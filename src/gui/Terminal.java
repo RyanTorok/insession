@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import main.Root;
 import terminal.TerminalRet;
 import terminal.TerminalUI;
 
@@ -118,6 +119,13 @@ public class Terminal extends AnchorPane {
             }
             if (terminalRet.isHide()) {
                 holder.quitTerminal();
+            }
+            if (out.trim().equals("Bye") && !terminalRet.isHide() && !terminalRet.isClear()) {
+                try {
+                    holder.stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         if (event.getCode().equals(KeyCode.UP)) {

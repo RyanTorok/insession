@@ -39,8 +39,9 @@ public class Root {
         } catch (Exception e) {
             startupError = e.getMessage();
         }
+
         //TODO intialize active user
-        active = new Student();
+        active = User.read();
         active.setBirthday(new Date(0));
         active.setAccentColor(new Color(218/255.0, 213/255.0, 237/255.0, 1));
 
@@ -62,11 +63,11 @@ public class Root {
                     sb.append(String.format("%02X%s", bmac[i], (i < bmac.length - 1) ? "-" : ""));
                 }
 
-                if (sb.toString().isEmpty() == false) {
+                if (!sb.toString().isEmpty()) {
                     addressByNetwork.put(network.getName(), sb.toString());
                 }
 
-                if (sb.toString().isEmpty() == false && firstInterface == null) {
+                if (!sb.toString().isEmpty() && firstInterface == null) {
                     firstInterface = network.getName();
                 }
             }
@@ -75,7 +76,6 @@ public class Root {
         if (firstInterface != null) {
             return addressByNetwork.get(firstInterface);
         }
-
         return null;
     }
 
@@ -105,5 +105,14 @@ public class Root {
 
     public static void setMACAddress(String macAddress) {
         Root.macAddress = macAddress;
+    }
+
+    public static void saveAll() {
+        getActiveUser().setUsername("rtorok");
+        System.out.println("here");
+        Root.getActiveUser().write();
+        DefaultUser def = new DefaultUser();
+        def.read();
+        def.write();
     }
 }

@@ -2,15 +2,20 @@ package main;
 
 import classes.Record;
 import javafx.scene.paint.Color;
+import terminal.Address;
+
+import java.io.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by 11ryt on 4/21/2017.
  */
-public abstract class User implements classes.setbuilder.Classifiable{
+public abstract class User implements classes.setbuilder.Classifiable, Serializable {
 
+    static final long serialVersionUID = 42L;
     private int id;
     private String mac;
     private String username;
@@ -24,9 +29,12 @@ public abstract class User implements classes.setbuilder.Classifiable{
     private String schoolCode;
     private String address;
     private Timestamp timestamp;
-    private Color accentColor;
+    private double[] accentColor;
     private Date birthday;
     private ArrayList<Record> updates;
+    private Timestamp lastVisit;
+    private ArrayList<String> searchHistory;
+    private ArrayList<module.Module> watchHistory;
 
     public User(int id, String mac, String username, String password, String first, String middle, String last, String email, String homephone, String cellphone, String address, Timestamp timestamp) {
         this.id = id;
@@ -44,6 +52,7 @@ public abstract class User implements classes.setbuilder.Classifiable{
     }
 
     protected User() {
+
     }
 
     public int getId() {
@@ -94,11 +103,11 @@ public abstract class User implements classes.setbuilder.Classifiable{
     public abstract String getID();
 
     public void setAccentColor(Color c) {
-        this.accentColor = c;
+        accentColor = new double[]{c.getRed(), c.getGreen(), c.getBlue()};
     }
 
     public Color getAccentColor() {
-        return accentColor;
+        return new Color(accentColor[0], accentColor[1], accentColor[2], 1);
     }
 
     public String getSchoolCode() {
@@ -238,4 +247,99 @@ public abstract class User implements classes.setbuilder.Classifiable{
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
+    public void write() {
+        lastVisit = new Timestamp(System.currentTimeMillis());
+        try {
+            File dest = new File("usr" + File.separator + this.getUsername() + ".ser");
+            if (!dest.exists()) {
+                boolean b = dest.createNewFile();
+                if (!b) {
+                    throw new IOException("an error occurred creating user file for '" + getUsername() + "'.");
+                }
+            }
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dest));
+            out.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void search(String query) {
+        searchHistory.add(query);
+    }
+
+    public void watch(module.Module m) {
+        watchHistory.add(m);
+    }
+
+    public void rmSearch(String query) {
+        searchHistory.removeAll(Collections.singleton(query));
+    }
+
+    public void rmSearch(int index) {
+        rmSearch(searchHistory.get(index));
+    }
+
+    public void clearSearchHistory() {
+        searchHistory.clear();
+    }
+
+    public void rmWatch(module.Module m) {
+        watchHistory.removeAll(Collections.singleton(m));
+    }
+
+    public void rmWatch(int index) {
+        rmWatch(watchHistory.get(index));
+    }
+
+    public void clearWatchHistory() {
+        watchHistory.clear();
+    }
+
+    public void clearAllHistory() {
+        clearSearchHistory();
+        clearWatchHistory();
+    }
+
+    public static User read() {
+        File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
+        File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
+        if (sers.length == 0) {
+            return initNew();
+        } else {
+            String defaultFN = new DefaultUser().read();
+            User[] users = new User[sers.length];
+            try {
+                for (int i = defaultFN == null ? 0 : -1 ; i < sers.length; i++) {
+                    //read default user first
+                    ObjectInputStream in = new ObjectInputStream(new FileInputStream((i == -1) ? new File(defaultFN) : sers[i]));
+                    Object readin = in.readObject();
+                    try {
+                        users[i] = (User) readin;
+                    } catch (ClassCastException e) {
+                        users[i] = null;
+                    }
+                    if (users[i] != null) {
+                        return users[i];
+                    }
+                }
+                return initNew();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return initNew();
+            }
+        }
+    }
+
+    private static User initNew() {
+
+        Student s = new Student();
+        s.setFirst("Ryan");
+        s.setLast("Torok");
+        s.setUsername("rtorok");
+        s.setMiddle("Daniel");
+        return s;
+    }
 }
+

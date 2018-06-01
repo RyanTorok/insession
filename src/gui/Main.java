@@ -153,6 +153,21 @@ public class Main extends Application {
                     mainArea.getChildren().setAll(workingCollection);
                 }
             }
+
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                if (state == BASE_STATE) {
+                    sleep();
+                }
+                else if (state == TERMINAL_STATE) {
+                    if (event.isControlDown()) {
+                        term.clearTerminal();
+                    }
+                    quitTerminal();
+                }
+            }
+        });
+
+        primaryStage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode().equals(KeyCode.LEFT) && state == BASE_STATE) {
                 if (currentMenu != 0)
                     scrollBody(currentMenu - 1, subtitle);
@@ -164,17 +179,6 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.CAPS)) {
                 caps = !caps;
                 mainlogo.setText(caps ? upper : lower);
-            }
-            if (event.getCode().equals(KeyCode.ESCAPE)) {
-                if (state == BASE_STATE) {
-                    sleep();
-                }
-                else if (state == TERMINAL_STATE) {
-                    if (event.isControlDown()) {
-                        term.clearTerminal();
-                    }
-                    quitTerminal();
-                }
             }
         });
 
@@ -261,6 +265,12 @@ public class Main extends Application {
         ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
         Collections.swap(workingCollection, 1, 2);
         mainArea.getChildren().setAll(workingCollection);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        Root.saveAll();
+        System.exit(1);
     }
 }
 
