@@ -12,6 +12,7 @@ import java.sql.Timestamp;
  * Created by 11ryt on 4/21/2017.
  */
 public class Student extends User {
+    static long serialVersionUID = User.serialVersionUID;
     private String studentID;
 
     public UtilScheduler.StudentSchedulePackage getSavedSSP() {
@@ -30,13 +31,10 @@ public class Student extends User {
 
     private int grade;
 
-    public Student(int id, String mac, String username, String password, String first, String middle, String last, String email, String homephone, String cellphone, String address, Timestamp timestamp, String studentID, int grade) {
-        super(id, mac, username, password, first, middle, last, email, homephone, cellphone, address, timestamp);
+    public Student(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp, String studentID, int grade) {
+        super(mac, username, password, first, middle, last, email, timestamp);
         this.studentID = studentID;
         this.grade = grade;
-    }
-
-    Student() {
     }
 
     @Override

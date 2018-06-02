@@ -5,7 +5,6 @@ import javafx.scene.paint.Color;
 import terminal.Address;
 
 import java.io.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +15,6 @@ import java.util.Collections;
 public abstract class User implements classes.setbuilder.Classifiable, Serializable {
 
     static final long serialVersionUID = 42L;
-    private int id;
     private String mac;
     private String username;
     private String password;
@@ -24,20 +22,16 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private String middle;
     private String last;
     private String email;
-    private String homephone;
-    private String cellphone;
     private String schoolCode;
-    private String address;
     private Timestamp timestamp;
     private double[] accentColor;
-    private Date birthday;
     private ArrayList<Record> updates;
     private Timestamp lastVisit;
     private ArrayList<String> searchHistory;
     private ArrayList<module.Module> watchHistory;
+    private String passwordSalt;
 
-    public User(int id, String mac, String username, String password, String first, String middle, String last, String email, String homephone, String cellphone, String address, Timestamp timestamp) {
-        this.id = id;
+    public User(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
         this.username = username;
         this.password = password;
@@ -45,18 +39,13 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         this.middle = middle;
         this.last = last;
         this.email = email;
-        this.homephone = homephone;
-        this.cellphone = cellphone;
-        this.address = address;
         this.timestamp = timestamp;
+        this.searchHistory = new ArrayList<>();
+        this.watchHistory = new ArrayList<>();
     }
 
     protected User() {
 
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getUsername() {
@@ -83,19 +72,6 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         return email;
     }
 
-    public String getHomePhone() {
-        return getHomephone();
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -114,10 +90,6 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         return schoolCode;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
     /**
      * @return the updates
      */
@@ -134,13 +106,6 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
 
     public String getName() {
         return getFirst() + " " + getLast();
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -200,27 +165,6 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     }
 
     /**
-     * @return the homephone
-     */
-    public String getHomephone() {
-        return homephone;
-    }
-
-    /**
-     * @param homephone the homephone to set
-     */
-    public void setHomephone(String homephone) {
-        this.homephone = homephone;
-    }
-
-    /**
-     * @param cellphone the cellphone to set
-     */
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    /**
      * @param schoolCode the schoolCode to set
      */
     public void setSchoolCode(String schoolCode) {
@@ -228,24 +172,10 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     }
 
     /**
-     * @param address the address to set
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    /**
      * @param timestamp the timestamp to set
      */
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    /**
-     * @param birthday the birthday to set
-     */
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public void write() {
@@ -306,7 +236,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
         if (sers.length == 0) {
-            return initNew();
+            return null;
         } else {
             String defaultFN = new DefaultUser().read();
             User[] users = new User[sers.length];
@@ -324,22 +254,63 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
                         return users[i];
                     }
                 }
-                return initNew();
+                return null;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-                return initNew();
+                return null;
             }
         }
     }
 
-    private static User initNew() {
+    public static ArrayList<User> readAll() {
+        File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
+        File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
+        ArrayList<User> out = new ArrayList<>();
+        if (sers.length == 0) {
+            return null;
+        } else {
+            String defaultFN = new DefaultUser().read();
+            User[] users = new User[sers.length];
+            try {
+                for (int i = defaultFN == null ? 0 : -1 ; i < sers.length; i++) {
+                    //read default user first
+                    ObjectInputStream in = new ObjectInputStream(new FileInputStream((i == -1) ? new File(defaultFN) : sers[i]));
+                    Object readin = in.readObject();
+                    try {
+                        users[i] = (User) readin;
+                    } catch (ClassCastException e) {
+                        users[i] = null;
+                    }
+                    if (users[i] != null) {
+                        out.add(users[i]);
+                    }
+                }
+                if (out.size() == 0)
+                    return null;
+                return out;
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
 
-        Student s = new Student();
-        s.setFirst("Ryan");
-        s.setLast("Torok");
-        s.setUsername("rtorok");
-        s.setMiddle("Daniel");
-        return s;
+    public static int getSerCount() {
+        File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
+        File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
+        return sers.length;
+    }
+
+    public Timestamp getLastVisit() {
+        return lastVisit;
+    }
+
+    public String getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    public void setPasswordSalt(String passwordSalt) {
+        this.passwordSalt = passwordSalt;
     }
 }
 

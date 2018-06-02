@@ -4,6 +4,9 @@ import main.Root;
 
 public class TerminalUI {
     public String getPrompt() {
+        if (Root.getActiveUser() == null) {
+            return "null@null";
+        }
         return Root.getActiveUser().getUsername() + "@" + Root.getActiveUser().getSchoolCode() + " > ";
     }
 

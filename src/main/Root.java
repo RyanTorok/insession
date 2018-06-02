@@ -40,11 +40,6 @@ public class Root {
             startupError = e.getMessage();
         }
 
-        //TODO intialize active user
-        active = User.read();
-        active.setBirthday(new Date(0));
-        active.setAccentColor(new Color(218/255.0, 213/255.0, 237/255.0, 1));
-
         portal.main(new String[]{startupError});
     }
 
@@ -83,10 +78,6 @@ public class Root {
         return activeID;
     }
 
-    public static javafx.application.Application getActiveFrame() {
-        return activeFrame;
-    }
-
     public static UtilAndConstants getUtilAndConstants() {
         return utilAndConstants;
     }
@@ -108,11 +99,18 @@ public class Root {
     }
 
     public static void saveAll() {
-        getActiveUser().setUsername("rtorok");
-        System.out.println("here");
+        if (Root.getActiveUser() != null)
         Root.getActiveUser().write();
         DefaultUser def = new DefaultUser();
         def.read();
         def.write();
+    }
+
+    public static void setActiveUser(User read) {
+        active = read;
+    }
+
+    public static void setPortal(Main main) {
+        portal = main;
     }
 }

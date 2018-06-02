@@ -20,6 +20,8 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Root;
+import main.Student;
+import main.User;
 
 import java.awt.*;
 import java.io.File;
@@ -46,21 +48,40 @@ public class Main extends Application {
     Terminal term;
     StackPane mainArea;
     int state = 0;
+    private Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    private void newUser() {
+        Scene window = NewUserWindow.get(this);
+        primaryStage.setScene(window);
+        primaryStage.show();
+    }
+
     @Override
     public void start(Stage primaryStage) {
         //create taskbar icon
+        this.primaryStage = primaryStage;
+        Root.setPortal(this);
+        User user = User.read();
         String icon_path = System.getProperty("user.dir") + File.separator + "resources" + File.separator + "icon.png" + File.separator;
-        Image icon = new Image("file:"+ icon_path);
+        Image icon = new Image("file:" + icon_path);
         primaryStage.getIcons().add(icon);
-        ImageView imageView = new ImageView(icon);
-
         primaryStage.setTitle("Paintbrush LMS");
+        ImageView imageView = new ImageView(icon);
+        Root.setActiveUser(user);
+        if (user == null || User.getSerCount() > 1) {
+                newUser();
+        } else {
+            switchToMain();
+        }
+    }
+
+    void switchToMain() {
         primaryStage.setMaximized(true);
+        primaryStage.setTitle("Welcome, " + Root.getActiveUser().getFirst() + " - Paintbrush LMS");
         Text mainlogo = new Text("paintbrush.    ");
         mainlogo.setFont(Font.font("Comfortaa", 60));
         mainlogo.setFill(Color.WHITE);
@@ -187,7 +208,6 @@ public class Main extends Application {
                 wakeup();
             }
         });
-
         primaryStage.show();
     }
 
