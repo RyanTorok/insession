@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -15,13 +16,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Root;
-import main.Student;
 import main.User;
+import terminal.Address;
 
 import java.awt.*;
 import java.io.File;
@@ -47,14 +49,15 @@ public class Main extends Application {
     Text date;
     Terminal term;
     StackPane mainArea;
-    int state = 0;
+    Integer state = 0;
     private Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private void newUser() {
+    public void newUser() {
+        primaryStage.setMaximized(false);
         Scene window = NewUserWindow.get(this);
         primaryStage.setScene(window);
         primaryStage.show();
@@ -66,7 +69,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         Root.setPortal(this);
         User user = User.read();
-        String icon_path = System.getProperty("user.dir") + File.separator + "resources" + File.separator + "icon.png" + File.separator;
+        String icon_path = Address.root_addr + File.separator + "resources" + File.separator + "icon.png";
         Image icon = new Image("file:" + icon_path);
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("Paintbrush LMS");
@@ -79,8 +82,8 @@ public class Main extends Application {
         }
     }
 
-    void switchToMain() {
-        primaryStage.setMaximized(true);
+    public void switchToMain() {
+        primaryStage.setMaximized(false);
         primaryStage.setTitle("Welcome, " + Root.getActiveUser().getFirst() + " - Paintbrush LMS");
         Text mainlogo = new Text("paintbrush.    ");
         mainlogo.setFont(Font.font("Comfortaa", 60));
@@ -101,11 +104,14 @@ public class Main extends Application {
         menus[2] = new BarMenu("organizations", 2);
         menus[3] = new BarMenu("browse lessons", 3);
         menus[4] = new BarMenu("community", 4);
-        menus[5] = new BarMenu(Root.getActiveUser() == null ? "not signed in" : "signed in as " + Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), 5);
+        menus[5] = new BarMenu(Root.getActiveUser() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), 5);
 
         menus[0].setFont(Font.font(menus[0].getFont().getFamily(), FontWeight.BOLD, menus[0].getFont().getSize()));
 
-        HBox topbar = new HBox(titles, menus[0], menus[1], menus[2], menus[3], menus[4], menus[5]);
+        Region filler = new Region();
+        HBox.setHgrow(filler, Priority.ALWAYS);
+        Image image = Root.getActiveUser().getAcctImage();
+        HBox topbar = new HBox(titles, menus[0], menus[1], menus[2], menus[3], menus[4], filler, menus[5], new ShapeImage(new Circle(30), image).apply());
         top_bar = topbar;
         topbar.setSpacing(35);
         topbar.setAlignment(Pos.CENTER_LEFT);
@@ -137,7 +143,7 @@ public class Main extends Application {
 
         BorderPane body = new BorderPane();
         mainBody = body;
-        ImageView backgd = new ImageView(new Image("file:" + System.getProperty("user.dir") + File.separator + "resources" + File.separator + "background.jpeg"));
+        ImageView backgd = new ImageView(new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "background.jpeg"));
         backgd.setFitWidth(1900);
         backgd.setPreserveRatio(true);
         StackPane allBodyPanes = new StackPane(sleepbody, body);
@@ -147,11 +153,17 @@ public class Main extends Application {
         AnchorPane terminalpane = new AnchorPane(term);
         terminalpane.setPrefHeight(649);
         terminalpane.setPrefWidth(999);
+        terminalpane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getTarget() != term) {
+                quitTerminal();
+            }
+        });
         term.setVisible(false);
 
         StackPane mainArea = new StackPane(backgd, terminalpane, root);
         this.mainArea = mainArea;
         primaryStage.setScene(new Scene(mainArea, 999, 649));
+        primaryStage.setMaximized(true);
 
         primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (state == SLEEP_STATE) {
@@ -188,7 +200,7 @@ public class Main extends Application {
             }
         });
 
-        primaryStage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (event.getCode().equals(KeyCode.LEFT) && state == BASE_STATE) {
                 if (currentMenu != 0)
                     scrollBody(currentMenu - 1, subtitle);
@@ -208,12 +220,13 @@ public class Main extends Application {
                 wakeup();
             }
         });
+        state = BASE_STATE;
         primaryStage.show();
     }
 
     private void updateTime() {
         if (state == SLEEP_STATE) {
-            String time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM dd, YYYY  h:mm:ss aa").format(new Date());
+            String time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(new Date());
             String[] timeanddate = time.split("  ");
             clock.setText(timeanddate[1]);
             date.setText(timeanddate[0]);
@@ -244,6 +257,16 @@ public class Main extends Application {
         updateTime();
         sleepBody.setVisible(true);
         ft.play();
+    }
+
+    public void clearStage() {
+        primaryStage.setScene(null);
+    }
+
+    public void resetMain() {
+        clearStage();
+        primaryStage.setMaximized(false);
+        switchToMain();
     }
 
     class BarMenu extends Text {
@@ -293,5 +316,3 @@ public class Main extends Application {
         System.exit(1);
     }
 }
-
-

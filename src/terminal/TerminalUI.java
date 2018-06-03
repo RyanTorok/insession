@@ -5,9 +5,19 @@ import main.Root;
 public class TerminalUI {
     public String getPrompt() {
         if (Root.getActiveUser() == null) {
-            return "null@null";
+            return "null@null >";
         }
-        return Root.getActiveUser().getUsername() + "@" + Root.getActiveUser().getSchoolCode() + " > ";
+        if (Root.getActiveUser().getUsername() == null) {
+            return "guest > ";
+        }
+        String toReturn = null;
+        if (Root.getActiveUser().getSchoolCode() == null)
+            toReturn =  Root.getActiveUser().getUsername() + " >";
+        else
+            toReturn = Root.getActiveUser().getUsername() + "@" + Root.getActiveUser().getSchoolCode() + " > ";
+        if (toReturn.length() > 30)
+            return toReturn.substring(0, 31) + "...";
+        return toReturn;
     }
 
     public TerminalRet command(String input, int columns) {

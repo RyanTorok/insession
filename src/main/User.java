@@ -1,6 +1,7 @@
 package main;
 
 import classes.Record;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import terminal.Address;
 
@@ -30,6 +31,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private ArrayList<String> searchHistory;
     private ArrayList<module.Module> watchHistory;
     private String passwordSalt;
+    private String imageFN;
 
     public User(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -42,10 +44,23 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         this.timestamp = timestamp;
         this.searchHistory = new ArrayList<>();
         this.watchHistory = new ArrayList<>();
+        this.accentColor = new double[]{0, 0, 0};
     }
 
     protected User() {
 
+    }
+
+    public static User read(String tokenLabel) {
+        File ser = new File(Address.root_addr + File.separator + "usr" + File.separator + tokenLabel + ".ser");
+        if (!ser.exists())
+            return null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(ser));
+            return (User) in.readObject();
+        } catch (IOException | ClassNotFoundException | ClassCastException e) {
+            return null;
+        }
     }
 
     public String getUsername() {
@@ -83,6 +98,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     }
 
     public Color getAccentColor() {
+        if (accentColor == null) return Color.BLACK;
         return new Color(accentColor[0], accentColor[1], accentColor[2], 1);
     }
 
@@ -311,6 +327,27 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
 
     public void setPasswordSalt(String passwordSalt) {
         this.passwordSalt = passwordSalt;
+    }
+
+    public Image getAcctImage() {
+//        setImageFN("file:" + Address.root_addr + File.separator + "resources" + File.separator + "pic.jpg");
+        try {
+            return new Image(getImageFN());
+        } catch (Exception e) {
+            try {
+                return new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "default_user.png");
+            } catch (Exception e1) {
+                return null;
+            }
+        }
+    }
+
+    public String getImageFN() {
+        return imageFN;
+    }
+
+    public void setImageFN(String imageFN) {
+        this.imageFN = imageFN;
     }
 }
 

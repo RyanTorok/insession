@@ -81,6 +81,7 @@ public class Tokenizer {
             case LOOKAT: return new CAT();
             case SEE: return new CAT();
             case OPEN: return new OPEN();
+            case SWITCH: return new SWITCH();
         }
         return null;
     }

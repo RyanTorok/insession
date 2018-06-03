@@ -11,18 +11,15 @@ import java.util.Random;
  */
 public class SQLMaster {
 
-    private static Connection overallServerConnection = null;
-
-    public static void connectToOverallServer() throws SQLException {
+    public static Connection connectToOverallServer() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/paintbrush_server";
         String username = "java_server_master";
         String password = "Vzg7PvdMZeZg76p1f%";
-        overallServerConnection = DriverManager.getConnection(url, username, password);
+        return DriverManager.getConnection(url, username, password);
     }
 
     public static String getInstitutionURL(String nextLine) throws SQLException {
-        if (overallServerConnection == null)
-            connectToOverallServer();
+        Connection overallServerConnection = connectToOverallServer();
         PreparedStatement ps = overallServerConnection.prepareStatement("Select `localdbaddress` from `clients` where `authenticationKey` = ?");
         ps.setString(1, nextLine);
         ResultSet rs = ps.executeQuery();
@@ -31,9 +28,7 @@ public class SQLMaster {
     }
 
     public static void createNewClient(String name) throws SQLException {
-        if (overallServerConnection == null)
-            connectToOverallServer();
-
+        Connection overallServerConnection = connectToOverallServer();
         //generate random authentication key
         StringBuffer keySB = new StringBuffer();
         String availableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -52,12 +47,45 @@ public class SQLMaster {
     }
 
     public static int createAccount(String username, String password, String first, String last, String email, String schoolCode) {
-        return 0;
+        try (Connection conn = connectToOverallServer()){
+            String verifyUN = "SELECT 1 FROM users WHERE  `username` = ?";
+            PreparedStatement ps = conn.prepareStatement(verifyUN);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return -1; //username already in use
+            }
+            int type = 0;
+            if (schoolCode != null && schoolCode.length() > 0) {
+                String getUType = "";
+                ps = conn.prepareStatement(getUType);
+                ps.setString(1, schoolCode);
+                rs = ps.executeQuery();
+                if (!rs.next()) {
+                    return -3; //no valid type due to invalid school code
+                }
+                type = rs.getInt("type");
+            }
+            String createAcct = "INSERT INTO users (`username`, `password`, `first`, `last`, `email`) values (?, ?, ?, ?, ?)";
+            ps = conn.prepareStatement(createAcct);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, first);
+            ps.setString(4, last);
+            ps.setString(5, email);
+            boolean success = ps.execute();
+            if (!success) {
+                return -2; //server error
+            }
+            return type;
+        } catch (SQLException e) {
+            return -2; //represents connection error
+        }
     }
 
     public static User login(String username, String password) throws LoginException {
         String query = "SELECT * FROM users WHERE `username` = ? AND `password` = ?;";
-        try {
+        try (Connection overallServerConnection = connectToOverallServer()) {
             PreparedStatement statement = overallServerConnection.prepareStatement(query);
             statement.setString(1, username);
             statement.setString(2, PasswordManager.hash(password));
@@ -82,7 +110,7 @@ public class SQLMaster {
             }
             return newUser;
         } catch (SQLException e) {
-            throw new LoginException(false);
+            throw new LoginException(true);
         }
     }
 

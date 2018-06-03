@@ -29,6 +29,9 @@ public class Address {
             }
             else
                 current = new File(current.getPath() + File.separator + fn);
+            if (current == null) {
+                throw new TerminalException("file parser - undefined file address: " + dest);
+            }
             if (!current.exists() && mustExist)
                 throw new TerminalException("file parser - file or directory not found: '" + current.getName() + "'.");
             ind++;
