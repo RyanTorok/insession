@@ -2,34 +2,147 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/gui/ShapeImage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/terminal/SWITCH.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Paintbrush.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Paintbrush.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Paintbrush.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/DailyMenuListing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/DailyMenuListing.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/FoodItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/FoodItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/LineMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/LineMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/NutritionLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/NutritionLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Assignment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Assignment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/AssignmentWeight.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/AssignmentWeight.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Attempt.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Attempt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/AttendanceCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/AttendanceCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPdInstance.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPdInstance.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Course.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/CourseIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/CourseIndex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Curve.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Curve.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/DayRegex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/DayRegex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Downloadable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Downloadable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Email.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Email.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Expression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Expression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Form$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Form$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Form.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Form.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/FormElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/FormElement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Grade.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Grade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/HousedAssignment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/HousedAssignment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/HousedTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/HousedTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/IncompleteScheduleException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/IncompleteScheduleException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MCQuestion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/MCQuestion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MSClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/MSClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MarkingPeriod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/MarkingPeriod.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MasterSchedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/MasterSchedule.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Person.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/PhoneNumber.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/PhoneNumber.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Question.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/QuestionGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/QuestionGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/QuestionObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/QuestionObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/RecordEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/RecordEntry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Runner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Runner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/SQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/SSPBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/SSPBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/School.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/School.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/StudentSchedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/StudentSchedule.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/TestElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/TestElement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/TestTimingRule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/TestTimingRule.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler$StudentSchedulePackage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler$StudentSchedulePackage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/canDisplay.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/canDisplay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/lessonmodule/LessonModule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/lessonmodule/LessonModule.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/mvFunction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/mvFunction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Classifiable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Classifiable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Condition.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Condition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Set.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Set.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/SetBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/SetBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/LoginException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/db/LoginException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLInstitution.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLInstitution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLLocal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLLocal.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLMaster.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLMaster.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/AttendanceException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/AttendanceException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/DatabaseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/DatabaseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/ExpressionSyntaxException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/ExpressionSyntaxException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/InconsistentSystemTimeException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/InconsistentSystemTimeException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/OfflineException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/OfflineException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/SoftlockException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/SoftlockException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/Warning.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/Warning.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/Directory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/Directory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/File.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/File.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemElement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemParseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemParseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/Indexed.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/Indexed.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Clock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Clock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/MessageBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/MessageBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow$Entry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow$Entry.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PhoneField$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PhoneField$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PhoneField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PhoneField.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Portal_Controls.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Portal_Controls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/RecentUpdate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/RecentUpdate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ShapeImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ShapeImage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/StartSettingsWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/StartSettingsWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Terminal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Terminal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Administrator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Administrator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Bluetooth.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Bluetooth.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/DefaultUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/DefaultUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Internet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Internet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/PasswordManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/PasswordManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Root.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Root.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Student.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Teacher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Teacher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UnsupportedOSException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/UnsupportedOSException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/module/Module.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/module/Module.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/QueryEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/QueryEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/Topic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/Topic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/WordDimension.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/WordDimension.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/WordVectorDimension.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/modulesearch/WordVectorDimension.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/parking/IllegalRegexException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/parking/IllegalRegexException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/parking/ParkingSpot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/parking/ParkingSpot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/parking/ParkingSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/parking/ParkingSystem.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CAT.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CAT.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CD.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CD.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CLEAR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CLEAR.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Clear.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Clear.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Command$CommandType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Command$CommandType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/HIDE.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/HIDE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/LS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/LS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/MKDIR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/MKDIR.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/OPEN.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/OPEN.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/PWD.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/PWD.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/QUIT.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/QUIT.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/RM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/RM.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/SWITCH.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/SWITCH.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TOUCH.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TOUCH.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tag$Label.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tag$Label.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tag.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalRet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalRet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Token$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Token$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Token.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Token.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tokenizer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tokenizer$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tokenizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/SQLMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/SQLMaster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/NewUserWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/NewUserWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/UtilAndConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/UtilAndConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terminal/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terminal/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terminal/TerminalUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/TerminalUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terminal/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/Tokenizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,12 +171,16 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+            <state relative-caret-position="278">
+              <caret line="230" column="83" selection-start-line="230" selection-start-column="83" selection-end-line="230" selection-end-column="83" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4552#4687#0" expanded="true" />
-                <element signature="e#4686#4687#0" expanded="true" />
+                <element signature="e#5079#5214#0" expanded="true" />
+                <element signature="e#5213#5214#0" expanded="true" />
+                <element signature="e#11878#11879#0" expanded="true" />
+                <element signature="e#11921#11922#0" expanded="true" />
+                <element signature="e#16080#16081#0" expanded="true" />
+                <element signature="e#16113#16114#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,8 +198,8 @@
       <file leaf-file-name="Terminal.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
+            <state relative-caret-position="212">
+              <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -99,8 +216,8 @@
       <file leaf-file-name="NewUserWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="268" column="47" selection-start-line="268" selection-start-column="47" selection-end-line="268" selection-end-column="47" />
+            <state relative-caret-position="240">
+              <caret line="135" column="76" lean-forward="true" selection-start-line="135" selection-start-column="76" selection-end-line="135" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,7 +228,7 @@
       <file leaf-file-name="ShapeImage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/ShapeImage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="225">
               <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -123,8 +240,11 @@
       <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3945">
-              <caret line="337" column="124" selection-start-line="337" selection-start-column="124" selection-end-line="337" selection-end-column="124" />
+            <state relative-caret-position="1095">
+              <caret line="95" column="41" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
+              <folding>
+                <element signature="e#2564#2565#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -132,8 +252,12 @@
       <file leaf-file-name="UtilAndConstants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="868">
-              <caret line="176" column="37" selection-start-line="176" selection-start-column="37" selection-end-line="176" selection-end-column="37" />
+            <state relative-caret-position="512">
+              <caret line="193" column="70" lean-forward="true" selection-start-line="193" selection-start-column="70" selection-end-line="193" selection-end-column="70" />
+              <folding>
+                <element signature="e#5446#5447#0" expanded="true" />
+                <element signature="e#5478#5479#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -174,15 +298,15 @@
         <option value="$PROJECT_DIR$/src/gui/BlankScene.java" />
         <option value="$PROJECT_DIR$/src/terminal/SWITCH.java" />
         <option value="$PROJECT_DIR$/src/terminal/Address.java" />
-        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/main/ImageFilter.java" />
         <option value="$PROJECT_DIR$/src/gui/ImageFilter.java" />
         <option value="$PROJECT_DIR$/src/gui/Circle.java" />
         <option value="$PROJECT_DIR$/src/gui/CircleImage.java" />
         <option value="$PROJECT_DIR$/src/gui/ShapeImage.java" />
+        <option value="$PROJECT_DIR$/src/gui/Terminal.java" />
         <option value="$PROJECT_DIR$/src/main/User.java" />
         <option value="$PROJECT_DIR$/src/gui/NewUserWindow.java" />
-        <option value="$PROJECT_DIR$/src/gui/Terminal.java" />
+        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
       </list>
     </option>
@@ -203,16 +327,42 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="174" />
-    <option name="y" value="12" />
-    <option name="width" value="927" />
-    <option name="height" value="1068" />
+    <option name="x" value="231" />
+    <option name="y" value="-4" />
+    <option name="width" value="925" />
+    <option name="height" value="1060" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Paintbrush" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Paintbrush" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Paintbrush" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Paintbrush" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Paintbrush" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Paintbrush" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Tokenizer.java&#10;Settings&#9;ACTION&#9;Database.Settings" />
@@ -222,7 +372,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -328,12 +478,15 @@
       <workItem from="1527951401630" duration="6107000" />
       <workItem from="1527970516057" duration="8315000" />
       <workItem from="1527989129099" duration="3956000" />
-      <workItem from="1528033493352" duration="1468000" />
+      <workItem from="1528033493352" duration="3359000" />
+      <workItem from="1528042664264" duration="4543000" />
+      <workItem from="1528482854490" duration="3027000" />
+      <workItem from="1528494923270" duration="6498000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76681000" />
+    <option name="totallyTimeSpent" value="92640000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="59" y="-4" width="1861" height="1084" extended-state="6" />
@@ -354,7 +507,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32948583" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.27933884" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28264463" />
       <window_info anchor="right" id="Database" order="8" weight="0.3294766" />
       <window_info id="Learn" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -419,7 +572,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/UserInit.java" />
     <entry file="file://$PROJECT_DIR$/src/main/Root.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
@@ -692,17 +844,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/User.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/ShapeImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3945">
-          <caret line="337" column="124" selection-start-line="337" selection-start-column="124" selection-end-line="337" selection-end-column="124" />
+        <state relative-caret-position="225">
+          <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/ShapeImage.java">
+    <entry file="file://$PROJECT_DIR$/src/main/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+        <state relative-caret-position="1095">
+          <caret line="95" column="41" selection-start-line="95" selection-start-column="41" selection-end-line="95" selection-end-column="41" />
+          <folding>
+            <element signature="e#2564#2565#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main_2.java" />
+    <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="135" column="76" lean-forward="true" selection-start-line="135" selection-start-column="76" selection-end-line="135" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -711,36 +884,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="868">
-          <caret line="176" column="37" selection-start-line="176" selection-start-column="37" selection-end-line="176" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="268" column="47" selection-start-line="268" selection-start-column="47" selection-end-line="268" selection-end-column="47" />
+        <state relative-caret-position="512">
+          <caret line="193" column="70" lean-forward="true" selection-start-line="193" selection-start-column="70" selection-end-line="193" selection-end-column="70" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#5446#5447#0" expanded="true" />
+            <element signature="e#5478#5479#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+        <state relative-caret-position="278">
+          <caret line="230" column="83" selection-start-line="230" selection-start-column="83" selection-end-line="230" selection-end-column="83" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4552#4687#0" expanded="true" />
-            <element signature="e#4686#4687#0" expanded="true" />
+            <element signature="e#5079#5214#0" expanded="true" />
+            <element signature="e#5213#5214#0" expanded="true" />
+            <element signature="e#11878#11879#0" expanded="true" />
+            <element signature="e#11921#11922#0" expanded="true" />
+            <element signature="e#16080#16081#0" expanded="true" />
+            <element signature="e#16113#16114#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -802,7 +966,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

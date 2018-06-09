@@ -117,25 +117,24 @@ public class NewUserWindow extends Pane {
             for (User u: users) {
                 existingUser = true;
                 Text user_name = new Text(u.getFirst() + " " + u.getLast());
-                user_name.setFill(Color.WHITE);
+                Color backgd = u.getAccentColor();
+                Color whiteBlack = UtilAndConstants.textFill(backgd, 2);
+                user_name.setFill(whiteBlack);
                 user_name.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 20));
                 Text user_username = new Text(u.getUsername());
-                user_username.setFill(Color.WHITE);
+                user_username.setFill(whiteBlack);
                 user_username.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 20));
                 VBox names = new VBox(user_name, user_username);
                 HBox userPane = new HBox(names);
-                Color backgd = u.getAccentColor();
-                if (backgd == null)
-                    backgd = Color.BLACK;
-                Color lightBackgd = new Color(backgd.getRed() + .3, backgd.getGreen() + .3, backgd.getBlue() + .3, 1);
+                Color lightBackgd;
+                if (backgd.getRed() + .3 > 1 || backgd.getGreen() + .3 > 1 || backgd.getBlue() + .3 > 1)
+                   lightBackgd = backgd.brighter();
+                else
+                    lightBackgd = new Color(backgd.getRed() + .3, backgd.getGreen() + .3, backgd.getBlue() + .3, 1);
                 final String bgcStr = UtilAndConstants.colorToHex(backgd);
                 final String lbgStr = UtilAndConstants.colorToHex(lightBackgd);
-                userPane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-                    userPane.setStyle("-fx-background-color: " + lbgStr);
-                });
-                userPane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-                    userPane.setStyle("-fx-background-color: " + bgcStr);
-                });
+                userPane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> userPane.setStyle("-fx-background-color: " + lbgStr));
+                userPane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> userPane.setStyle("-fx-background-color: " + bgcStr));
                 userPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     user = u;
                     Root.setActiveUser(u);

@@ -1,6 +1,9 @@
 package main;
 
 import classes.MasterSchedule;
+import javafx.event.EventType;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.math.BigDecimal;
@@ -178,5 +181,17 @@ public class UtilAndConstants {
                     (int)( color.getRed() * 255 ),
                     (int)( color.getGreen() * 255 ),
                     (int)( color.getBlue() * 255 ) );
+    }
+
+    public static Color textFill(Color background) {
+        return textFill(background, 1.5);
+    }
+
+    public static Color textFill(Color background, double threshold) {
+        return background.getRed() + background.getGreen() + background.getBlue() > threshold ? Color.BLACK : Color.WHITE;
+    }
+
+    public static void fireMouse(Node n, EventType<MouseEvent> type) {
+        n.fireEvent(new MouseEvent(type, 0,0,0,0,null, 0, false, false,false, false, false, false, false, false, false, false, null));
     }
 }
