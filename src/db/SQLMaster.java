@@ -117,4 +117,17 @@ public class SQLMaster {
     public static ArrayList lookUpActivationKey(String text) {
         return null;
     }
+
+    public static boolean updatePassword(User activeUser, String password) {
+
+        try (Connection conn = connectToOverallServer()){
+            String query = "UPDATE users SET `password` = ? WHERE `username` = ?;";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, activeUser.getUsername());
+            ps.setString(2, password);
+            return ps.execute();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.*;
+import jdk.jshell.execution.Util;
 import main.*;
 import terminal.Address;
 
@@ -129,11 +130,7 @@ public class NewUserWindow extends Pane {
                 user_username.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 20));
                 VBox names = new VBox(user_name, user_username);
                 HBox userPane = new HBox(names);
-                Color lightBackgd;
-                if (backgd.getRed() + .3 > 1 || backgd.getGreen() + .3 > 1 || backgd.getBlue() + .3 > 1)
-                   lightBackgd = backgd.brighter();
-                else
-                    lightBackgd = new Color(backgd.getRed() + .3, backgd.getGreen() + .3, backgd.getBlue() + .3, 1);
+                Color lightBackgd = UtilAndConstants.highlightColor(backgd);
                 final String bgcStr = UtilAndConstants.colorToHex(backgd);
                 final String lbgStr = UtilAndConstants.colorToHex(lightBackgd);
                 userPane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> userPane.setStyle("-fx-background-color: " + lbgStr));

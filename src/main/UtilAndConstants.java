@@ -178,4 +178,10 @@ public class UtilAndConstants {
     public static void fireMouse(Node n, EventType<MouseEvent> type) {
         n.fireEvent(new MouseEvent(type, 0,0,0,0,null, 0, false, false,false, false, false, false, false, false, false, false, null));
     }
+
+    public static Color highlightColor(Color c) {
+        if (c.equals(Color.BLACK))
+            return Color.web("#505050");
+        else return textFill(c).equals(Color.WHITE) ? c.brighter() : c.darker();
+    }
 }

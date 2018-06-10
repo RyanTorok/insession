@@ -51,6 +51,7 @@ public class Main extends Application {
     Node mainBody;
     Text clock;
     Text date;
+    Node picture;
     Terminal term;
     StackPane mainArea;
     SideBar sideBar;
@@ -137,12 +138,13 @@ public class Main extends Application {
         HBox.setHgrow(filler, Priority.ALWAYS);
         Image image = Root.getActiveUser().getAcctImage();
         Shape picture = new ShapeImage(new Circle(30), image).apply();
+        this.picture = picture;
         HBox topbar = new HBox(titles, menus[0], menus[1], menus[2], menus[3], menus[4], filler, name, picture);
         top_bar = topbar;
         topbar.setSpacing(35);
         topbar.setAlignment(Pos.CENTER_LEFT);
         String color = UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor());
-        String borderWidth = color.equals("#000000") ? "0em" : ".67em";
+        String borderWidth =  ".67em";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(new Insets(15));
 
@@ -380,15 +382,16 @@ public class Main extends Application {
         System.exit(1);
     }
 
-    private class SideBar extends VBox {
+    class SideBar extends VBox {
         private Main holder;
 
         private TranslateTransition init;
         private TranslateTransition in;
         private TranslateTransition out;
         private int selectedMenu = -1;
+        private Color color;
 
-        private ArrayList<Menu> menus;
+        ArrayList<Menu> menus;
 
         public SideBar(Main holder) {
             super();
@@ -458,7 +461,8 @@ public class Main extends Application {
             });
 
             accountSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO
+                UtilAndConstants.fireMouse(Main.this.picture, MouseEvent.MOUSE_CLICKED);
+                new AcctSettings().show();
             });
 
             history.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -520,12 +524,21 @@ public class Main extends Application {
             out.play();
         }
 
-        private class Menu extends AnchorPane {
+        public void setColor(Color color) {
+            this.color = color;
+            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
+            for (Menu m : menus) {
+                m.setColor(color);
+            }
+        }
+
+        class Menu extends AnchorPane {
 
             Text text;
+            Color color;
 
             public Menu (String text) {
-                Color color = Root.getActiveUser().getAccentColor();
+                color = Root.getActiveUser().getAccentColor();
                 String colorHex = UtilAndConstants.colorToHex(color);
                 setStyle("-fx-background-color: " + colorHex);
                 setPadding(new Insets(15));
@@ -540,16 +553,22 @@ public class Main extends Application {
 
                 addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
                     for (Menu m: menus) {
-                        m.setStyle("-fx-background-color: " + colorHex);
+                        m.setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
                     }
-                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color.brighter()));
+                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(UtilAndConstants.highlightColor(color)));
                     selectedMenu = menus.indexOf(this);
                 });
                 addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-                    setStyle("-fx-background-color: " + colorHex);
+                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
                 });
                 AnchorPane.setTopAnchor(prompt, 8.5);
                 AnchorPane.setLeftAnchor(prompt, 5.0);
+            }
+
+            public void setColor(Color c) {
+                this.color = c;
+                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(c));
+                    text.setFill(UtilAndConstants.textFill(c));
             }
 
             public void setText(String txt) {

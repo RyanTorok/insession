@@ -150,8 +150,13 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean setPassword(String password) {
+        String np = PasswordManager.set(password);
+        if (np != null) {
+            this.password = np;
+            return true;
+        }
+        return false;
     }
 
     /**
