@@ -113,9 +113,12 @@ public class NewUserWindow extends Pane {
         //existing accounts pane
         VBox existingAccts = new VBox();
         ArrayList<User> users = User.readAll();
+        User guest = new Student(null, null, null, "Preview as Guest", null, "", null, new Timestamp(System.currentTimeMillis()), null, -1);
+        guest.setAccentColor(Color.web("#505050"));
+        users.add(guest);
         if (users != null) {
             for (User u: users) {
-                existingUser = true;
+                existingUser = existingUser || !u.getFirst().equals("Preview as Guest");
                 Text user_name = new Text(u.getFirst() + " " + u.getLast());
                 Color backgd = u.getAccentColor();
                 Color whiteBlack = UtilAndConstants.textFill(backgd, 2);

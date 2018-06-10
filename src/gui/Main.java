@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -22,7 +23,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jdk.jshell.execution.Util;
 import main.Root;
 import main.User;
 import main.UtilAndConstants;
@@ -109,13 +109,17 @@ public class Main extends Application {
         menus[2] = new BarMenu("organizations", 2);
         menus[3] = new BarMenu("browse lessons", 3);
         menus[4] = new BarMenu("community", 4);
+        BarMenu name = new BarMenu(Root.getActiveUser() == null || Root.getActiveUser().getUsername() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
         for (BarMenu m: menus
              ) {
-                m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> scrollBody(m.scrollPos, subtitle));
+                m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    if (state == SIDEBAR_STATE)
+                        UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
+                    scrollBody(m.scrollPos, subtitle);
+                });
         }
         menus[0].setFont(Font.font(menus[0].getFont().getFamily(), FontWeight.BOLD, menus[0].getFont().getSize()));
 
-        BarMenu name = new BarMenu(Root.getActiveUser() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
         name.setOnMouseClicked(event -> {
             if (state == BASE_STATE) {
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.BOLD, name.getFont().getSize()));
@@ -137,7 +141,6 @@ public class Main extends Application {
         top_bar = topbar;
         topbar.setSpacing(35);
         topbar.setAlignment(Pos.CENTER_LEFT);
-        Root.getActiveUser().setAccentColor(Color.web("#6d95d6"));
         String color = UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor());
         String borderWidth = color.equals("#000000") ? "0em" : ".67em";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
@@ -161,8 +164,9 @@ public class Main extends Application {
         BorderPane sleepbody = new BorderPane();
         sleepBody = sleepbody;
         HBox sleep_btm = new HBox(new VBox(clock,date));
-        sleep_btm.setAlignment(Pos.BOTTOM_CENTER);
+        sleep_btm.setAlignment(Pos.BOTTOM_LEFT);
         sleepbody.setBottom(sleep_btm);
+        sleepbody.setPadding(new Insets(30));
         sleepbody.setVisible(false);
 
 
@@ -173,15 +177,25 @@ public class Main extends Application {
         backgd.setPreserveRatio(true);
         StackPane allBodyPanes = new StackPane(sleepbody, body);
         VBox root = new VBox(topbar, allBodyPanes);
-        Terminal term = new Terminal(this);
+        ScrollPane terminalWrapper = new ScrollPane();
+        Terminal term = new Terminal(this, terminalWrapper);
         this.term = term;
-        AnchorPane terminalpane = new AnchorPane(term);
+        terminalWrapper.setContent(term);
+        terminalWrapper.setFitToHeight(true);
+        terminalWrapper.setStyle("-fx-background-color: #202020");
+        terminalWrapper.setPrefWidth(term.getPrefWidth());
+        terminalWrapper.setPrefHeight(term.getPrefHeight());
+        terminalWrapper.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        terminalWrapper.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        terminalWrapper.setFitToWidth(true);
+        AnchorPane terminalpane = new AnchorPane(terminalWrapper);
         terminalpane.setPrefHeight(649);
         terminalpane.setPrefWidth(999);
         terminalpane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getTarget() != term) {
+            //not the actual terminal
+            if (state == TERMINAL_STATE && event.getTarget() == terminalpane)
                 quitTerminal();
-            }
+            else term.current.requestFocus();
         });
         term.setVisible(false);
 
@@ -195,7 +209,7 @@ public class Main extends Application {
         allBodyPanes.getChildren().add(sideBar);
         body.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getTarget() != sideBar && state == SIDEBAR_STATE) {
-                sideBar.disappear();
+                UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 state = BASE_STATE;
             }
         });
@@ -205,13 +219,12 @@ public class Main extends Application {
         });
 
         primaryStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (state == SLEEP_STATE) {
+            if (state == SLEEP_STATE)
                 wakeup();
-            }
         });
 
+
         primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            
             if (state == SLEEP_STATE) {
                 if (event.getCode().equals(KeyCode.ESCAPE))
                     return;
@@ -373,6 +386,7 @@ public class Main extends Application {
         private TranslateTransition init;
         private TranslateTransition in;
         private TranslateTransition out;
+        private int selectedMenu = -1;
 
         private ArrayList<Menu> menus;
 
@@ -430,11 +444,9 @@ public class Main extends Application {
             menus.add(help);
             menus.add(switch_user);
             menus.add(save);
-
+            
             openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                this.disappear();
-                term.start();
-                state = TERMINAL_STATE;
+                primaryStage.getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false));
             });
 
             grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -471,7 +483,30 @@ public class Main extends Application {
             });
             getChildren().addAll(menus);
             setAlignment(Pos.TOP_CENTER);
+            primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+                if (state == SIDEBAR_STATE) {
+                    if (event.getCode().equals(KeyCode.UP)) {
+                        if (selectedMenu == 0 || selectedMenu == -1) {
+                            scroll(0, menus.size() - 1);
+                            selectedMenu = menus.size() - 1;
+                        }
+                        else scroll(selectedMenu, --selectedMenu);
+
+                    } else if (event.getCode().equals(KeyCode.DOWN)) {
+                        if (selectedMenu == menus.size() - 1) {
+                            scroll(menus.size() - 1, 0);
+                            selectedMenu = 0;
+                        } else scroll(selectedMenu == -1 ? menus.size() - 1 : selectedMenu, ++selectedMenu);
+                    } else if (event.getCode().equals(KeyCode.ENTER) && selectedMenu != -1) {
+                        UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_CLICKED);
+                    }
+                }
+            });
             setVisible(true);
+        }
+
+        private void scroll(int oldIndex, int newIndex) {
+            UtilAndConstants.fireMouse(menus.get(newIndex), MouseEvent.MOUSE_ENTERED);
         }
 
         public void enter() {
@@ -479,6 +514,9 @@ public class Main extends Application {
         }
 
         public void disappear() {
+            if (selectedMenu != -1)
+                UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
+            selectedMenu = -1;
             out.play();
         }
 
@@ -500,15 +538,22 @@ public class Main extends Application {
                 this.text = prompt;
                 setAlignment(Pos.CENTER);
 
-                addEventHandler(MouseEvent.MOUSE_ENTERED, event -> setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color.brighter())));
-                addEventHandler(MouseEvent.MOUSE_EXITED, event -> setStyle("-fx-background-color: " + colorHex));
+                addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+                    for (Menu m: menus) {
+                        m.setStyle("-fx-background-color: " + colorHex);
+                    }
+                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color.brighter()));
+                    selectedMenu = menus.indexOf(this);
+                });
+                addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+                    setStyle("-fx-background-color: " + colorHex);
+                });
                 AnchorPane.setTopAnchor(prompt, 8.5);
                 AnchorPane.setLeftAnchor(prompt, 5.0);
             }
 
             public void setText(String txt) {
                 text.setText(txt);
-
             }
 
             public Text getText() {return text;}

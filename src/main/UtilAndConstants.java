@@ -19,6 +19,8 @@ public class UtilAndConstants {
      * @return the operatingSystem
      */
     public static String getOperatingSystem() {
+        if (operatingSystem == null)
+            initOS();
         return operatingSystem;
     }
 
@@ -47,24 +49,6 @@ public class UtilAndConstants {
         MAX_ATTENDANCE_EXTRA_TIME = mAET;
         this.attendanceCodes = attendanceCodes;
         this.attendanceStartTime = attendanceStartTime;
-    }
-
-    public static String parseFileNameForOS(String fn) {
-        if (getOperatingSystem() == null) {
-            initOS();
-        }
-        switch (getOperatingSystem()) {
-            case "win":
-                return fn;
-            case "linux":
-                if (fn.indexOf(".\\") == 0)
-                    fn = fn.substring(2);
-                return fn.replaceAll("\\\\", "/");
-            case "mac":
-                return fn;
-            default:
-                return null;
-        }
     }
 
     private static void initOS() {

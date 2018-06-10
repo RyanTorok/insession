@@ -94,7 +94,9 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     public abstract String getID();
 
     public void setAccentColor(Color c) {
-        accentColor = new double[]{c.getRed(), c.getGreen(), c.getBlue()};
+        accentColor[0] = c.getRed();
+        accentColor[1] = c.getGreen();
+        accentColor[2] = c.getBlue();
     }
 
     public Color getAccentColor() {

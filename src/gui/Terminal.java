@@ -3,6 +3,8 @@ package gui;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 
 public class Terminal extends AnchorPane {
 
+    private ScrollPane wrapper;
     private ArrayList<String> previous_commands;
     private boolean pc_last_confirmed;
     private int pc_index;
@@ -34,33 +37,29 @@ public class Terminal extends AnchorPane {
     TerminalUI eval;
     Main holder;
 
-    public Terminal(Main holder) {
+    public Terminal(Main holder, ScrollPane wrapper) {
         //make terminal automatically close if it loses focus, but retain its contents
         Terminal self = this;
+        this.wrapper = wrapper;
         this.holder = holder;
         previous_commands = new ArrayList<>();
-        focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue && oldValue) {
-                self.exit.play();
-            }
-        });
 
         TranslateTransition init = new TranslateTransition();
         init.setByY(250);
         init.setByX(-2000);
         init.setDuration(Duration.millis(1));
-        init.setNode(this);
+        init.setNode(this.wrapper);
         init.play();
 
         ent = new TranslateTransition();
         ent.setDuration(Duration.millis(200));
-        ent.setNode(this);
+        ent.setNode(this.wrapper);
         ent.setByX(2300);
         ent.setAutoReverse(false);
 
         exit = new TranslateTransition();
         exit.setDuration(Duration.millis(200));
-        exit.setNode(this);
+        exit.setNode(this.wrapper);
         exit.setByX(-2300);
         exit.setAutoReverse(false);
 
@@ -116,6 +115,7 @@ public class Terminal extends AnchorPane {
                 pane.getChildren().add(field_new);
                 field_new.requestFocus();
                 field_new.addEventHandler(KeyEvent.KEY_PRESSED, event1 -> advance(field_new, event1));
+                wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
             }
             if (terminalRet.isHide()) {
                 holder.quitTerminal();
@@ -145,6 +145,7 @@ public class Terminal extends AnchorPane {
                 field.setText(previous_commands.get(++pc_index));
             }
         }
+        wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
     }
 
     public void clearTerminal() {

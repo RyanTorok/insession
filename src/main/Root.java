@@ -99,8 +99,8 @@ public class Root {
     }
 
     public static void saveAll() {
-        if (Root.getActiveUser() != null)
-        Root.getActiveUser().write();
+        if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null)
+            Root.getActiveUser().write();
         DefaultUser def = new DefaultUser();
         def.read();
         def.write();

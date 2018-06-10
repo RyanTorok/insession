@@ -13,7 +13,7 @@ public class SWITCH extends Command{
     @Override
     protected TerminalRet execute(ArrayList<Token> tokens) throws TerminalException {
         if (tokens.size() == 1) {
-            Root.getActiveUser().write();
+            Root.saveAll();
             Root.getPortal().newUser();
             return new TerminalRet("", true, true);
         }
