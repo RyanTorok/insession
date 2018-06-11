@@ -14,10 +14,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.Root;
+import terminal.Address;
+import terminal.TerminalException;
 import terminal.TerminalRet;
 import terminal.TerminalUI;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Terminal extends AnchorPane {
 
@@ -38,8 +48,6 @@ public class Terminal extends AnchorPane {
     Main holder;
 
     public Terminal(Main holder, ScrollPane wrapper) {
-        //make terminal automatically close if it loses focus, but retain its contents
-        Terminal self = this;
         this.wrapper = wrapper;
         this.holder = holder;
         previous_commands = new ArrayList<>();
@@ -143,6 +151,44 @@ public class Terminal extends AnchorPane {
         if (event.getCode().equals(KeyCode.DOWN)) {
             if (pc_index < previous_commands.size() - 1) {
                 field.setText(previous_commands.get(++pc_index));
+            }
+        }
+        if (event.getCode().equals(KeyCode.TAB)) {
+            System.out.println("tab!");
+            int lastSpace = current.getText().indexOf(" ") + 1;
+            String before = current.getText().substring(0, lastSpace);
+            String text = current.getText().substring(lastSpace);
+            int lio = text.lastIndexOf(File.separator);
+            String ssr = lio == -1 ? "." : text.substring(0, lio);
+            try {
+                File dir = Address.parse(ssr, true, false, true, false, false);
+                String start = text.substring(lio + 1);
+                String end = start;
+                List<String> result = Files.walk(dir.toPath(), 1, FileVisitOption.FOLLOW_LINKS)
+                        .map(path -> path.toFile().getName())
+                        .filter(name -> name.startsWith(start))
+                        .collect(Collectors.toList());
+                outer : for (int i = start.length();; i++) {
+                    Character currentChar = null;
+                    for (String name: result) {
+                        if (name.length() <= i) {
+                            break outer;
+                        }
+                        char test = name.charAt(i);
+                        if (currentChar != null && !currentChar.equals(test))
+                            break outer;
+                        else
+                            currentChar = test;
+                    }
+                    end += currentChar;
+                    currentChar = null;
+                }
+                current.setText(before + (lio == -1 ? "" : (ssr + File.separator)) + end);
+            } catch (TerminalException | IOException e) {
+            } finally {
+                current.requestFocus();
+                current.positionCaret(current.getText().length());
+                event.consume();
             }
         }
         wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
