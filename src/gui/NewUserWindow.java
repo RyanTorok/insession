@@ -54,7 +54,7 @@ public class NewUserWindow extends Pane {
         Button b = new Button("Submit");
         b.setAlignment(Pos.CENTER);
         pane.getChildren().add(subpane);
-        b.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        b.setOnAction(event -> {
             invalidMessage.setText("");
             if (which == 1) {
                 User user = dbLookup(entries.get(0).getField(), entries.get(1).getField());

@@ -283,8 +283,13 @@ public class Main extends Application {
                     scrollBody(currentMenu + 1, subtitle);
             }
             if (event.getCode().equals(KeyCode.CAPS)) {
-                caps = !caps;
+                caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
                 mainlogo.setText(caps ? upper : lower);
+                if (caps)
+                    subtitle.setText("Live your life in ALL CAPS today.");
+                else {
+                    subtitle.setText(subtitles[currentMenu]);
+                }
             }
         });
 
@@ -294,7 +299,11 @@ public class Main extends Application {
 
     private void updateTime() {
         if (state == SLEEP_STATE) {
-            String time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(new Date());
+            String time;
+            if (Root.getActiveUser().isClock24Hour())
+                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(new Date());
+            else
+                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(new Date());
             String[] timeanddate = time.split("  ");
             clock.setText(timeanddate[1]);
             date.setText(timeanddate[0]);
@@ -350,14 +359,15 @@ public class Main extends Application {
         }
     }
 
+    String subtitles[] = {
+            "Let's get something done today.",
+            "Let's learn something today.",
+            "Let's do something we love today.",
+            "Let's find a new interest today.",
+            "Let's see what the world did today.",
+    };
+
     private void scrollBody(int scrollPos, Text changeText) {
-        String subtitles[] = {
-                "Let's get something done today.",
-                "Let's learn something today.",
-                "Let's do something we love today.",
-                "Let's find a new interest today.",
-                "Let's see what the world did today.",
-        };
         changeText.setText(subtitles[scrollPos]);
         currentMenu = scrollPos;
         BarMenu m = menus[scrollPos];
@@ -425,6 +435,7 @@ public class Main extends Application {
 
             menus = new ArrayList<>();
 
+            boolean signedIn = Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null;
             Menu openTerminal = new Menu("Open Terminal");
             Menu grades = new Menu("My Grades");
             Menu attendance = new Menu("Attendance History");
@@ -433,9 +444,8 @@ public class Main extends Application {
             Menu history = new Menu("Usage History");
             Menu privacy = new Menu("Privacy Policy");
             Menu help = new Menu("Help");
-            Menu switch_user = new Menu("Switch User");
-            Menu save = new Menu("Save and Exit");
-
+            Menu switch_user = new Menu(signedIn ? "Switch User" : "Sign in");
+            Menu save = new Menu(signedIn ? "Save and Exit" : "Exit");
 
             menus.add(openTerminal);
             menus.add(grades);
@@ -448,9 +458,7 @@ public class Main extends Application {
             menus.add(switch_user);
             menus.add(save);
             
-            openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                primaryStage.getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false));
-            });
+            openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> primaryStage.getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false)));
 
             grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 //TODO
@@ -461,8 +469,10 @@ public class Main extends Application {
             });
 
             accountSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                UtilAndConstants.fireMouse(Main.this.picture, MouseEvent.MOUSE_CLICKED);
-                new AcctSettings().show();
+                if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
+                    UtilAndConstants.fireMouse(Main.this.picture, MouseEvent.MOUSE_CLICKED);
+                    new AcctSettings().show();
+                }
             });
 
             history.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -479,6 +489,7 @@ public class Main extends Application {
 
             switch_user.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 Main.this.primaryStage.setMaximized(false);
+                Root.saveAll();
                 Main.this.newUser();
             });
 

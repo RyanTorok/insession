@@ -1,11 +1,11 @@
 package gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -38,7 +38,6 @@ public class AcctSettings extends Stage {
         oldPassword.setEditable(true);
         HBox oldPasswordWrapper = new HBox(opPrompt, new Filler(), oldPassword);
         oldPasswordWrapper.setAlignment(Pos.CENTER);
-        oldPasswordWrapper.setPadding(new Insets(6));
 
         Text npPrompt = new Text("New Password  ");
         PasswordField newPassword = new PasswordField();
@@ -46,7 +45,6 @@ public class AcctSettings extends Stage {
         newPassword.setEditable(true);
         HBox newPasswordWrapper = new HBox(npPrompt, new Filler(), newPassword);
         newPasswordWrapper.setAlignment(Pos.CENTER);
-        newPasswordWrapper.setPadding(new Insets(6));
 
         Text cfpPrompt = new Text("Confirm New Password  ");
         PasswordField cfPassword = new PasswordField();
@@ -54,12 +52,11 @@ public class AcctSettings extends Stage {
         cfPassword.setEditable(true);
         HBox cfPasswordWrapper = new HBox(cfpPrompt, new Filler(), cfPassword);
         cfPasswordWrapper.setAlignment(Pos.CENTER);
-        cfPasswordWrapper.setPadding(new Insets(6));
 
         Text invalidMsg = new Text("");
 
         Button submit = new Button("Submit");
-        submit.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        submit.setOnAction(event -> {
             if (!PasswordManager.attempt(oldPassword.getText(), Root.getActiveUser())) {
                 invalidMsg.setText("Your old password is incorrect.");
                 return;
@@ -74,9 +71,8 @@ public class AcctSettings extends Stage {
             }
             String error = PasswordManager.validate(newPassword.getText());
             invalidMsg.setText(error);
-            boolean success = false;
             if (error.length() == 0) {
-                success = Root.getActiveUser().setPassword(newPassword.getText());
+                boolean success = Root.getActiveUser().setPassword(newPassword.getText());
                 if (!success) {
                     invalidMsg.setText("A connection error occurred. Please try again.");
                 }
@@ -84,15 +80,17 @@ public class AcctSettings extends Stage {
         });
 
         VBox changePassword = new VBox(cpPrompt, oldPasswordWrapper, newPasswordWrapper, cfPasswordWrapper, invalidMsg, submit);
-        changePassword.setAlignment(Pos.CENTER);
         changePassword.setPadding(new Insets(10));
+        changePassword.setAlignment(Pos.CENTER);
+        changePassword.setSpacing(10);
 
-        layout.add(changePassword, 0, 0);
+        layout.add(changePassword, 0, 0, 2, 1);
 
         //accent color
         Text accentColorPrompt = new Text("Accent Color: ");
         Shape colorSquare = new Rectangle(60, 60);
-        colorSquare.setFill(Root.getActiveUser().getAccentColor());
+        Color original = Root.getActiveUser().getAccentColor();
+        colorSquare.setFill(original);
         ColorPicker colorPicker = new ColorPicker();
         colorPicker.setValue(Root.getActiveUser().getAccentColor());
         colorPicker.setOnAction(event1 -> {
@@ -100,18 +98,35 @@ public class AcctSettings extends Stage {
             Root.getActiveUser().setAccentColor(colorPicker.getValue());
             Root.getPortal().top_bar.setStyle(Root.getPortal().top_bar.getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + UtilAndConstants.colorToHex(colorPicker.getValue())));
             Root.getPortal().sideBar.setColor(colorPicker.getValue());
+            if (!colorPicker.getValue().equals(original)) {
+                Root.getPortal().subtitle.setText("Feeling a different color today?");
+            }
         });
-        VBox selectColor = new VBox(colorSquare, colorPicker);
-        selectColor.setPadding(new Insets(0, 10, 10, 10));
-        selectColor.setAlignment(Pos.TOP_CENTER);
-        HBox accentColor = new HBox(accentColorPrompt, selectColor);
+        VBox accentColor = new VBox(accentColorPrompt, colorSquare, colorPicker);
+        accentColor.setSpacing(10);
+        accentColor.setAlignment(Pos.CENTER);
         accentColor.setPadding(new Insets(10));
-        layout.add(accentColor, 1, 0);
+        layout.add(accentColor, 1, 1);
+
+        //clock format
+        Text cfPrompt = new Text("Clock Format");
+        ToggleGroup cfGroup = new ToggleGroup();
+        RadioButton twelve = new RadioButton("12 Hour");
+        RadioButton twentyFour = new RadioButton("24 Hour");
+        twelve.setToggleGroup(cfGroup);
+        twentyFour.setToggleGroup(cfGroup);
+        cfGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> Root.getActiveUser().setClock24Hour(newValue == twentyFour));
+        if (Root.getActiveUser().isClock24Hour())
+            twentyFour.setSelected(true);
+        else twelve.setSelected(true);
+
+        VBox clockFormat = new VBox(cfPrompt, twelve, twentyFour);
+        clockFormat.setSpacing(10);
+        clockFormat.setPadding(new Insets(10));
+        layout.add(clockFormat, 0, 1);
 
         Button closeBtn = new Button("Close");
-        closeBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            this.close();
-        });
+        closeBtn.setOnAction(event -> this.close());
         VBox rootpane = new VBox(layout, closeBtn);
         rootpane.setAlignment(Pos.TOP_CENTER);
         rootpane.setPadding(new Insets(20));

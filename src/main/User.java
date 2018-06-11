@@ -32,6 +32,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private ArrayList<module.Module> watchHistory;
     private String passwordSalt;
     private String imageFN;
+    private boolean clock24Hour = false;
 
     public User(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -355,6 +356,14 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
 
     public void setImageFN(String imageFN) {
         this.imageFN = imageFN;
+    }
+
+    public boolean isClock24Hour() {
+        return clock24Hour;
+    }
+
+    public void setClock24Hour(boolean clock24Hour) {
+        this.clock24Hour = clock24Hour;
     }
 }
 

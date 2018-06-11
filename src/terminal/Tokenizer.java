@@ -38,6 +38,7 @@ public class Tokenizer {
                 case "hide": return new Token(Command.CommandType.HIDE);
                 case "quit": return new Token(Command.CommandType.EXIT);
                 case "open": return new Token(Command.CommandType.OPEN);
+                case "settings": case "options": case "prefrences": return  new Token(Command.CommandType.SETTINGS);
                 default: throw new TerminalException(s + " - Command not found");
             }
         }
@@ -83,6 +84,7 @@ public class Tokenizer {
             case OPEN: return new OPEN();
             case SWITCH: return new SWITCH();
             case EDIT: return new EDIT();
+            case SETTINGS: return new SETTINGS();
         }
         return null;
     }
