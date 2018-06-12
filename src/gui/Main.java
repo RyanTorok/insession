@@ -360,17 +360,18 @@ public class Main extends Application {
     }
 
     private void setWeatherGraphics(ImageView backgd, AnchorPane weatherPane) {
-        Image day_partly_cloudy = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "background.jpeg"); //default
-        Image day_sunny = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Day_Sunny.png");
-        Image day_cloudy = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Day_Cloudy.png");
-        Image night_clear = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Night_Clear.png");
-        Image night_cloudy = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Night_Cloudy.png");
+        String day_partly_cloudy = "background.jpeg";
+        String day_sunny = "Day_Sunny.png";
+        String day_cloudy = "Day_Cloudy.png";
+        String night_clear = "Night_Clear.png";
+        String night_cloudy = "Night_Cloudy.png";
 
         Integer currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
         Boolean isDaytime = currentHr > 6 && currentHr < 21;
         day = isDaytime;
-        Image clear_now = isDaytime ? day_sunny : night_clear;
-        Image cloudy_now = isDaytime ? day_cloudy : night_cloudy;
+        String clear_now = isDaytime ? day_sunny : night_clear;
+        String cloudy_now = isDaytime ? day_cloudy : night_cloudy;
+        String partly_cloudy_now = isDaytime ? day_partly_cloudy : night_cloudy;
 
         //reset weatherpane
         weatherPane.getChildren().removeAll();
@@ -384,39 +385,41 @@ public class Main extends Application {
 
         switch (getManager().getCurrent()) {
             case Fog:
-                backgd.setImage(cloudy_now);
+                backgd.setImage(parseBackgroundImage(cloudy_now));
                 fog(backgd);
                 break;
             case Snow:
-                backgd.setImage(cloudy_now);
+                backgd.setImage(parseBackgroundImage(cloudy_now));
                 snow(weatherPane, 75);
                 break;
             case Blizzard:
-                backgd.setImage(cloudy_now);
+                backgd.setImage(parseBackgroundImage(cloudy_now));
                 snow(weatherPane, 200);
                 break;
             case Thunderstorm:
                 lightning(backgd, .167); //no break
             case Heavy_Rain:
                 rain(weatherPane, 800);
-                backgd.setImage(cloudy_now);
+                backgd.setImage(parseBackgroundImage(cloudy_now));
                 break;
             case Light_Rain:
                 rain(weatherPane, 400); //no break;
             case Cloudy:
-                backgd.setImage(cloudy_now);
+                backgd.setImage(parseBackgroundImage(cloudy_now));
                 break;
             case Partly_Cloudy:
-                if (isDaytime)
-                    backgd.setImage(day_partly_cloudy);
-                else backgd.setImage(night_cloudy);
+                backgd.setImage(parseBackgroundImage(partly_cloudy_now));
                 break; //day_partly_cloudy is default image.
             case Sunny:
-                backgd.setImage(clear_now);
+                backgd.setImage(parseBackgroundImage(clear_now));
                 break;
             default:
                 break;
         }
+    }
+
+    private Image parseBackgroundImage(String fn) {
+        return new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + fn);
     }
 
     private void fog(ImageView background) {
