@@ -62,7 +62,17 @@ public class WeatherManager {
         }
         //set current state
         String descLC = description.toLowerCase();
-        Double lastHr = properties.getDouble("precipitationLastHour");
+        Double lastHr = null;
+        Object lastHrObj = properties.getJSONObject("precipitationLastHour").get("value");
+        if (lastHrObj.equals(null))
+            lastHr = 0.0;
+        else lastHr = (Double) lastHrObj;
+        try {
+        } catch (Exception e) {
+            lastHr = 0.0;
+        }
+        if (lastHr == null)
+            lastHr = 0.0;
         if (descLC.contains("fog")) {
             setCurrent(WeatherState.Fog);
             return;
