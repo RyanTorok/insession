@@ -62,6 +62,11 @@ public class Main extends Application {
     private WeatherManager manager;
     private Integer state = 0;
     private Stage primaryStage;
+    private Timeline weatherParticleTimer;
+    private Timer lightningTimer;
+    private ImageView background;
+    private AnchorPane weatherPane;
+    private boolean day;
 
     public static void main(String[] args) {
         launch(args);
@@ -143,12 +148,10 @@ public class Main extends Application {
             }
         });
 
-        Region filler = new Region();
-        HBox.setHgrow(filler, Priority.ALWAYS);
         Image image = Root.getActiveUser().getAcctImage();
         Shape picture = new ShapeImage(new Circle(30), image).apply();
         this.picture = picture;
-        HBox topbar = new HBox(titles, getMenus()[0], getMenus()[1], getMenus()[2], getMenus()[3], getMenus()[4], filler, name, picture);
+        HBox topbar = new HBox(titles, getMenus()[0], getMenus()[1], getMenus()[2], getMenus()[3], getMenus()[4], new UtilAndConstants.Filler(), name, picture);
         top_bar = topbar;
         topbar.setSpacing(35);
         topbar.setAlignment(Pos.CENTER_LEFT);
@@ -176,7 +179,7 @@ public class Main extends Application {
         sleepBody = sleepbody;
 
         //weather display
-        AnchorPane weatherPane = new AnchorPane();
+        weatherPane = new AnchorPane();
         manager = new WeatherManager(Root.getActiveUser().getZipcode());
         getManager().update();
         Timer weatherUpdateTimer = new Timer();
@@ -218,9 +221,11 @@ public class Main extends Application {
 
         BorderPane body = new BorderPane();
         mainBody = body;
-        ImageView backgd = new ImageView(new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "background.jpeg"));
+        ImageView backgd = new ImageView();
+        this.background = backgd;
         backgd.setFitWidth(1900);
         backgd.setPreserveRatio(true);
+        setWeatherGraphics(background, weatherPane);
         StackPane allBodyPanes = new StackPane(sleepbody, body);
         VBox root = new VBox(topbar, allBodyPanes);
         ScrollPane terminalWrapper = new ScrollPane();
@@ -245,17 +250,6 @@ public class Main extends Application {
         });
         term.setVisible(false);
 
-        switch (getManager().getCurrent()) {
-            case Fog: fog(backgd); break;
-            case Snow: snow(weatherPane, 75); break;
-            case Blizzard: snow(weatherPane, 200); break;
-            case Thunderstorm: lightning(backgd, .167); //no break
-            case Heavy_Rain: rain(weatherPane, 800); fullClouds(); break;
-            case Light_Rain: rain(weatherPane, 400); //no break;
-            case Cloudy: fullClouds(); break;
-            case Partly_Cloudy: partialClouds();
-            default: break;
-        }
         StackPane mainArea = new StackPane(backgd, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
         getPrimaryStage().setScene(new Scene(mainArea, 999, 649));
@@ -362,12 +356,67 @@ public class Main extends Application {
             getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
         }
         getWeatherDesc().setText(getManager().getDescription());
+        setWeatherGraphics(background, weatherPane);
     }
 
-    private void fullClouds() {
-    }
+    private void setWeatherGraphics(ImageView backgd, AnchorPane weatherPane) {
+        Image day_partly_cloudy = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "background.jpeg"); //default
+        Image day_sunny = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Day_Sunny.png");
+        Image day_cloudy = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Day_Cloudy.png");
+        Image night_clear = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Night_Clear.png");
+        Image night_cloudy = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Night_Cloudy.png");
 
-    private void partialClouds() {
+        Integer currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
+        Boolean isDaytime = currentHr > 6 && currentHr < 21;
+        day = isDaytime;
+        Image clear_now = isDaytime ? day_sunny : night_clear;
+        Image cloudy_now = isDaytime ? day_cloudy : night_cloudy;
+
+        //reset weatherpane
+        weatherPane.getChildren().removeAll();
+        if (weatherParticleTimer != null)
+            weatherParticleTimer.stop();
+        if (lightningTimer != null)
+            lightningTimer.cancel();
+        if (backgd == null)
+            return;
+        backgd.setEffect(null);
+
+        switch (getManager().getCurrent()) {
+            case Fog:
+                backgd.setImage(cloudy_now);
+                fog(backgd);
+                break;
+            case Snow:
+                backgd.setImage(cloudy_now);
+                snow(weatherPane, 75);
+                break;
+            case Blizzard:
+                backgd.setImage(cloudy_now);
+                snow(weatherPane, 200);
+                break;
+            case Thunderstorm:
+                lightning(backgd, .167); //no break
+            case Heavy_Rain:
+                rain(weatherPane, 800);
+                backgd.setImage(cloudy_now);
+                break;
+            case Light_Rain:
+                rain(weatherPane, 400); //no break;
+            case Cloudy:
+                backgd.setImage(cloudy_now);
+                break;
+            case Partly_Cloudy:
+                if (isDaytime)
+                    backgd.setImage(day_partly_cloudy);
+                else backgd.setImage(night_cloudy);
+                break; //day_partly_cloudy is default image.
+            case Sunny:
+                backgd.setImage(clear_now);
+                break;
+            default:
+                break;
+        }
     }
 
     private void fog(ImageView background) {
@@ -380,6 +429,7 @@ public class Main extends Application {
     private void lightning(ImageView background, double flashesPerSecond) {
         ColorAdjust flash = new ColorAdjust();
         Timer flashTimer = new Timer();
+        lightningTimer = flashTimer;
         final Random rand = new Random();
         flash.setBrightness(-.3);
         background.setEffect(flash);
@@ -399,25 +449,33 @@ public class Main extends Application {
     private void rain(AnchorPane weatherPane, int particlesPerSecond) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new RainParticle(weatherPane).shape)));
         timeline.setCycleCount(Animation.INDEFINITE);
+        weatherParticleTimer = timeline;
         timeline.play();
     }
 
     private void snow(AnchorPane weatherPane, int particlesPerSecond) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new SnowParticle(weatherPane).shape)));
         timeline.setCycleCount(Animation.INDEFINITE);
+        weatherParticleTimer = timeline;
         timeline.play();
     }
 
     private void updateTime() {
+        Date date = new Date();
         if (getState() == SLEEP_STATE) {
             String time;
             if (Root.getActiveUser().isClock24Hour())
-                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(new Date());
+                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(date);
             else
-                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(new Date());
+                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(date);
             String[] timeanddate = time.split("  ");
             getClock().setText(timeanddate[1]);
             getDate().setText(timeanddate[0]);
+        }
+        int hour = Integer.parseInt(new SimpleDateFormat("H").format(date));
+        boolean isDaytime = hour > 6 && hour < 21;
+        if (day &&  !isDaytime || !day && isDaytime) {
+            setWeatherGraphics(background, weatherPane);
         }
     }
 

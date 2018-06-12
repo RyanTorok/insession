@@ -378,12 +378,16 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         this.latlon = latlon;
     }
 
-    public void setLocation(int zip) {
+    public void setLocation(int zip) throws UnknownZipCodeException {
         this.zipcode = zip;
         ZipMap.LatLon latLon = new ZipMap().get(zip);
         latlon = new double[2];
-        this.latlon[0] = latLon.getLat();
-        this.latlon[1] = latLon.getLon();
+        try {
+            this.latlon[0] = latLon.getLat();
+            this.latlon[1] = latLon.getLon();
+        } catch (NullPointerException e) {
+            throw new UnknownZipCodeException("Zip Code not found: " + zip);
+        }
     }
 
     public boolean usesFahrenheit() {

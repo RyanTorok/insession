@@ -5,6 +5,8 @@ import main.Root;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import main.UnknownZipCodeException;
 import org.json.*;
 
 /**
@@ -27,8 +29,12 @@ public class WeatherManager {
         JSONObject properties;
         try {
             double[] latlon = Root.getActiveUser().getLatlon();
-            if (latlon == null) {
-                Root.getActiveUser().setLocation(getZipCode());
+            if (latlon == null || latlon[0] == 0 && latlon[1] == 0) {
+                try {
+                    Root.getActiveUser().setLocation(getZipCode());
+                } catch (UnknownZipCodeException e) {
+                    Root.getActiveUser().setLocation(77379);
+                }
                 latlon = Root.getActiveUser().getLatlon();
             }
 
@@ -56,7 +62,10 @@ public class WeatherManager {
             properties = observationObj.getJSONObject("properties");
             setDescription(properties.getString("textDescription"));
             Object tempObj = properties.getJSONObject("temperature").get("value");
-            setTempCelsius(tempObj.equals(null) ? null : (Double) tempObj);
+            if (tempObj instanceof Integer)
+                setTempCelsius((double) (int) tempObj);
+            else
+                setTempCelsius(tempObj.equals(null) ? null : (double) tempObj);
             setTempFahrenheit(getTempCelsius() == null ? null : getTempCelsius() * 1.8 + 32);
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.PasswordManager;
 import main.Root;
+import main.UnknownZipCodeException;
 import main.UtilAndConstants;
 
 public class AcctSettings extends Stage {
@@ -136,8 +137,12 @@ public class AcctSettings extends Stage {
         zcSave.setOnAction(event -> {
             zcInvalidMsg.setText("");
             if (zcField.getText().length() == 5) {
-                Root.getActiveUser().setLocation(Integer.parseInt(zcField.getText()));
-                Root.getPortal().updateWeather();
+                try {
+                    Root.getActiveUser().setLocation(Integer.parseInt(zcField.getText()));
+                    Root.getPortal().updateWeather();
+                } catch (UnknownZipCodeException e) {
+                   zcInvalidMsg.setText("Invalid Zip Code");
+                }
             } else {
                 zcInvalidMsg.setText("Invalid Zip Code");
             }
