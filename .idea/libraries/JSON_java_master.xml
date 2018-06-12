@@ -3,7 +3,7 @@
     <CLASSES />
     <JAVADOC />
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/lib/JSON-java-master" />
+      <root url="file://$PROJECT_DIR$/src/JSON-java-master" />
     </SOURCES>
   </library>
 </component>

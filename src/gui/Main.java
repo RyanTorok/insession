@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -58,7 +60,7 @@ public class Main extends Application {
     SideBar sideBar;
     Text temperature;
     Text weatherDesc;
-    static final DecimalFormat tempFormat = new DecimalFormat("##.#");
+    static final DecimalFormat tempFormat = new DecimalFormat("#00.0");
     WeatherManager manager;
     Integer state = 0;
     private Stage primaryStage;
@@ -175,18 +177,33 @@ public class Main extends Application {
         AnchorPane weatherPane = new AnchorPane();
         manager = new WeatherManager(Root.getActiveUser().getZipcode());
         manager.update();
+        Timer weatherUpdateTimer = new Timer();
+        weatherUpdateTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateWeather();
+            }
+        }, 3000000, 300000);
         temperature = new Text();
-        if (Root.getActiveUser().usesFahrenheit()) {
-            temperature.setText(tempFormat.format(manager.getTempFahrenheit()) + (char) 0x00B0 + "F");
+        boolean temperature_nullcheck = manager.getTempCelsius() == null;
+        if (temperature_nullcheck ) {
+            temperature.setText("----" + (char) 0x00B0 + (Root.getActiveUser().usesFahrenheit() ? "F" : "C"));
         } else {
-            temperature.setText(tempFormat.format(manager.getTempCelsius()) + (char) 0x00B0 + "C");
+            if (Root.getActiveUser().usesFahrenheit()) {
+                temperature.setText(tempFormat.format(manager.getTempFahrenheit()) + (char) 0x00B0 + "F");
+            } else {
+                temperature.setText(tempFormat.format(manager.getTempCelsius()) + (char) 0x00B0 + "C");
+            }
         }
         temperature.setFill(Color.WHITE);
         temperature.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
+        temperature.setTextAlignment(TextAlignment.RIGHT);
         weatherDesc = new Text(manager.getDescription());
         weatherDesc.setFill(Color.WHITE);
         weatherDesc.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 45));
+        weatherDesc.setTextAlignment(TextAlignment.RIGHT);
         VBox weatherDetails = new VBox(weatherDesc);
+        weatherDetails.setAlignment(Pos.CENTER_RIGHT);
         VBox weatherDisplay = new VBox(temperature, weatherDetails);
         weatherDisplay.setAlignment(Pos.CENTER_RIGHT);
         HBox sleep_btm = new HBox(new VBox(clock,date), new UtilAndConstants.Filler(), weatherDisplay);
@@ -196,7 +213,6 @@ public class Main extends Application {
         sleepbody.setBottom(sleep_btm);
         sleepbody.setPadding(new Insets(30));
         sleepbody.setVisible(false);
-
 
         BorderPane body = new BorderPane();
         mainBody = body;
@@ -230,8 +246,10 @@ public class Main extends Application {
         switch (manager.getCurrent()) {
             case Snow: snow(weatherPane, 75); break;
             case Blizzard: snow(weatherPane, 200); break;
-            default: //snow(weatherPane, 200);
-                break;
+            case Thunderstorm: lightning(backgd, .167); //no break
+            case Heavy_Rain: rain(weatherPane, 200); break;
+            case Light_Rain: rain(weatherPane, 75); break;
+            default:
         }
         StackPane mainArea = new StackPane(backgd, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
@@ -329,6 +347,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
     public void updateWeather() {
         manager.update();
         if (Root.getActiveUser().usesFahrenheit()) {
@@ -345,6 +364,36 @@ public class Main extends Application {
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+    
+    private void fog(ImageView background) {
+        ColorAdjust colorInput = new ColorAdjust();
+        colorInput.setBrightness(.7);
+        colorInput.setContrast(-.5);
+        background.setEffect(colorInput);
+    }
+
+    private void lightning(ImageView background, double flashesPerSecond) {
+        ColorAdjust flash = new ColorAdjust();
+        Timer flashTimer = new Timer();
+        final Random rand = new Random();
+        flash.setBrightness(-.3);
+        background.setEffect(flash);
+        flashTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Timeline pulser = new Timeline(new KeyFrame(Duration.millis(40), event -> {
+                    flash.setBrightness(flash.getBrightness() == -.3 ? .7 : -.3);
+                    background.setEffect(flash);
+                }));
+                pulser.setCycleCount((rand.nextInt(5) + 1) * 2);
+                pulser.play();
+            }
+        }, (long) (1000.0/flashesPerSecond), (long) (1000.0 / flashesPerSecond));
+    }
+
+    private void rain(AnchorPane weatherPane, int particlesPerSecond) {
+        snow(weatherPane, particlesPerSecond);
     }
 
     private void updateTime() {

@@ -10,12 +10,13 @@ import org.json.*;
 /**
  * Created by 11ryt on 7/24/2017.
  */
+
 public class WeatherManager {
     private int zipCode;
     private WeatherState current;
     private String description;
-    private double tempCelsius;
-    private double tempFahrenheit;
+    private Double tempCelsius;
+    private Double tempFahrenheit;
     private static final Double HEAVY_THRESHOLD = .00635;
 
     public WeatherManager(int zipCode){
@@ -54,8 +55,9 @@ public class WeatherManager {
             JSONObject observationObj = new JSONObject(observation);
             properties = observationObj.getJSONObject("properties");
             setDescription(properties.getString("textDescription"));
-            setTempCelsius(properties.getJSONObject("temperature").getDouble("value"));
-            setTempFahrenheit(getTempCelsius() * 1.8 + 32);
+            Object tempObj = properties.getJSONObject("temperature").get("value");
+            setTempCelsius(tempObj.equals(null) ? null : (Double) tempObj);
+            setTempFahrenheit(getTempCelsius() == null ? null : getTempCelsius() * 1.8 + 32);
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -108,7 +110,6 @@ public class WeatherManager {
     }
 
     public int getZipCode() {
-        this.setZipCode(77379);
         return zipCode;
     }
 
@@ -128,15 +129,15 @@ public class WeatherManager {
         this.description = description;
     }
 
-    public double getTempCelsius() {
+    public Double getTempCelsius() {
         return tempCelsius;
     }
 
-    public void setTempCelsius(double tempCelsius) {
+    public void setTempCelsius(Double tempCelsius) {
         this.tempCelsius = tempCelsius;
     }
 
-    public double getTempFahrenheit() {
+    public Double getTempFahrenheit() {
         return tempFahrenheit;
     }
 
