@@ -8,6 +8,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -161,13 +163,14 @@ public class AcctSettings extends Stage {
         celsius.setToggleGroup(tuGroup);
         tuGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             Root.getActiveUser().setTempUnits(newValue == fahrenheit);
-            Root.getPortal().updateWeather();
+            Root.getPortal().updateWeatherDisplay();
         });
         if (Root.getActiveUser().usesFahrenheit())
             fahrenheit.setSelected(true);
         else celsius.setSelected(true);
-
-        VBox temperatureUnits = new VBox(tuPrompt, fahrenheit, celsius);
+        Text courtesy = new Text("Weather provided by NOAA");
+        courtesy.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 10));
+        VBox temperatureUnits = new VBox(tuPrompt, fahrenheit, celsius, courtesy);
         temperatureUnits.setSpacing(10);
         temperatureUnits.setPadding(new Insets(10, 10, 10, 60));
         layout.add(temperatureUnits, 1, 2);

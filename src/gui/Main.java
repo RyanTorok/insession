@@ -350,6 +350,10 @@ public class Main extends Application {
 
     public void updateWeather() {
         getManager().update();
+        updateWeatherDisplay();
+    }
+
+    public void updateWeatherDisplay() {
         if (Root.getActiveUser().usesFahrenheit()) {
             getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
         } else {
@@ -383,6 +387,7 @@ public class Main extends Application {
             return;
         backgd.setEffect(null);
 
+        boolean needMoon = false;
         switch (getManager().getCurrent()) {
             case Fog:
                 backgd.setImage(parseBackgroundImage(cloudy_now));
@@ -412,9 +417,31 @@ public class Main extends Application {
                 break; //day_partly_cloudy is default image.
             case Sunny:
                 backgd.setImage(parseBackgroundImage(clear_now));
+                if (!day) needMoon = true;
                 break;
             default:
                 break;
+        }
+        if (needMoon) {
+            int hourOfNight = (currentHr + 3) % 24 + 1;
+            Image moon = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Moon_Unsoftened.png");
+            ImageView moonNode = new ImageView(moon);
+            moonNode.setFitWidth(50);
+            moonNode.setFitHeight(50);
+            double xradius = 800;
+            double yradius = 500;
+            double dx = Math.cos(Math.PI / 10 * hourOfNight);
+            double dy = Math.sin(Math.PI / 10 * hourOfNight);
+
+            double dx_pixels = dx * xradius;
+            double dy_pixels = dy * yradius;
+
+            double centerX = 1920/2;
+            double centerY = 1080/2;
+
+            AnchorPane.setLeftAnchor(moonNode, centerX + dx_pixels);
+            AnchorPane.setTopAnchor(moonNode, 1080 - (centerY + dy_pixels));
+            weatherPane.getChildren().add(moonNode);
         }
     }
 
@@ -424,9 +451,10 @@ public class Main extends Application {
 
     private void fog(ImageView background) {
         ColorAdjust colorInput = new ColorAdjust();
-        colorInput.setBrightness(.7);
+        colorInput.setBrightness(.5);
         colorInput.setContrast(-.5);
-        background.setEffect(colorInput);
+        if (day)
+            background.setEffect(colorInput);
     }
 
     private void lightning(ImageView background, double flashesPerSecond) {
