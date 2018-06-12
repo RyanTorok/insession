@@ -1,6 +1,7 @@
 package main;
 
 import classes.Record;
+import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import terminal.Address;
@@ -33,6 +34,9 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private String passwordSalt;
     private String imageFN;
     private boolean clock24Hour = false;
+    private int zipcode;
+    private double[] latlon = new double[]{0,0};
+    private boolean tempUnits; //false for Metric, true for English
 
     public User(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -365,5 +369,34 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     public void setClock24Hour(boolean clock24Hour) {
         this.clock24Hour = clock24Hour;
     }
+
+    public double[] getLatlon() {
+        return latlon;
+    }
+
+    public void setLatlon(double[] latlon) {
+        this.latlon = latlon;
+    }
+
+    public void setLocation(int zip) {
+        this.zipcode = zip;
+        ZipMap.LatLon latLon = new ZipMap().get(zip);
+        latlon = new double[2];
+        this.latlon[0] = latLon.getLat();
+        this.latlon[1] = latLon.getLon();
+    }
+
+    public boolean usesFahrenheit() {
+        return tempUnits;
+    }
+
+    public void setTempUnits(boolean tempUnits) {
+        this.tempUnits = tempUnits;
+    }
+
+    public int getZipcode() {
+        return zipcode;
+    }
+
 }
 

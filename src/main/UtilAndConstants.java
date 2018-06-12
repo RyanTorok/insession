@@ -4,6 +4,9 @@ import classes.MasterSchedule;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import java.math.BigDecimal;
@@ -164,7 +167,7 @@ public class UtilAndConstants {
             return String.format( "#%02X%02X%02X",
                     (int)( color.getRed() * 255 ),
                     (int)( color.getGreen() * 255 ),
-                    (int)( color.getBlue() * 255 ) );
+                    (int)( color.getBlue() * 255 ));
     }
 
     public static Color textFill(Color background) {
@@ -183,5 +186,11 @@ public class UtilAndConstants {
         if (c.equals(Color.BLACK))
             return Color.web("#505050");
         else return textFill(c).equals(Color.WHITE) ? c.brighter() : c.darker();
+    }
+
+    public static class Filler extends Region {
+        public Filler() {
+            HBox.setHgrow(this, Priority.ALWAYS);
+        }
     }
 }

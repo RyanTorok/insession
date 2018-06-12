@@ -1,7 +1,6 @@
 package gui;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +30,7 @@ import terminal.Address;
 
 import java.awt.*;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -55,6 +56,10 @@ public class Main extends Application {
     Terminal term;
     StackPane mainArea;
     SideBar sideBar;
+    Text temperature;
+    Text weatherDesc;
+    static final DecimalFormat tempFormat = new DecimalFormat("##.#");
+    WeatherManager manager;
     Integer state = 0;
     private Stage primaryStage;
 
@@ -165,8 +170,29 @@ public class Main extends Application {
         }, 0, 500);
         BorderPane sleepbody = new BorderPane();
         sleepBody = sleepbody;
-        HBox sleep_btm = new HBox(new VBox(clock,date));
+
+        //weather display
+        AnchorPane weatherPane = new AnchorPane();
+        manager = new WeatherManager(Root.getActiveUser().getZipcode());
+        manager.update();
+        temperature = new Text();
+        if (Root.getActiveUser().usesFahrenheit()) {
+            temperature.setText(tempFormat.format(manager.getTempFahrenheit()) + (char) 0x00B0 + "F");
+        } else {
+            temperature.setText(tempFormat.format(manager.getTempCelsius()) + (char) 0x00B0 + "C");
+        }
+        temperature.setFill(Color.WHITE);
+        temperature.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
+        weatherDesc = new Text(manager.getDescription());
+        weatherDesc.setFill(Color.WHITE);
+        weatherDesc.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 45));
+        VBox weatherDetails = new VBox(weatherDesc);
+        VBox weatherDisplay = new VBox(temperature, weatherDetails);
+        weatherDisplay.setAlignment(Pos.CENTER_RIGHT);
+        HBox sleep_btm = new HBox(new VBox(clock,date), new UtilAndConstants.Filler(), weatherDisplay);
         sleep_btm.setAlignment(Pos.BOTTOM_LEFT);
+
+        //synthesize sleep body
         sleepbody.setBottom(sleep_btm);
         sleepbody.setPadding(new Insets(30));
         sleepbody.setVisible(false);
@@ -201,7 +227,13 @@ public class Main extends Application {
         });
         term.setVisible(false);
 
-        StackPane mainArea = new StackPane(backgd, terminalpane, root);
+        switch (manager.getCurrent()) {
+            case Snow: snow(weatherPane, 75); break;
+            case Blizzard: snow(weatherPane, 200); break;
+            default: //snow(weatherPane, 200);
+                break;
+        }
+        StackPane mainArea = new StackPane(backgd, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
         primaryStage.setScene(new Scene(mainArea, 999, 649));
         primaryStage.setMaximized(true);
@@ -249,7 +281,7 @@ public class Main extends Application {
                     term.start();
                     state = TERMINAL_STATE;
                     ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
-                    Collections.swap(workingCollection, 1, 2);
+                    Collections.swap(workingCollection, 2, 3);
                     mainArea.getChildren().setAll(workingCollection);
                 }
 
@@ -295,6 +327,24 @@ public class Main extends Application {
 
         state = BASE_STATE;
         primaryStage.show();
+    }
+
+    public void updateWeather() {
+        manager.update();
+        if (Root.getActiveUser().usesFahrenheit()) {
+            temperature.setText(tempFormat.format(manager.getTempFahrenheit()) + (char) 0x00B0 + "F");
+        } else {
+            temperature.setText(tempFormat.format(manager.getTempCelsius()) + (char) 0x00B0 + "C");
+        }
+        weatherDesc.setText(manager.getDescription());
+    }
+
+    private void snow(AnchorPane weatherPane, int particlesPerSecond) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> {
+           weatherPane.getChildren().add(new SnowParticle(weatherPane));
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     private void updateTime() {
@@ -382,7 +432,7 @@ public class Main extends Application {
         term.exit();
         state = BASE_STATE;
         ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
-        Collections.swap(workingCollection, 1, 2);
+        Collections.swap(workingCollection, 2, 3);
         mainArea.getChildren().setAll(workingCollection);
     }
 

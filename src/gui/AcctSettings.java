@@ -88,7 +88,7 @@ public class AcctSettings extends Stage {
 
         //accent color
         Text accentColorPrompt = new Text("Accent Color: ");
-        Shape colorSquare = new Rectangle(60, 60);
+        Shape colorSquare = new Rectangle(50, 50);
         Color original = Root.getActiveUser().getAccentColor();
         colorSquare.setFill(original);
         ColorPicker colorPicker = new ColorPicker();
@@ -104,9 +104,8 @@ public class AcctSettings extends Stage {
         });
         VBox accentColor = new VBox(accentColorPrompt, colorSquare, colorPicker);
         accentColor.setSpacing(10);
-        accentColor.setAlignment(Pos.CENTER);
         accentColor.setPadding(new Insets(10));
-        layout.add(accentColor, 1, 1);
+        layout.add(accentColor, 0, 1);
 
         //clock format
         Text cfPrompt = new Text("Clock Format");
@@ -123,8 +122,55 @@ public class AcctSettings extends Stage {
         VBox clockFormat = new VBox(cfPrompt, twelve, twentyFour);
         clockFormat.setSpacing(10);
         clockFormat.setPadding(new Insets(10));
-        layout.add(clockFormat, 0, 1);
+        layout.add(clockFormat, 0, 2);
 
+        //Zip Code for Weather
+        Text zcPrompt = new Text("Zip Code for Weather");
+        TextField zcField = new TextField(String.format("%05d", Root.getActiveUser().getZipcode()));
+        zcField.setPrefColumnCount(5);
+        zcField.setEditable(true);
+        zcField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                zcField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        Text zcInvalidMsg = new Text("");
+        Button zcSave = new Button("Save");
+        zcSave.setOnAction(event -> {
+            zcInvalidMsg.setText("");
+            if (zcField.getText().length() == 5) {
+                Root.getActiveUser().setLocation(Integer.parseInt(zcField.getText()));
+                Root.getPortal().updateWeather();
+            } else {
+                zcInvalidMsg.setText("Invalid Zip Code");
+            }
+        });
+        VBox zipcode = new VBox(zcPrompt, zcField, zcInvalidMsg, zcSave);
+        zipcode.setSpacing(10);
+        zipcode.setPadding(new Insets(10, 10, 10, 60));
+        layout.add(zipcode, 1, 1);
+
+        //temperature units
+        Text tuPrompt = new Text("Temperature Units");
+        ToggleGroup tuGroup = new ToggleGroup();
+        RadioButton fahrenheit = new RadioButton("Fahrenheit");
+        RadioButton celsius = new RadioButton("Celsius");
+        fahrenheit.setToggleGroup(tuGroup);
+        celsius.setToggleGroup(tuGroup);
+        tuGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            Root.getActiveUser().setTempUnits(newValue == fahrenheit);
+            Root.getPortal().updateWeather();
+        });
+        if (Root.getActiveUser().usesFahrenheit())
+            fahrenheit.setSelected(true);
+        else celsius.setSelected(true);
+
+        VBox temperatureUnits = new VBox(tuPrompt, fahrenheit, celsius);
+        temperatureUnits.setSpacing(10);
+        temperatureUnits.setPadding(new Insets(10, 10, 10, 60));
+        layout.add(temperatureUnits, 1, 2);
+
+        //close button
         Button closeBtn = new Button("Close");
         closeBtn.setOnAction(event -> this.close());
         VBox rootpane = new VBox(layout, closeBtn);
