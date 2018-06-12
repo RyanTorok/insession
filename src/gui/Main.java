@@ -8,10 +8,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -38,10 +36,10 @@ import java.util.*;
 
 public class Main extends Application {
 
-    BarMenu menus[] = new BarMenu[5];
-    int currentMenu = 0;
-    Text subtitle;
-    boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
+    private BarMenu[] menus = new BarMenu[5];
+    private int currentMenu = 0;
+    private Text subtitle;
+    private boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
 
 
     public static final int BASE_STATE = 0;
@@ -49,31 +47,35 @@ public class Main extends Application {
     public static final int TERMINAL_STATE = 2;
     public static final int SIDEBAR_STATE = 3;
 
-    Node top_bar;
-    Node sleepBody;
-    Node mainBody;
-    Text clock;
-    Text date;
-    Node picture;
-    Terminal term;
-    StackPane mainArea;
-    SideBar sideBar;
-    Text temperature;
-    Text weatherDesc;
-    static final DecimalFormat tempFormat = new DecimalFormat("#00.0");
-    WeatherManager manager;
-    Integer state = 0;
+    private Node top_bar;
+    private Node sleepBody;
+    private Node mainBody;
+    private Text clock;
+    private Text date;
+    private Node picture;
+    private Terminal term;
+    private StackPane mainArea;
+    private SideBar sideBar;
+    private Text temperature;
+    private Text weatherDesc;
+    private static final DecimalFormat tempFormat = new DecimalFormat("#00.0");
+    private WeatherManager manager;
+    private Integer state = 0;
     private Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public static DecimalFormat getTempFormat() {
+        return tempFormat;
+    }
+
     public void newUser() {
-        primaryStage.setMaximized(false);
+        getPrimaryStage().setMaximized(false);
         Scene window = NewUserWindow.get(this);
-        primaryStage.setScene(window);
-        primaryStage.show();
+        getPrimaryStage().setScene(window);
+        getPrimaryStage().show();
     }
 
     @Override
@@ -96,8 +98,8 @@ public class Main extends Application {
     }
 
     public void switchToMain() {
-        primaryStage.setMaximized(false);
-        primaryStage.setTitle("Welcome, " + Root.getActiveUser().getFirst() + " - Paintbrush LMS");
+        getPrimaryStage().setMaximized(false);
+        getPrimaryStage().setTitle("Welcome, " + Root.getActiveUser().getFirst() + " - Paintbrush LMS");
         Text mainlogo = new Text("paintbrush.    ");
         mainlogo.setFont(Font.font("Comfortaa", 60));
         mainlogo.setFill(Color.WHITE);
@@ -112,31 +114,31 @@ public class Main extends Application {
         titles.setSpacing(5);
 
         //scroll links
-        menus[0] = new BarMenu("latest", 0);
-        menus[1] = new BarMenu("classes", 1);
-        menus[2] = new BarMenu("organizations", 2);
-        menus[3] = new BarMenu("browse lessons", 3);
-        menus[4] = new BarMenu("community", 4);
+        getMenus()[0] = new BarMenu("latest", 0);
+        getMenus()[1] = new BarMenu("classes", 1);
+        getMenus()[2] = new BarMenu("organizations", 2);
+        getMenus()[3] = new BarMenu("browse lessons", 3);
+        getMenus()[4] = new BarMenu("community", 4);
         BarMenu name = new BarMenu(Root.getActiveUser() == null || Root.getActiveUser().getUsername() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
-        for (BarMenu m: menus
+        for (BarMenu m: getMenus()
              ) {
                 m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (state == SIDEBAR_STATE)
+                    if (getState() == SIDEBAR_STATE)
                         UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
-                    scrollBody(m.scrollPos, subtitle);
+                    scrollBody(m.scrollPos, getSubtitle());
                 });
         }
-        menus[0].setFont(Font.font(menus[0].getFont().getFamily(), FontWeight.BOLD, menus[0].getFont().getSize()));
+        getMenus()[0].setFont(Font.font(getMenus()[0].getFont().getFamily(), FontWeight.BOLD, getMenus()[0].getFont().getSize()));
 
         name.setOnMouseClicked(event -> {
-            if (state == BASE_STATE) {
+            if (getState() == BASE_STATE) {
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.BOLD, name.getFont().getSize()));
-                sideBar.enter();
+                getSideBar().enter();
                 state = SIDEBAR_STATE;
             }
-            else if (state == SIDEBAR_STATE) {
+            else if (getState() == SIDEBAR_STATE) {
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.NORMAL, name.getFont().getSize()));
-                sideBar.disappear();
+                getSideBar().disappear();
                 state = BASE_STATE;
             }
         });
@@ -146,7 +148,7 @@ public class Main extends Application {
         Image image = Root.getActiveUser().getAcctImage();
         Shape picture = new ShapeImage(new Circle(30), image).apply();
         this.picture = picture;
-        HBox topbar = new HBox(titles, menus[0], menus[1], menus[2], menus[3], menus[4], filler, name, picture);
+        HBox topbar = new HBox(titles, getMenus()[0], getMenus()[1], getMenus()[2], getMenus()[3], getMenus()[4], filler, name, picture);
         top_bar = topbar;
         topbar.setSpacing(35);
         topbar.setAlignment(Pos.CENTER_LEFT);
@@ -176,7 +178,7 @@ public class Main extends Application {
         //weather display
         AnchorPane weatherPane = new AnchorPane();
         manager = new WeatherManager(Root.getActiveUser().getZipcode());
-        manager.update();
+        getManager().update();
         Timer weatherUpdateTimer = new Timer();
         weatherUpdateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -185,26 +187,26 @@ public class Main extends Application {
             }
         }, 3000000, 300000);
         temperature = new Text();
-        boolean temperature_nullcheck = manager.getTempCelsius() == null;
+        boolean temperature_nullcheck = getManager().getTempCelsius() == null;
         if (temperature_nullcheck ) {
-            temperature.setText("----" + (char) 0x00B0 + (Root.getActiveUser().usesFahrenheit() ? "F" : "C"));
+            getTemperature().setText("----" + (char) 0x00B0 + (Root.getActiveUser().usesFahrenheit() ? "F" : "C"));
         } else {
             if (Root.getActiveUser().usesFahrenheit()) {
-                temperature.setText(tempFormat.format(manager.getTempFahrenheit()) + (char) 0x00B0 + "F");
+                getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
             } else {
-                temperature.setText(tempFormat.format(manager.getTempCelsius()) + (char) 0x00B0 + "C");
+                getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
             }
         }
-        temperature.setFill(Color.WHITE);
-        temperature.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
-        temperature.setTextAlignment(TextAlignment.RIGHT);
-        weatherDesc = new Text(manager.getDescription());
-        weatherDesc.setFill(Color.WHITE);
-        weatherDesc.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 45));
-        weatherDesc.setTextAlignment(TextAlignment.RIGHT);
-        VBox weatherDetails = new VBox(weatherDesc);
+        getTemperature().setFill(Color.WHITE);
+        getTemperature().setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
+        getTemperature().setTextAlignment(TextAlignment.RIGHT);
+        weatherDesc = new Text(getManager().getDescription());
+        getWeatherDesc().setFill(Color.WHITE);
+        getWeatherDesc().setFont(Font.font("Sans Serif", FontWeight.NORMAL, 45));
+        getWeatherDesc().setTextAlignment(TextAlignment.RIGHT);
+        VBox weatherDetails = new VBox(getWeatherDesc());
         weatherDetails.setAlignment(Pos.CENTER_RIGHT);
-        VBox weatherDisplay = new VBox(temperature, weatherDetails);
+        VBox weatherDisplay = new VBox(getTemperature(), weatherDetails);
         weatherDisplay.setAlignment(Pos.CENTER_RIGHT);
         HBox sleep_btm = new HBox(new VBox(clock,date), new UtilAndConstants.Filler(), weatherDisplay);
         sleep_btm.setAlignment(Pos.BOTTOM_LEFT);
@@ -237,30 +239,33 @@ public class Main extends Application {
         terminalpane.setPrefWidth(999);
         terminalpane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             //not the actual terminal
-            if (state == TERMINAL_STATE && event.getTarget() == terminalpane)
+            if (getState() == TERMINAL_STATE && event.getTarget() == terminalpane)
                 quitTerminal();
             else term.current.requestFocus();
         });
         term.setVisible(false);
 
-        switch (manager.getCurrent()) {
+        switch (getManager().getCurrent()) {
+            case Fog: fog(backgd); break;
             case Snow: snow(weatherPane, 75); break;
             case Blizzard: snow(weatherPane, 200); break;
             case Thunderstorm: lightning(backgd, .167); //no break
-            case Heavy_Rain: rain(weatherPane, 200); break;
-            case Light_Rain: rain(weatherPane, 75); break;
-            default:
+            case Heavy_Rain: rain(weatherPane, 800); fullClouds(); break;
+            case Light_Rain: rain(weatherPane, 400); //no break;
+            case Cloudy: fullClouds(); break;
+            case Partly_Cloudy: partialClouds();
+            default: break;
         }
         StackPane mainArea = new StackPane(backgd, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
-        primaryStage.setScene(new Scene(mainArea, 999, 649));
-        primaryStage.setMaximized(true);
+        getPrimaryStage().setScene(new Scene(mainArea, 999, 649));
+        getPrimaryStage().setMaximized(true);
 
         //sidebar
         sideBar = new SideBar(this);
-        allBodyPanes.getChildren().add(sideBar);
+        allBodyPanes.getChildren().add(getSideBar());
         body.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getTarget() != sideBar && state == SIDEBAR_STATE) {
+            if (event.getTarget() != getSideBar() && getState() == SIDEBAR_STATE) {
                 UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 state = BASE_STATE;
             }
@@ -270,30 +275,30 @@ public class Main extends Application {
             UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
         });
 
-        primaryStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (state == SLEEP_STATE)
+        getPrimaryStage().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (getState() == SLEEP_STATE)
                 wakeup();
         });
 
 
-        primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (state == SLEEP_STATE) {
+        getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            if (getState() == SLEEP_STATE) {
                 if (event.getCode().equals(KeyCode.ESCAPE))
                     return;
                 wakeup();
                 if (event.getCode().equals(KeyCode.CAPS)) {
-                    caps = !caps;
+                    caps = !isCaps();
                 }
                 return;
             }
             if (event.getCode().equals(KeyCode.SPACE)) {
 
-                if (state == BASE_STATE && event.isControlDown()) {
+                if (getState() == BASE_STATE && event.isControlDown()) {
                     UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 }
 
-                else if (state == BASE_STATE || state == SIDEBAR_STATE && !event.isControlDown()) {
-                    if (state == SIDEBAR_STATE)
+                else if (getState() == BASE_STATE || getState() == SIDEBAR_STATE && !event.isControlDown()) {
+                    if (getState() == SIDEBAR_STATE)
                         UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                     term.setVisible(true);
                     term.start();
@@ -303,69 +308,68 @@ public class Main extends Application {
                     mainArea.getChildren().setAll(workingCollection);
                 }
 
-                else if (state == SIDEBAR_STATE) {
+                else if (getState() == SIDEBAR_STATE) {
                     UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 }
             }
 
             if (event.getCode().equals(KeyCode.ESCAPE)) {
-                if (state == BASE_STATE) {
+                if (getState() == BASE_STATE) {
                     sleep();
                 }
-                else if (state == TERMINAL_STATE) {
+                else if (getState() == TERMINAL_STATE) {
                     if (event.isControlDown()) {
                         term.clearTerminal();
                     }
                     quitTerminal();
-                } else if (state == SIDEBAR_STATE) {
+                } else if (getState() == SIDEBAR_STATE) {
                     UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 }
             }
         });
 
-        primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (event.getCode().equals(KeyCode.LEFT) && state == BASE_STATE) {
-                if (currentMenu != 0)
-                    scrollBody(currentMenu - 1, subtitle);
+        getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode().equals(KeyCode.LEFT) && getState() == BASE_STATE) {
+                if (getCurrentMenu() != 0)
+                    scrollBody(getCurrentMenu() - 1, getSubtitle());
             }
-            if (event.getCode().equals(KeyCode.RIGHT) && state == BASE_STATE) {
-                if (currentMenu != menus.length - 1)
-                    scrollBody(currentMenu + 1, subtitle);
+            if (event.getCode().equals(KeyCode.RIGHT) && getState() == BASE_STATE) {
+                if (getCurrentMenu() != getMenus().length - 1)
+                    scrollBody(getCurrentMenu() + 1, getSubtitle());
             }
             if (event.getCode().equals(KeyCode.CAPS)) {
                 caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
-                mainlogo.setText(caps ? upper : lower);
-                if (caps)
-                    subtitle.setText("Live your life in ALL CAPS today.");
+                mainlogo.setText(isCaps() ? upper : lower);
+                if (isCaps())
+                    getSubtitle().setText("Live your life in ALL CAPS today.");
                 else {
-                    subtitle.setText(subtitles[currentMenu]);
+                    getSubtitle().setText(getSubtitles()[getCurrentMenu()]);
                 }
             }
         });
 
         state = BASE_STATE;
-        primaryStage.show();
+        getPrimaryStage().show();
     }
+
 
 
     public void updateWeather() {
-        manager.update();
+        getManager().update();
         if (Root.getActiveUser().usesFahrenheit()) {
-            temperature.setText(tempFormat.format(manager.getTempFahrenheit()) + (char) 0x00B0 + "F");
+            getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
         } else {
-            temperature.setText(tempFormat.format(manager.getTempCelsius()) + (char) 0x00B0 + "C");
+            getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
         }
-        weatherDesc.setText(manager.getDescription());
+        getWeatherDesc().setText(getManager().getDescription());
     }
 
-    private void snow(AnchorPane weatherPane, int particlesPerSecond) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> {
-           weatherPane.getChildren().add(new SnowParticle(weatherPane));
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+    private void fullClouds() {
     }
-    
+
+    private void partialClouds() {
+    }
+
     private void fog(ImageView background) {
         ColorAdjust colorInput = new ColorAdjust();
         colorInput.setBrightness(.7);
@@ -393,56 +397,140 @@ public class Main extends Application {
     }
 
     private void rain(AnchorPane weatherPane, int particlesPerSecond) {
-        snow(weatherPane, particlesPerSecond);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new RainParticle(weatherPane).shape)));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private void snow(AnchorPane weatherPane, int particlesPerSecond) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new SnowParticle(weatherPane).shape)));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     private void updateTime() {
-        if (state == SLEEP_STATE) {
+        if (getState() == SLEEP_STATE) {
             String time;
             if (Root.getActiveUser().isClock24Hour())
                 time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(new Date());
             else
                 time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(new Date());
             String[] timeanddate = time.split("  ");
-            clock.setText(timeanddate[1]);
-            date.setText(timeanddate[0]);
+            getClock().setText(timeanddate[1]);
+            getDate().setText(timeanddate[0]);
         }
     }
 
     private void wakeup() {
         state = BASE_STATE;
-        top_bar.setVisible(true);
-        FadeTransition fadein = new FadeTransition(Duration.millis(200), top_bar);
+        getTop_bar().setVisible(true);
+        FadeTransition fadein = new FadeTransition(Duration.millis(200), getTop_bar());
         fadein.setFromValue(0);
         fadein.setToValue(1);
         fadein.play();
-        FadeTransition fadein_ = new FadeTransition(Duration.millis(200), mainBody);
+        FadeTransition fadein_ = new FadeTransition(Duration.millis(200), getMainBody());
         fadein_.setFromValue(0);
         fadein_.setToValue(1);
         fadein_.play();
-        sleepBody.setVisible(false);
+        getSleepBody().setVisible(false);
     }
 
     private void sleep() {
         state = SLEEP_STATE;
-        top_bar.setVisible(false);
-        mainBody.setVisible(false);
-        FadeTransition ft = new FadeTransition(Duration.millis(200), sleepBody);
+        getTop_bar().setVisible(false);
+        getMainBody().setVisible(false);
+        FadeTransition ft = new FadeTransition(Duration.millis(200), getSleepBody());
         ft.setFromValue(0);
         ft.setToValue(1);
         updateTime();
-        sleepBody.setVisible(true);
+        getSleepBody().setVisible(true);
         ft.play();
     }
 
     public void clearStage() {
-        primaryStage.setScene(null);
+        getPrimaryStage().setScene(null);
     }
 
     public void resetMain() {
         clearStage();
-        primaryStage.setMaximized(false);
+        getPrimaryStage().setMaximized(false);
         switchToMain();
+    }
+
+    public BarMenu[] getMenus() {
+        return menus;
+    }
+
+    public int getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public Text getSubtitle() {
+        return subtitle;
+    }
+
+    public boolean isCaps() {
+        return caps;
+    }
+
+    public Node getTop_bar() {
+        return top_bar;
+    }
+
+    public Node getSleepBody() {
+        return sleepBody;
+    }
+
+    public Node getMainBody() {
+        return mainBody;
+    }
+
+    public Text getClock() {
+        return clock;
+    }
+
+    public Text getDate() {
+        return date;
+    }
+
+    public Node getPicture() {
+        return picture;
+    }
+
+    public Terminal getTerm() {
+        return term;
+    }
+
+    public StackPane getMainArea() {
+        return mainArea;
+    }
+
+    public SideBar getSideBar() {
+        return sideBar;
+    }
+
+    public Text getTemperature() {
+        return temperature;
+    }
+
+    public Text getWeatherDesc() {
+        return weatherDesc;
+    }
+
+    public WeatherManager getManager() {
+        return manager;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public String[] getSubtitles() {
+        return subtitles;
     }
 
     class BarMenu extends Text {
@@ -458,7 +546,7 @@ public class Main extends Application {
         }
     }
 
-    String subtitles[] = {
+    private String[] subtitles = {
             "Let's get something done today.",
             "Let's learn something today.",
             "Let's do something we love today.",
@@ -467,22 +555,22 @@ public class Main extends Application {
     };
 
     private void scrollBody(int scrollPos, Text changeText) {
-        changeText.setText(subtitles[scrollPos]);
+        changeText.setText(getSubtitles()[scrollPos]);
         currentMenu = scrollPos;
-        BarMenu m = menus[scrollPos];
+        BarMenu m = getMenus()[scrollPos];
         for (BarMenu m1 :
-                menus) {
+                getMenus()) {
             m1.setFont(Font.font(m.getFont().getFamily(), FontWeight.NORMAL, m.getFont().getSize()));
         }
         m.setFont(Font.font(m.getFont().getFamily(), FontWeight.BOLD, m.getFont().getSize()));
     }
 
     void quitTerminal() {
-        term.exit();
+        getTerm().exit();
         state = BASE_STATE;
-        ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
+        ObservableList<Node> workingCollection = FXCollections.observableArrayList(getMainArea().getChildren());
         Collections.swap(workingCollection, 2, 3);
-        mainArea.getChildren().setAll(workingCollection);
+        getMainArea().getChildren().setAll(workingCollection);
     }
 
     @Override
@@ -557,7 +645,7 @@ public class Main extends Application {
             menus.add(switch_user);
             menus.add(save);
             
-            openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> primaryStage.getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false)));
+            openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false)));
 
             grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 //TODO
@@ -569,7 +657,7 @@ public class Main extends Application {
 
             accountSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
-                    UtilAndConstants.fireMouse(Main.this.picture, MouseEvent.MOUSE_CLICKED);
+                    UtilAndConstants.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED);
                     new AcctSettings().show();
                 }
             });
@@ -587,7 +675,7 @@ public class Main extends Application {
             });
 
             switch_user.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                Main.this.primaryStage.setMaximized(false);
+                Main.this.getPrimaryStage().setMaximized(false);
                 Root.saveAll();
                 Main.this.newUser();
             });
@@ -597,8 +685,8 @@ public class Main extends Application {
             });
             getChildren().addAll(menus);
             setAlignment(Pos.TOP_CENTER);
-            primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-                if (state == SIDEBAR_STATE) {
+            getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+                if (getState() == SIDEBAR_STATE) {
                     if (event.getCode().equals(KeyCode.UP)) {
                         if (selectedMenu == 0 || selectedMenu == -1) {
                             scroll(0, menus.size() - 1);

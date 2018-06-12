@@ -2,44 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/JSON-java-master/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Paintbrush.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Paintbrush.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/JSON_java_master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/JSON_java_master.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_json_json_20140107.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/PrecipParticle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/RainParticle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.paintbrush.sh.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/CDL.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/Cookie.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/CookieList.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/HTTP.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/HTTPTokener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONArray.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONML.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONPointer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONPointerException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONPropertyIgnore.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONPropertyName.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONString.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONStringer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONTokener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/JSONWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/Property.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/XML.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/JSON-java-master/XMLTokener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings$Filler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings$Filler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SnowParticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SnowParticle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AcctSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AcctSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/WeatherManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WeatherManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SnowParticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SnowParticle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,95 +52,79 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="251" column="20" lean-forward="true" selection-start-line="251" selection-start-column="20" selection-end-line="251" selection-end-column="20" />
+            <state relative-caret-position="527">
+              <caret line="461" column="5" lean-forward="true" selection-start-line="461" selection-start-column="5" selection-end-line="461" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6667#6795#0" expanded="true" />
-                <element signature="e#6794#6795#0" expanded="true" />
-                <element signature="e#15309#15443#0" expanded="true" />
-                <element signature="e#15442#15443#0" expanded="true" />
-                <element signature="e#16055#16056#0" expanded="true" />
-                <element signature="e#16077#16078#0" expanded="true" />
-                <element signature="e#17224#17225#0" expanded="true" />
-                <element signature="e#17267#17268#0" expanded="true" />
-                <element signature="e#24269#24270#0" expanded="true" />
-                <element signature="e#24302#24303#0" expanded="true" />
-                <element signature="e#26587#26588#0" expanded="true" />
-                <element signature="e#26636#26637#0" expanded="true" />
+                <element signature="e#2050#2051#0" expanded="true" />
+                <element signature="e#2083#2084#0" expanded="true" />
+                <element signature="e#18306#18307#0" expanded="true" />
+                <element signature="e#18334#18335#0" expanded="true" />
+                <element signature="e#18369#18370#0" expanded="true" />
+                <element signature="e#18403#18404#0" expanded="true" />
+                <element signature="e#18436#18437#0" expanded="true" />
+                <element signature="e#18467#18468#0" expanded="true" />
+                <element signature="e#18498#18499#0" expanded="true" />
+                <element signature="e#18525#18526#0" expanded="true" />
+                <element signature="e#18557#18558#0" expanded="true" />
+                <element signature="e#18587#18588#0" expanded="true" />
+                <element signature="e#18621#18622#0" expanded="true" />
+                <element signature="e#18653#18654#0" expanded="true" />
+                <element signature="e#18686#18687#0" expanded="true" />
+                <element signature="e#18717#18718#0" expanded="true" />
+                <element signature="e#18747#18748#0" expanded="true" />
+                <element signature="e#18775#18776#0" expanded="true" />
+                <element signature="e#18804#18805#0" expanded="true" />
+                <element signature="e#18831#18832#0" expanded="true" />
+                <element signature="e#18863#18864#0" expanded="true" />
+                <element signature="e#18893#18894#0" expanded="true" />
+                <element signature="e#18926#18927#0" expanded="true" />
+                <element signature="e#18953#18954#0" expanded="true" />
+                <element signature="e#18991#18992#0" expanded="true" />
+                <element signature="e#19022#19023#0" expanded="true" />
+                <element signature="e#19057#19058#0" expanded="true" />
+                <element signature="e#19087#19088#0" expanded="true" />
+                <element signature="e#19123#19124#0" expanded="true" />
+                <element signature="e#19157#19158#0" expanded="true" />
+                <element signature="e#19193#19194#0" expanded="true" />
+                <element signature="e#19227#19228#0" expanded="true" />
+                <element signature="e#19269#19270#0" expanded="true" />
+                <element signature="e#19299#19300#0" expanded="true" />
+                <element signature="e#19332#19333#0" expanded="true" />
+                <element signature="e#19360#19361#0" expanded="true" />
+                <element signature="e#19398#19399#0" expanded="true" />
+                <element signature="e#19433#19434#0" expanded="true" />
+                <element signature="e#19471#19472#0" expanded="true" />
+                <element signature="e#19503#19504#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UtilAndConstants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
+      <file leaf-file-name="RainParticle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/RainParticle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WeatherManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/WeatherManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="82" column="30" lean-forward="true" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+            <state relative-caret-position="405">
+              <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4314#4315#0" expanded="true" />
-                <element signature="e#4344#4345#0" expanded="true" />
-                <element signature="e#4313#4314#0" expanded="true" />
-                <element signature="e#4351#4352#0" expanded="true" />
-                <element signature="e#4739#4740#0" expanded="true" />
-                <element signature="e#4785#4786#0" expanded="true" />
-                <element signature="e#4826#4827#0" expanded="true" />
-                <element signature="e#4863#4864#0" expanded="true" />
+                <element signature="e#298#299#0" expanded="true" />
+                <element signature="e#318#319#0" expanded="true" />
+                <element signature="e#381#382#0" expanded="true" />
+                <element signature="e#411#412#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/User.java">
+      <file leaf-file-name="PrecipParticle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/PrecipParticle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4485">
-              <caret line="382" column="53" selection-start-line="382" selection-start-column="53" selection-end-line="382" selection-end-column="53" />
-              <folding>
-                <element signature="e#10747#10748#0" expanded="true" />
-                <element signature="e#10777#10778#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZipMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/ZipMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="392">
+              <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HIDE.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/terminal/HIDE.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WeatherState.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/WeatherState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="55" selection-start-line="6" selection-start-column="55" selection-end-line="6" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -169,22 +132,14 @@
       <file leaf-file-name="SnowParticle.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/SnowParticle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
+            <state relative-caret-position="210">
+              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AcctSettings.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1125">
-              <caret line="91" column="63" selection-start-line="91" selection-start-column="63" selection-end-line="91" selection-end-column="63" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#300#301#0" expanded="true" />
+                <element signature="e#323#324#0" expanded="true" />
+                <element signature="e#417#418#0" expanded="true" />
+                <element signature="e#447#448#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -210,6 +165,7 @@
       <find>rand</find>
       <find>background.jpeg</find>
       <find>167</find>
+      <find>4</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -255,9 +211,11 @@
         <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/gui/ZipMap.java" />
         <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
-        <option value="$PROJECT_DIR$/src/gui/SnowParticle.java" />
         <option value="$PROJECT_DIR$/src/terminal/HIDE.java" />
         <option value="$PROJECT_DIR$/src/gui/WeatherManager.java" />
+        <option value="$PROJECT_DIR$/src/gui/SnowParticle.java" />
+        <option value="$PROJECT_DIR$/src/gui/PrecipParticle.java" />
+        <option value="$PROJECT_DIR$/src/gui/RainParticle.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
       </list>
     </option>
@@ -301,6 +259,12 @@
               <item name="Paintbrush" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Paintbrush" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Paintbrush" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -330,6 +294,7 @@
       <recent name="$PROJECT_DIR$/src/org/json" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="gui" />
       <recent name="terminal" />
       <recent name="db" />
       <recent name="main" />
@@ -352,7 +317,8 @@
     <configuration name="Root" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Root" />
       <module name="Paintbrush" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="-Xmx1024m" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="main.*" />
@@ -463,12 +429,12 @@
       <workItem from="1528753236972" duration="13113000" />
       <workItem from="1528776152885" duration="5261000" />
       <workItem from="1528781837246" duration="485000" />
-      <workItem from="1528810033846" duration="9010000" />
+      <workItem from="1528810033846" duration="15516000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173006000" />
+    <option name="totallyTimeSpent" value="179512000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
@@ -554,20 +520,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Root.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="9" lean-forward="true" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -821,16 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/SnowParticle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="38" column="26" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/ZipMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -852,13 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="55" selection-start-line="6" selection-start-column="55" selection-end-line="6" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -887,24 +822,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="251" column="20" lean-forward="true" selection-start-line="251" selection-start-column="20" selection-end-line="251" selection-end-column="20" />
+        <state>
+          <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/SnowParticle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6667#6795#0" expanded="true" />
-            <element signature="e#6794#6795#0" expanded="true" />
-            <element signature="e#15309#15443#0" expanded="true" />
-            <element signature="e#15442#15443#0" expanded="true" />
-            <element signature="e#16055#16056#0" expanded="true" />
-            <element signature="e#16077#16078#0" expanded="true" />
-            <element signature="e#17224#17225#0" expanded="true" />
-            <element signature="e#17267#17268#0" expanded="true" />
-            <element signature="e#24269#24270#0" expanded="true" />
-            <element signature="e#24302#24303#0" expanded="true" />
-            <element signature="e#26587#26588#0" expanded="true" />
-            <element signature="e#26636#26637#0" expanded="true" />
+            <element signature="e#300#301#0" expanded="true" />
+            <element signature="e#323#324#0" expanded="true" />
+            <element signature="e#417#418#0" expanded="true" />
+            <element signature="e#447#448#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/PrecipParticle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/RainParticle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#298#299#0" expanded="true" />
+            <element signature="e#318#319#0" expanded="true" />
+            <element signature="e#381#382#0" expanded="true" />
+            <element signature="e#411#412#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="461" column="5" lean-forward="true" selection-start-line="461" selection-start-column="5" selection-end-line="461" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2050#2051#0" expanded="true" />
+            <element signature="e#2083#2084#0" expanded="true" />
+            <element signature="e#18306#18307#0" expanded="true" />
+            <element signature="e#18334#18335#0" expanded="true" />
+            <element signature="e#18369#18370#0" expanded="true" />
+            <element signature="e#18403#18404#0" expanded="true" />
+            <element signature="e#18436#18437#0" expanded="true" />
+            <element signature="e#18467#18468#0" expanded="true" />
+            <element signature="e#18498#18499#0" expanded="true" />
+            <element signature="e#18525#18526#0" expanded="true" />
+            <element signature="e#18557#18558#0" expanded="true" />
+            <element signature="e#18587#18588#0" expanded="true" />
+            <element signature="e#18621#18622#0" expanded="true" />
+            <element signature="e#18653#18654#0" expanded="true" />
+            <element signature="e#18686#18687#0" expanded="true" />
+            <element signature="e#18717#18718#0" expanded="true" />
+            <element signature="e#18747#18748#0" expanded="true" />
+            <element signature="e#18775#18776#0" expanded="true" />
+            <element signature="e#18804#18805#0" expanded="true" />
+            <element signature="e#18831#18832#0" expanded="true" />
+            <element signature="e#18863#18864#0" expanded="true" />
+            <element signature="e#18893#18894#0" expanded="true" />
+            <element signature="e#18926#18927#0" expanded="true" />
+            <element signature="e#18953#18954#0" expanded="true" />
+            <element signature="e#18991#18992#0" expanded="true" />
+            <element signature="e#19022#19023#0" expanded="true" />
+            <element signature="e#19057#19058#0" expanded="true" />
+            <element signature="e#19087#19088#0" expanded="true" />
+            <element signature="e#19123#19124#0" expanded="true" />
+            <element signature="e#19157#19158#0" expanded="true" />
+            <element signature="e#19193#19194#0" expanded="true" />
+            <element signature="e#19227#19228#0" expanded="true" />
+            <element signature="e#19269#19270#0" expanded="true" />
+            <element signature="e#19299#19300#0" expanded="true" />
+            <element signature="e#19332#19333#0" expanded="true" />
+            <element signature="e#19360#19361#0" expanded="true" />
+            <element signature="e#19398#19399#0" expanded="true" />
+            <element signature="e#19433#19434#0" expanded="true" />
+            <element signature="e#19471#19472#0" expanded="true" />
+            <element signature="e#19503#19504#0" expanded="true" />
           </folding>
         </state>
       </provider>

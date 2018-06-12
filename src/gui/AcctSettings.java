@@ -1,12 +1,9 @@
 package gui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -96,10 +93,10 @@ public class AcctSettings extends Stage {
         colorPicker.setOnAction(event1 -> {
             colorSquare.setFill(colorPicker.getValue());
             Root.getActiveUser().setAccentColor(colorPicker.getValue());
-            Root.getPortal().top_bar.setStyle(Root.getPortal().top_bar.getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + UtilAndConstants.colorToHex(colorPicker.getValue())));
-            Root.getPortal().sideBar.setColor(colorPicker.getValue());
+            Root.getPortal().getTop_bar().setStyle(Root.getPortal().getTop_bar().getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + UtilAndConstants.colorToHex(colorPicker.getValue())));
+            Root.getPortal().getSideBar().setColor(colorPicker.getValue());
             if (!colorPicker.getValue().equals(original)) {
-                Root.getPortal().subtitle.setText("Feeling a different color today?");
+                Root.getPortal().getSubtitle().setText("Feeling a different color today?");
             }
         });
         VBox accentColor = new VBox(accentColorPrompt, colorSquare, colorPicker);
