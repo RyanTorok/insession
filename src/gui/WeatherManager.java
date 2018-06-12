@@ -16,12 +16,14 @@ public class WeatherManager {
     private String description;
     private double tempCelsius;
     private double tempFahrenheit;
+    private static final Double HEAVY_THRESHOLD = .00635;
 
     public WeatherManager(int zipCode){
         this.setZipCode(zipCode);
     }
 
     public void update() {
+        JSONObject properties;
         try {
             double[] latlon = Root.getActiveUser().getLatlon();
             if (latlon == null) {
@@ -50,7 +52,7 @@ public class WeatherManager {
             }
             observationIn.close();
             JSONObject observationObj = new JSONObject(observation);
-            JSONObject properties = observationObj.getJSONObject("properties");
+            properties = observationObj.getJSONObject("properties");
             setDescription(properties.getString("textDescription"));
             setTempCelsius(properties.getJSONObject("temperature").getDouble("value"));
             setTempFahrenheit(getTempCelsius() * 1.8 + 32);
@@ -58,7 +60,33 @@ public class WeatherManager {
             e.printStackTrace();
             return;
         }
-        setCurrent(WeatherState.Snow);
+        //set current state
+        String descLC = description.toLowerCase();
+        Double lastHr = properties.getDouble("precipitationLastHour");
+        if (descLC.contains("fog")) {
+            setCurrent(WeatherState.Fog);
+            return;
+        }
+        if (descLC.contains("snow") || descLC.contains("ice") || descLC.contains("icy") || descLC.contains("mix")
+                || descLC.contains("sleet") || descLC.contains("freez") || descLC.contains("blizzard")) {
+            setCurrent(lastHr > HEAVY_THRESHOLD ? WeatherState.Blizzard : WeatherState.Snow);
+            return;
+        }
+        if (descLC.contains("storm") || descLC.contains("thunder")) {
+            setCurrent(WeatherState.Thunderstorm);
+            return;
+        }
+        if (descLC.contains("rain") || descLC.contains("shower") || descLC.contains("drizzle")) {
+            setCurrent(lastHr > HEAVY_THRESHOLD ? WeatherState.Heavy_Rain : WeatherState.Light_Rain);
+            return;
+        }
+        if (descLC.contains("cloud") || descLC.contains("overcast")) {
+            if (descLC.contains("partly") || descLC.contains("few") || descLC.contains("mostly")) {
+                setCurrent(WeatherState.Partly_Cloudy);
+            } else setCurrent(WeatherState.Cloudy);
+            return;
+        }
+        setCurrent(WeatherState.Sunny);
     }
 
     public void update(int zipCode){
