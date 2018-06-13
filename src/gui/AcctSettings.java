@@ -98,6 +98,7 @@ public class AcctSettings extends Stage {
             Root.getActiveUser().setAccentColor(colorPicker.getValue());
             Root.getPortal().getTop_bar().setStyle(Root.getPortal().getTop_bar().getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + UtilAndConstants.colorToHex(colorPicker.getValue())));
             Root.getPortal().getSideBar().setColor(colorPicker.getValue());
+            Root.getPortal().topBarScrollBar.setStroke(UtilAndConstants.highlightColor(colorPicker.getValue()));
             if (!colorPicker.getValue().equals(original)) {
                 Root.getPortal().getSubtitle().setText("Feeling a different color today?");
             }

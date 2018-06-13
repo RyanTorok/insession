@@ -59,7 +59,7 @@ public class ClassLauncher extends VBox {
         }
 
         VBox classHeader = new VBox();
-        classHeader.setStyle("-fx-background-color: #c5c5c5");
+        classHeader.setStyle("-fx-background-color: #e0e0e0");
         classHeader.setPadding(new Insets(5));
         classHeader.setPrefWidth(width);
         classHeader.setSpacing(8);

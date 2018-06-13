@@ -6,6 +6,7 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -14,12 +15,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
@@ -52,8 +52,11 @@ public class Main extends Application {
     public static final int SIDEBAR_STATE = 3;
 
     private Pane[] contentPanes;
+    private HBox contentPanesWrapper;
 
     private Node top_bar;
+    Line topBarScrollBar;
+    private boolean tbsbDrag = false;
     private Node sleepBody;
     private Pane mainBody;
     private Text clock;
@@ -73,6 +76,8 @@ public class Main extends Application {
     private ImageView background;
     private AnchorPane weatherPane;
     private boolean day;
+    private boolean currentlyTranslatingBody = false;
+    private StackPane topbarWrapper;
 
     public static void main(String[] args) {
         launch(args);
@@ -140,7 +145,7 @@ public class Main extends Application {
                     scrollBody(m.scrollPos, getSubtitle());
                 });
         }
-        getMenus()[0].setFont(Font.font(getMenus()[0].getFont().getFamily(), FontWeight.BOLD, getMenus()[0].getFont().getSize()));
+        getMenus()[0].setFont(Font.font(getMenus()[0].getFont().getFamily(), FontPosture.ITALIC, getMenus()[0].getFont().getSize()));
 
         name.setOnMouseClicked(event -> {
             if (getState() == BASE_STATE) {
@@ -166,6 +171,45 @@ public class Main extends Application {
         String borderWidth =  ".67em";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(new Insets(15));
+
+        //top bar scroll bar
+        topBarScrollBar = new Line();
+        topBarScrollBar.setStartX(0);
+        topBarScrollBar.setEndX(75);
+        topBarScrollBar.setStartY(0);
+        topBarScrollBar.setEndY(topBarScrollBar.getStartY());
+        topBarScrollBar.setStrokeWidth(8);
+        topBarScrollBar.setStroke(UtilAndConstants.highlightColor(Root.getActiveUser().getAccentColor()));
+
+        top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            topBarScrollBar.setTranslateX(event.getSceneX());
+            tbsbDrag = true;
+        });
+
+        top_bar.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+            if (!tbsbDrag)
+                return;
+            tbsbDrag = false;
+            double endX = event.getSceneX();
+            int closestIndex = -1;
+            double closestDistance = Double.MAX_VALUE;
+            int i = 0;
+            for (BarMenu m: menus) {
+                double menuX = m.getLayoutX();
+                double distance = Math.abs(endX - menuX);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = i;
+                }
+                i++;
+            }
+            scrollBody(closestIndex, subText);
+            repositionTopBarScrollBar(closestIndex, 100);
+        });
+
+        topbarWrapper = new StackPane(topbar, topBarScrollBar);
+        topbarWrapper.setAlignment(Pos.BOTTOM_LEFT);
+
 
         //clock
         final Text clock = new Text("");
@@ -234,7 +278,7 @@ public class Main extends Application {
         backgd.setPreserveRatio(true);
         setWeatherGraphics(background, weatherPane);
         StackPane allBodyPanes = new StackPane(sleepbody, body);
-        VBox root = new VBox(topbar, allBodyPanes);
+        VBox root = new VBox(topbarWrapper, allBodyPanes);
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
         this.term = term;
@@ -273,56 +317,75 @@ public class Main extends Application {
         });
 
         //content panes
+        try {
+            contentPanesWrapper = new HBox();
+            contentPanesWrapper.setPrefWidth(1920 * contentPanes.length);
+            contentPanesWrapper.setPrefHeight(1080);
 
-        //latest
-        GridPane latestGrid = new GridPane();
-        contentPanes[0] = latestGrid;
+            //latest
+            GridPane latestGrid = new GridPane();
+            contentPanes[0] = latestGrid;
 
-        //classes
-        GridPane classLauncherGrid = new GridPane();
-        contentPanes[1] = classLauncherGrid;
+            //classes
+            GridPane classLauncherGrid = new GridPane();
+            contentPanes[1] = classLauncherGrid;
 
-        List<ClassPd> allClasses = new ArrayList<>();
-        allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesTeacher()));
-        allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesStudent()));
+            List<ClassPd> allClasses = new ArrayList<>();
+            //allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesTeacher()));
+            allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesStudent()));
 
-        ArrayList<ClassLauncher> launchers = new ArrayList<>();
-        classLauncherGrid.setHgap(40);
-        classLauncherGrid.setVgap(40);
-        classLauncherGrid.setPadding(new Insets(classLauncherGrid.getHgap()));
+            ArrayList<ClassLauncher> launchers = new ArrayList<>();
+            classLauncherGrid.setHgap(40);
+            classLauncherGrid.setVgap(40);
 
-        int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
+            int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
 
-        int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
-        int clWidth = (int) (1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
+            int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
+            int clWidth = (int) (1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
 
-        ClassPd test = new ClassPd();
-        test.setPeriodNo(1);
-        test.setTeacherFirst("FirstName");
-        test.setTeacherLast("LastName");
-        test.setCastOf(new Course());
+            int remainder = (int) (1900 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
+            classLauncherGrid.setPadding(new Insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
 
-        for (int i = 0; i < allClasses.size(); i++) {
-            test.setPeriodNo(new Random().nextInt(10));
-            allClasses.set(i, test);
-            ClassLauncher launcher = new ClassLauncher(allClasses.get(i), clWidth);
-            classLauncherGrid.add(launcher, i % launchersPerRow, i / launchersPerRow);
+            ClassPd test = new ClassPd();
+            test.setPeriodNo(1);
+            test.setTeacherFirst("FirstName");
+            test.setTeacherLast("LastName");
+            test.setCastOf(new Course());
+
+//        allClasses.sort(Comparator.comparing(ClassPd::getPeriodNo)); //will need this later when the periodNo acutally exists at this point.
+
+            for (int i = 0; i < allClasses.size(); i++) {
+                test.setPeriodNo(new Random().nextInt(10));
+                allClasses.set(i, test);
+                ClassLauncher launcher = new ClassLauncher(allClasses.get(i), clWidth);
+                classLauncherGrid.add(launcher, i % launchersPerRow, i / launchersPerRow);
+            }
+
+            //organizations
+
+            GridPane organizationsGrid = new GridPane();
+            contentPanes[2] = organizationsGrid;
+
+            //browse lessons
+
+            GridPane browseLessonsGrid = new GridPane();
+            contentPanes[3] = browseLessonsGrid;
+
+            //community
+
+            GridPane communityGrid = new GridPane();
+            contentPanes[4] = communityGrid;
+
+
+            for (Pane p: contentPanes) {
+                p.setPrefWidth(1920);
+                p.setPrefHeight(1080);
+            }
+            contentPanesWrapper.getChildren().addAll(contentPanes);
+            mainBody.getChildren().add(contentPanesWrapper);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        //organizations
-
-        GridPane organizationsGrid = new GridPane();
-        contentPanes[2] = organizationsGrid;
-
-        //browse lessons
-
-        GridPane browseLessonsGrid = new GridPane();
-        contentPanes[3] = organizationsGrid;
-
-        //community
-
-        GridPane communityGrid = new GridPane();
-        contentPanes[4] = communityGrid;
         
         picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
@@ -402,6 +465,7 @@ public class Main extends Application {
         });
 
 
+        repositionTopBarScrollBar(0, 0);
 
         state = BASE_STATE;
         getPrimaryStage().show();
@@ -574,8 +638,8 @@ public class Main extends Application {
 
     private void wakeup() {
         state = BASE_STATE;
-        getTop_bar().setVisible(true);
-        FadeTransition fadein = new FadeTransition(Duration.millis(200), getTop_bar());
+        topbarWrapper.setVisible(true);
+        FadeTransition fadein = new FadeTransition(Duration.millis(200), topbarWrapper);
         fadein.setFromValue(0);
         fadein.setToValue(1);
         fadein.play();
@@ -589,7 +653,7 @@ public class Main extends Application {
 
     private void sleep() {
         state = SLEEP_STATE;
-        getTop_bar().setVisible(false);
+        topbarWrapper.setVisible(false);
         getMainBody().setVisible(false);
         FadeTransition ft = new FadeTransition(Duration.millis(200), getSleepBody());
         ft.setFromValue(0);
@@ -712,28 +776,40 @@ public class Main extends Application {
     };
 
     private void scrollBody(int scrollPos, Text changeText) {
+        int oldMenu = currentMenu;
         changeText.setText(getSubtitles()[scrollPos]);
         currentMenu = scrollPos;
         BarMenu m = getMenus()[scrollPos];
         for (BarMenu m1 :
                 getMenus()) {
-            m1.setFont(Font.font(m.getFont().getFamily(), FontWeight.NORMAL, m.getFont().getSize()));
+            m1.setFont(Font.font(m.getFont().getFamily(), FontPosture.REGULAR, m.getFont().getSize()));
         }
-        m.setFont(Font.font(m.getFont().getFamily(), FontWeight.BOLD, m.getFont().getSize()));
-        mainBody.getChildren().clear();
-        mainBody.getChildren().add(contentPanes[scrollPos]);
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(100), contentPanes[scrollPos]);
-        fadeTransition.setFromValue(0);
-        fadeTransition.setToValue(1);
-        fadeTransition.play();
+        m.setFont(Font.font(m.getFont().getFamily(), FontPosture.ITALIC, m.getFont().getSize()));
+        int duration = 200;
+        TranslateTransition bodyTransition = new TranslateTransition(Duration.millis(duration), contentPanesWrapper);
+        bodyTransition.setToX(-1920 * scrollPos);
+        bodyTransition.play();
+
+        repositionTopBarScrollBar(scrollPos, duration);
+    }
+
+    private void repositionTopBarScrollBar(int scrollPos, int duration) {
+        TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
+        scrollBarTransition.setToX(menus[scrollPos].getLayoutX());
+        Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), 10 * menus[scrollPos].getText().length())));
+        growShrink.setCycleCount(1);
+        growShrink.play();
+        scrollBarTransition.play();
     }
 
     void quitTerminal() {
         getTerm().exit();
-        state = BASE_STATE;
-        ObservableList<Node> workingCollection = FXCollections.observableArrayList(getMainArea().getChildren());
-        Collections.swap(workingCollection, 2, 3);
-        getMainArea().getChildren().setAll(workingCollection);
+        getTerm().exit.setOnFinished(event -> {
+            state = BASE_STATE;
+            ObservableList<Node> workingCollection = FXCollections.observableArrayList(getMainArea().getChildren());
+            Collections.swap(workingCollection, 2, 3);
+            getMainArea().getChildren().setAll(workingCollection);
+        });
     }
 
     @Override
