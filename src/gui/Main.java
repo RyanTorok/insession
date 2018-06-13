@@ -183,11 +183,12 @@ public class Main extends Application {
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             topBarScrollBar.setTranslateX(event.getSceneX());
+            contentPanesWrapper.setTranslateX(Math.max(-4 * 1920, Math.min(0, -5 * (event.getSceneX() - 450) * 4)));
             tbsbDrag = true;
         });
 
         top_bar.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
-            if (!tbsbDrag)
+            if (!tbsbDrag && event.getTarget() != topbar)
                 return;
             tbsbDrag = false;
             double endX = event.getSceneX();
@@ -204,7 +205,6 @@ public class Main extends Application {
                 i++;
             }
             scrollBody(closestIndex, subText);
-            repositionTopBarScrollBar(closestIndex, 100);
         });
 
         topbarWrapper = new StackPane(topbar, topBarScrollBar);
