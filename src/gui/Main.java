@@ -1,5 +1,7 @@
 package gui;
 
+import classes.ClassPd;
+import classes.Course;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,6 +21,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -33,6 +36,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -47,9 +51,11 @@ public class Main extends Application {
     public static final int TERMINAL_STATE = 2;
     public static final int SIDEBAR_STATE = 3;
 
+    private Pane[] contentPanes;
+
     private Node top_bar;
     private Node sleepBody;
-    private Node mainBody;
+    private Pane mainBody;
     private Text clock;
     private Text date;
     private Node picture;
@@ -87,6 +93,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         //create taskbar icon
         this.primaryStage = primaryStage;
+        contentPanes = new Pane[5];
         Root.setPortal(this);
         User user = User.read();
         String icon_path = Address.root_addr + File.separator + "resources" + File.separator + "icon.png";
@@ -265,6 +272,58 @@ public class Main extends Application {
             }
         });
 
+        //content panes
+
+        //latest
+        GridPane latestGrid = new GridPane();
+        contentPanes[0] = latestGrid;
+
+        //classes
+        GridPane classLauncherGrid = new GridPane();
+        contentPanes[1] = classLauncherGrid;
+
+        List<ClassPd> allClasses = new ArrayList<>();
+        allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesTeacher()));
+        allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesStudent()));
+
+        ArrayList<ClassLauncher> launchers = new ArrayList<>();
+        classLauncherGrid.setHgap(40);
+        classLauncherGrid.setVgap(40);
+        classLauncherGrid.setPadding(new Insets(classLauncherGrid.getHgap()));
+
+        int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
+
+        int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
+        int clWidth = (int) (1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
+
+        ClassPd test = new ClassPd();
+        test.setPeriodNo(1);
+        test.setTeacherFirst("FirstName");
+        test.setTeacherLast("LastName");
+        test.setCastOf(new Course());
+
+        for (int i = 0; i < allClasses.size(); i++) {
+            test.setPeriodNo(new Random().nextInt(10));
+            allClasses.set(i, test);
+            ClassLauncher launcher = new ClassLauncher(allClasses.get(i), clWidth);
+            classLauncherGrid.add(launcher, i % launchersPerRow, i / launchersPerRow);
+        }
+
+        //organizations
+
+        GridPane organizationsGrid = new GridPane();
+        contentPanes[2] = organizationsGrid;
+
+        //browse lessons
+
+        GridPane browseLessonsGrid = new GridPane();
+        contentPanes[3] = organizationsGrid;
+
+        //community
+
+        GridPane communityGrid = new GridPane();
+        contentPanes[4] = communityGrid;
+        
         picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
         });
@@ -342,6 +401,8 @@ public class Main extends Application {
             }
         });
 
+
+
         state = BASE_STATE;
         getPrimaryStage().show();
     }
@@ -378,7 +439,7 @@ public class Main extends Application {
         String partly_cloudy_now = isDaytime ? day_partly_cloudy : night_cloudy;
 
         //reset weatherpane
-        weatherPane.getChildren().removeAll();
+        weatherPane.getChildren().clear();
         if (weatherParticleTimer != null)
             weatherParticleTimer.stop();
         if (lightningTimer != null)
@@ -504,8 +565,9 @@ public class Main extends Application {
             getDate().setText(timeanddate[0]);
         }
         int hour = Integer.parseInt(new SimpleDateFormat("H").format(date));
+        int newHrChecksum = Integer.parseInt(new SimpleDateFormat("mmss").format(date));
         boolean isDaytime = hour > 6 && hour < 21;
-        if (day &&  !isDaytime || !day && isDaytime) {
+        if (day &&  !isDaytime || !day && isDaytime || newHrChecksum == 0 && !day) {
             setWeatherGraphics(background, weatherPane);
         }
     }
@@ -517,6 +579,7 @@ public class Main extends Application {
         fadein.setFromValue(0);
         fadein.setToValue(1);
         fadein.play();
+        mainBody.setVisible(true);
         FadeTransition fadein_ = new FadeTransition(Duration.millis(200), getMainBody());
         fadein_.setFromValue(0);
         fadein_.setToValue(1);
@@ -622,6 +685,11 @@ public class Main extends Application {
         return subtitles;
     }
 
+    public void launchClass(ClassPd classPd) {
+        assert state == BASE_STATE;
+        System.out.println("Launch " + classPd.getCastOf().getName());
+    }
+
     class BarMenu extends Text {
         int scrollPos;
         public BarMenu(String text, int order) {
@@ -652,6 +720,12 @@ public class Main extends Application {
             m1.setFont(Font.font(m.getFont().getFamily(), FontWeight.NORMAL, m.getFont().getSize()));
         }
         m.setFont(Font.font(m.getFont().getFamily(), FontWeight.BOLD, m.getFont().getSize()));
+        mainBody.getChildren().clear();
+        mainBody.getChildren().add(contentPanes[scrollPos]);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(100), contentPanes[scrollPos]);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
     }
 
     void quitTerminal() {
@@ -733,7 +807,8 @@ public class Main extends Application {
             menus.add(help);
             menus.add(switch_user);
             menus.add(save);
-            
+
+
             openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false)));
 
             grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

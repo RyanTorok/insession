@@ -37,6 +37,8 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private int zipcode;
     private double[] latlon = new double[]{0,0};
     private boolean tempUnits; //false for Metric, true for English
+    private classes.ClassPd[] classesStudent;
+    private classes.ClassPd[] classesTeacher;
 
     public User(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -402,5 +404,22 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         return zipcode;
     }
 
+    public classes.ClassPd[] getClassesTeacher() {
+//        classesTeacher = new classes.ClassPd[7];
+        return classesTeacher;
+    }
+
+    public void setClassesTeacher(classes.ClassPd[] classesTeacher) {
+        this.classesTeacher = classesTeacher;
+    }
+
+    public classes.ClassPd[] getClassesStudent() {
+  //      classesStudent = new classes.ClassPd[7];
+        return classesStudent;
+    }
+
+    public void setClassesStudent(classes.ClassPd[] classesStudent) {
+        this.classesStudent = classesStudent;
+    }
 }
 

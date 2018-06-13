@@ -154,7 +154,6 @@ public class Terminal extends AnchorPane {
             }
         }
         if (event.getCode().equals(KeyCode.TAB)) {
-            System.out.println("tab!");
             int lastSpace = current.getText().indexOf(" ") + 1;
             String before = current.getText().substring(0, lastSpace);
             String text = current.getText().substring(lastSpace);

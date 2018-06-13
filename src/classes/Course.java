@@ -1,5 +1,7 @@
 package classes;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,7 @@ public class Course {
     private int[] classroomSize;
     private Course combinedWith;
     private ClassPd[] classes;
+    Image graphic;
 
     private MarkingPeriod[] markingPeriods;
 
@@ -93,5 +96,13 @@ public class Course {
 
     public void setClasses(ClassPd[] classes) {
         this.classes = classes;
+    }
+
+    public Image getGraphic() {
+        return graphic;
+    }
+
+    public void setGraphic(Image graphic) {
+        this.graphic = graphic;
     }
 }
