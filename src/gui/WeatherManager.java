@@ -96,7 +96,7 @@ public class WeatherManager {
         }
         if (descLC.contains("snow") || descLC.contains("ice") || descLC.contains("icy") || descLC.contains("mix")
                 || descLC.contains("sleet") || descLC.contains("freez") || descLC.contains("blizzard")) {
-            setCurrent(lastHr > HEAVY_THRESHOLD ? WeatherState.Blizzard : WeatherState.Snow);
+            setCurrent(lastHr > HEAVY_THRESHOLD || descLC.contains("heavy") || descLC.contains("blizzard") ? WeatherState.Blizzard : WeatherState.Snow);
             return;
         }
         if (descLC.contains("storm") || descLC.contains("thunder")) {
@@ -104,7 +104,7 @@ public class WeatherManager {
             return;
         }
         if (descLC.contains("rain") || descLC.contains("shower") || descLC.contains("drizzle")) {
-            setCurrent(lastHr > HEAVY_THRESHOLD ? WeatherState.Heavy_Rain : WeatherState.Light_Rain);
+            setCurrent(lastHr > HEAVY_THRESHOLD || descLC.contains("heavy") ? WeatherState.Heavy_Rain : WeatherState.Light_Rain);
             return;
         }
         if (descLC.contains("cloud") || descLC.contains("overcast")) {
