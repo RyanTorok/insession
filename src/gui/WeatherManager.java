@@ -84,10 +84,6 @@ public class WeatherManager {
                 lastHr = (Double) lastHrObj;
             }
         }
-        try {
-        } catch (Exception e) {
-            lastHr = 0.0;
-        }
         if (lastHr == null)
             lastHr = 0.0;
         if (descLC.contains("fog")) {
