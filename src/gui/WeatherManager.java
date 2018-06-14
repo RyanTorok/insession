@@ -77,7 +77,13 @@ public class WeatherManager {
         Object lastHrObj = properties.getJSONObject("precipitationLastHour").get("value");
         if (lastHrObj.equals(null))
             lastHr = 0.0;
-        else lastHr = (Double) lastHrObj;
+        else {
+            if (lastHrObj instanceof  Integer) {
+                lastHr = (double) (int) lastHrObj;
+            } else {
+                lastHr = (Double) lastHrObj;
+            }
+        }
         try {
         } catch (Exception e) {
             lastHr = 0.0;

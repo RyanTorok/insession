@@ -110,7 +110,11 @@ public class Main extends Application {
         if (user == null || User.getSerCount() > 1) {
                 newUser();
         } else {
-            switchToMain();
+            try {
+                switchToMain();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
