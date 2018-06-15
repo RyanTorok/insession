@@ -224,12 +224,11 @@ public class Main extends Application {
         clock.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
         date.setFill(Color.WHITE);
         date.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 45));
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Main.this.updateTime();
-            }
-        }, 0, 500);
+        Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
+            Main.this.updateTime();
+        }));
+        clockTimeline.setCycleCount(Animation.INDEFINITE);
+        clockTimeline.play();
         BorderPane sleepbody = new BorderPane();
         sleepBody = sleepbody;
 
