@@ -6,7 +6,6 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -120,7 +118,8 @@ public class Main extends Application {
 
     public void switchToMain() {
         getPrimaryStage().setMaximized(false);
-        getPrimaryStage().setTitle("Welcome, " + Root.getActiveUser().getFirst() + " - Paintbrush LMS");
+        String title_name = Root.getActiveUser() != null && Root.getActiveUser().getFirst() != null ? Root.getActiveUser().getFirst() : "Guest";
+        getPrimaryStage().setTitle("Welcome, " + title_name + " - Paintbrush LMS");
         Text mainlogo = new Text("paintbrush.    ");
         mainlogo.setFont(Font.font("Comfortaa", 60));
         mainlogo.setFill(Color.WHITE);
@@ -244,16 +243,7 @@ public class Main extends Application {
             }
         }, 3000000, 300000);
         temperature = new Text();
-        boolean temperature_nullcheck = getManager().getTempCelsius() == null;
-        if (temperature_nullcheck ) {
-            getTemperature().setText("----" + (char) 0x00B0 + (Root.getActiveUser().usesFahrenheit() ? "F" : "C"));
-        } else {
-            if (Root.getActiveUser().usesFahrenheit()) {
-                getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
-            } else {
-                getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
-            }
-        }
+        setTemperatureDisplay();
         getTemperature().setFill(Color.WHITE);
         getTemperature().setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
         getTemperature().setTextAlignment(TextAlignment.RIGHT);
@@ -468,10 +458,10 @@ public class Main extends Application {
         });
 
 
-        repositionTopBarScrollBar(0, 0);
 
         state = BASE_STATE;
         getPrimaryStage().show();
+        repositionTopBarScrollBar(0, 1);
     }
 
 
@@ -482,13 +472,21 @@ public class Main extends Application {
     }
 
     public void updateWeatherDisplay() {
-        if (Root.getActiveUser().usesFahrenheit()) {
-            getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
-        } else {
-            getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
-        }
+        setTemperatureDisplay();
         getWeatherDesc().setText(getManager().getDescription());
         setWeatherGraphics(background, weatherPane);
+    }
+
+    private void setTemperatureDisplay() {
+        if (getManager().getTempCelsius() == null) {
+            getTemperature().setText("----" + (char) 0x00B0 + (Root.getActiveUser().usesFahrenheit() ? "F" : "C"));
+        } else {
+            if (Root.getActiveUser().usesFahrenheit()) {
+                getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
+            } else {
+                getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
+            }
+        }
     }
 
     private void setWeatherGraphics(ImageView backgd, AnchorPane weatherPane) {
@@ -521,20 +519,33 @@ public class Main extends Application {
                 backgd.setImage(parseBackgroundImage(cloudy_now));
                 fog(backgd);
                 break;
+            case Fog_And_Snow:
+                fog(backgd);
             case Snow:
                 backgd.setImage(parseBackgroundImage(cloudy_now));
                 snow(weatherPane, 75);
                 break;
+            case Fog_And_Blizzard:
+                fog(backgd);
             case Blizzard:
                 backgd.setImage(parseBackgroundImage(cloudy_now));
                 snow(weatherPane, 200);
                 break;
+            case Fog_And_Thunderstorm:
+                fog(backgd);
             case Thunderstorm:
                 lightning(backgd, .167); //no break
             case Heavy_Rain:
                 rain(weatherPane, 800);
                 backgd.setImage(parseBackgroundImage(cloudy_now));
                 break;
+            case Fog_And_Heavy_Rain:
+                fog(backgd);
+                rain(weatherPane, 800);
+                backgd.setImage(parseBackgroundImage(cloudy_now));
+                break;
+            case Fog_And_Light_Rain:
+                fog(backgd);
             case Light_Rain:
                 rain(weatherPane, 400); //no break;
             case Cloudy:
@@ -606,14 +617,14 @@ public class Main extends Application {
     }
 
     private void rain(AnchorPane weatherPane, int particlesPerSecond) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new RainParticle(weatherPane).shape)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new RainParticle(weatherPane, day).shape)));
         timeline.setCycleCount(Animation.INDEFINITE);
         weatherParticleTimer = timeline;
         timeline.play();
     }
 
     private void snow(AnchorPane weatherPane, int particlesPerSecond) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new SnowParticle(weatherPane).shape)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new SnowParticle(weatherPane, day).shape)));
         timeline.setCycleCount(Animation.INDEFINITE);
         weatherParticleTimer = timeline;
         timeline.play();

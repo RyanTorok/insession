@@ -11,18 +11,17 @@ public class SnowParticle extends PrecipParticle {
 
     private AnchorPane holder;
 
-    SnowParticle(AnchorPane holder) {
-        super(holder, 1);
-    }
-
-    private SnowParticle(int size) {
-        super(size, 1);
+    SnowParticle(AnchorPane holder, boolean day) {
+        super(holder, 1, day);
     }
 
     @Override
     protected Shape get() {
         Circle circle = new Circle();
-        circle.setFill(Color.WHITE);
+        Color fill = Color.WHITE;
+        if (!this.day)
+            fill = fill.darker();
+        circle.setFill(fill);
         circle.setRadius(4 * this.size);
         return circle;
     }

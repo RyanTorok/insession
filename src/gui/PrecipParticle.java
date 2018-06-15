@@ -8,21 +8,23 @@ import javafx.util.Duration;
 import java.util.Random;
 
 public abstract class PrecipParticle {
+    final boolean day;
     Shape shape;
     int size;
     private AnchorPane holder;
 
-    PrecipParticle(AnchorPane holder, double speed) {
-        this(new Random().nextInt(6) + 1, speed);
+    PrecipParticle(AnchorPane holder, double speed, boolean day) {
+        this(new Random().nextInt(6) + 1, speed, day);
         this.holder = holder;
     }
 
-    public PrecipParticle(int size, double speed) {
+    public PrecipParticle(int size, double speed, boolean day) {
         if (size < 3)
             this.size = 1;
         else if (size < 5)
             this.size = 2;
         else this.size = 3;
+        this.day = day;
         shape = get();
 
         //random start point

@@ -11,17 +11,16 @@ public class RainParticle extends PrecipParticle {
 
     private AnchorPane holder;
 
-    RainParticle(AnchorPane holder) {
-        super(holder, 5);
-    }
-
-    private RainParticle(int size) {
-        super(size, 4);
+    RainParticle(AnchorPane holder, boolean day) {
+        super(holder, 5, day);
     }
 
     protected Shape get() {
         Line l = new Line();
-        l.setStroke(Color.LIGHTBLUE.deriveColor(0, 1, 1, 0.4));
+        Color stroke = (Color.LIGHTBLUE.deriveColor(0, 1, 1, 0.4));
+        if (!this.day)
+            stroke = stroke.darker();
+        l.setStroke(stroke);
         l.setStrokeWidth(size);
         l.setStartX(0);
         l.setStartY(0);

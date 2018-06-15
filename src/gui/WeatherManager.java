@@ -86,21 +86,46 @@ public class WeatherManager {
         }
         if (lastHr == null)
             lastHr = 0.0;
+        boolean fog = false;
+        boolean isHeavy = lastHr > HEAVY_THRESHOLD || descLC.contains("heavy") || descLC.contains("blizzard");
         if (descLC.contains("fog")) {
+            fog = true;
             setCurrent(WeatherState.Fog);
-            return;
         }
         if (descLC.contains("snow") || descLC.contains("ice") || descLC.contains("icy") || descLC.contains("mix")
                 || descLC.contains("sleet") || descLC.contains("freez") || descLC.contains("blizzard")) {
-            setCurrent(lastHr > HEAVY_THRESHOLD || descLC.contains("heavy") || descLC.contains("blizzard") ? WeatherState.Blizzard : WeatherState.Snow);
+            if (fog) {
+                if (isHeavy)
+                    setCurrent(WeatherState.Fog_And_Blizzard);
+                else
+                    setCurrent(WeatherState.Fog_And_Snow);
+            } else {
+                if (isHeavy)
+                    setCurrent(WeatherState.Blizzard);
+                else
+                    setCurrent(WeatherState.Snow);
+            }
             return;
         }
         if (descLC.contains("storm") || descLC.contains("thunder")) {
-            setCurrent(WeatherState.Thunderstorm);
+            if (fog)
+                setCurrent(WeatherState.Fog_And_Thunderstorm);
+            else
+                setCurrent(WeatherState.Thunderstorm);
             return;
         }
         if (descLC.contains("rain") || descLC.contains("shower") || descLC.contains("drizzle")) {
-            setCurrent(lastHr > HEAVY_THRESHOLD || descLC.contains("heavy") ? WeatherState.Heavy_Rain : WeatherState.Light_Rain);
+            if (fog) {
+                if (isHeavy)
+                    setCurrent(WeatherState.Fog_And_Heavy_Rain);
+                else
+                    setCurrent(WeatherState.Fog_And_Light_Rain);
+            } else {
+                if (isHeavy)
+                    setCurrent(WeatherState.Heavy_Rain);
+                else
+                    setCurrent(WeatherState.Light_Rain);
+            }
             return;
         }
         if (descLC.contains("cloud") || descLC.contains("overcast")) {
@@ -109,7 +134,8 @@ public class WeatherManager {
             } else setCurrent(WeatherState.Cloudy);
             return;
         }
-        setCurrent(WeatherState.Sunny);
+        if (!fog)
+            setCurrent(WeatherState.Sunny);
     }
 
     public void update(int zipCode){
@@ -152,7 +178,7 @@ public class WeatherManager {
         return tempFahrenheit;
     }
 
-    public void setTempFahrenheit(double tempFahrenheit) {
+    public void setTempFahrenheit(Double tempFahrenheit) {
         this.tempFahrenheit = tempFahrenheit;
     }
 }
