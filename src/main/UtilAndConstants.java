@@ -10,8 +10,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by 11ryt on 7/3/2017.
@@ -64,15 +68,49 @@ public class UtilAndConstants {
             setOperatingSystem("mac");
     }
 
+    public static String parseTimestamp(Timestamp timestamp) {
+        long then = timestamp.getTime();
+        long now = System.currentTimeMillis();
+        BigDecimal daysAgo_ = convertTimeUnits(now - then, (byte) 6);
+        double daysAgo = daysAgo_.doubleValue();
+        if (daysAgo < 7) {
+            //less than one week
+            if (daysAgo < 1) {
+                //less than one day
+                double hoursAgo = daysAgo * 24;
+                if (hoursAgo < 1) {
+                    //less than one hour
+                    double minutesAgo = 60 * hoursAgo;
+                    if (minutesAgo < 1) {
+                        //less than one minute
+                        return ((int) (60 * minutesAgo)) + pluralizeTimeUnits(" second", (int)(60 * minutesAgo)) + " ago";
+                    } else return ((int) minutesAgo) + pluralizeTimeUnits(" minute", (int) minutesAgo) + " ago";
+                } else return ((int) hoursAgo) + pluralizeTimeUnits(" hour", (int) hoursAgo) + " ago";
+            } else  return ((int) daysAgo) + pluralizeTimeUnits(" day", (int) daysAgo) + " ago";
+        } else {
+            SimpleDateFormat year = new SimpleDateFormat("YYYY");
+            String thenYear = year.format(new Date(then)), nowYear = year.format(new Date(now));
+            if (thenYear.equals(nowYear))
+                return new SimpleDateFormat("MMMMMMMMM dd").format(then);
+            return new SimpleDateFormat("M/d/YYYY").format(then);
+        }
+    }
+
+    private static String pluralizeTimeUnits(String singular, int count) {
+        if (count > 1)
+            return singular + "s";
+        else return singular;
+    }
+
     public int getMAX_ATTENDANCE_EXTRA_TIME() {
         return MAX_ATTENDANCE_EXTRA_TIME;
     }
 
-    public long elapsedTimeMillis(Time earlierTime, Time laterTime) {
+    public static long elapsedTimeMillis(Time earlierTime, Time laterTime) {
         return laterTime.getTime() - earlierTime.getTime();
     }
 
-    public BigDecimal elapsedTimeUnits(Time earlierTime, Time laterTime, byte convertTo) {
+    public static BigDecimal elapsedTimeUnits(Time earlierTime, Time laterTime, byte convertTo) {
         //convertTo Key:
         //0: millisecond (1/1000 second) - returns original value
         //1: centisecond (1/100 second)
@@ -88,29 +126,29 @@ public class UtilAndConstants {
         return convertTimeUnits(elapsedTimeMillis(earlierTime, laterTime), convertTo);
     }
 
-    private BigDecimal convertTimeUnits(long millis, byte convertTo) {
+    private static BigDecimal convertTimeUnits(long millis, byte convertTo) {
         BigDecimal bd = new BigDecimal(Long.toString(millis));
         switch (convertTo) {
             case 10:
-                bd = bd.divide(new BigDecimal("10"));
+                bd = bd.divide(new BigDecimal("10"), 25, RoundingMode.HALF_UP);
             case 9:
-                bd = bd.divide(new BigDecimal("10"));
+                bd = bd.divide(new BigDecimal("10"), 25, RoundingMode.HALF_UP);
             case 8:
-                bd = bd.divide(new BigDecimal("10"));
+                bd = bd.divide(new BigDecimal("10"), 25, RoundingMode.HALF_UP);
             case 7:
-                bd = bd.divide(new BigDecimal("365.2422"));
+                bd = bd.divide(new BigDecimal("365.2422"), 25, RoundingMode.HALF_UP);
             case 6:
-                bd = bd.divide(new BigDecimal("24"));
+                bd = bd.divide(new BigDecimal("24"), 25, RoundingMode.HALF_UP);
             case 5:
-                bd = bd.divide(new BigDecimal("60"));
+                bd = bd.divide(new BigDecimal("60"), 25, RoundingMode.HALF_UP);
             case 4:
-                bd = bd.divide(new BigDecimal("60"));
+                bd = bd.divide(new BigDecimal("60"), 25, RoundingMode.HALF_UP);
             case 3:
-                bd = bd.divide(new BigDecimal("10"));
+                bd = bd.divide(new BigDecimal("10"), 25, RoundingMode.HALF_UP);
             case 2:
-                bd = bd.divide(new BigDecimal("10"));
+                bd = bd.divide(new BigDecimal("10"), 25, RoundingMode.HALF_UP);
             case 1:
-                bd = bd.divide(new BigDecimal("10"));
+                bd = bd.divide(new BigDecimal("10"), 25, RoundingMode.HALF_UP);
             case 0:
                 break;
             default:
@@ -192,5 +230,29 @@ public class UtilAndConstants {
         public Filler() {
             HBox.setHgrow(this, Priority.ALWAYS);
         }
+    }
+
+    public static void hightlightOnMouseOver(Node n) {
+
+        String oldStyle_ = n.getStyle();
+        if (!oldStyle_.contains("-fx-background-color")) {
+            if (n.getStyle() == null || n.getStyle().length() == 0)
+                n.setStyle("-fx-background-color: #000000");
+            else n.setStyle(n.getStyle() + "; -fx-background-color: #000000");
+            oldStyle_ = n.getStyle();
+        }
+        final String oldStyle = oldStyle_;
+        int colorIndex = n.getStyle().indexOf("-fx-background-color: #") + 22;
+        String oldColorStr = n.getStyle().substring(colorIndex, colorIndex + 7);
+        Color oldColor = Color.web(oldColorStr);
+        Color newColor = UtilAndConstants.highlightColor(oldColor);
+        String newColorStr = UtilAndConstants.colorToHex(newColor);
+        String newStyle = oldStyle.replaceAll("-fx-background-color: #......", "-fx-background-color: " + newColorStr);
+        n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+            n.setStyle(oldStyle);
+        });
+        n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            n.setStyle(newStyle);
+        });
     }
 }

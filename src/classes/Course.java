@@ -2,13 +2,15 @@ package classes;
 
 import javafx.scene.image.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by S507098 on 4/13/2017.
  */
 
-public class Course {
+public class Course implements Serializable {
+    static final long serialVersionUID = 103L;
     private String name;
     private String alias;
     private String classCode;
@@ -18,7 +20,8 @@ public class Course {
     private int[] classroomSize;
     private Course combinedWith;
     private ClassPd[] classes;
-    Image graphic;
+    private String imageFN;
+    transient Image graphic;
 
     private MarkingPeriod[] markingPeriods;
 
@@ -99,10 +102,16 @@ public class Course {
     }
 
     public Image getGraphic() {
+        if (graphic == null) {
+            if (imageFN == null)
+                return null;
+            graphic = new Image(imageFN);
+        }
         return graphic;
     }
 
     public void setGraphic(Image graphic) {
+        imageFN = graphic.getUrl();
         this.graphic = graphic;
     }
 }

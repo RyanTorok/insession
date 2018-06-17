@@ -1,11 +1,15 @@
 package classes;
 
 import javafx.scene.paint.Color;
+import main.Root;
 import main.Student;
 import main.Teacher;
 
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by S507098 on 4/13/2017.
@@ -16,7 +20,7 @@ public class ClassPd implements Serializable {
     static final long serialVersionUID = 100L;
 
     private Course castOf;
-    private ArrayList<Student> studentList;
+    private transient ArrayList<Student> studentList;
     private int periodNo;
     private int capacity;
     private transient Color color;
@@ -83,5 +87,24 @@ public class ClassPd implements Serializable {
 
     public void setTeacherLast(String teacherLast) {
         this.teacherLast = teacherLast;
+    }
+
+    public void fireUpdate(Record.Type type, Date end, String message) {
+        //TODO check for existing record chain
+        Root.getActiveUser().getUpdates().add(new Record(type, end) {
+            {
+                ArrayList<RecordEntry> entries = new ArrayList<>();
+                entries.add(new RecordEntry(Root.getActiveUser(), message, new Timestamp(System.currentTimeMillis()), this, ClassPd.this));
+                setHistory(entries);
+            }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("hello!"); //TODO
+            }
+        });
+    }
+
+    public void startSession() {
+        fireUpdate(Record.Type.Session_Start, getTodaysInstance().getEndTime(), null);
     }
 }

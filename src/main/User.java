@@ -1,11 +1,15 @@
 package main;
 
+import classes.ClassPd;
+import classes.Course;
 import classes.Record;
+import classes.RecordEntry;
 import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import terminal.Address;
 
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -30,7 +34,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private ArrayList<Record> updates;
     private Timestamp lastVisit;
     private ArrayList<String> searchHistory;
-    private ArrayList<module.Module> watchHistory;
+    private transient ArrayList<module.Module> watchHistory;
     private String passwordSalt;
     private String imageFN;
     private boolean clock24Hour = false;
@@ -52,6 +56,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         this.searchHistory = new ArrayList<>();
         this.watchHistory = new ArrayList<>();
         this.accentColor = new double[]{0, 0, 0};
+        this.updates = new ArrayList<>();
     }
 
     protected User() {
@@ -119,6 +124,9 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
      * @return the updates
      */
     public ArrayList<Record> getUpdates() {
+        if (updates == null) {
+            updates = new ArrayList<>();
+        }
         return updates;
     }
 
@@ -405,7 +413,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     }
 
     public classes.ClassPd[] getClassesTeacher() {
-//        classesTeacher = new classes.ClassPd[7];
+        classesTeacher = new classes.ClassPd[0];
         return classesTeacher;
     }
 
@@ -414,7 +422,6 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     }
 
     public classes.ClassPd[] getClassesStudent() {
-  //      classesStudent = new classes.ClassPd[7];
         return classesStudent;
     }
 

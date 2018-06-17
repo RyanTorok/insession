@@ -1,7 +1,6 @@
 package gui;
 
-import classes.ClassPd;
-import classes.Course;
+import classes.*;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -30,11 +29,15 @@ import main.UtilAndConstants;
 import terminal.Address;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main extends Application {
 
@@ -185,6 +188,8 @@ public class Main extends Application {
         topBarScrollBar.setStroke(UtilAndConstants.highlightColor(Root.getActiveUser().getAccentColor()));
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            if (event.getTarget() == picture || event.getTarget() == name)
+                return;
             topBarScrollBar.setTranslateX(event.getSceneX());
             contentPanesWrapper.setTranslateX(Math.max(-4 * 1920, Math.min(0, -5 * (event.getSceneX() - 450) * 4)));
             tbsbDrag = true;
@@ -223,9 +228,7 @@ public class Main extends Application {
         clock.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 100));
         date.setFill(Color.WHITE);
         date.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 45));
-        Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
-            Main.this.updateTime();
-        }));
+        Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> Main.this.updateTime()));
         clockTimeline.setCycleCount(Animation.INDEFINITE);
         clockTimeline.play();
         BorderPane sleepbody = new BorderPane();
@@ -235,13 +238,9 @@ public class Main extends Application {
         weatherPane = new AnchorPane();
         manager = new WeatherManager(Root.getActiveUser().getZipcode());
         getManager().update();
-        Timer weatherUpdateTimer = new Timer();
-        weatherUpdateTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                updateWeather();
-            }
-        }, 3000000, 300000);
+        Timeline weatherUpdateTimer = new Timeline(new KeyFrame(Duration.millis(300000), event -> updateWeather()));
+        weatherUpdateTimer.setCycleCount(Animation.INDEFINITE);
+        weatherUpdateTimer.play();
         temperature = new Text();
         setTemperatureDisplay();
         getTemperature().setFill(Color.WHITE);
@@ -310,76 +309,96 @@ public class Main extends Application {
         });
 
         //content panes
-        try {
-            contentPanesWrapper = new HBox();
-            contentPanesWrapper.setPrefWidth(1920 * contentPanes.length);
-            contentPanesWrapper.setPrefHeight(1080);
+        contentPanesWrapper = new HBox();
+        contentPanesWrapper.setPrefWidth(1920 * contentPanes.length);
+        contentPanesWrapper.setPrefHeight(1080);
 
-            //latest
-            GridPane latestGrid = new GridPane();
-            contentPanes[0] = latestGrid;
+        //latest
+        GridPane latestGrid = new GridPane();
+        latestGrid.setPadding(new Insets(30));
+        contentPanes[0] = latestGrid;
+        latestGrid.setHgap(50);
+        latestGrid.setVgap(20);
 
-            //classes
-            GridPane classLauncherGrid = new GridPane();
-            contentPanes[1] = classLauncherGrid;
+        ArrayList<Record> updates = Root.getActiveUser().getUpdates();
 
-            List<ClassPd> allClasses = new ArrayList<>();
-            //allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesTeacher()));
-            allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesStudent()));
+        List<Record> r_announcements = updates.stream().filter(record -> record.getMenuPlacement() == Record.Sorting.Announcements).collect(Collectors.toList());
+        List<Record> r_coming_up = updates.stream().filter(record -> record.getMenuPlacement() == Record.Sorting.Coming_Up).collect(Collectors.toList());
+        List<Record> r_notifications = updates.stream().filter(record -> record.getMenuPlacement() == Record.Sorting.Notifications).collect(Collectors.toList());
 
-            ArrayList<ClassLauncher> launchers = new ArrayList<>();
-            classLauncherGrid.setHgap(40);
-            classLauncherGrid.setVgap(40);
+        LatestPane notifications = new LatestPane("Notifications", r_notifications, "Nothing new here!");
+        latestGrid.add(notifications, 0, 0);
 
-            int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
+        LatestPane announcements = new LatestPane("Announcements", r_announcements, "You're all caught up!");
+        latestGrid.add(announcements, 1, 0);
 
-            int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
-            int clWidth = (int) (1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
+        LatestPane comingUp = new LatestPane("Coming Up", r_coming_up, "Everything's done and dusted!");
+        latestGrid.add(comingUp, 2, 0);
 
-            int remainder = (int) (1900 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
-            classLauncherGrid.setPadding(new Insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
-
-            ClassPd test = new ClassPd();
-            test.setPeriodNo(1);
-            test.setTeacherFirst("FirstName");
-            test.setTeacherLast("LastName");
-            test.setCastOf(new Course());
-
-//        allClasses.sort(Comparator.comparing(ClassPd::getPeriodNo)); //will need this later when the periodNo acutally exists at this point.
-
-            for (int i = 0; i < allClasses.size(); i++) {
-                test.setPeriodNo(new Random().nextInt(10));
-                allClasses.set(i, test);
-                ClassLauncher launcher = new ClassLauncher(allClasses.get(i), clWidth);
-                classLauncherGrid.add(launcher, i % launchersPerRow, i / launchersPerRow);
-            }
-
-            //organizations
-
-            GridPane organizationsGrid = new GridPane();
-            contentPanes[2] = organizationsGrid;
-
-            //browse lessons
-
-            GridPane browseLessonsGrid = new GridPane();
-            contentPanes[3] = browseLessonsGrid;
-
-            //community
-
-            GridPane communityGrid = new GridPane();
-            contentPanes[4] = communityGrid;
+        GridPane.setHgrow(announcements, Priority.ALWAYS);
 
 
-            for (Pane p: contentPanes) {
-                p.setPrefWidth(1920);
-                p.setPrefHeight(1080);
-            }
-            contentPanesWrapper.getChildren().addAll(contentPanes);
-            mainBody.getChildren().add(contentPanesWrapper);
-        } catch (Exception e) {
-            e.printStackTrace();
+        //classes
+        GridPane classLauncherGrid = new GridPane();
+        contentPanes[1] = classLauncherGrid;
+
+        List<ClassPd> allClasses = new ArrayList<>();
+        allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesTeacher()));
+        allClasses.addAll(Arrays.asList(Root.getActiveUser().getClassesStudent()));
+
+        ArrayList<ClassLauncher> launchers = new ArrayList<>();
+        classLauncherGrid.setHgap(40);
+        classLauncherGrid.setVgap(40);
+
+        int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
+
+        int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
+        int clWidth = (int) (1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
+
+        int remainder = (int) (1900 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
+        classLauncherGrid.setPadding(new Insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
+
+        ClassPd test = new ClassPd();
+        test.setPeriodNo(1);
+        test.setTeacherFirst("FirstName");
+        test.setTeacherLast("LastName");
+        test.setCastOf(new Course());
+        for (int i = 0; i < 7; i++) {
+            test.setPeriodNo(new Random().nextInt(10));
+            allClasses.set(i, test);
         }
-        
+
+        allClasses.sort(Comparator.comparing(ClassPd::getPeriodNo).thenComparing(ClassPd::getTeacherLast).thenComparing(ClassPd::getTeacherFirst));
+
+        for (int i = 0; i < allClasses.size(); i++) {
+            ClassLauncher launcher = new ClassLauncher(allClasses.get(i), clWidth);
+            classLauncherGrid.add(launcher, i % launchersPerRow, i / launchersPerRow);
+        }
+
+        //organizations
+
+
+        GridPane organizationsGrid = new GridPane();
+        contentPanes[2] = organizationsGrid;
+
+        //browse lessons
+
+        GridPane browseLessonsGrid = new GridPane();
+        contentPanes[3] = browseLessonsGrid;
+
+        //community
+
+        GridPane communityGrid = new GridPane();
+        contentPanes[4] = communityGrid;
+
+
+        for (Pane p: contentPanes) {
+            p.setMaxSize(1860, 1000);
+            p.setMinSize(1860, 1000);
+        }
+        contentPanesWrapper.getChildren().addAll(contentPanes);
+        mainBody.getChildren().add(contentPanesWrapper);
+
         picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
         });
