@@ -69,13 +69,19 @@ public class AcctSettings extends Stage {
             invalidMsg.setText(error);
             if (error.length() == 0) {
                 //confirm old password
-                net.Root.UserMaybe testOldPwd = new net.Root().login(Root.getActiveUser().getUsername(), oldPassword.getText(), false);
+                net.Root.UserMaybe testOldPwd = net.Root.login(Root.getActiveUser().getUsername(), oldPassword.getText(), false);
                 boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
                 if (oldPasswordMatches) {
                     //try to set new password
                     boolean success = net.Root.changePassword(newPassword.getText(), testOldPwd.getUniqueID());
+                    System.out.println(success);
                     if (!success) {
                         invalidMsg.setText("A connection error occurred. Please try again.");
+                    } else {
+                        invalidMsg.setText("Your password has been successfully changed.");
+                        oldPassword.setText("");
+                        newPassword.setText("");
+                        cfPassword.setText("");
                     }
                 } else {
                     invalidMsg.setText("Your old password is incorrect.");
