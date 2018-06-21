@@ -57,10 +57,6 @@ public class AcctSettings extends Stage {
 
         Button submit = new Button("Submit");
         submit.setOnAction(event -> {
-            if (!PasswordManager.attempt(oldPassword.getText(), Root.getActiveUser())) {
-                invalidMsg.setText("Your old password is incorrect.");
-                return;
-            }
             if (!cfPassword.getText().equals(newPassword.getText())) {
                 invalidMsg.setText("Your passwords do not match. Check your spelling.");
                 return;
@@ -72,9 +68,17 @@ public class AcctSettings extends Stage {
             String error = PasswordManager.validate(newPassword.getText());
             invalidMsg.setText(error);
             if (error.length() == 0) {
-                boolean success = Root.getActiveUser().setPassword(newPassword.getText());
-                if (!success) {
-                    invalidMsg.setText("A connection error occurred. Please try again.");
+                //confirm old password
+                net.Root.UserMaybe testOldPwd = new net.Root().login(Root.getActiveUser().getUsername(), oldPassword.getText(), false);
+                boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
+                if (oldPasswordMatches) {
+                    //try to set new password
+                    boolean success = net.Root.changePassword(newPassword.getText(), testOldPwd.getUniqueID());
+                    if (!success) {
+                        invalidMsg.setText("A connection error occurred. Please try again.");
+                    }
+                } else {
+                    invalidMsg.setText("Your old password is incorrect.");
                 }
             }
         });

@@ -40,7 +40,7 @@ public class Root {
             startupError = e.getMessage();
         }
 
-        portal.main(new String[]{startupError});
+        Main.main(new String[]{startupError});
     }
 
     public static String searchForMACAddress() throws SocketException {
@@ -99,8 +99,10 @@ public class Root {
     }
 
     public static void saveAll() {
-        if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null)
+        if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
             Root.getActiveUser().write();
+            net.Root.syncSerFileUp();
+        }
         DefaultUser def = new DefaultUser();
         def.read();
         def.write();

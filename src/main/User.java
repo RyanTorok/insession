@@ -1,19 +1,24 @@
 package main;
 
 import classes.ClassPd;
-import classes.Course;
 import classes.Record;
-import classes.RecordEntry;
 import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import module.Module;
+import modulesearch.SearchRecord;
+import modulesearch.WatchRecord;
 import terminal.Address;
 
-import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Scanner;
 
 /**
  * Created by 11ryt on 4/21/2017.
@@ -23,7 +28,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     static final long serialVersionUID = 42L;
     private String mac;
     private String username;
-    private String password;
+    private byte[] password;
     private String first;
     private String middle;
     private String last;
@@ -33,18 +38,19 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private double[] accentColor;
     private ArrayList<Record> updates;
     private Timestamp lastVisit;
-    private ArrayList<String> searchHistory;
-    private transient ArrayList<module.Module> watchHistory;
-    private String passwordSalt;
+    private HashSet<SearchRecord> searchHistory;
+    private HashSet<WatchRecord> watchHistory;
+    private byte[] passwordSalt;
     private String imageFN;
     private boolean clock24Hour = false;
     private int zipcode;
     private double[] latlon = new double[]{0,0};
     private boolean tempUnits; //false for Metric, true for English
-    private classes.ClassPd[] classesStudent;
-    private classes.ClassPd[] classesTeacher;
+    private HashSet<ClassPd> classesStudent;
+    private HashSet<ClassPd> classesTeacher;
+    private Timestamp serFileTimestamp = null;
 
-    public User(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp) {
+    public User(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
         this.username = username;
         this.password = password;
@@ -53,10 +59,12 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         this.last = last;
         this.email = email;
         this.timestamp = timestamp;
-        this.searchHistory = new ArrayList<>();
-        this.watchHistory = new ArrayList<>();
+        this.searchHistory = new HashSet<>();
+        this.watchHistory = new HashSet<>();
         this.accentColor = new double[]{0, 0, 0};
         this.updates = new ArrayList<>();
+        this.classesTeacher = new HashSet<>();
+        this.classesStudent = new HashSet<>();
     }
 
     protected User() {
@@ -79,7 +87,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         return username;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
@@ -165,13 +173,8 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     /**
      * @param password the password to set
      */
-    public boolean setPassword(String password) {
-        String np = PasswordManager.set(password);
-        if (np != null) {
-            this.password = np;
-            return true;
-        }
-        return false;
+    public void setPassword(byte[] password) {
+        this.password = password;
     }
 
     /**
@@ -218,6 +221,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
 
     public void write() {
         lastVisit = new Timestamp(System.currentTimeMillis());
+        serFileTimestamp = new Timestamp(System.currentTimeMillis());
         try {
             File dest = new File("usr" + File.separator + this.getUsername() + ".ser");
             if (!dest.exists()) {
@@ -234,19 +238,15 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     }
 
     public void search(String query) {
-        searchHistory.add(query);
+        searchHistory.add(new SearchRecord(query));
     }
 
     public void watch(module.Module m) {
-        watchHistory.add(m);
+        watchHistory.add(new WatchRecord(m));
     }
 
     public void rmSearch(String query) {
         searchHistory.removeAll(Collections.singleton(query));
-    }
-
-    public void rmSearch(int index) {
-        rmSearch(searchHistory.get(index));
     }
 
     public void clearSearchHistory() {
@@ -255,10 +255,6 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
 
     public void rmWatch(module.Module m) {
         watchHistory.removeAll(Collections.singleton(m));
-    }
-
-    public void rmWatch(int index) {
-        rmWatch(watchHistory.get(index));
     }
 
     public void clearWatchHistory() {
@@ -305,7 +301,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
         ArrayList<User> out = new ArrayList<>();
         if (sers.length == 0) {
-            return null;
+            return new ArrayList<>();
         } else {
             String defaultFN = new DefaultUser().read();
             User[] users = new User[sers.length];
@@ -324,11 +320,11 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
                     }
                 }
                 if (out.size() == 0)
-                    return null;
+                    return new ArrayList<>();
                 return out;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-                return null;
+                return new ArrayList<>();
             }
         }
     }
@@ -343,11 +339,11 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         return lastVisit;
     }
 
-    public String getPasswordSalt() {
+    public byte[] getPasswordSalt() {
         return passwordSalt;
     }
 
-    public void setPasswordSalt(String passwordSalt) {
+    public void setPasswordSalt(byte[] passwordSalt) {
         this.passwordSalt = passwordSalt;
     }
 
@@ -412,21 +408,67 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         return zipcode;
     }
 
-    public classes.ClassPd[] getClassesTeacher() {
-        classesTeacher = new classes.ClassPd[0];
+    public HashSet<ClassPd> getClassesTeacher() {
         return classesTeacher;
     }
 
-    public void setClassesTeacher(classes.ClassPd[] classesTeacher) {
+    public void setClassesTeacher(HashSet<ClassPd> classesTeacher) {
         this.classesTeacher = classesTeacher;
     }
 
-    public classes.ClassPd[] getClassesStudent() {
+    public HashSet<ClassPd> getClassesStudent() {
         return classesStudent;
     }
 
-    public void setClassesStudent(classes.ClassPd[] classesStudent) {
+    public void setClassesStudent(HashSet<ClassPd> classesStudent) {
         this.classesStudent = classesStudent;
+    }
+
+    public void syncExternal(User external) {
+        if (external == null)
+            return;
+        Timestamp me = getSerFileTimestamp(), them = external.getSerFileTimestamp();
+        boolean iAmFirst = me.before(them);
+        this.username = iAmFirst ? external.getUsername() : username;
+        this.password = iAmFirst ? external.getPassword() : password;
+        this.passwordSalt = iAmFirst ? external.getPasswordSalt() : passwordSalt;
+        this.username = iAmFirst ? external.getUsername() : username;
+        this.username = iAmFirst ? external.getUsername() : username;
+        this.username = iAmFirst ? external.getUsername() : username;
+        this.first = iAmFirst ? external.getFirst() : first;
+        this.middle = iAmFirst ? external.getMiddle() : middle;
+        this.last = iAmFirst ? external.getLast() : last;
+        this.email = iAmFirst ? external.getEmail() : email;
+        this.searchHistory.addAll(external.searchHistory);
+        this.watchHistory.addAll(external.watchHistory);
+        this.accentColor = iAmFirst ? external.accentColor : accentColor;
+        this.imageFN = iAmFirst ? external.imageFN : imageFN;
+        this.schoolCode = iAmFirst ? external.schoolCode : schoolCode;
+        this.zipcode = iAmFirst ? external.zipcode : zipcode;
+        this.clock24Hour = iAmFirst ? external.clock24Hour : clock24Hour;
+        this.latlon = iAmFirst ? external.getLatlon() : latlon;
+        this.tempUnits = iAmFirst ? external.tempUnits : tempUnits;
+        this.classesStudent = iAmFirst ? external.getClassesStudent() : getClassesStudent();
+        this.classesTeacher = iAmFirst ? external.getClassesTeacher() : getClassesTeacher();
+        this.write();
+    }
+
+    public Timestamp getSerFileTimestamp() {
+        return serFileTimestamp;
+    }
+
+    public byte[] getSerFileBytes() {
+        File serFile = new File(Address.root_addr + File.separator + "usr" + File.separator + Root.getActiveUser().getUsername() + ".ser");
+        try {
+            FileInputStream input = new FileInputStream(serFile);
+            return input.readAllBytes();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public void syncSerFileWithServer() {
+        syncExternal(net.Root.syncSerFileDown());
     }
 }
 

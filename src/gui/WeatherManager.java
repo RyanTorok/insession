@@ -21,56 +21,69 @@ public class WeatherManager {
     private Double tempFahrenheit;
     private static final Double HEAVY_THRESHOLD = .00635;
 
-    public WeatherManager(int zipCode){
+    public WeatherManager(int zipCode) {
         this.setZipCode(zipCode);
     }
 
     public void update() {
-        JSONObject properties;
+        JSONObject properties = null;
         try {
-            double[] latlon = Root.getActiveUser().getLatlon();
-            if (latlon == null || latlon[0] == 0 && latlon[1] == 0) {
-                try {
-                    Root.getActiveUser().setLocation(getZipCode());
-                } catch (UnknownZipCodeException e) {
-                    Root.getActiveUser().setLocation(77379);
+            boolean success = false;
+            int stationIndex = 0;
+            while (!success) {
+                double[] latlon = Root.getActiveUser().getLatlon();
+                if (latlon == null || latlon[0] == 0 && latlon[1] == 0) {
+                    try {
+                        Root.getActiveUser().setLocation(getZipCode());
+                    } catch (UnknownZipCodeException e) {
+                        Root.getActiveUser().setLocation(77379);
+                    }
+                    latlon = Root.getActiveUser().getLatlon();
                 }
-                latlon = Root.getActiveUser().getLatlon();
-            }
 
-            URL api = new URL("https://api.weather.gov/");
-            URL stations = new URL(api, "points/" + latlon[0] + "," + latlon[1] + "/stations/");
-            BufferedReader stationsIn = new BufferedReader(new InputStreamReader(stations.openStream()));
-            String stationFile = "", line = "";
-            while ((line = stationsIn.readLine()) != null) {
-                stationFile += line + "\n";
-            }
-            stationsIn.close();
-            JSONObject stationsObj = new JSONObject(stationFile);
-            JSONArray features = stationsObj.getJSONArray("features");
-            JSONObject closest = features.getJSONObject(0);
+                URL api = new URL("https://api.weather.gov/");
+                URL stations = new URL(api, "points/" + latlon[0] + "," + latlon[1] + "/stations/");
+                BufferedReader stationsIn = new BufferedReader(new InputStreamReader(stations.openStream()));
+                String stationFile = "", line = "";
+                while ((line = stationsIn.readLine()) != null) {
+                    stationFile += line + "\n";
+                }
+                stationsIn.close();
+                JSONObject stationsObj = new JSONObject(stationFile);
+                JSONArray features = stationsObj.getJSONArray("features");
+                int numStations = features.length();
+                if (stationIndex >= numStations)
+                    return;
+                JSONObject closest = features.getJSONObject(stationIndex);
 
-            //get station current observation
-            URL current_station_url = new URL(closest.getString("id") + "/observations/current/");
-            BufferedReader observationIn = new BufferedReader(new InputStreamReader(current_station_url.openStream()));
-            String observation = "";
-            while ((line = observationIn.readLine()) != null) {
-                observation += line + "\n";
+                //get station current observation
+                URL current_station_url = new URL(closest.getString("id") + "/observations/current/");
+                BufferedReader observationIn = new BufferedReader(new InputStreamReader(current_station_url.openStream()));
+                String observation = "";
+                while ((line = observationIn.readLine()) != null) {
+                    observation += line + "\n";
+                }
+                observationIn.close();
+                JSONObject observationObj = new JSONObject(observation);
+                properties = observationObj.getJSONObject("properties");
+                setDescription(properties.getString("textDescription"));
+                Object tempObj = properties.getJSONObject("temperature").get("value");
+                if (tempObj instanceof Integer)
+                    setTempCelsius((double) (int) tempObj);
+                else
+                    setTempCelsius(tempObj.equals(null) ? null : (double) tempObj);
+                setTempFahrenheit(getTempCelsius() == null ? null : getTempCelsius() * 1.8 + 32);
+                success = !tempObj.equals(null);
+                stationIndex++;
             }
-            observationIn.close();
-            JSONObject observationObj = new JSONObject(observation);
-            properties = observationObj.getJSONObject("properties");
-            setDescription(properties.getString("textDescription"));
-            Object tempObj = properties.getJSONObject("temperature").get("value");
-            if (tempObj instanceof Integer)
-                setTempCelsius((double) (int) tempObj);
-            else
-                setTempCelsius(tempObj.equals(null) ? null : (double) tempObj);
-            setTempFahrenheit(getTempCelsius() == null ? null : getTempCelsius() * 1.8 + 32);
+            setCurrentState(properties);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
+    }
+
+    private void setCurrentState(JSONObject properties) {
         //set current state
         String descLC = description.toLowerCase();
         Double lastHr = null;
@@ -78,7 +91,7 @@ public class WeatherManager {
         if (lastHrObj.equals(null))
             lastHr = 0.0;
         else {
-            if (lastHrObj instanceof  Integer) {
+            if (lastHrObj instanceof Integer) {
                 lastHr = (double) (int) lastHrObj;
             } else {
                 lastHr = (Double) lastHrObj;
@@ -142,6 +155,7 @@ public class WeatherManager {
         this.setZipCode(zipCode);
         update();
     }
+
     public WeatherState getCurrent(){
         return current;
     }

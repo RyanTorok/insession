@@ -50,16 +50,22 @@ public class LatestPane extends VBox {
                             boolean success = false; //refresh();, use another thread for net connections
                             //TODO code to wait for net thread but keep animation running
                             spin.stop();
-                            if (!success) {
-                                setFill(Color.RED);
-                                refreshColor = Color.RED;
+                            spin.setToAngle(0);
+                            spin.setCycleCount(1);
+                            spin.setDuration(Duration.millis(1));
+                            spin.play();
+                            spin.setOnFinished(event1 -> {
+                                if (!success) {
+                                    setFill(Color.RED);
+                                    refreshColor = Color.RED;
 
-                                Timeline colorChangeTimer = new Timeline(new KeyFrame(Duration.seconds(1), event1 -> {
-                                    refreshColor = Color.WHITE;
-                                    setFill(Color.WHITE);
-                                }));
-                                colorChangeTimer.play();
-                            }
+                                    Timeline colorChangeTimer = new Timeline(new KeyFrame(Duration.seconds(1), event2 -> {
+                                        refreshColor = Color.WHITE;
+                                        setFill(Color.WHITE);
+                                    }));
+                                    colorChangeTimer.play();
+                                }
+                            });
                         });
                         setOnMouseEntered(event -> setFill(refreshColor.equals(Color.WHITE) ? UtilAndConstants.highlightColor((Color) getFill()) : (Color) getFill()));
                         setOnMouseExited(event -> setFill(refreshColor));

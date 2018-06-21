@@ -8,15 +8,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.Root;
 import main.UtilAndConstants;
-
 
 public class UpdateWrapper extends GridPane {
     public UpdateWrapper(RecordEntry record, LatestPane holder) {
@@ -31,7 +28,7 @@ public class UpdateWrapper extends GridPane {
         timing.setFill(Color.WHITE);
         Text closeX = new Text(Character.toString((char) 0x00D7));
         closeX.setFont(Font.font("Sans Serif", 20));
-        Color fill = Color.LIGHTGRAY;
+        Color fill = Color.WHITE;
         closeX.setFill(fill);
         closeX.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> closeX.setFill(UtilAndConstants.highlightColor((Color) closeX.getFill())));
         closeX.addEventHandler(MouseEvent.MOUSE_EXITED, event -> closeX.setFill(fill));

@@ -31,7 +31,7 @@ public class Student extends User {
 
     private int grade;
 
-    public Student(String mac, String username, String password, String first, String middle, String last, String email, Timestamp timestamp, String studentID, int grade) {
+    public Student(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp, String studentID, int grade) {
         super(mac, username, password, first, middle, last, email, timestamp);
         this.studentID = studentID;
         this.grade = grade;

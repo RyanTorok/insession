@@ -22,6 +22,8 @@ import main.*;
 import terminal.Address;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -57,16 +59,24 @@ public class NewUserWindow extends Pane {
         b.setOnAction(event -> {
             invalidMessage.setText("");
             if (which == 1) {
-                User user = dbLookup(entries.get(0).getField(), entries.get(1).getField());
-                if (user != null) {
-                    Root.setActiveUser(user);
-                    main.switchToMain();
-                } else {
-                    if (loginConnErr)
-                        invalidMessage.setText("A connection error occurred. Please try again.");
-                    else
-                    invalidMessage.setText("We do not recognize that username and password combination.");
-                    loginConnErr = false;
+                net.Root.UserMaybe userMaybe = net.Root.login(entries.get(0).getField(), entries.get(1).getField(), true);
+                switch (userMaybe.getExistsCode()) {
+                    case -2: {
+                        //expected user and got correct input, but missing ser file
+                        invalidMessage.setText("We cannot locate your user data. Try creating a new account.");
+                    } break;
+                    case -1: invalidMessage.setText("A connection error occurred. Please try again."); break;
+                    case 0:
+                        invalidMessage.setText("We do not recognize that username and password combination.");
+                        loginConnErr = false;
+                        break;
+                    case 1: invalidMessage.setText("You shouldn't be able to see this. If you do, it's a bug.");
+                    break;
+                    case 2: {
+                        //valid user login
+                        Root.setActiveUser(userMaybe.getUser());
+                        Root.getPortal().switchToMain();
+                    }
                 }
             } else {
                 String  username   = entries .get(0).getField(),
@@ -76,8 +86,8 @@ public class NewUserWindow extends Pane {
                         last       = entries1.get(2).getField(),
                         email      = entries1.get(3).getField(),
                         schoolCode = entries1.get(4).getField();
-                boolean valid = true;
-                valid = valid && checkEmptyField(username, "Username", invalidMessage);
+                boolean valid;
+                valid = checkEmptyField(username, "Username", invalidMessage);
                 valid = valid && checkEmptyField(password, "Password", invalidMessage);
                 valid = valid && checkEmptyField(passwordC, "Password", invalidMessage);
                 valid = valid && checkEmptyField(first, "First Name", invalidMessage);
@@ -89,23 +99,27 @@ public class NewUserWindow extends Pane {
                     invalidMessage.setText("Your passwords do not match. Check your spelling.");
                     return;
                 }
-                int type = SQLMaster.createAccount(username, password, first, last, email, schoolCode);
+                int type = 0;
+                net.Root.CreateAccountStatus status = net.Root.createAccount(username, password, first, last, email, schoolCode);
+                type = status.getStatus();
                 User newUser = null;
                 switch (type) {
                     case -3: invalidMessage.setText("The school code you entered was not recognized.");
                     return;
                     case -2: invalidMessage.setText("A connection error occurred. Please try again.");
                     return;
-                    case -1: invalidMessage.setText("Your username is already in use. Please choose another username.");
+                    case -1: invalidMessage.setText("Your username is already in use. Please choose another username."); //deprecated: duplicate usernames are allowed.
                     return;
-                    case 0: newUser = new Student(Root.getMACAddress(), username, password, first, null, last, email, new Timestamp(System.currentTimeMillis()), null, -1);
+                    case 0: newUser = new Student(Root.getMACAddress(), username, password.getBytes(StandardCharsets.UTF_8), first, null, last, email, new Timestamp(System.currentTimeMillis()), null, -1);
                     break;
-                    case 1: newUser = new Teacher(Root.getMACAddress(), username, password, first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
+                    case 1: newUser = new Teacher(Root.getMACAddress(), username, password.getBytes(StandardCharsets.UTF_8), first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
                     break;
-                    case 2: newUser = new Administrator(Root.getMACAddress(), username, password, first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
+                    case 2: newUser = new Administrator(Root.getMACAddress(), username, password.getBytes(StandardCharsets.UTF_8), first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
                     break;
                 }
                 user = newUser;
+                newUser.setPassword(status.getPasswordCombo().getEncryptedPassword());
+                newUser.setPasswordSalt(status.getPasswordCombo().getSalt());
                 Root.setActiveUser(newUser);
                 main.switchToMain();
             }
@@ -286,21 +300,6 @@ public class NewUserWindow extends Pane {
             return false;
         }
         return true;
-    }
-
-    public User dbLookup(String username, String password) {
-        try {
-            SQLMaster.connectToOverallServer();
-        } catch (SQLException e) {
-            loginConnErr = true;
-            return null;
-        }
-        try {
-            return SQLMaster.login(username, password);
-        } catch (LoginException e) {
-            loginConnErr = Boolean.valueOf(e.getMessage());
-            return null;
-        }
     }
 
     public static User getUser() {

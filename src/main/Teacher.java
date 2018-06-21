@@ -9,7 +9,7 @@ public class Teacher extends User {
     static long serialVersionUID = User.serialVersionUID;
 
     private String eid;
-    public Teacher(String mac, String username, String password, String first, String middle, String last, String email, String eid, Timestamp timestamp) {
+    public Teacher(String mac, String username, byte[] password, String first, String middle, String last, String email, String eid, Timestamp timestamp) {
         super(mac, username, password, first, middle, last, email, timestamp);
         this.eid = eid;
     }

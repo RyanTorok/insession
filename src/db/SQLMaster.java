@@ -88,7 +88,7 @@ public class SQLMaster {
         try (Connection overallServerConnection = connectToOverallServer()) {
             PreparedStatement statement = overallServerConnection.prepareStatement(query);
             statement.setString(1, username);
-            statement.setString(2, PasswordManager.hash(password));
+            statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
             overallServerConnection.close();
             if (!rs.next()) {
@@ -101,11 +101,11 @@ public class SQLMaster {
             int type = rs.getInt("type");
             User newUser = null;
             switch (type) {
-                case 0: newUser = new Student(Root.getMACAddress(), username, password, first, null, last, email, new Timestamp(System.currentTimeMillis()), null, -1);
+                case 0: newUser = new Student(Root.getMACAddress(), username, password.getBytes(), first, null, last, email, new Timestamp(System.currentTimeMillis()), null, -1);
                     break;
-                case 1: newUser = new Teacher(Root.getMACAddress(), username, password, first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
+                case 1: newUser = new Teacher(Root.getMACAddress(), username, password.getBytes(), first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
                     break;
-                case 2: newUser = new Administrator(Root.getMACAddress(), username, password, first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
+                case 2: newUser = new Administrator(Root.getMACAddress(), username, password.getBytes(), first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
                     break;
             }
             return newUser;
