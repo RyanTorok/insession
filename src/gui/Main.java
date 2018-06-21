@@ -56,14 +56,16 @@ public class Main extends Application {
     private Pane[] contentPanes;
     private HBox contentPanesWrapper;
 
-    private Node top_bar;
+    private HBox top_bar;
     Line topBarScrollBar;
     private boolean tbsbDrag = false;
     private Node sleepBody;
     private Pane mainBody;
     private Text clock;
     private Text date;
+    private Text name;
     private Node picture;
+    private int topbarPictureIndex = -1;
     private Terminal term;
     private StackPane mainArea;
     private SideBar sideBar;
@@ -147,6 +149,7 @@ public class Main extends Application {
         getMenus()[3] = new BarMenu("browse lessons", 3);
         getMenus()[4] = new BarMenu("community", 4);
         BarMenu name = new BarMenu(Root.getActiveUser() == null || Root.getActiveUser().getUsername() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
+        this.setName(name);
         for (BarMenu m: getMenus()
              ) {
                 m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -174,6 +177,7 @@ public class Main extends Application {
         Shape picture = new ShapeImage(new Circle(30), image).apply();
         this.picture = picture;
         HBox topbar = new HBox(titles, getMenus()[0], getMenus()[1], getMenus()[2], getMenus()[3], getMenus()[4], new UtilAndConstants.Filler(), name, picture);
+        topbarPictureIndex = topbar.getChildren().indexOf(picture);
         top_bar = topbar;
         topbar.setSpacing(35);
         topbar.setAlignment(Pos.CENTER_LEFT);
@@ -192,7 +196,8 @@ public class Main extends Application {
         topBarScrollBar.setStroke(UtilAndConstants.highlightColor(Root.getActiveUser().getAccentColor()));
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
-            if (event.getTarget() == picture || event.getTarget() == name)
+            //don't trigger drags on name or picture
+            if (event.getTarget() == topbar.getChildren().get(topbarPictureIndex) || event.getTarget() == name)
                 return;
             topBarScrollBar.setTranslateX(event.getSceneX());
             contentPanesWrapper.setTranslateX(Math.max(-4 * 1920, Math.min(0, -5 * (event.getSceneX() - 450) * 4)));
@@ -726,7 +731,7 @@ public class Main extends Application {
         return caps;
     }
 
-    public Node getTop_bar() {
+    public HBox getTop_bar() {
         return top_bar;
     }
 
@@ -789,6 +794,18 @@ public class Main extends Application {
     public void launchClass(ClassPd classPd) {
         assert state == BASE_STATE;
         System.out.println("Launch " + classPd.getCastOf().getName());
+    }
+
+    public void setPicture(Shape newShape) {
+        this.picture = newShape;
+    }
+
+    public Text getName() {
+        return name;
+    }
+
+    public void setName(Text name) {
+        this.name = name;
     }
 
     class BarMenu extends Text {

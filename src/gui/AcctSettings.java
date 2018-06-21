@@ -4,19 +4,28 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.PasswordManager;
 import main.Root;
 import main.UnknownZipCodeException;
 import main.UtilAndConstants;
+import terminal.Address;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class AcctSettings extends Stage {
 
@@ -74,7 +83,6 @@ public class AcctSettings extends Stage {
                 if (oldPasswordMatches) {
                     //try to set new password
                     boolean success = net.Root.changePassword(newPassword.getText(), testOldPwd.getUniqueID());
-                    System.out.println(success);
                     if (!success) {
                         invalidMsg.setText("A connection error occurred. Please try again.");
                     } else {
@@ -185,6 +193,54 @@ public class AcctSettings extends Stage {
         temperatureUnits.setSpacing(10);
         temperatureUnits.setPadding(new Insets(10, 10, 10, 60));
         layout.add(temperatureUnits, 1, 2);
+
+        //profile picture
+        VBox profilePicture = new VBox();
+        profilePicture.setSpacing(10);
+
+        Text ppPrompt = new Text("Profile Picture");
+        Image image = Root.getActiveUser().getAcctImage();
+        Shape picture = new ShapeImage(new Circle(30), image).apply();
+        Button browse = new Button("Browse...");
+        Text pictureInvalidMessage = new Text("");
+        browse.setOnAction(event -> {
+            pictureInvalidMessage.setText("");
+            FileChooser fileChooser = new FileChooser();
+            List<String> extensions = Arrays.asList("*.png", "*.jpeg", "*.jpg", "*.tiff", "*.gif", "*.webp", "*.svg");
+            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("All Image Files", extensions));
+            fileChooser.setTitle("Select Profile Picture");
+            fileChooser.setInitialDirectory(new java.io.File(Address.root_addr + java.io.File.separator + "resources"));
+            java.io.File selected = fileChooser.showOpenDialog(Root.getPortal().getPrimaryStage());
+            Image new_image = new Image("file:" + selected.getPath());
+            if (new_image.isError()) {
+                pictureInvalidMessage.setText("Unable to parse image file " + selected.getName() + ".");
+            } else {
+                Shape newShape = new ShapeImage(new Circle(30), new_image).apply();
+                newShape.setOnMouseClicked(event1 ->  UtilAndConstants.fireMouse(Root.getPortal().getName(), MouseEvent.MOUSE_CLICKED));
+                //copied becuase we cannot use the same node twice.
+                profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), new_image).apply());
+                Root.getActiveUser().setImageFN("file:" + selected.getPath());
+                int pictureIndex = Root.getPortal().getTop_bar().getChildren().indexOf(Root.getPortal().getPicture());
+                Root.getPortal().getTop_bar().getChildren().set(pictureIndex, newShape);
+                Root.getPortal().setPicture(newShape);
+            }
+        });
+        Button resetToDefault = new Button("Reset to Default");
+        resetToDefault.setOnAction(event -> {
+            pictureInvalidMessage.setText("");
+            Root.getActiveUser().setImageFN("file:" + new java.io.File(Address.root_addr + File.separator + "resources" + File.separator + "default_user.png").getPath());
+            int pictureIndex = Root.getPortal().getTop_bar().getChildren().indexOf(Root.getPortal().getPicture());
+            Shape newShape = new ShapeImage(new Circle(30), Root.getActiveUser().getAcctImage()).apply();
+            //copied becuase we cannot use the same node twice.
+            profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), Root.getActiveUser().getAcctImage()).apply());
+            newShape.setOnMouseClicked(event1 ->  UtilAndConstants.fireMouse(Root.getPortal().getName(), MouseEvent.MOUSE_CLICKED));
+            Root.getPortal().getTop_bar().getChildren().set(pictureIndex, newShape);
+            Root.getPortal().setPicture(newShape);
+        });
+        profilePicture.getChildren().addAll(ppPrompt, picture, browse, resetToDefault, pictureInvalidMessage);
+
+        layout.add(profilePicture, 0, 3);
+
 
         //close button
         Button closeBtn = new Button("Close");

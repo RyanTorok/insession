@@ -45,7 +45,6 @@ public class Root {
             }
             BufferedReader readDone = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
             String in = readDone.readLine();
-            System.out.println(in);
             if (in.contains("done")) {
                 main.Root.getActiveUser().setPassword(newCombo.getEncryptedPassword());
                 main.Root.getActiveUser().setPasswordSalt(newCombo.getSalt());

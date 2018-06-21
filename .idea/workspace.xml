@@ -5,11 +5,20 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings$Filler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings$Filler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Root$CreateAccountStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/Root$CreateAccountStatus.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Root$UserMaybe.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/Root$UserMaybe.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Root.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/Root.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/AcctSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AcctSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/Root.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terminal/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/Address.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,11 +48,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="198" column="52" selection-start-line="198" selection-start-column="52" selection-end-line="198" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#30335#30336#0" expanded="true" />
+                <element signature="e#30374#30375#0" expanded="true" />
+                <element signature="e#30454#30455#0" expanded="true" />
+                <element signature="e#30481#30482#0" expanded="true" />
+                <element signature="e#30519#30520#0" expanded="true" />
+                <element signature="e#30551#30552#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="AcctSettings.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
+            <state relative-caret-position="651">
+              <caret line="230" column="50" selection-start-line="230" selection-start-column="50" selection-end-line="230" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -51,11 +78,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Root.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="274">
+              <caret line="352" column="43" lean-forward="true" selection-start-line="352" selection-start-column="43" selection-end-line="352" selection-end-column="43" />
+              <folding>
+                <element signature="e#10441#10442#0" expanded="true" />
+                <element signature="e#10479#10480#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Address.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/terminal/Address.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Root.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/Root.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="53" column="39" lean-forward="true" selection-start-line="53" selection-start-column="39" selection-end-line="53" selection-end-column="39" />
+            <state relative-caret-position="465">
+              <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -100,6 +149,8 @@
       <find>GETBYTES</find>
       <find>GETINPUTSTREA</find>
       <find>new String</find>
+      <find>gettop</find>
+      <find>picture.add</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -108,7 +159,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/gui/Circle.java" />
         <option value="$PROJECT_DIR$/src/gui/CircleImage.java" />
         <option value="$PROJECT_DIR$/src/gui/ShapeImage.java" />
         <option value="$PROJECT_DIR$/src/main/OPEN.java" />
@@ -153,12 +203,13 @@
         <option value="$PROJECT_DIR$/src/modulesearch/SearchRecord.java" />
         <option value="$PROJECT_DIR$/src/modulesearch/WatchRecord.java" />
         <option value="$PROJECT_DIR$/src/gui/NewUserWindow.java" />
-        <option value="$PROJECT_DIR$/src/gui/Main.java" />
         <option value="$PROJECT_DIR$/src/main/Root.java" />
         <option value="$PROJECT_DIR$/src/net/TestSaltPost.java" />
         <option value="$PROJECT_DIR$/src/main/User.java" />
         <option value="$PROJECT_DIR$/src/net/Root.java" />
+        <option value="$PROJECT_DIR$/src/terminal/Address.java" />
         <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
+        <option value="$PROJECT_DIR$/src/gui/Main.java" />
       </list>
     </option>
   </component>
@@ -205,7 +256,7 @@
               <item name="Paintbrush" type="b2602c69:ProjectViewProjectNode" />
               <item name="Paintbrush" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="terminal" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -413,15 +464,16 @@
       <workItem from="1529419841647" duration="4229000" />
       <workItem from="1529463427670" duration="4286000" />
       <workItem from="1529517522514" duration="17367000" />
-      <workItem from="1529585876452" duration="21097000" />
+      <workItem from="1529585876452" duration="26026000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="343645000" />
+    <option name="totallyTimeSpent" value="348574000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="2" />
       <window_info anchor="right" id="Cargo" order="7" weight="0.3294766" />
@@ -441,11 +493,11 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4564533" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37040922" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32528856" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.19504133" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
-      <window_info id="Learn" order="6" />
+      <window_info id="Learn" order="6" weight="0.3294766" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -503,13 +555,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/json/JSONObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="679" selection-start-line="679" selection-end-line="679" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/UnknownZipCodeException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -787,16 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="847" column="65" selection-start-line="847" selection-start-column="65" selection-end-line="847" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/TestSaltPost.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -835,27 +870,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="463" column="12" selection-start-line="463" selection-start-column="12" selection-end-line="463" selection-end-column="12" />
-          <folding>
-            <element signature="e#4330#4331#0" expanded="true" />
-            <element signature="e#4370#4371#0" expanded="true" />
-            <element signature="e#5894#5895#0" expanded="true" />
-            <element signature="e#5934#5935#0" expanded="true" />
-            <element signature="e#5976#5977#0" expanded="true" />
-            <element signature="e#6011#6012#0" expanded="true" />
-            <element signature="e#11704#11705#0" expanded="true" />
-            <element signature="e#11756#11757#0" expanded="true" />
-            <element signature="e#11975#11976#0" expanded="true" />
-            <element signature="e#12014#12015#0" expanded="true" />
-            <element signature="e#13988#13989#0" expanded="true" />
-            <element signature="e#14044#14045#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/Root.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
@@ -876,22 +890,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
+    <entry file="file://$PROJECT_DIR$/src/terminal/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
+        <state relative-caret-position="105">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/Root.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/Root.java">
+    <entry file="file://$PROJECT_DIR$/src/main/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="53" column="39" lean-forward="true" selection-start-line="53" selection-start-column="39" selection-end-line="53" selection-end-column="39" />
+        <state relative-caret-position="274">
+          <caret line="352" column="43" lean-forward="true" selection-start-line="352" selection-start-column="43" selection-end-line="352" selection-end-column="43" />
+          <folding>
+            <element signature="e#10441#10442#0" expanded="true" />
+            <element signature="e#10479#10480#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="230" column="50" selection-start-line="230" selection-start-column="50" selection-end-line="230" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="198" column="52" selection-start-line="198" selection-start-column="52" selection-end-line="198" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#30335#30336#0" expanded="true" />
+            <element signature="e#30374#30375#0" expanded="true" />
+            <element signature="e#30454#30455#0" expanded="true" />
+            <element signature="e#30481#30482#0" expanded="true" />
+            <element signature="e#30519#30520#0" expanded="true" />
+            <element signature="e#30551#30552#0" expanded="true" />
           </folding>
         </state>
       </provider>
