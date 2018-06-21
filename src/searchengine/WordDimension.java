@@ -1,4 +1,4 @@
-package modulesearch;
+package searchengine;
 
 import java.math.BigInteger;
 

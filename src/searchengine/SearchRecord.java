@@ -1,4 +1,4 @@
-package modulesearch;
+package searchengine;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

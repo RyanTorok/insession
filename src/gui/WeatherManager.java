@@ -5,6 +5,8 @@ import main.Root;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import main.UnknownZipCodeException;
 import org.json.*;
@@ -194,5 +196,27 @@ public class WeatherManager {
 
     public void setTempFahrenheit(Double tempFahrenheit) {
         this.tempFahrenheit = tempFahrenheit;
+    }
+
+    static final double CYCLE_LENGTH_MILLIS = 2551442801.5584;
+    static final long zero_point = 1530161580000L; // 6/28/18 at 4:53 AM UTC - Full Moon
+
+    public Moon getMoonState() {
+        double segment_length = CYCLE_LENGTH_MILLIS / 8.0;
+        long diff = System.currentTimeMillis() - zero_point;
+        double offset = (diff) % CYCLE_LENGTH_MILLIS;
+        int phaseNo = (int) Math.round(offset / segment_length);
+        switch (phaseNo) {
+            case 0: return Moon.Full_Moon;
+            case 1: return Moon.Waning_Gibbous;
+            case 2: return Moon.Last_Quarter;
+            case 3 : return Moon.Waning_Crescent;
+            case 4: return Moon.New_Moon;
+            case 5: return Moon.Waxing_Crescent;
+            case 6: return Moon.First_Quarter;
+            case 7: return Moon.Waxing_Gibbous;
+            case 8: return Moon.Full_Moon;
+            default: return Moon.New_Moon;
+        }
     }
 }

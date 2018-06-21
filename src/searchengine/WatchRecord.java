@@ -1,4 +1,4 @@
-package modulesearch;
+package searchengine;
 
 import module.Module;
 import java.io.Serializable;

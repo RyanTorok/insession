@@ -1,7 +1,5 @@
 package terminal;
 
-import gui.Terminal;
-
 import java.util.ArrayList;
 
 public class Tokenizer {
@@ -28,7 +26,7 @@ public class Tokenizer {
                 case "run": return new Token(Command.CommandType.RUN);
                 case "cat": return new Token(Command.CommandType.CAT);
                 case "see": return new Token(Command.CommandType.SEE);
-                case "search": return new Token(Command.CommandType.SEARCH);
+                case "searchengine": return new Token(Command.CommandType.SEARCH);
                 case "switch": return new Token(Command.CommandType.SWITCH);
                 case "submit": return new Token(Command.CommandType.SUBMIT);
                 case "turnin": return new Token(Command.CommandType.TURNIN);

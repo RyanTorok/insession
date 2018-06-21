@@ -7,19 +7,15 @@ import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import module.Module;
-import modulesearch.SearchRecord;
-import modulesearch.WatchRecord;
+import searchengine.SearchRecord;
+import searchengine.WatchRecord;
 import terminal.Address;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Scanner;
 
 /**
  * Created by 11ryt on 4/21/2017.

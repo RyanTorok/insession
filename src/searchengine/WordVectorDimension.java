@@ -1,4 +1,4 @@
-package modulesearch;
+package searchengine;
 
 public class WordVectorDimension {
     Long value;

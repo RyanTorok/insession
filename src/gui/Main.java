@@ -602,7 +602,7 @@ public class Main extends Application {
         }
         if (needMoon) {
             int hourOfNight = (currentHr + 3) % 24 + 1;
-            Image moon = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "Moon_Unsoftened.png");
+            Image moon = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + getMoonFN() + ".png");
             ImageView moonNode = new ImageView(moon);
             moonNode.setFitWidth(50);
             moonNode.setFitHeight(50);
@@ -620,6 +620,20 @@ public class Main extends Application {
             AnchorPane.setLeftAnchor(moonNode, centerX + dx_pixels);
             AnchorPane.setTopAnchor(moonNode, 1080 - (centerY + dy_pixels));
             weatherPane.getChildren().add(moonNode);
+        }
+    }
+
+    private String getMoonFN() {
+        switch (manager.getMoonState()) {
+            case New_Moon: return "new_moon";
+            case Waxing_Crescent: return "waxing_crescent";
+            case First_Quarter: return "first_quarter";
+            case Waxing_Gibbous: return "waxing_gibbous";
+            case Full_Moon: return "full_moon";
+            case Waning_Gibbous: return "waning_gibbous";
+            case Last_Quarter: return "last_quarter";
+            case Waning_Crescent: return "waning_crescent";
+            default: return "new_moon";
         }
     }
 
@@ -965,13 +979,9 @@ public class Main extends Application {
 
             calendar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Calendar()));
 
-            grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                Main.this.launchTaskView(new Grades());
-            });
+            grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Grades()));
 
-            attendance.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                Main.this.launchTaskView(new Attendance());
-            });
+            attendance.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Attendance()));
 
             accountSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
