@@ -2,6 +2,7 @@ package main;
 
 import classes.ClassPd;
 import classes.Record;
+import classes.setbuilder.Classifiable;
 import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -23,7 +24,7 @@ import java.util.Scanner;
 /**
  * Created by 11ryt on 4/21/2017.
  */
-public abstract class User implements classes.setbuilder.Classifiable, Serializable {
+public abstract class User implements Classifiable, Serializable {
 
     static final long serialVersionUID = 42L;
     private String mac;
@@ -42,6 +43,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
     private HashSet<WatchRecord> watchHistory;
     private byte[] passwordSalt;
     private String imageFN;
+    private int pictureVisibility;
     private boolean clock24Hour = false;
     private int zipcode;
     private double[] latlon = new double[]{0,0};
@@ -65,6 +67,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         this.updates = new ArrayList<>();
         this.classesTeacher = new HashSet<>();
         this.classesStudent = new HashSet<>();
+        pictureVisibility = 0;
     }
 
     protected User() {
@@ -241,7 +244,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         searchHistory.add(new SearchRecord(query));
     }
 
-    public void watch(module.Module m) {
+    public void watch(Module m) {
         watchHistory.add(new WatchRecord(m));
     }
 
@@ -253,7 +256,7 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
         searchHistory.clear();
     }
 
-    public void rmWatch(module.Module m) {
+    public void rmWatch(Module m) {
         watchHistory.removeAll(Collections.singleton(m));
     }
 
@@ -469,6 +472,14 @@ public abstract class User implements classes.setbuilder.Classifiable, Serializa
 
     public void syncSerFileWithServer() {
         syncExternal(net.Root.syncSerFileDown());
+    }
+
+    public void setPictureVisibility(int pictureVisibility) {
+        this.pictureVisibility = pictureVisibility;
+    }
+
+    public int getPictureVisibility() {
+        return pictureVisibility;
     }
 }
 

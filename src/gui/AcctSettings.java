@@ -105,7 +105,7 @@ public class AcctSettings extends Stage {
         layout.add(changePassword, 0, 0, 2, 1);
 
         //accent color
-        Text accentColorPrompt = new Text("Accent Color: ");
+        Text accentColorPrompt = new Text("Accent Color");
         Shape colorSquare = new Rectangle(50, 50);
         Color original = Root.getActiveUser().getAccentColor();
         colorSquare.setFill(original);
@@ -184,6 +184,8 @@ public class AcctSettings extends Stage {
             Root.getActiveUser().setTempUnits(newValue == fahrenheit);
             Root.getPortal().updateWeatherDisplay();
         });
+
+        tuGroup.selectToggle(fahrenheit);
         if (Root.getActiveUser().usesFahrenheit())
             fahrenheit.setSelected(true);
         else celsius.setSelected(true);
@@ -197,6 +199,7 @@ public class AcctSettings extends Stage {
         //profile picture
         VBox profilePicture = new VBox();
         profilePicture.setSpacing(10);
+        profilePicture.setPadding(new Insets(10, 10, 10, 10));
 
         Text ppPrompt = new Text("Profile Picture");
         Image image = Root.getActiveUser().getAcctImage();
@@ -206,7 +209,7 @@ public class AcctSettings extends Stage {
         browse.setOnAction(event -> {
             pictureInvalidMessage.setText("");
             FileChooser fileChooser = new FileChooser();
-            List<String> extensions = Arrays.asList("*.png", "*.jpeg", "*.jpg", "*.tiff", "*.gif", "*.webp", "*.svg");
+            List<String> extensions = Arrays.asList("*.png", "*.jpeg", "*.jpg", "*.tiff", "*.gif", "*.webp", "*.svg", "*.bmp");
             fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("All Image Files", extensions));
             fileChooser.setTitle("Select Profile Picture");
             fileChooser.setInitialDirectory(new java.io.File(Address.root_addr + java.io.File.separator + "resources"));
@@ -241,6 +244,23 @@ public class AcctSettings extends Stage {
 
         layout.add(profilePicture, 0, 3);
 
+        //image permissions
+
+        Text ipPrompt = new Text("Profile picture visibility:");
+        ToggleGroup ipGroup = new ToggleGroup();
+        RadioButton justMe = new RadioButton("Just Me");
+        RadioButton classmatesAndInstructorsOnly = new RadioButton("Classmates and Instructors Only");
+        RadioButton everyone = new RadioButton("Everyone");
+        justMe.setToggleGroup(ipGroup);
+        classmatesAndInstructorsOnly.setToggleGroup(ipGroup);
+        everyone.setToggleGroup(ipGroup);
+        int oldIPValue = Root.getActiveUser().getPictureVisibility();
+        ipGroup.selectToggle(oldIPValue == 0 ? justMe : oldIPValue == 1 ? classmatesAndInstructorsOnly : everyone);
+        ipGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> Root.getActiveUser().setPictureVisibility(newValue == justMe ? 0 : newValue == classmatesAndInstructorsOnly ? 1 : 2));
+        VBox imagePermissions = new VBox(ipPrompt, justMe, classmatesAndInstructorsOnly, everyone);
+        imagePermissions.setSpacing(10);
+        imagePermissions.setPadding(new Insets(10, 10, 10, 60));
+        layout.add(imagePermissions, 1, 3);
 
         //close button
         Button closeBtn = new Button("Close");
