@@ -122,7 +122,12 @@ public class Terminal extends AnchorPane {
                 GridPane.setConstraints(field_new, 1, yindex++, 1, 1);
                 pane.getChildren().add(field_new);
                 field_new.requestFocus();
-                field_new.addEventHandler(KeyEvent.KEY_PRESSED, event1 -> advance(field_new, event1));
+                field_new.addEventHandler(KeyEvent.KEY_PRESSED, event1 -> {
+                    if (Root.getPortal().getState() != Main.TERMINAL_STATE)
+                        event.consume();
+                    else
+                        advance(field_new, event1);
+                });
                 wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
             }
             if (terminalRet.isHide()) {
@@ -209,7 +214,12 @@ public class Terminal extends AnchorPane {
         field.setStyle("-fx-background-color: #202020; -fx-text-fill: #ffffff");
         pane = new GridPane();
 
-        field.addEventHandler(KeyEvent.KEY_PRESSED, event -> advance(field, event));
+        field.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (Root.getPortal().getState() != Main.TERMINAL_STATE)
+                event.consume();
+            else
+                advance(field, event);
+        });
 
         GridPane.setRowIndex(prompt, 0);
         GridPane.setColumnIndex(prompt, 0);

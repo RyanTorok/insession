@@ -61,6 +61,7 @@ public class Main extends Application {
     private boolean tbsbDrag = false;
     private Node sleepBody;
     private Pane mainBody;
+    private StackPane mainBodyAndTaskViews;
     private Text clock;
     private Text date;
     private Text name;
@@ -81,6 +82,10 @@ public class Main extends Application {
     private AnchorPane weatherPane;
     private boolean day;
     private StackPane topbarWrapper;
+
+    //Task Views
+    private TaskViewWrapper taskViews;
+    private boolean homeScreen;
 
     public static void main(String[] args) {
         launch(args);
@@ -277,7 +282,8 @@ public class Main extends Application {
         backgd.setFitWidth(1900);
         backgd.setPreserveRatio(true);
         setWeatherGraphics(background, weatherPane);
-        StackPane allBodyPanes = new StackPane(sleepbody, body);
+        mainBodyAndTaskViews = new StackPane();
+        StackPane allBodyPanes = new StackPane(sleepbody, mainBodyAndTaskViews);
         VBox root = new VBox(topbarWrapper, allBodyPanes);
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
@@ -410,6 +416,11 @@ public class Main extends Application {
         contentPanesWrapper.getChildren().addAll(contentPanes);
         mainBody.getChildren().add(contentPanesWrapper);
 
+        taskViews = new TaskViewWrapper();
+
+        mainBodyAndTaskViews.getChildren().addAll(taskViews, mainBody);
+        homeScreen = true;
+
         picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
 
         getPrimaryStage().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -466,11 +477,11 @@ public class Main extends Application {
         });
 
         getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (event.getCode().equals(KeyCode.LEFT) && getState() == BASE_STATE) {
+            if (event.getCode().equals(KeyCode.LEFT) && getState() == BASE_STATE && homeScreen) {
                 if (getCurrentMenu() != 0)
                     scrollBody(getCurrentMenu() - 1, getSubtitle());
             }
-            if (event.getCode().equals(KeyCode.RIGHT) && getState() == BASE_STATE) {
+            if (event.getCode().equals(KeyCode.RIGHT) && getState() == BASE_STATE && homeScreen) {
                 if (getCurrentMenu() != getMenus().length - 1)
                     scrollBody(getCurrentMenu() + 1, getSubtitle());
             }
@@ -581,7 +592,7 @@ public class Main extends Application {
                 break;
             case Partly_Cloudy:
                 backgd.setImage(parseBackgroundImage(partly_cloudy_now));
-                break; //day_partly_cloudy is default image.
+                break;
             case Sunny:
                 backgd.setImage(parseBackgroundImage(clear_now));
                 if (!day) needMoon = true;
@@ -685,8 +696,8 @@ public class Main extends Application {
         fadein.setFromValue(0);
         fadein.setToValue(1);
         fadein.play();
-        mainBody.setVisible(true);
-        FadeTransition fadein_ = new FadeTransition(Duration.millis(200), getMainBody());
+        mainBodyAndTaskViews.setVisible(true);
+        FadeTransition fadein_ = new FadeTransition(Duration.millis(200), mainBodyAndTaskViews);
         fadein_.setFromValue(0);
         fadein_.setToValue(1);
         fadein_.play();
@@ -696,7 +707,7 @@ public class Main extends Application {
     private void sleep() {
         state = SLEEP_STATE;
         topbarWrapper.setVisible(false);
-        getMainBody().setVisible(false);
+        mainBodyAndTaskViews.setVisible(false);
         FadeTransition ft = new FadeTransition(Duration.millis(200), getSleepBody());
         ft.setFromValue(0);
         ft.setToValue(1);
@@ -808,6 +819,14 @@ public class Main extends Application {
         this.name = name;
     }
 
+    public boolean isHomeScreen() {
+        return homeScreen;
+    }
+
+    public void setHomeScreen(boolean homeScreen) {
+        this.homeScreen = homeScreen;
+    }
+
     class BarMenu extends Text {
         int scrollPos;
         public BarMenu(String text, int order) {
@@ -830,6 +849,7 @@ public class Main extends Application {
     };
 
     private void scrollBody(int scrollPos, Text changeText) {
+        hideTaskViews();
         int oldMenu = currentMenu;
         changeText.setText(getSubtitles()[scrollPos]);
         currentMenu = scrollPos;
@@ -861,7 +881,7 @@ public class Main extends Application {
         getTerm().exit.setOnFinished(event -> {
             state = BASE_STATE;
             ObservableList<Node> workingCollection = FXCollections.observableArrayList(getMainArea().getChildren());
-            Collections.swap(workingCollection, 2, 3);
+            Collections.swap(workingCollection, 3, 2);
             getMainArea().getChildren().setAll(workingCollection);
         });
     }
@@ -903,20 +923,21 @@ public class Main extends Application {
             in = new TranslateTransition();
             in.setNode(this);
             in.setDuration(Duration.millis(200));
-            in.setByX(-300);
+            in.setToX(1600);
             in.setAutoReverse(false);
 
             //exit screen animation
             out = new TranslateTransition();
             out.setNode(this);
             out.setDuration(Duration.millis(200));
-            out.setByX(300);
+            out.setToX(1900);
             out.setAutoReverse(false);
 
             menus = new ArrayList<>();
 
             boolean signedIn = Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null;
             Menu openTerminal = new Menu("Open Terminal");
+            Menu calendar = new Menu("Calendar");
             Menu grades = new Menu("My Grades");
             Menu attendance = new Menu("Attendance History");
             Menu accountSettings = new Menu("Account Settings");
@@ -928,6 +949,7 @@ public class Main extends Application {
             Menu save = new Menu(signedIn ? "Save and Exit" : "Exit");
 
             menus.add(openTerminal);
+            menus.add(calendar);
             menus.add(grades);
             menus.add(attendance);
             menus.add(accountSettings);
@@ -940,6 +962,8 @@ public class Main extends Application {
 
 
             openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false)));
+
+            calendar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Calendar()));
 
             grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 //TODO
@@ -1043,6 +1067,8 @@ public class Main extends Application {
                 this.text = prompt;
                 setAlignment(Pos.CENTER);
 
+                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> UtilAndConstants.fireMouse(picture, MouseEvent.MOUSE_CLICKED));
+
                 addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
                     for (Menu m: menus) {
                         m.setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
@@ -1050,9 +1076,7 @@ public class Main extends Application {
                     setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(UtilAndConstants.highlightColor(color)));
                     selectedMenu = menus.indexOf(this);
                 });
-                addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
-                });
+                addEventHandler(MouseEvent.MOUSE_EXITED, event -> setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color)));
                 AnchorPane.setTopAnchor(prompt, 8.5);
                 AnchorPane.setLeftAnchor(prompt, 5.0);
             }
@@ -1070,4 +1094,43 @@ public class Main extends Application {
             public Text getText() {return text;}
         }
     }
+
+    public void launchTaskView(TaskView view) {
+        assert mainBodyAndTaskViews.getChildren().size() == 2;
+        showTaskViews(view);
+        taskViews.launch(view);
+        homeScreen = false;
+    }
+
+    void showTaskViews() {
+        showTaskViews(false);
+    }
+
+    private void showTaskViews(TaskView newView) {
+        if (newView != null)
+            showTaskViews(true);
+    }
+
+    private void showTaskViews(boolean newView) {
+        if (!homeScreen || (taskViews.getActiveViews().size() == 0 && !newView))
+            return;
+        assert mainBodyAndTaskViews.getChildren().indexOf(taskViews) == 0;
+        ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainBodyAndTaskViews.getChildren());
+        Collections.swap(workingCollection, 0, 1);
+        mainBodyAndTaskViews.getChildren().setAll(workingCollection);
+        taskViews.setVisible(true);
+        homeScreen = false;
+    }
+
+    void hideTaskViews() {
+        if (homeScreen)
+            return;
+        assert mainBodyAndTaskViews.getChildren().indexOf(taskViews) == 1;
+        ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainBodyAndTaskViews.getChildren());
+        Collections.swap(workingCollection, 0, 1);
+        mainBodyAndTaskViews.getChildren().setAll(workingCollection);
+        taskViews.setVisible(false);
+        homeScreen = true;
+    }
+
 }
