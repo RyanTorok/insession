@@ -939,7 +939,7 @@ public class Main extends Application {
             Menu openTerminal = new Menu("Open Terminal");
             Menu calendar = new Menu("Calendar");
             Menu grades = new Menu("My Grades");
-            Menu attendance = new Menu("Attendance History");
+            Menu attendance = new Menu("Attendance");
             Menu accountSettings = new Menu("Account Settings");
             Menu kbShortcuts = new Menu("Keyboard Shortcuts");
             Menu history = new Menu("Usage History");
@@ -966,11 +966,11 @@ public class Main extends Application {
             calendar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Calendar()));
 
             grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO
+                Main.this.launchTaskView(new Grades());
             });
 
             attendance.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO
+                Main.this.launchTaskView(new Attendance());
             });
 
             accountSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -981,15 +981,15 @@ public class Main extends Application {
             });
 
             history.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO
+                Main.this.launchTaskView(new History());
             });
 
             privacy.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO
+                Main.this.launchTaskView(new PrivacyPolicy());
             });
 
             help.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //TODO
+                Main.this.launchTaskView(new Help());
             });
 
             switch_user.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

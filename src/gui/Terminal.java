@@ -159,7 +159,7 @@ public class Terminal extends AnchorPane {
             }
         }
         if (event.getCode().equals(KeyCode.TAB)) {
-            int lastSpace = current.getText().indexOf(" ") + 1;
+            int lastSpace = current.getText().lastIndexOf(" ") + 1;
             String before = current.getText().substring(0, lastSpace);
             String text = current.getText().substring(lastSpace);
             int lio = text.lastIndexOf(File.separator);
@@ -169,6 +169,7 @@ public class Terminal extends AnchorPane {
                 String start = text.substring(lio + 1);
                 String end = start;
                 List<String> result = Files.walk(dir.toPath(), 1, FileVisitOption.FOLLOW_LINKS)
+                        .filter(path -> !path.toFile().equals(dir))
                         .map(path -> path.toFile().getName())
                         .filter(name -> name.startsWith(start))
                         .collect(Collectors.toList());
