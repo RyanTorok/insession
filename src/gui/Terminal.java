@@ -172,6 +172,14 @@ public class Terminal extends AnchorPane {
                         .map(path -> path.toFile().getName())
                         .filter(name -> name.startsWith(start))
                         .collect(Collectors.toList());
+                //added to prevent JVM crashes on tab when there are no file matches (somehow this bypasses the JVM error handler).
+                if (result.size() == 0) {
+                    current.requestFocus();
+                    current.positionCaret(current.getText().length());
+                    event.consume();
+                    wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
+                    return;
+                }
                 outer : for (int i = start.length();; i++) {
                     Character currentChar = null;
                     for (String name: result) {
@@ -185,7 +193,6 @@ public class Terminal extends AnchorPane {
                             currentChar = test;
                     }
                     end += currentChar;
-                    currentChar = null;
                 }
                 current.setText(before + (lio == -1 ? "" : (ssr + File.separator)) + end);
             } catch (TerminalException | IOException e) {
