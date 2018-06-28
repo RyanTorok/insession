@@ -82,7 +82,7 @@ public class AcctSettings extends Stage {
                 boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
                 if (oldPasswordMatches) {
                     //try to set new password
-                    boolean success = net.Root.changePassword(newPassword.getText(), testOldPwd.getUniqueID());
+                    boolean success = net.Root.changePassword(newPassword.getText(), testOldPwd.getUniqueID(), Root.getActiveUser().getUsername(), Root.getActiveUser().getPassword());
                     if (!success) {
                         invalidMsg.setText("A connection error occurred. Please try again.");
                     } else {

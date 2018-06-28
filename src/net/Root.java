@@ -20,12 +20,12 @@ public class Root {
         return new URL(ROOT_URL);
     }
 
-    public static boolean changePassword(String password, long uniqueID) {
+    public static boolean changePassword(String password, long uniqueID, String username, byte[] oldPassword) {
         try {
             PasswordManager.PasswordCombo newCombo = PasswordManager.newGen(password);
 
             //post data
-            String data = "id="+ uniqueID + "&password=" + urlEncode(newCombo.getEncryptedPassword()) + "&salt=" + urlEncode(newCombo.getSalt());
+            String data = "id="+ uniqueID + "&password=" + urlEncode(newCombo.getEncryptedPassword()) + "&salt=" + urlEncode(newCombo.getSalt()) + "&old=" + urlEncode(oldPassword) + "&username=" + username;
             byte[] postData = data.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
 
