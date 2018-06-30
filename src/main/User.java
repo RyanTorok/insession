@@ -467,7 +467,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public void syncSerFileWithServer() {
-        syncExternal(net.Root.syncSerFileDown());
+        syncExternal(net.Net.syncSerFileDown());
     }
 
     public void setPictureVisibility(int pictureVisibility) {

@@ -148,11 +148,11 @@ public class Main extends Application {
         titles.setSpacing(5);
 
         //scroll links
-        getMenus()[0] = new BarMenu("latest", 0);
-        getMenus()[1] = new BarMenu("classes", 1);
-        getMenus()[2] = new BarMenu("organizations", 2);
-        getMenus()[3] = new BarMenu("browse lessons", 3);
-        getMenus()[4] = new BarMenu("community", 4);
+        getMenus()[0] = new BarMenu("Latest", 0);
+        getMenus()[1] = new BarMenu("Classes", 1);
+        getMenus()[2] = new BarMenu("Organizations", 2);
+        getMenus()[3] = new BarMenu("Browse Lessons", 3);
+        getMenus()[4] = new BarMenu("Community", 4);
         BarMenu name = new BarMenu(Root.getActiveUser() == null || Root.getActiveUser().getUsername() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
         this.setName(name);
         for (BarMenu m: getMenus()
@@ -604,8 +604,8 @@ public class Main extends Application {
             int hourOfNight = (currentHr + 3) % 24 + 1;
             Image moon = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + getMoonFN() + ".png");
             ImageView moonNode = new ImageView(moon);
-            moonNode.setFitWidth(50);
-            moonNode.setFitHeight(50);
+            moonNode.setFitWidth(40);
+            moonNode.setFitHeight(40);
             double xradius = 800;
             double yradius = 500;
             double dx = Math.cos(Math.PI / 10 * hourOfNight);

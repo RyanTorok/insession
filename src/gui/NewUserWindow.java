@@ -1,8 +1,5 @@
 package gui;
 
-import classes.SQL;
-import db.LoginException;
-import db.SQLMaster;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,14 +14,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.*;
-import jdk.jshell.execution.Util;
 import main.*;
-import terminal.Address;
+import net.Login;
+import net.Net;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class NewUserWindow extends Pane {
@@ -59,25 +54,31 @@ public class NewUserWindow extends Pane {
         b.setOnAction(event -> {
             invalidMessage.setText("");
             if (which == 1) {
-                net.Root.UserMaybe userMaybe = net.Root.login(entries.get(0).getField(), entries.get(1).getField(), true);
-                switch (userMaybe.getExistsCode()) {
-                    case -2: {
-                        //expected user and got correct input, but missing ser file
-                        invalidMessage.setText("We cannot locate your user data. Try creating a new account.");
-                    } break;
-                    case -1: invalidMessage.setText("A connection error occurred. Please try again."); break;
-                    case 0:
-                        invalidMessage.setText("We do not recognize that username and password combination.");
-                        loginConnErr = false;
-                        break;
-                    case 1: invalidMessage.setText("You shouldn't be able to see this. If you do, it's a bug.");
-                    break;
-                    case 2: {
-                        //valid user login
-                        Root.setActiveUser(userMaybe.getUser());
-                        Root.getPortal().switchToMain();
+                Login login = new Login(entries.get(0).getField(), entries.get(1).getField(), true);
+                login.setOnSucceeded(event1 -> {
+                    Net.UserMaybe userMaybe = (Net.UserMaybe) login.getValue();
+                    switch (userMaybe.getExistsCode()) {
+                        case -2: {
+                            //expected user and got correct input, but missing ser file
+                            invalidMessage.setText("We cannot locate your user data. Try creating a new account.");
+                        } break;
+                        case -1: invalidMessage.setText("A connection error occurred. Please try again."); break;
+                        case 0:
+                            invalidMessage.setText("We do not recognize that username and password combination.");
+                            loginConnErr = false;
+                            break;
+                        case 1: invalidMessage.setText("You shouldn't be able to see this. If you do, it's a bug.");
+                            break;
+                        case 2: {
+                            //valid user login
+                            Root.setActiveUser(userMaybe.getUser());
+                            Root.getPortal().switchToMain();
+                        }
                     }
-                }
+                });
+                Thread th = new Thread(login);
+                th.setDaemon(true);
+                th.start();
             } else {
                 String  username   = entries .get(0).getField(),
                         password   = entries .get(1).getField(),
@@ -100,7 +101,7 @@ public class NewUserWindow extends Pane {
                     return;
                 }
                 int type = 0;
-                net.Root.CreateAccountStatus status = net.Root.createAccount(username, password, first, last, email, schoolCode);
+                net.Net.CreateAccountStatus status = net.Net.createAccount(username, password, first, last, email, schoolCode);
                 type = status.getStatus();
                 User newUser = null;
                 switch (type) {

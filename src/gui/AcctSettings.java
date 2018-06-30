@@ -21,6 +21,8 @@ import main.PasswordManager;
 import main.Root;
 import main.UnknownZipCodeException;
 import main.UtilAndConstants;
+import net.Login;
+import net.Net;
 import terminal.Address;
 
 import java.io.File;
@@ -78,22 +80,29 @@ public class AcctSettings extends Stage {
             invalidMsg.setText(error);
             if (error.length() == 0) {
                 //confirm old password
-                net.Root.UserMaybe testOldPwd = net.Root.login(Root.getActiveUser().getUsername(), oldPassword.getText(), false);
-                boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
-                if (oldPasswordMatches) {
-                    //try to set new password
-                    boolean success = net.Root.changePassword(newPassword.getText(), testOldPwd.getUniqueID(), Root.getActiveUser().getUsername(), Root.getActiveUser().getPassword());
-                    if (!success) {
-                        invalidMsg.setText("A connection error occurred. Please try again.");
+                Login login = new Login(Root.getActiveUser().getUsername(), oldPassword.getText(), false);
+                login.setOnSucceeded(event1 -> {
+                    net.Net.UserMaybe testOldPwd = (Net.UserMaybe) login.getValue();
+                    boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
+                    if (oldPasswordMatches) {
+                        //try to set new password
+                        boolean success = net.Net.changePassword(newPassword.getText(), testOldPwd.getUniqueID(), Root.getActiveUser().getUsername(), Root.getActiveUser().getPassword());
+                        if (!success) {
+                            invalidMsg.setText("A connection error occurred. Please try again.");
+                        } else {
+                            invalidMsg.setText("Your password has been successfully changed.");
+                            oldPassword.setText("");
+                            newPassword.setText("");
+                            cfPassword.setText("");
+                        }
                     } else {
-                        invalidMsg.setText("Your password has been successfully changed.");
-                        oldPassword.setText("");
-                        newPassword.setText("");
-                        cfPassword.setText("");
+                        invalidMsg.setText("Your old password is incorrect.");
                     }
-                } else {
-                    invalidMsg.setText("Your old password is incorrect.");
-                }
+
+                });
+                Thread th = new Thread(login);
+                th.setDaemon(true);
+                th.start();
             }
         });
 

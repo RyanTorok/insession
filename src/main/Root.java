@@ -101,7 +101,7 @@ public class Root {
     public static void saveAll() {
         if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
             Root.getActiveUser().write();
-            net.Root.syncSerFileUp();
+            net.Net.syncSerFileUp();
         }
         DefaultUser def = new DefaultUser();
         def.read();
