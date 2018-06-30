@@ -2,26 +2,29 @@ package searchengine;
 
 import main.Root;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class QueryEngine {
 
-    public Collection<Indexable> query(String query) {
+    private Index index;
+
+    public List<Identifier> query(String query) {
         ParseTree parseTree = ParseTree.fromQuery(query);
         Root.getActiveUser().search(query);
         Result result = getResults(parseTree);
         if (result.isNegative()) {
-            return new HashSet<>();
-        } else return result.getResults();
+            return new ArrayList<>();
+        } else return result.getResults().stream()
+                .sorted(Comparator.comparing(ItemNode::getRelevance))
+                .map(node -> node.identifier)
+                .collect(Collectors.toList());
     }
 
     private Result getResults(ParseTree parseTree) {
         switch (parseTree.getType()) {
             case OR: {
-                HashSet<Indexable> combined = new HashSet<>();
+                HashSet<ItemNode> combined = new HashSet<>();
                 Result left = getResults(parseTree.getLeft()), right = getResults(parseTree.getRight());
 
                 //case 1: both positive queries
@@ -34,14 +37,14 @@ public class QueryEngine {
                 //case 2: left is negative and right is positive
                 if (left.isNegative() && !right.isNegative()) {
                     combined.addAll(left.results);
-                    Set<Indexable> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getRight())).collect(Collectors.toSet());
+                    Set<ItemNode> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getRight())).collect(Collectors.toSet());
                     return new Result(filter, true);
                 }
 
                 //case 3: left is positive and right is negative
                 if (!left.isNegative() && right.isNegative()) {
                     combined.addAll(right.results);
-                    Set<Indexable> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getLeft())).collect(Collectors.toSet());
+                    Set<ItemNode> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getLeft())).collect(Collectors.toSet());
                     return new Result(filter, true);
                 }
 
@@ -49,11 +52,11 @@ public class QueryEngine {
                 if (left.isNegative() && right.isNegative()) {
                     return new Result(andMerge(left.results, parseTree.getRight()), true);
                 }
-                break; //shouldn't get here, just for aesthetic purposes
+                return null; //shouldn't get here, just for aesthetic purposes
             }
             case AND: {
 
-                HashSet<Indexable> combined = new HashSet<>();
+                HashSet<ItemNode> combined = new HashSet<>();
                 Result left = getResults(parseTree.getLeft()), right = getResults(parseTree.getRight());
 
                 //case 1: both positive queries
@@ -64,14 +67,14 @@ public class QueryEngine {
                 //case 2: left is negative and right is positive - TODO
                 if (left.isNegative() && !right.isNegative()) {
                     combined.addAll(right.results);
-                    Set<Indexable> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getLeft())).collect(Collectors.toSet());
+                    Set<ItemNode> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getLeft())).collect(Collectors.toSet());
                     return new Result(filter, false);
                 }
 
                 //case 3: left is positive and right is negative - TODO
                 if (!left.isNegative() && right.isNegative()) {
                     combined.addAll(left.results);
-                    Set<Indexable> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getRight())).collect(Collectors.toSet());
+                    Set<ItemNode> filter = combined.stream().filter(result -> !matchesQuery(result, parseTree.getRight())).collect(Collectors.toSet());
                     return new Result(filter, false);
                 }
 
@@ -81,30 +84,39 @@ public class QueryEngine {
                     combined.addAll(right.results);
                     return new Result(combined, true);
                 }
-                break; //shouldn't get here, just for aesthetic purposes
+                return null; //shouldn't get here, just for aesthetic purposes
 
             }
             case WORD: {
-
+                HashSet<ItemNode> results = index.getItems(parseTree.getWord());
+                return new Result(results, parseTree.isNegative());
             }
+
+            case PHRASE: {
+                Set<ItemNode> results = index.getItems(parseTree.getWord());
+                results = results.stream().filter(itemNode -> itemNode.identifier.find().containsString(parseTree.getWord())).collect(Collectors.toSet());
+                return new Result(results, parseTree.isNegative());
+            }
+
+            default: throw new IllegalStateException("Non-query element escaped parse tree");
         }
     }
 
-    private boolean matchesQuery(Indexable item, ParseTree tree) {
+    private boolean matchesQuery(ItemNode item, ParseTree tree) {
         return true;
     }
 
-    private Set<Indexable> andMerge(Set<Indexable> left, ParseTree right) {
-        Set<Indexable> combined = new HashSet<>();
+    private Set<ItemNode> andMerge(Set<ItemNode> left, ParseTree right) {
+        Set<ItemNode> combined = new HashSet<>();
         combined.addAll(left);
         return combined.stream().filter(result -> matchesQuery(result, right)).collect(Collectors.toSet());
     }
 
     class Result {
         private boolean negative;
-        private Set<Indexable> results;
+        private Set<ItemNode> results;
 
-        public Result(Set<Indexable> results, boolean negative) {
+        public Result(Set<ItemNode> results, boolean negative) {
 
             this.results = results;
             this.negative = negative;
@@ -119,11 +131,11 @@ public class QueryEngine {
             this.negative = negative;
         }
 
-        public Set<Indexable> getResults() {
+        public Set<ItemNode> getResults() {
             return results;
         }
 
-        public void setResults(Set<Indexable> results) {
+        public void setResults(Set<ItemNode> results) {
             this.results = results;
         }
     }

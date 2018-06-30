@@ -5,6 +5,10 @@ public class Identifier {
     private Type type;
     private long id;
 
+    public Indexable find() {
+        return null;
+    }
+
     enum Type {
         Module, Class, Organization, Class_Item, Post, Utility, Setting
     }

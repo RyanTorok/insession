@@ -60,7 +60,7 @@ public class Index {
     }
 
     static class ItemTree implements Serializable {
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 303L;
         private HashMap<String, ItemTree> children;
         //stores the actual url object if the key node is a valid url
         private Indexable item;

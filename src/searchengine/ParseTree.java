@@ -10,9 +10,8 @@ public class ParseTree {
     private String word;
     private Token.Type type;
     private boolean parentDirection;
-    private boolean expectedOperator;
-    private int parenDepth;
     private boolean plus = false;
+    private boolean negative = false;
     private boolean phrase = false;
 
     ParseTree(Token.Type type) {
@@ -40,13 +39,13 @@ public class ParseTree {
     }
 
     private void parse(Tokenizer tok, boolean negate, boolean plus) {
+        this.negative = negate;
+        this.plus = plus;
         Token me = tok.consume();
         switch (me.getType()) {
             case NONE:
                 break;
             case LPAREN: {
-                parenDepth++;
-                expectedOperator = true;
                 if (left == null) {
                     //left child is empty, place sub-query in left child
                     left = new ParseTree(null) {
@@ -200,4 +199,27 @@ public class ParseTree {
     }
 
 
+    public boolean isNegative() {
+        return negative;
+    }
+
+    public void setNegative(boolean negative) {
+        this.negative = negative;
+    }
+
+    public boolean isPhrase() {
+        return phrase;
+    }
+
+    public void setPhrase(boolean phrase) {
+        this.phrase = phrase;
+    }
+
+    public boolean isPlus() {
+        return plus;
+    }
+
+    public void setPlus(boolean plus) {
+        this.plus = plus;
+    }
 }
