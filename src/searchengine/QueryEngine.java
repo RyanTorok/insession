@@ -4,26 +4,54 @@ import main.Root;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class QueryEngine {
 
     private Index index;
     private static final String[] ignoredWords = {"where", "what", "how", "and", "or", "a", "an", "of", "i", "the"};
-    //avert your eyes!
-    public static final String[] safeSearchFilterWords = {"shit", "crap", "dick", "dickhead", "shithead", "ass", "asshole", "damn", "fuck", "motherfucker", "shithead", "dammit", "bitch", "hell", "goddamn", "goddammit"};
+    //"encrypted" for code censorship (i.e. characters adjusted by one letter)
+    private static String[] safeSearchFilterWords = {"tiju", "dsbq", "ejdl", "eidlifbe", "tijuifbe", "btt", "bttipmf", "ebno", "gvdl", "npuifsgvdlfs", "tijuifbe", "ebnnju", "cjudi", "ifmm", "hpeebno", "hpeebnoju"};
     private boolean safeSearchOn = false;
     private Set<ItemNode> filterItems;
-    long lastQueryTimeNanos;
-    HashSet<String> allMeaningfulWords;
-    List<String> itemTitles;
-    List<String> textExcerpts;
-    StemIndex stemIndex;
+    private long lastQueryTimeNanos;
+    private HashSet<String> allMeaningfulWords;
+    private List<String> itemTitles;
+    private List<String> textExcerpts;
+    private StemIndex stemIndex;
+
+    public QueryEngine(Index index) {
+        this.index = index;
+        for (int i = 0; i < safeSearchFilterWords.length; i++) {
+            safeSearchFilterWords[i] = decCharacter(safeSearchFilterWords[i]);
+        }
+        lastQueryTimeNanos = 0;
+        stemIndex = new StemIndex();
+    }
+
+    private String decCharacter(String encoding) {
+        char[] arr = encoding.toCharArray();
+        StringBuilder builder = new StringBuilder();
+        for (char c :
+                arr) {
+            builder.append(c == 'a' ? 'z' : c - 1);
+        }
+        return builder.toString();
+    }
+
+    public static String[] getIgnoredWords() {
+        return ignoredWords;
+    }
+
+    public static String[] getSafeSearchFilterWords() {
+        return safeSearchFilterWords;
+    }
 
     //performs a tentative query based on the most likely auto-completion of the last word
     public List<Identifier> incompleteQuery(String query) {
         int lastSpace = query.lastIndexOf("\\s+");
         String lastWord = query.substring(lastSpace + 1);
-        String replace = stemIndex.getBestMatch(lastWord);
+        String replace = getStemIndex().getBestMatch(lastWord);
         if (replace == null || replace.length() == 0)
             return query(query);
         else return query(query.substring(0, lastSpace + 1) + replace);
@@ -34,6 +62,7 @@ public class QueryEngine {
         ParseTree parseTree = ParseTree.fromQuery(query);
         Root.getActiveUser().search(query);
         Result result = getResults(parseTree);
+        assert result != null;
         if (result.isNegative()) {
             lastQueryTimeNanos = System.currentTimeMillis() - startTime;
             return new ArrayList<>();
@@ -54,8 +83,9 @@ public class QueryEngine {
                 Result left = getResults(parseTree.getLeft()), right = getResults(parseTree.getRight());
 
                 //sort result sets to speed up relevance merges to O(n log n) instead of O(n^2)
-                left.results = left.results.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)).collect(Collectors.toSet());
-                right.results = right.results.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)).collect(Collectors.toSet());
+                //casts are necessary to avoid generification to Stream<Object> during sort
+                left.results = ((Stream<ItemNode>) (left.results.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)))).collect(Collectors.toSet());
+                right.results = ((Stream<ItemNode>) (right.results.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)))).collect(Collectors.toSet());
 
                 //case 1: both positive queries
                 if (!left.isNegative() && !right.isNegative()) {
@@ -117,12 +147,12 @@ public class QueryEngine {
 
             }
             case WORD: {
-                HashSet<ItemNode> results = index.getItems(parseTree.getWord());
+                HashSet<ItemNode> results = getIndex().getItems(parseTree.getWord());
                 return new Result(results, parseTree.isNegative());
             }
 
             case PHRASE: {
-                Set<ItemNode> results = index.getItems(parseTree.getWord());
+                Set<ItemNode> results = getIndex().getItems(parseTree.getWord());
                 results = results.stream().filter(itemNode -> itemNode.identifier.find().containsString(parseTree.getWord())).collect(Collectors.toSet());
                 return new Result(results, parseTree.isNegative());
             }
@@ -140,8 +170,9 @@ public class QueryEngine {
             HashSet<ItemNode> combined = new HashSet<>();
 
             //sort result sets to speed up relevance merges to O(n log n) instead of O(n^2)
-            left = left.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)).collect(Collectors.toSet());
-            right = right.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)).collect(Collectors.toSet());
+            //casts are necessary to avoid generification to Stream<Object> during sort
+            left = ((Stream<ItemNode>) (left.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)))).collect(Collectors.toSet());
+            right = ((Stream<ItemNode>) (right.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)))).collect(Collectors.toSet());
 
             Iterator<ItemNode> leftIter = left.iterator(), rightIter = right.iterator();
             ItemNode leftCurrent = advance(leftIter), rightCurrent = advance(rightIter);
@@ -215,7 +246,7 @@ public class QueryEngine {
             case PHRASE:
             case WORD:
                 if (tree.isNegative()) {
-                    int result = index.find(tree.getWord(), item.identifier);
+                    int result = getIndex().find(tree.getWord(), item.identifier);
                     if (result > 0) {
                         return -1;
                     } else {
@@ -223,7 +254,7 @@ public class QueryEngine {
                     }
                 }
                 if (!tree.isPlus()) {
-                    for (String s : ignoredWords) {
+                    for (String s : getIgnoredWords()) {
                         if (s.equals(tree.getWord().toString())) {
                             //common word. ignore element
                             return 0;
@@ -231,11 +262,43 @@ public class QueryEngine {
                     }
                 }
 
-                return index.find(tree.getWord(), item.identifier);
+                return getIndex().find(tree.getWord(), item.identifier);
             default:
                 throw new IllegalStateException("Illegal token in tree");
         }
 
+    }
+
+    public Index getIndex() {
+        return index;
+    }
+
+    public boolean isSafeSearchOn() {
+        return safeSearchOn;
+    }
+
+    public Set<ItemNode> getFilterItems() {
+        return filterItems;
+    }
+
+    public long getLastQueryTimeNanos() {
+        return lastQueryTimeNanos;
+    }
+
+    public HashSet<String> getAllMeaningfulWords() {
+        return allMeaningfulWords;
+    }
+
+    public List<String> getItemTitles() {
+        return itemTitles;
+    }
+
+    public List<String> getTextExcerpts() {
+        return textExcerpts;
+    }
+
+    public StemIndex getStemIndex() {
+        return stemIndex;
     }
 
     class Result {

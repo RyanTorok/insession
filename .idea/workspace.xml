@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/searchengine/StemIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/searchengine/Trie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/searchengine/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/Identifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/searchengine/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/Index.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/searchengine/ItemNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/ItemNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/searchengine/QueryEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/QueryEngine.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,10 +63,30 @@
       <file leaf-file-name="QueryEngine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/searchengine/QueryEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="27" column="32" lean-forward="true" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+            <state relative-caret-position="150">
+              <caret line="87" selection-start-line="87" selection-end-line="87" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#890#891#0" expanded="true" />
+                <element signature="e#925#926#0" expanded="true" />
+                <element signature="e#982#983#0" expanded="true" />
+                <element signature="e#1026#1027#0" expanded="true" />
+                <element signature="e#10969#10970#0" expanded="true" />
+                <element signature="e#10997#10998#0" expanded="true" />
+                <element signature="e#11036#11037#0" expanded="true" />
+                <element signature="e#11071#11072#0" expanded="true" />
+                <element signature="e#11116#11117#0" expanded="true" />
+                <element signature="e#11150#11151#0" expanded="true" />
+                <element signature="e#11193#11194#0" expanded="true" />
+                <element signature="e#11234#11235#0" expanded="true" />
+                <element signature="e#11288#11289#0" expanded="true" />
+                <element signature="e#11329#11330#0" expanded="true" />
+                <element signature="e#11372#11373#0" expanded="true" />
+                <element signature="e#11405#11406#0" expanded="true" />
+                <element signature="e#11450#11451#0" expanded="true" />
+                <element signature="e#11485#11486#0" expanded="true" />
+                <element signature="e#11524#11525#0" expanded="true" />
+                <element signature="e#11556#11557#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -522,12 +537,12 @@
       <workItem from="1530322018644" duration="8264000" />
       <workItem from="1530483629936" duration="7332000" />
       <workItem from="1530543644939" duration="1270000" />
-      <workItem from="1530582861556" duration="4771000" />
+      <workItem from="1530582861556" duration="6269000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="469407000" />
+    <option name="totallyTimeSpent" value="470905000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
@@ -536,6 +551,7 @@
       <window_info anchor="right" id="Palette" order="2" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Cargo" order="7" weight="0.3294766" />
+      <window_info active="true" anchor="bottom" id="Messages" order="9" visible="true" weight="0.32948583" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
@@ -560,7 +576,6 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.32948583" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32948583" />
@@ -973,10 +988,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/searchengine/QueryEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="27" column="32" lean-forward="true" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+        <state relative-caret-position="150">
+          <caret line="87" selection-start-line="87" selection-end-line="87" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#890#891#0" expanded="true" />
+            <element signature="e#925#926#0" expanded="true" />
+            <element signature="e#982#983#0" expanded="true" />
+            <element signature="e#1026#1027#0" expanded="true" />
+            <element signature="e#10969#10970#0" expanded="true" />
+            <element signature="e#10997#10998#0" expanded="true" />
+            <element signature="e#11036#11037#0" expanded="true" />
+            <element signature="e#11071#11072#0" expanded="true" />
+            <element signature="e#11116#11117#0" expanded="true" />
+            <element signature="e#11150#11151#0" expanded="true" />
+            <element signature="e#11193#11194#0" expanded="true" />
+            <element signature="e#11234#11235#0" expanded="true" />
+            <element signature="e#11288#11289#0" expanded="true" />
+            <element signature="e#11329#11330#0" expanded="true" />
+            <element signature="e#11372#11373#0" expanded="true" />
+            <element signature="e#11405#11406#0" expanded="true" />
+            <element signature="e#11450#11451#0" expanded="true" />
+            <element signature="e#11485#11486#0" expanded="true" />
+            <element signature="e#11524#11525#0" expanded="true" />
+            <element signature="e#11556#11557#0" expanded="true" />
           </folding>
         </state>
       </provider>
