@@ -40,7 +40,7 @@ public class Index {
         return tree.getAll();
     }
 
-    int find(String word, Indexable item) {
+    int find(String word, Identifier item) {
         ItemTree tree = index.get(word);
         if (tree == null)
             return -1;
@@ -48,8 +48,8 @@ public class Index {
     }
 
     //O(n) return of all urls in worst case when implicitly negative query reaches the top of the query tree.
-    Set<Indexable> getAll() {
-        HashSet<Indexable> items = new HashSet<>();
+    Set<Identifier> getAll() {
+        HashSet<Identifier> items = new HashSet<>();
         for (Map.Entry<String, ItemTree> tree : index.entrySet()) {
             HashSet<ItemNode> temp = tree.getValue().getAll();
             for (ItemNode node : temp) {
@@ -103,7 +103,7 @@ public class Index {
             }
         }
 
-        int find(Indexable item) {
+        int find(Identifier item) {
             String itemString = item.toString();
             //chop off ending slash if necessary
             if (itemString.charAt(itemString.length() - 1) == '/')

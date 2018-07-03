@@ -24,4 +24,8 @@ public class ItemNode {
         this.identifier = identifier;
         this.relevance = relevance;
     }
+
+    public void merge(ItemNode other) {
+        relevance += other.relevance;
+    }
 }
