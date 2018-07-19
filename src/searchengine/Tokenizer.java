@@ -1,6 +1,8 @@
 package searchengine;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Tokenizer {
 
@@ -9,6 +11,7 @@ public class Tokenizer {
     private char nullChar = (char) 0;
     private Token current;
     private ArrayList<Tag> tags;
+    private Token reserve = null;
 
     public Tokenizer(String query) {
         this.query = query;
@@ -29,14 +32,32 @@ public class Tokenizer {
     }
 
     private Token consumeToken() {
-        switch (next()) {
+        if (reserve != null) {
+            Token tok = reserve;
+            reserve = null;
+            return tok;
+        }
+        next();
+        while (Character.toString(get()).matches("\\s+")) {
+            next();
+        }
+        switch (get()) {
             case (char) 0: return new Token(Token.Type.NONE);
             case '\"': {
                 StringBuilder phrase = new StringBuilder();
                 while (next() != '\"' && get() != nullChar) {
-                    phrase.append(get());
+                    if (Character.isLetterOrDigit(get()) || Character.isSpaceChar(get()))
+                        phrase.append(get());
                 }
-                return new Token(Token.Type.PHRASE, phrase.toString());
+                String phraseStr = phrase.toString().toLowerCase().trim();
+                Pattern pattern = Pattern.compile("\\s");
+                Matcher matcher = pattern.matcher(phraseStr);
+                if (!matcher.find()) {
+                    Token toReturn = new Token(Token.Type.WORD, phraseStr);
+                    reserve = toReturn;
+                    return new Token(Token.Type.PLUS);
+                }
+                return new Token(Token.Type.PHRASE, phraseStr);
             }
             case '-': return new Token(Token.Type.NOT);
             case '+': return new Token(Token.Type.PLUS);
@@ -55,13 +76,18 @@ public class Tokenizer {
             }
             default: {
                 //search word
-                StringBuilder word = new StringBuilder();
+                StringBuilder word = new StringBuilder(String.valueOf(get()));
                 while (Character.isLetterOrDigit(next())) {
                     word.append(get());
                 }
                 //back up off the first character of the next token
                 charAt--;
-                return new Token(Token.Type.WORD, word.toString());
+                String wordStr = word.toString().toLowerCase();
+                if (wordStr.equals("and"))
+                    return new Token(Token.Type.AND);
+                if (wordStr.equals("or"))
+                    return new Token(Token.Type.OR);
+                return new Token(Token.Type.WORD, word.toString().toLowerCase());
             }
         }
     }
@@ -73,8 +99,25 @@ public class Tokenizer {
     }
 
     private char next() {
-        if (charAt >= query.length())
+        if (++charAt >= query.length())
             return nullChar;
-        return query.charAt(++charAt);
+        return query.charAt(charAt);
+    }
+
+    public boolean hasNext() {
+        if (reserve != null)
+            return false;
+        int orig = charAt;
+        while (Character.isSpaceChar(next())) {}
+        if (get() == nullChar) {
+            charAt = orig;
+            return false;
+        }
+        charAt = orig;
+        return true;
+    }
+
+    ArrayList<Tag> getTags() {
+        return tags;
     }
 }

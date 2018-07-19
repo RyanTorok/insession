@@ -89,7 +89,7 @@ public class TaskViewWrapper extends StackPane {
 
     static final int centerLocX = 0;
     static final double fullWidth = 1860;
-    static final double fullHeight = 930;
+    static final double fullHeight = 945;
     static final double smallWidth = fullWidth / 2;
     static final double smallHeight = fullHeight / 2;
 

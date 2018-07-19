@@ -1,5 +1,7 @@
 package searchengine;
 
+import classes.Test;
+
 import static searchengine.Token.Type.*;
 
 public class ParseTree {
@@ -23,10 +25,9 @@ public class ParseTree {
         this.setWord(word);
     }
 
-    static ParseTree fromQuery(String query) {
-        Tokenizer tok = new Tokenizer(query);
+    static ParseTree fromQuery(Tokenizer tok) {
         ParseTree tree = new ParseTree(null);
-        tree.parse(tok, false, false);
+        tree.parseWrapper(tok);
         return tree.getRoot();
     }
 
@@ -38,76 +39,148 @@ public class ParseTree {
         return tree;
     }
 
+    //percolates down a negative branch using DeMorgan's Law
+    private void deepNegate() {
+        if (type == AND) type = OR;
+        else if (type == OR) type = AND;
+        else if (type == WORD || type == PHRASE)
+            negative = !negative;
+        if (left != null)
+            left.deepNegate();
+        if (right != null)
+            right.deepNegate();
+    }
+
+    private void parseWrapper(Tokenizer tok) {
+        parse(tok, false, false);
+        if (tok.hasNext()) {
+            ParseTree superTree = new ParseTree(null);
+            superTree.setLeft(this);
+            superTree.parseWrapper(tok);
+        }
+    }
+
     private void parse(Tokenizer tok, boolean negate, boolean plus) {
-        this.negative = negate;
-        this.plus = plus;
+        boolean rParen = false;
         Token me = tok.consume();
         switch (me.getType()) {
-            case NONE:
-                break;
-            case LPAREN: {
-                if (left == null) {
-                    //left child is empty, place sub-query in left child
-                    left = new ParseTree(null) {
-                        {
-                            parse(tok, negate, false);
-                        }
-                    };
-                } else {
-                    right = new ParseTree(null);
-                    right.setLeft(new ParseTree(null) {
-                        {
-                            parse(tok, negate, false);
-                        }
-                    });
+            case NONE: {
+                //end of query, rotate ending parenthesised query right to prevent inner null node
+                if (type == null && left != null && left.getType() != null) {
+                    //consume child node into empty parent
+                    consumeChild(left);
                 }
                 break;
             }
-            case RPAREN:
+            case LPAREN: {
+                if (type == null) {
+                    if (left == null) {
+                        //place parenthesized query in left child
+                        ParseTree subTree = new ParseTree(null);
+                        subTree.parse(tok, false, false);
+                        setLeft(subTree.getRoot());
+                        if (negate)
+                            left.deepNegate();
+                        parse(tok, false, false);
+                    } else {
+                        //previous query in left child but no operator: need implicit AND
+                        type = AND;
+                        ParseTree newRight = new ParseTree(null);
+                        ParseTree newRightLeft = new ParseTree(null);
+                        newRightLeft.parse(tok, false, false);
+                        newRightLeft = newRightLeft.getRoot();
+                        if (negate)
+                            newRightLeft.deepNegate();
+                        newRight.setLeft(newRightLeft);
+                        setRight(newRight);
+                        right.parse(tok, false, false);
+                        if (right.type == null)
+                            right.consumeChild(right.left);
+                    }
+                } else {
+                    if (type == AND || type == OR) {
+                        //same as above, but without implicit AND
+                        ParseTree newRight = new ParseTree(null);
+                        ParseTree newRightLeft = new ParseTree(null);
+                        newRightLeft.parse(tok, false, false);
+                        newRightLeft = newRightLeft.getRoot();
+                        if (negate)
+                            newRightLeft.deepNegate();
+                        newRight.setLeft(newRightLeft);
+                        setRight(newRight);
+                        right.parse(tok, false, false);
+                        if (right.type == null)
+                            right.consumeChild(right.left);
+                    } else {
+                        //word or phrase query in root
+                        ParseTree andNode = new ParseTree(AND);
+                        setRight(andNode);
+                        rotateLeft();
+                        assert andNode.left == this;
+                        ParseTree newRight = new ParseTree(null);
+                        ParseTree newRightLeft = new ParseTree(null);
+                        newRightLeft.parse(tok, false, false);
+                        newRightLeft = newRightLeft.getRoot();
+                        if (negate)
+                            newRightLeft.deepNegate();
+                        newRight.setLeft(newRightLeft);
+                        andNode.setRight(newRight);
+                        andNode.right.parse(tok, false, false);
+                        if (andNode.right != null && andNode.right.type == null)
+                            andNode.right.consumeChild(andNode.right.left);
+
+                    }
+                }
                 break;
+            }
+            case RPAREN: {
+                if (type == null && left != null && left.getType() != null) //handles empty nodes created by nested parentheses
+                    consumeChild(left);
+                break;
+            }
             case AND: {
                 if (type == null) {
-                    type = AND;
-                    right = new ParseTree(null) {
-                        {
-                            parse(tok, negate, false);
-                        }
-                    };
+                    if (left == null)
+                        parse(tok, false, false);
+                    else {
+                        type = AND;
+                        ParseTree newTree = new ParseTree(null);
+                        newTree.parse(tok, false, false);
+                        setRight(newTree.getRoot());
+                        if (right.getType() == OR) rotateLeft();
+                    }
                 } else {
                     ParseTree newTree = new ParseTree(AND);
                     setRight(newTree);
                     rotateLeft();
-                    newTree.right = new ParseTree(null) {
-                        {
-                            parse(tok, negate, false);
-                        }
-                    };
-                    if (right.getType() == OR) {
+                    ParseTree newTree1 = new ParseTree(null);
+                    newTree1.parse(tok, false, false);
+                    newTree.right = newTree1.getRoot();
+                    if (newTree.right.getType() == OR) {
                         //ensures OR nodes have lower precedence than AND nodes by being farther up in the tree
                         //ORs nested in () are immune because they are only ever placed in the left child
-                        rotateLeft();
+                        newTree.rotateLeft();
                     }
                 }
                 break;
             }
             case OR: {
                 if (type == null) {
-                    type = OR;
-                    right = new ParseTree(null) {
-                        {
-                            parse(tok, negate, false);
-                        }
-                    };
+                    if (left == null) {
+                        parse(tok, false, false);
+                    } else {
+                        type = OR;
+                        ParseTree newTree = new ParseTree(null);
+                        newTree.parse(tok, false, false);
+                        right = newTree.getRoot();
+                    }
                 } else {
                     ParseTree newTree = new ParseTree(OR);
                     setRight(newTree);
                     rotateLeft();
-                    newTree.right = new ParseTree(null) {
-                        {
-                            parse(tok, negate, false);
-                        }
-                    };
-
+                    ParseTree newTree1 = new ParseTree(null);
+                    newTree1.parse(tok, false, false);
+                    newTree.setRight(newTree1.getRoot());
                 }
                 break;
             }
@@ -115,22 +188,44 @@ public class ParseTree {
             case PLUS: parse(tok, negate, true); break;
             case PHRASE:
             case WORD: {
-                if (left == null) {
-                    left = new ParseTree(WORD, me.getText());
-                    left.plus = plus;
-                    left.phrase = me.getType() == PHRASE;
-                    parse(tok, negate, false);
-                } else {
-                    if (type == null) {
-                        //consecutive words, need implicit AND
+                if (type == null) {
+                    if (left == null || left.type == null) {
+                        type = me.getType();
+                        word = me.getText();
+                        this.negative = negate;
+                        this.plus = plus;
+                        parse(tok, false, false);
+                    } else {
                         this.type = AND;
-                        ParseTree newTree = new ParseTree(null) {
-                            {
-                                parse(tok, negate, false);
-                            }
-                        };
-                        setRight(newTree);
+                        ParseTree newRight = new ParseTree(me.getType(), me.getText());
+                        newRight.setNegative(negate);
+                        newRight.setPlus(plus);
+                        newRight.parse(tok, false, false);
+                        setRight(newRight.getRoot());
+                        if (right.getType() == OR)
+                            rotateLeft();
+                    }
+                } else {
+                    if (type == AND || type == OR) {
+                        ParseTree newRight = new ParseTree(me.getType(), me.getText());
+                        newRight.setNegative(negate);
+                        newRight.setPlus(plus);
+                        newRight.parse(tok, false, false);
+                        setRight(newRight.getRoot());
+                        if (type == AND && right.getType() == OR)
+                            rotateLeft();
+                    } else {
+                        ParseTree and = new ParseTree(AND);
+                        setRight(and);
                         rotateLeft();
+                        assert and.left == this;
+                        ParseTree newRight = new ParseTree(me.getType(), me.getText());
+                        newRight.setNegative(negate);
+                        newRight.setPlus(plus);
+                        newRight.parse(tok, false, false);
+                        and.setRight(newRight.getRoot());
+                        if (and.getRight().getType() == OR)
+                            and.rotateLeft();
                     }
                 }
                 break;
@@ -138,18 +233,28 @@ public class ParseTree {
         }
     }
 
+    private void consumeChild(ParseTree tree) {
+        this.setType(tree.getType());
+        this.setLeft(tree.getLeft());
+        this.setRight(tree.getRight());
+        this.setNegative(tree.isNegative());
+        this.setPlus(tree.isPlus());
+        this.setWord(tree.getWord());
+        this.setPhrase(tree.isPhrase());
+    }
+
     private void rotateLeft() {
         assert right != null;
         ParseTree child = right;
         if (getParent() != null) {
             if (!parentDirection)
-                getParent().setLeft(child);
-            else getParent().setRight(child);
+                getParent().plainSetLeft(child);
+            else getParent().plainSetRight(child);
         }
         child.parentDirection = this.parentDirection;
         this.parentDirection = false;
-        setRight(child.getLeft());
-        child.setLeft(this);
+        plainSetRight(child.getLeft());
+        child.plainSetLeft(this);
         child.setParent(getParent());
         this.setParent(child);
     }
@@ -158,10 +263,20 @@ public class ParseTree {
         return left;
     }
 
+    private void plainSetLeft(ParseTree tree) {
+        this.left = tree;
+    }
+
+    private void plainSetRight(ParseTree tree) {
+        this.right = tree;
+    }
+
     public void setLeft(ParseTree left) {
         this.left = left;
-        right.setParent(this);
-        right.parentDirection = false;
+        if (left != null) {
+            left.setParent(this);
+            left.parentDirection = false;
+        }
     }
 
     public ParseTree getRight() {
@@ -169,9 +284,12 @@ public class ParseTree {
     }
 
     public void setRight(ParseTree right) {
+        if (right != null)
         this.right = right;
-        right.setParent(this);
-        right.parentDirection = true;
+        if (right != null) {
+            right.setParent(this);
+            right.parentDirection = true;
+        }
     }
 
     public String getWord() {

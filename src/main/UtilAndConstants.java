@@ -11,10 +11,12 @@ import javafx.scene.paint.Color;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 
 /**
@@ -100,6 +102,16 @@ public class UtilAndConstants {
         if (count > 1)
             return singular + "s";
         else return singular;
+    }
+
+    public static String parseTimeNanos(long nanos) {
+        if (nanos < 1000)
+            return nanos + " ns";
+        if (nanos < 1000000)
+            return nanos / 1000 + " " + (char) 0x03bc + "s";
+        if (nanos < 1000000000)
+            return nanos / 1000000 + " ms";
+        return nanos / 1000000000 + " sec";
     }
 
     public int getMAX_ATTENDANCE_EXTRA_TIME() {
@@ -232,7 +244,7 @@ public class UtilAndConstants {
         }
     }
 
-    public static void hightlightOnMouseOver(Node n) {
+    public static void highlightOnMouseOver(Node n) {
 
         String oldStyle_ = n.getStyle();
         if (!oldStyle_.contains("-fx-background-color")) {
@@ -254,5 +266,40 @@ public class UtilAndConstants {
         n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             n.setStyle(newStyle);
         });
+    }
+
+    public static String[] parsePHPDataOutBase64(String base64, int expectedLength) {
+        byte[] actualBytes = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
+        String string = new String(actualBytes);
+        String split[] = new String[expectedLength];
+        for (int i = 0; i < split.length; i++) {
+            split[i] = "";
+        }
+        int index = 0;
+        int charAt = 0;
+        boolean escaped = false;
+        while (charAt < string.length()) {
+            if (index > split.length)
+                throw new IllegalArgumentException("Too many splits in post encoding");
+            char c = string.charAt(charAt);
+            if (escaped) {
+                if (c == '\\')
+                    split[index] += '\\';
+                else if (c == ';')
+                    split[index] += ';';
+                else throw new IllegalArgumentException("Illegal escape sequence in decoded post: " + '\\' + c);
+            } else {
+                if (c == '\\')
+                    escaped = true;
+                else if (c == ';')
+                    index++;
+                else split[index] += c;
+            }
+            charAt++;
+        }
+        if (index <= string.length() - 1) {
+            throw new IllegalArgumentException("Not enough splits in post encoding");
+        }
+        return split;
     }
 }

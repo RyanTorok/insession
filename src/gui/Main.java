@@ -30,6 +30,10 @@ import javafx.util.Duration;
 import main.Root;
 import main.User;
 import main.UtilAndConstants;
+import searchengine.Index;
+import searchengine.Indexable;
+import searchengine.QueryEngine;
+import searchengine.Trie;
 import terminal.Address;
 
 import java.awt.*;
@@ -52,6 +56,7 @@ public class Main extends Application {
     public static final int SLEEP_STATE = 1;
     public static final int TERMINAL_STATE = 2;
     public static final int SIDEBAR_STATE = 3;
+    private static final int SEARCH_STATE = 4;
 
     private Pane[] contentPanes;
     private HBox contentPanesWrapper;
@@ -86,6 +91,10 @@ public class Main extends Application {
     //Task Views
     private TaskViewWrapper taskViews;
     private boolean homeScreen;
+
+    //Search Interface
+    private SearchModule searchBox;
+    private StackPane allMenusAndSearchBar;
 
     public static void main(String[] args) {
         launch(args);
@@ -146,6 +155,7 @@ public class Main extends Application {
         subText.setFill(Color.WHITE);
         VBox titles = new VBox(mainlogo, subText);
         titles.setSpacing(5);
+        titles.setPadding(new Insets(10, 0, 0, 0));
 
         //scroll links
         getMenus()[0] = new BarMenu("Latest", 0);
@@ -155,23 +165,25 @@ public class Main extends Application {
         getMenus()[4] = new BarMenu("Community", 4);
         BarMenu name = new BarMenu(Root.getActiveUser() == null || Root.getActiveUser().getUsername() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
         this.setName(name);
-        for (BarMenu m: getMenus()
-             ) {
-                m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (getState() == SIDEBAR_STATE)
-                        UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
-                    scrollBody(m.scrollPos, getSubtitle());
-                });
+        for (BarMenu m : getMenus()
+                ) {
+            m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (getState() == SIDEBAR_STATE)
+                    UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
+                scrollBody(m.scrollPos, getSubtitle());
+            });
         }
         getMenus()[0].setFont(Font.font(getMenus()[0].getFont().getFamily(), FontPosture.ITALIC, getMenus()[0].getFont().getSize()));
 
-        name.setOnMouseClicked(event -> {
+        name.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (state == SEARCH_STATE)
+                closeSearchBar();
             if (getState() == BASE_STATE) {
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.BOLD, name.getFont().getSize()));
                 getSideBar().enter();
                 state = SIDEBAR_STATE;
-            }
-            else if (getState() == SIDEBAR_STATE) {
+            } else if (getState() == SIDEBAR_STATE) {
+                sideBar.requestFocus();
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.NORMAL, name.getFont().getSize()));
                 getSideBar().disappear();
                 state = BASE_STATE;
@@ -181,15 +193,24 @@ public class Main extends Application {
         Image image = Root.getActiveUser().getAcctImage();
         Shape picture = new ShapeImage(new Circle(30), image).apply();
         this.picture = picture;
-        HBox topbar = new HBox(titles, getMenus()[0], getMenus()[1], getMenus()[2], getMenus()[3], getMenus()[4], new UtilAndConstants.Filler(), name, picture);
-        topbarPictureIndex = topbar.getChildren().indexOf(picture);
+        HBox menusWrapper = new HBox(menus[0], menus[1], menus[2], menus[3], menus[4]);
+        menusWrapper.setAlignment(Pos.CENTER_LEFT);
+        menusWrapper.setSpacing(35);
+        allMenusAndSearchBar = new StackPane(menusWrapper);
+        HBox topbar = new HBox(titles, allMenusAndSearchBar, new UtilAndConstants.Filler(), new AnchorPane(name), new AnchorPane(picture));
+        AnchorPane.setTopAnchor(name, 40.0);
+        AnchorPane.setLeftAnchor(picture, 5.0);
+        AnchorPane.setTopAnchor(picture, 20.0);
+        topbarPictureIndex = topbar.getChildren().size() - 1; //picture is last item in top bar.
         top_bar = topbar;
         topbar.setSpacing(35);
-        topbar.setAlignment(Pos.CENTER_LEFT);
+        topbar.setAlignment(Pos.TOP_LEFT);
         String color = UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor());
-        String borderWidth =  ".67em";
+        String borderWidth = ".67em";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(new Insets(15));
+        top_bar.setPrefHeight(135);
+        top_bar.setMinHeight(135);
 
         //top bar scroll bar
         topBarScrollBar = new Line();
@@ -201,8 +222,10 @@ public class Main extends Application {
         topBarScrollBar.setStroke(UtilAndConstants.highlightColor(Root.getActiveUser().getAccentColor()));
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            if (state == SEARCH_STATE)
+                return;
             //don't trigger drags on name or picture
-            if (event.getTarget() == topbar.getChildren().get(topbarPictureIndex) || event.getTarget() == name)
+            if (event.getTarget() == topbar.getChildren().get(topbarPictureIndex) || event.getTarget() == name || event.getTarget() == ((AnchorPane) topbar.getChildren().get(topbarPictureIndex)).getChildren().get(0))
                 return;
             topBarScrollBar.setTranslateX(event.getSceneX());
             contentPanesWrapper.setTranslateX(Math.max(-4 * 1920, Math.min(0, -5 * (event.getSceneX() - 450) * 4)));
@@ -210,15 +233,15 @@ public class Main extends Application {
         });
 
         top_bar.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
-            if (!tbsbDrag && event.getTarget() != topbar)
+            if (!tbsbDrag && event.getTarget() != topbar && event.getTarget() != menusWrapper && event.getTarget() != allMenusAndSearchBar)
                 return;
             tbsbDrag = false;
             double endX = event.getSceneX();
             int closestIndex = -1;
             double closestDistance = Double.MAX_VALUE;
             int i = 0;
-            for (BarMenu m: menus) {
-                double menuX = m.getLayoutX();
+            for (BarMenu m : menus) {
+                double menuX = allMenusAndSearchBar.getLayoutX() + menusWrapper.getLayoutX() + m.getLayoutX();
                 double distance = Math.abs(endX - menuX);
                 if (distance < closestDistance) {
                     closestDistance = distance;
@@ -267,7 +290,7 @@ public class Main extends Application {
         weatherDetails.setAlignment(Pos.CENTER_RIGHT);
         VBox weatherDisplay = new VBox(getTemperature(), weatherDetails);
         weatherDisplay.setAlignment(Pos.CENTER_RIGHT);
-        HBox sleep_btm = new HBox(new VBox(clock,date), new UtilAndConstants.Filler(), weatherDisplay);
+        HBox sleep_btm = new HBox(new VBox(clock, date), new UtilAndConstants.Filler(), weatherDisplay);
         sleep_btm.setAlignment(Pos.BOTTOM_LEFT);
 
         //synthesize sleep body
@@ -285,6 +308,7 @@ public class Main extends Application {
         mainBodyAndTaskViews = new StackPane();
         StackPane allBodyPanes = new StackPane(sleepbody, mainBodyAndTaskViews);
         VBox root = new VBox(topbarWrapper, allBodyPanes);
+        root.setMinHeight(1080);
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
         this.term = term;
@@ -322,6 +346,42 @@ public class Main extends Application {
             }
         });
 
+
+        //load search index
+        Index searchIndex = Index.loadLocal();
+
+        //search box
+        searchBox = new SearchModule(new QueryEngine(searchIndex), this);
+
+        primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                if (state == BASE_STATE && !event.isControlDown()) {
+                    allMenusAndSearchBar.getChildren().get(0).setVisible(false); //hide menus
+                    allMenusAndSearchBar.getChildren().get(1).setVisible(true);  //show search box
+                    subtitle.setText("What can I help you find?");
+                    state = SEARCH_STATE;
+                    searchBox.getSearchBox().setText("");
+                    searchBox.getSearchBox().requestFocus();
+
+                    //fade in transition
+                    FadeTransition transition = new FadeTransition(Duration.millis(200));
+                    transition.setNode(searchBox);
+                    transition.setFromValue(0);
+                    transition.setToValue(1);
+                    transition.play();
+
+                }
+            } else if (event.getCode().equals(KeyCode.ESCAPE)) {
+                if (state == SEARCH_STATE) {
+                    closeSearchBar();
+                }
+            }
+        });
+
+        allMenusAndSearchBar.getChildren().add(searchBox);
+        searchBox.setVisible(false);
+        searchBox.setPadding(new Insets(19, 0, 0, 0));
+
         //content panes
         contentPanesWrapper = new HBox();
         contentPanesWrapper.setPrefWidth(1920 * contentPanes.length);
@@ -346,7 +406,7 @@ public class Main extends Application {
         LatestPane announcements = new LatestPane("Announcements", r_announcements, "You're all caught up!");
         latestGrid.add(announcements, 1, 0);
 
-        LatestPane comingUp = new LatestPane("Coming Up", r_coming_up, "Everything's done and dusted!");
+        LatestPane comingUp = new LatestPane("Coming Up", r_coming_up, "Your agenda is clear!");
         latestGrid.add(comingUp, 2, 0);
 
         GridPane.setHgrow(announcements, Priority.ALWAYS);
@@ -409,7 +469,7 @@ public class Main extends Application {
         contentPanes[4] = communityGrid;
 
 
-        for (Pane p: contentPanes) {
+        for (Pane p : contentPanes) {
             p.setMaxSize(1860, 1000);
             p.setMinSize(1860, 1000);
         }
@@ -424,8 +484,10 @@ public class Main extends Application {
         picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
 
         getPrimaryStage().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (getState() == SLEEP_STATE)
+            if (getState() == SLEEP_STATE) {
                 wakeup();
+                event.consume();
+            }
         });
 
 
@@ -437,17 +499,12 @@ public class Main extends Application {
                 if (event.getCode().equals(KeyCode.CAPS)) {
                     caps = !isCaps();
                 }
+                event.consume();
                 return;
             }
-            if (event.getCode().equals(KeyCode.SPACE)) {
+            if (event.getCode().equals(KeyCode.TAB)) {
 
-                if (getState() == BASE_STATE && event.isControlDown()) {
-                    UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
-                }
-
-                else if (getState() == BASE_STATE || getState() == SIDEBAR_STATE && !event.isControlDown()) {
-                    if (getState() == SIDEBAR_STATE)
-                        UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
+                if (getState() == BASE_STATE) {
                     term.setVisible(true);
                     term.start();
                     state = TERMINAL_STATE;
@@ -455,8 +512,10 @@ public class Main extends Application {
                     Collections.swap(workingCollection, 2, 3);
                     mainArea.getChildren().setAll(workingCollection);
                 }
+            }
 
-                else if (getState() == SIDEBAR_STATE) {
+            if (event.getCode().equals(KeyCode.SPACE) && event.isControlDown()) {
+                if (state == BASE_STATE || state == SIDEBAR_STATE) {
                     UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 }
             }
@@ -464,8 +523,7 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 if (getState() == BASE_STATE) {
                     sleep();
-                }
-                else if (getState() == TERMINAL_STATE) {
+                } else if (getState() == TERMINAL_STATE) {
                     if (event.isControlDown()) {
                         term.clearTerminal();
                     }
@@ -497,20 +555,31 @@ public class Main extends Application {
         });
 
 
-
         state = BASE_STATE;
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
+
+        for (Collection<Indexable> list :
+                QueryEngine.getPrimaryIndexSets()) {
+            searchBox.getEngine().getIndex().index(list);
+        }
+    }
+
+    private void closeSearchBar() {
+        allMenusAndSearchBar.getChildren().get(0).setVisible(true);  //show menus
+        allMenusAndSearchBar.getChildren().get(1).setVisible(false); //hide search box
+        searchBox.collapse();
+        subtitle.setText(subtitles[currentMenu]);
+        state = BASE_STATE;
     }
 
 
-
-    public void updateWeather() {
+    void updateWeather() {
         getManager().update();
         updateWeatherDisplay();
     }
 
-    public void updateWeatherDisplay() {
+    void updateWeatherDisplay() {
         setTemperatureDisplay();
         getWeatherDesc().setText(getManager().getDescription());
         setWeatherGraphics(background, weatherPane);
@@ -553,6 +622,8 @@ public class Main extends Application {
         backgd.setEffect(null);
 
         boolean needMoon = false;
+        if (manager.getCurrent() == null)
+           manager.setCurrent(WeatherState.Sunny);
         switch (getManager().getCurrent()) {
             case Fog:
                 backgd.setImage(parseBackgroundImage(cloudy_now));
@@ -614,8 +685,8 @@ public class Main extends Application {
             double dx_pixels = dx * xradius;
             double dy_pixels = dy * yradius;
 
-            double centerX = 1920/2;
-            double centerY = 1080/2;
+            double centerX = 1920 / 2;
+            double centerY = 1080 / 2;
 
             AnchorPane.setLeftAnchor(moonNode, centerX + dx_pixels);
             AnchorPane.setTopAnchor(moonNode, 1080 - (centerY + dy_pixels));
@@ -625,15 +696,24 @@ public class Main extends Application {
 
     private String getMoonFN() {
         switch (manager.getMoonState()) {
-            case New_Moon: return "new_moon";
-            case Waxing_Crescent: return "waxing_crescent";
-            case First_Quarter: return "first_quarter";
-            case Waxing_Gibbous: return "waxing_gibbous";
-            case Full_Moon: return "full_moon";
-            case Waning_Gibbous: return "waning_gibbous";
-            case Last_Quarter: return "last_quarter";
-            case Waning_Crescent: return "waning_crescent";
-            default: return "new_moon";
+            case New_Moon:
+                return "new_moon";
+            case Waxing_Crescent:
+                return "waxing_crescent";
+            case First_Quarter:
+                return "first_quarter";
+            case Waxing_Gibbous:
+                return "waxing_gibbous";
+            case Full_Moon:
+                return "full_moon";
+            case Waning_Gibbous:
+                return "waning_gibbous";
+            case Last_Quarter:
+                return "last_quarter";
+            case Waning_Crescent:
+                return "waning_crescent";
+            default:
+                return "new_moon";
         }
     }
 
@@ -666,7 +746,7 @@ public class Main extends Application {
                 pulser.setCycleCount((rand.nextInt(5) + 1) * 2);
                 pulser.play();
             }
-        }, (long) (1000.0/flashesPerSecond), (long) (1000.0 / flashesPerSecond));
+        }, (long) (1000.0 / flashesPerSecond), (long) (1000.0 / flashesPerSecond));
     }
 
     private void rain(AnchorPane weatherPane, int particlesPerSecond) {
@@ -688,9 +768,9 @@ public class Main extends Application {
         if (getState() == SLEEP_STATE) {
             String time;
             if (Root.getActiveUser().isClock24Hour())
-                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(date);
+                time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(date);
             else
-                time = new SimpleDateFormat( "EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(date);
+                time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(date);
             String[] timeanddate = time.split("  ");
             getClock().setText(timeanddate[1]);
             getDate().setText(timeanddate[0]);
@@ -698,7 +778,7 @@ public class Main extends Application {
         int hour = Integer.parseInt(new SimpleDateFormat("H").format(date));
         int newHrChecksum = Integer.parseInt(new SimpleDateFormat("mmss").format(date));
         boolean isDaytime = hour > 6 && hour < 21;
-        if (day &&  !isDaytime || !day && isDaytime || newHrChecksum == 0 && !day) {
+        if (day && !isDaytime || !day && isDaytime || newHrChecksum == 0 && !day) {
             setWeatherGraphics(background, weatherPane);
         }
     }
@@ -841,10 +921,21 @@ public class Main extends Application {
         this.homeScreen = homeScreen;
     }
 
+    public void expandTopBar() {
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), 1080), new KeyValue(top_bar.minHeightProperty(), 1080)));
+        expansion.play();
+    }
+
+    public void collapseTopBar() {
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), 135), new KeyValue(top_bar.minHeightProperty(), 135)));
+        expansion.play();
+    }
+
     class BarMenu extends Text {
         int scrollPos;
+
         public BarMenu(String text, int order) {
-            super (text);
+            super(text);
             scrollPos = order;
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> this.setUnderline(true));
             addEventFilter(MouseEvent.MOUSE_EXITED, event -> this.setUnderline(false));
@@ -865,7 +956,8 @@ public class Main extends Application {
     private void scrollBody(int scrollPos, Text changeText) {
         hideTaskViews();
         int oldMenu = currentMenu;
-        changeText.setText(getSubtitles()[scrollPos]);
+        if (state != SEARCH_STATE)
+            changeText.setText(getSubtitles()[scrollPos]);
         currentMenu = scrollPos;
         BarMenu m = getMenus()[scrollPos];
         for (BarMenu m1 :
@@ -883,7 +975,7 @@ public class Main extends Application {
 
     private void repositionTopBarScrollBar(int scrollPos, int duration) {
         TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
-        scrollBarTransition.setToX(menus[scrollPos].getLayoutX());
+        scrollBarTransition.setToX(menus[scrollPos].getLayoutX() + 445);
         Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), 10 * menus[scrollPos].getText().length())));
         growShrink.setCycleCount(1);
         growShrink.play();
@@ -975,7 +1067,7 @@ public class Main extends Application {
             menus.add(save);
 
 
-            openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.SPACE, false, false, false, false)));
+            openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot().fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.TAB, false, false, false, false)));
 
             calendar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Calendar()));
 
@@ -1008,9 +1100,7 @@ public class Main extends Application {
                 Main.this.newUser();
             });
 
-            save.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                Main.this.stop();
-            });
+            save.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.stop());
             getChildren().addAll(menus);
             setAlignment(Pos.TOP_CENTER);
             getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
@@ -1019,8 +1109,7 @@ public class Main extends Application {
                         if (selectedMenu == 0 || selectedMenu == -1) {
                             scroll(0, menus.size() - 1);
                             selectedMenu = menus.size() - 1;
-                        }
-                        else scroll(selectedMenu, --selectedMenu);
+                        } else scroll(selectedMenu, --selectedMenu);
 
                     } else if (event.getCode().equals(KeyCode.DOWN)) {
                         if (selectedMenu == menus.size() - 1) {
@@ -1030,6 +1119,7 @@ public class Main extends Application {
                     } else if (event.getCode().equals(KeyCode.ENTER) && selectedMenu != -1) {
                         UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_CLICKED);
                     }
+                    event.consume();
                 }
             });
             setVisible(true);
@@ -1063,7 +1153,7 @@ public class Main extends Application {
             Text text;
             Color color;
 
-            public Menu (String text) {
+            public Menu(String text) {
                 color = Root.getActiveUser().getAccentColor();
                 String colorHex = UtilAndConstants.colorToHex(color);
                 setStyle("-fx-background-color: " + colorHex);
@@ -1080,7 +1170,7 @@ public class Main extends Application {
                 addEventHandler(MouseEvent.MOUSE_CLICKED, event -> UtilAndConstants.fireMouse(picture, MouseEvent.MOUSE_CLICKED));
 
                 addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-                    for (Menu m: menus) {
+                    for (Menu m : menus) {
                         m.setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
                     }
                     setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(UtilAndConstants.highlightColor(color)));
@@ -1093,15 +1183,17 @@ public class Main extends Application {
 
             public void setColor(Color c) {
                 this.color = c;
-                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(c));
-                    text.setFill(UtilAndConstants.textFill(c));
+                setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(c));
+                text.setFill(UtilAndConstants.textFill(c));
             }
 
             public void setText(String txt) {
                 text.setText(txt);
             }
 
-            public Text getText() {return text;}
+            public Text getText() {
+                return text;
+            }
         }
     }
 

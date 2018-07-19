@@ -1,139 +1,85 @@
 package searchengine;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import terminal.Address;
 
-public class Index {
+import java.io.*;
+import java.util.*;
 
-    private static final long serialVersionUID = 1000L;
+public class Index implements Serializable {
 
 
-    // TODO: Implement all of this! You may choose your own data structures an internal APIs.
-    // You should not need to worry about serialization (just make any other data structures you use
-    // here also serializable - the Java standard library data structures already are, for example).
+    static final long serialVersionUID = 1000L;
+    private HashMap<Identifier, Indexable> objects;
 
-    private HashMap<String, ItemTree> index;
-
-    Index() {
-        index = new HashMap<>();
+    public Index() {
+        map = new HashMap<>();
+        objects = new HashMap<>();
     }
 
-    //called by WebCrawler to establish a link between a keyword and a page
-    void associate(String word, Indexable item, int relevance) {
-        ItemTree tree = index.get(word);
-        if (tree == null) {
-            ItemTree newTree = new ItemTree();
-            newTree.update(item, relevance);
-            index.put(word, newTree);
-        } else {
-            tree.update(item, relevance);
+    private HashMap<String, HashMap<Identifier, Integer>> map;
+
+    public static Index loadLocal() {
+        try {
+            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(Address.root_addr + File.separator + "resources" + File.separator + "index.ser")));
+            return (Index) stream.readObject();
+        } catch (IOException | ClassNotFoundException | ClassCastException e) {
+            return new Index();
         }
     }
 
-    HashSet<ItemNode> getItems(String word) {
-        ItemTree tree = index.get(word);
-        if (tree == null)
+    public void write() {
+        try {
+            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(Address.root_addr + File.separator + "resources" + File.separator + "index.ser")));
+            stream.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void associate(String word, Identifier id, int relevance) {
+        HashMap<Identifier, Integer> wordSet = map.computeIfAbsent(word, k -> new HashMap<>());
+        Integer existing = wordSet.get(id);
+        if (existing == null) existing = 0;
+        wordSet.put(id, existing + relevance);
+    }
+
+    HashSet<ItemNode> getItems(String key) {
+        HashMap<Identifier, Integer> wordSet = map.get(key);
+        if (wordSet == null)
             return new HashSet<>();
-        return tree.getAll();
+        HashSet<ItemNode> nodes = new HashSet<>();
+        wordSet.forEach((key1, value) -> nodes.add(new ItemNode(key1, value)));
+        return nodes;
     }
 
-    int find(String word, Identifier item) {
-        ItemTree tree = index.get(word);
-        if (tree == null)
-            return -1;
-        return tree.find(item);
+    public int find(String key, Identifier identifier) {
+        HashMap<Identifier, Integer> wordSet = map.get(key);
+        if (wordSet == null)
+            return 0;
+        Integer existing = wordSet.get(identifier);
+        if (existing == null)
+            return 0;
+        return existing;
     }
 
-    //O(n) return of all urls in worst case when implicitly negative query reaches the top of the query tree.
-    Set<Identifier> getAll() {
-        HashSet<Identifier> items = new HashSet<>();
-        for (Map.Entry<String, ItemTree> tree : index.entrySet()) {
-            HashSet<ItemNode> temp = tree.getValue().getAll();
-            for (ItemNode node : temp) {
-                //items.add(node.getIdentifier());
-            }
-        }
-        return items;
-    }
+    public void index(Collection<? extends Indexable> list) {
+        for (Indexable i : list) {
+            for (RankedString s : i.getIndexTextSets()) {
+                String[] splitOnSpace = s.getString().split("\\s+");
+                for (String s1 :
+                        splitOnSpace) {
+                    associate(s1, i.getUniqueIdentifier(), s.getRelevance());
 
-    static class ItemTree implements Serializable {
-        private static final long serialVersionUID = 303L;
-        private HashMap<String, ItemTree> children;
-        //stores the actual url object if the key node is a valid url
-        private Indexable item;
-        private String key = null;
-        private boolean isItem = false;
-        private int relevance;
-
-        public ItemTree() {
-            children = new HashMap<>();
-        }
-
-        private ItemTree(String key, boolean isItem) {
-            this();
-            this.key = key;
-            this.isItem = isItem;
-        }
-
-        void update(Indexable item, int relevance) {
-            String idString = item.getUniqueIdentifier();
-            //chop off ending slash if necessary
-            if (idString.charAt(idString.length() - 1) == '/')
-                idString = idString.substring(0, idString.length() - 1);
-            update(item, idString.split("/"), relevance, 0);
-        }
-
-        //find and insert methods combined, used by WebCrawler
-        private void update(Indexable item, String[] idSplit, int relevance, int depth) {
-            if (idSplit.length == depth) {
-                this.item = item;
-                this.relevance += relevance;
-            } else {
-                ItemTree child = children.get(idSplit[depth]);
-                if (child != null) {
-                    child.update(item, idSplit, relevance, depth + 1);
-                } else {
-                    ItemTree newChild = new ItemTree(idSplit[depth], idSplit.length - 1 == depth);
-                    children.put(idSplit[depth], newChild);
-                    newChild.update(item, idSplit, relevance, depth + 1);
                 }
             }
         }
+    }
 
-        int find(Identifier item) {
-            String itemString = item.toString();
-            //chop off ending slash if necessary
-            if (itemString.charAt(itemString.length() - 1) == '/')
-                itemString = itemString.substring(0, itemString.length() - 1);
-            return find(itemString.split("/"), 0);
-        }
+    public HashMap<Identifier, Indexable> getObjects() {
+        return objects;
+    }
 
-        private int find(String[] idSplit, int depth) {
-            if (idSplit.length == depth)
-                return relevance;
-            ItemTree child = children.get(idSplit[depth]);
-            if (child == null)
-                return -1;
-            else return child.find(idSplit, depth + 1);
-        }
-
-        //called by query processor
-        HashSet<ItemNode> getAll() {
-            HashSet<ItemNode> nodes = new HashSet<>();
-            getAll(nodes);
-            return nodes;
-        }
-
-        private HashSet<ItemNode> getAll(HashSet<ItemNode> temp) {
-//            if (isItem)
-  //              temp.add(new ItemNode(item, relevance));
-            for (Map.Entry<String, ItemTree> entry : children.entrySet()) {
-                entry.getValue().getAll(temp);
-            }
-            return temp;
-        }
+    public Indexable getObject(Identifier identifier) {
+        return objects.get(identifier);
     }
 }

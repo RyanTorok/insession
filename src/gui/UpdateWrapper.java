@@ -47,7 +47,7 @@ public class UpdateWrapper extends GridPane {
                 record.fireEvent();
         });
         this.setStyle("-fx-background-color: #000000;");
-        UtilAndConstants.hightlightOnMouseOver(this);
+        UtilAndConstants.highlightOnMouseOver(this);
         add(message, 0, 0);
         add(classTag, 0, 1);
         Region filler = new Region();

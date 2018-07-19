@@ -26,6 +26,7 @@ public class ClassPd implements Serializable {
     private transient Color color;
     private String teacherFirst;
     private String teacherLast;
+    private long uniqueId;
 
 
 
@@ -106,5 +107,20 @@ public class ClassPd implements Serializable {
 
     public void startSession() {
         fireUpdate(Record.Type.Session_Start, getTodaysInstance().getEndTime(), null);
+    }
+
+    public long getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(long uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    @Override
+    public String toString() {
+        if (castOf == null)
+            return "null " + getPeriodNo();
+        return getCastOf().getName() + " - " + getPeriodNo();
     }
 }

@@ -3,17 +3,17 @@ package searchengine;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Trie {
-    String stem;
-    HashMap<Character, Trie> children;
-    boolean isValid;
-    int accessCount;
+public class Trie implements Comparable<Trie> {
+    private String stem;
+    private HashMap<Character, Trie> children;
+    private boolean isValid;
+    private int maxPriority;
+    private int priority;
 
     private Trie(String stem, boolean isValid) {
-        children = new HashMap<>();
-        this.stem = stem;
-        this.isValid = isValid;
-        accessCount = 0;
+        setChildren(new HashMap<>());
+        this.setStem(stem);
+        this.setValid(isValid);
     }
 
     public Trie() {
@@ -21,14 +21,19 @@ public class Trie {
     }
 
     public void add(String stem) {
-        if (stem == null || stem.length() == 0)
+        if (stem == null)
             return;
-        accessCount++;
+        if (stem.length() == 0) {
+            isValid = true;
+            maxPriority++;
+            return;
+        }
+        maxPriority++;
         Character first = stem.charAt(0);
-        Trie child = children.get(first);
+        Trie child = getChildren().get(first);
         if (child == null) {
-            child = new Trie(this.stem + stem.charAt(0), stem.length() == 1);
-            children.put(first, child);
+            child = new Trie(this.getStem() + stem.charAt(0), stem.length() == 1);
+            getChildren().put(first, child);
         }
         if (stem.length() > 1)
             child.add(stem.substring(1));
@@ -44,6 +49,36 @@ public class Trie {
         return start.getAll();
     }
 
+    //returns the n highest priority nodes beginning with the provided stem
+    List<Trie> findStemDescending(String stem, int n) {
+        if (stem == null)
+            return new ArrayList<>();
+        Trie start = find(stem);
+        if (start == null) {
+            return new ArrayList<>();
+        }
+        return start.findBestNMatches(n);
+    }
+
+    private List<Trie> findBestNMatches(int n) {
+        if (children == null || children.entrySet().size() == 0) {
+            assert isValid;
+            return new ArrayList<>() {{add(Trie.this);}};
+        }
+        List<Trie> childrenSorted = children.entrySet().stream().map(Map.Entry::getValue).sorted(Comparator.comparing(trie -> getMaxPriority()).reversed()).collect(Collectors.toList());
+        List<Trie> found = new ArrayList<>();
+        for (int i = 0; i < childrenSorted.size() && found.size() < n; i++) {
+            found.addAll(childrenSorted.get(i).findBestNMatches(n - found.size()));
+        }
+        if (isValid)
+            found.add(0, this);
+        List<Trie> foundSorted = found.stream().sorted(Comparator.comparing(trie -> getMaxPriority()).reversed()).collect(Collectors.toList());
+        assert foundSorted.size() < n + 2;
+        if (foundSorted.size() > n)
+            foundSorted.remove(n);
+        return foundSorted;
+    }
+
     //hyper-optimized version of findStemDescending which only gets the most popular match
     public String getBestMatch(String stem) {
         if (stem == null || stem.length() == 0)
@@ -51,27 +86,76 @@ public class Trie {
         Trie root = find(stem);
         if (root == null)
             return null;
-        return findBest().item;
+        return root.findBest().item;
     }
 
     private Node findBest() {
         String best = "";
         int bestValue = -1;
-        for (Map.Entry<Character, Trie> t : children.entrySet()) {
+        for (Map.Entry<Character, Trie> t : getChildren().entrySet()) {
             Node n = t.getValue().findBest();
             if (n.value > bestValue) {
                 bestValue = n.value;
                 best = n.item;
             }
         }
-        if (isValid) {
-            if (accessCount > bestValue) {
-                best = stem;
-                bestValue = accessCount;
+        if (isValid()) {
+            if (maxPriority > bestValue) {
+                best = getStem();
+                bestValue = maxPriority;
             }
         }
         return new Node(best, bestValue);
     }
+
+    public String getStem() {
+        return stem;
+    }
+
+    public void setStem(String stem) {
+        this.stem = stem;
+    }
+
+    public HashMap<Character, Trie> getChildren() {
+        return children;
+    }
+
+    public void setChildren(HashMap<Character, Trie> children) {
+        this.children = children;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
+    public int getMaxPriority() {
+        return maxPriority;
+    }
+
+    public void setMaxPriority(int maxPriority) {
+        this.maxPriority = maxPriority;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public int compareTo(Trie o) {
+        int diff = priority - o.priority;
+        if (diff == 0) //prevent reduction in TreeSet
+            return stem.compareTo(o.stem);
+        return diff;
+    }
+
 
     private static class Node {
         String item;
@@ -89,15 +173,15 @@ public class Trie {
         Trie t = find(stem);
         if (t == null)
             return false;
-        return t.isValid;
+        return t.isValid();
     }
 
     private Trie find(String stem) {
-        if (stem.equals(this.stem))
+        if (stem.equals(this.getStem()))
             return this;
         else {
-            if (stem.startsWith(this.stem)) {
-                Trie child = children.get(stem.charAt(this.stem.length()));
+            if (stem.startsWith(this.getStem())) {
+                Trie child = getChildren().get(stem.charAt(this.getStem().length()));
                 if (child == null)
                     return null;
                 else return child.quickFind(stem);
@@ -108,10 +192,10 @@ public class Trie {
 
     //bypasses the stem start check to make recursion in find() faster
     private Trie quickFind(String stem) {
-        if (stem.equals(this.stem))
+        if (stem.equals(this.getStem()))
             return this;
         else {
-                Trie child = children.get(stem.charAt(this.stem.length()));
+                Trie child = getChildren().get(stem.charAt(this.getStem().length()));
                 if (child == null)
                     return null;
                 else return child.quickFind(stem);
@@ -120,11 +204,18 @@ public class Trie {
 
     private List<Trie> getAll() {
         ArrayList<Trie> results = new ArrayList<>();
-        for (Map.Entry<Character, Trie> t: children.entrySet()) {
+        for (Map.Entry<Character, Trie> t: getChildren().entrySet()) {
             results.addAll(t.getValue().getAll());
         }
-        if (isValid)
+        if (isValid())
             results.add(this);
-        return results.stream().sorted(Comparator.comparing(trie -> trie.accessCount)).collect(Collectors.toList());
+        return results.stream().sorted(Comparator.comparing(Trie::getMaxPriority)).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Trie))
+            return false;
+        return getStem().equals(((Trie) obj).getStem());
     }
 }

@@ -8,8 +8,9 @@ import java.util.stream.Stream;
 
 public class QueryEngine {
 
+    private static final long MAX_STEM_QUERY_TIME_NANOS = 1000000; // 1 ms
     private Index index;
-    private static final String[] ignoredWords = {"where", "what", "how", "and", "or", "a", "an", "of", "i", "the"};
+    private static final String[] ignoredWords = {"where", "what", "how", "a", "an", "of", "i", "the"};
     //"encrypted" for code censorship (i.e. characters adjusted by one letter)
     private static String[] safeSearchFilterWords = {"tiju", "dsbq", "ejdl", "eidlifbe", "tijuifbe", "btt", "bttipmf", "ebno", "gvdl", "npuifsgvdlfs", "tijuifbe", "ebnnju", "cjudi", "ifmm", "hpeebno", "hpeebnoju"};
     private boolean safeSearchOn = false;
@@ -18,7 +19,8 @@ public class QueryEngine {
     private HashSet<String> allMeaningfulWords;
     private List<String> itemTitles;
     private List<String> textExcerpts;
-    private StemIndex stemIndex;
+    private WeightedPredictor weightedPredictor;
+    private List<Tag> tags;
 
     public QueryEngine(Index index) {
         this.index = index;
@@ -26,7 +28,12 @@ public class QueryEngine {
             safeSearchFilterWords[i] = decCharacter(safeSearchFilterWords[i]);
         }
         lastQueryTimeNanos = 0;
-        stemIndex = new StemIndex();
+        weightedPredictor = WeightedPredictor.read();
+    }
+
+    public static Collection<? extends Collection<Indexable>> getPrimaryIndexSets() {
+        HashSet<Collection<Indexable>> set = new HashSet<>();
+        return set; //TODO
     }
 
     private String decCharacter(String encoding) {
@@ -47,41 +54,54 @@ public class QueryEngine {
         return safeSearchFilterWords;
     }
 
-    //performs a tentative query based on the most likely auto-completion of the last word
-    public List<Identifier> incompleteQuery(String query) {
-        int lastSpace = query.lastIndexOf("\\s+");
-        String lastWord = query.substring(lastSpace + 1);
-        String replace = getStemIndex().getBestMatch(lastWord);
-        if (replace == null || replace.length() == 0)
-            return query(query);
-        else return query(query.substring(0, lastSpace + 1) + replace);
+    //performs a tentative query based on the most likely auto-completions of the last word
+    public TreeSet<Identifier> incompleteQuery(ArrayList<String> textFillerStrings) {
+        long queryTime = 0;
+        TreeSet<Identifier> allResults = new TreeSet<>();
+        for (String stem : textFillerStrings) {
+            allResults.addAll(query(stem));
+            queryTime += getLastQueryTimeNanos();
+            if (queryTime > MAX_STEM_QUERY_TIME_NANOS) {
+                lastQueryTimeNanos = queryTime;
+                return allResults;
+            }
+        }
+        lastQueryTimeNanos = queryTime;
+        return allResults;
     }
 
     public List<Identifier> query(String query) {
-        long startTime = System.currentTimeMillis();
-        ParseTree parseTree = ParseTree.fromQuery(query);
+        if (query.length() == 0) {
+            lastQueryTimeNanos = 0;
+            tags = new ArrayList<>();
+            return new ArrayList<>();
+        }
+        long startTime = System.nanoTime();
+        Tokenizer tok = new Tokenizer(query);
+        ParseTree parseTree = ParseTree.fromQuery(tok);
+        tags = tok.getTags();
         Root.getActiveUser().search(query);
         Result result = getResults(parseTree);
         assert result != null;
         if (result.isNegative()) {
-            lastQueryTimeNanos = System.currentTimeMillis() - startTime;
+            lastQueryTimeNanos = System.nanoTime() - startTime;
             return new ArrayList<>();
         } else {
             List<Identifier> results = result.getResults().stream()
                     .sorted(Comparator.comparing(ItemNode::getRelevance))
                     .map(node -> node.identifier)
                     .collect(Collectors.toList());
-            lastQueryTimeNanos = System.currentTimeMillis() - startTime;
+            lastQueryTimeNanos = System.nanoTime() - startTime;
             return results;
         }
     }
 
     private Result getResults(ParseTree parseTree) {
+        if (parseTree == null || parseTree.getType() == null) return new Result(new HashSet<>(), false);
         switch (parseTree.getType()) {
             case OR: {
                 HashSet<ItemNode> combined = new HashSet<>();
                 Result left = getResults(parseTree.getLeft()), right = getResults(parseTree.getRight());
-
                 //sort result sets to speed up relevance merges to O(n log n) instead of O(n^2)
                 //casts are necessary to avoid generification to Stream<Object> during sort
                 left.results = ((Stream<ItemNode>) (left.results.stream().sorted(Comparator.comparing(itemNode -> itemNode.identifier)))).collect(Collectors.toSet());
@@ -153,7 +173,7 @@ public class QueryEngine {
 
             case PHRASE: {
                 Set<ItemNode> results = getIndex().getItems(parseTree.getWord());
-                results = results.stream().filter(itemNode -> itemNode.identifier.find().containsString(parseTree.getWord())).collect(Collectors.toSet());
+                results = results.stream().filter(itemNode -> itemNode.identifier.find(getIndex()).containsString(parseTree.getWord())).collect(Collectors.toSet());
                 return new Result(results, parseTree.isNegative());
             }
 
@@ -227,9 +247,9 @@ public class QueryEngine {
     }
 
     private int matchesQuery(ItemNode item, ParseTree tree) {
-        if (tree == null) {
-            if (tree.getLeft() == null)
-                throw new IllegalStateException("null check on matchesQuery");
+        if (tree == null || tree.getType() == null) {
+            if (tree != null && tree.getLeft() == null)
+                return 0;
             else return matchesQuery(item, tree.getLeft());
         }
         switch (tree.getType()) {
@@ -297,8 +317,16 @@ public class QueryEngine {
         return textExcerpts;
     }
 
-    public StemIndex getStemIndex() {
-        return stemIndex;
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public WeightedPredictor getWeightedPredictor() {
+        return weightedPredictor;
     }
 
     class Result {
