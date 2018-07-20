@@ -67,6 +67,7 @@ public class Main extends Application {
     private Node sleepBody;
     private Pane mainBody;
     private StackPane mainBodyAndTaskViews;
+    private VBox titles;
     private Text clock;
     private Text date;
     private Text name;
@@ -153,7 +154,7 @@ public class Main extends Application {
         subtitle = subText;
         subText.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 20));
         subText.setFill(Color.WHITE);
-        VBox titles = new VBox(mainlogo, subText);
+        titles = new VBox(mainlogo, subText);
         titles.setSpacing(5);
         titles.setPadding(new Insets(10, 0, 0, 0));
 
@@ -929,6 +930,10 @@ public class Main extends Application {
     public void collapseTopBar() {
         Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), 135), new KeyValue(top_bar.minHeightProperty(), 135)));
         expansion.play();
+    }
+
+    public VBox getTitles() {
+        return titles;
     }
 
     class BarMenu extends Text {

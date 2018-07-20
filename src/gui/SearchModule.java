@@ -2,6 +2,7 @@ package gui;
 
 import classes.ClassPd;
 import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,10 +15,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.UtilAndConstants;
-import searchengine.Identifier;
-import searchengine.Indexable;
-import searchengine.QueryEngine;
-import searchengine.WeightedPredictor;
+import searchengine.*;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -38,6 +36,8 @@ public class SearchModule extends VBox {
     private boolean expanded;
     private boolean lastChangeFromUser = true;
     private Text topBarSubtitle;
+    private ScrollPane filters;
+    private boolean lastSearchType; //false for stem, true for full search
 
     public SearchModule(QueryEngine engine, Main wrapper) {
         this.engine = engine;
@@ -85,6 +85,7 @@ public class SearchModule extends VBox {
         setStyle("-fx-background-color: black");
         setPrefSize(1920, 100);
         getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd());}}, 1);
+        filters = new ScrollPane(new SearchFilterBox(this)) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
     }
 
     private void setFillerSelected(int i) {
@@ -102,7 +103,7 @@ public class SearchModule extends VBox {
         searchBox.positionCaret(searchBox.getText() == null ? 0 : searchBox.getText().length());
     }
 
-    private void searchStem() {
+    void searchStem() {
         if (!expanded)
             expand();
         searchResultsDisplay.getChildren().clear();
@@ -136,7 +137,7 @@ public class SearchModule extends VBox {
             });
             textFillers.getChildren().add(box);
         }
-        TreeSet<Identifier> result = getEngine().incompleteQuery(textFillerStrings);
+        TreeSet<Identifier> result = getEngine().incompleteQuery(textFillerStrings, new FilterSet((SearchFilterBox) filters.getContent()));
         for (Identifier id : result) {
             searchResultsDisplay.getChildren().add(new ResultBlock(id));
         }
@@ -144,6 +145,7 @@ public class SearchModule extends VBox {
             getChildren().add(1, textFillers);
         setSubHeaderText();
         fillersIndex = -1;
+        lastSearchType = false;
     }
 
     private void setSubHeaderText() {
@@ -153,19 +155,20 @@ public class SearchModule extends VBox {
         else topBarSubtitle.setText("Returned " + size + (size == 1 ? " result" : " results") + " in " + UtilAndConstants.parseTimeNanos(getEngine().getLastQueryTimeNanos()));
     }
 
-    private void search() {
+    void search() {
         if (!expanded)
             expand();
         fillersIndex = -1;
         getChildren().remove(textFillers);
         searchResultsDisplay.getChildren().clear();
-        List<Identifier> result = getEngine().query(searchBox.getText());
+        List<Identifier> result = getEngine().query(searchBox.getText(), new FilterSet((SearchFilterBox) filters.getContent()));
         for (Identifier id : result) {
             searchResultsDisplay.getChildren().add(new ResultBlock(id));
         }
         if (result.size() == 0)
             collapse();
         setSubHeaderText();
+        lastSearchType = true;
     }
 
     public QueryEngine getEngine() {
@@ -182,6 +185,10 @@ public class SearchModule extends VBox {
 
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
+    }
+
+    public boolean isLastSearchType() {
+        return lastSearchType;
     }
 
     class ResultBlock extends HBox {
@@ -281,6 +288,9 @@ public class SearchModule extends VBox {
         wrapper.expandTopBar();
         if (!getChildren().contains(searchResultsDisplay))
             getChildren().add(searchResultsDisplay);
+        if (!wrapper.getTitles().getChildren().contains(filters)) {
+            wrapper.getTitles().getChildren().add(filters);
+        }
         expanded = true;
     }
 
@@ -288,6 +298,7 @@ public class SearchModule extends VBox {
         getChildren().remove(textFillers);
         getChildren().remove(searchResultsDisplay);
         topBarSubtitle.setText("What can I help you find?");
+        wrapper.getTitles().getChildren().remove(filters);
         if (expanded)
             wrapper.collapseTopBar();
         expanded = false;

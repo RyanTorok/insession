@@ -21,6 +21,7 @@ public class QueryEngine {
     private List<String> textExcerpts;
     private WeightedPredictor weightedPredictor;
     private List<Tag> tags;
+    private FilterSet filters; //temporary field during queries
 
     public QueryEngine(Index index) {
         this.index = index;
@@ -55,11 +56,11 @@ public class QueryEngine {
     }
 
     //performs a tentative query based on the most likely auto-completions of the last word
-    public TreeSet<Identifier> incompleteQuery(ArrayList<String> textFillerStrings) {
+    public TreeSet<Identifier> incompleteQuery(ArrayList<String> textFillerStrings, FilterSet filters) {
         long queryTime = 0;
         TreeSet<Identifier> allResults = new TreeSet<>();
         for (String stem : textFillerStrings) {
-            allResults.addAll(query(stem));
+            allResults.addAll(query(stem, filters));
             queryTime += getLastQueryTimeNanos();
             if (queryTime > MAX_STEM_QUERY_TIME_NANOS) {
                 lastQueryTimeNanos = queryTime;
@@ -70,7 +71,8 @@ public class QueryEngine {
         return allResults;
     }
 
-    public List<Identifier> query(String query) {
+    public List<Identifier> query(String query, FilterSet filters) {
+        this.filters = filters;
         if (query.length() == 0) {
             lastQueryTimeNanos = 0;
             tags = new ArrayList<>();
@@ -167,18 +169,62 @@ public class QueryEngine {
 
             }
             case WORD: {
-                HashSet<ItemNode> results = getIndex().getItems(parseTree.getWord());
+                Set<ItemNode> results = getIndex().getItems(parseTree.getWord()).stream().filter(this::matchesFilter).collect(Collectors.toSet());
                 return new Result(results, parseTree.isNegative());
             }
 
             case PHRASE: {
-                Set<ItemNode> results = getIndex().getItems(parseTree.getWord());
+                Set<ItemNode> results = getIndex().getItems(parseTree.getWord()).stream().filter(this::matchesFilter).collect(Collectors.toSet());
                 results = results.stream().filter(itemNode -> itemNode.identifier.find(getIndex()).containsString(parseTree.getWord())).collect(Collectors.toSet());
                 return new Result(results, parseTree.isNegative());
             }
 
             default: throw new IllegalStateException("Non-query element escaped parse tree");
         }
+    }
+
+    private boolean matchesFilter(ItemNode itemNode) {
+        Identifier id = itemNode.identifier;
+
+        //class and type lists contain what should be EXCLUDED
+
+        //check type filter
+        if (filters.types.contains(id.getType()))
+            return false;
+
+        //check class filter
+        if (filters.classPds.contains(id.getBelongsTo()))
+            return false;
+
+        int secs = 86400; //seconds in a day
+
+        //check time filter
+        switch (filters.dateConstraint) {
+            case TODAY: {
+                long now = System.currentTimeMillis();
+                long today = now - now % secs;
+                long diff1 = id.getTime1() - today;
+                long diff2 = id.getTime2() - today;
+                return (diff1 > 0 && diff1 < secs) || (diff2 > 0 && diff2 < secs);
+            }
+            case PAST_WEEK: {
+                Date idDate = new Date(id.getTime1() - id.getTime1() % secs);
+                long now = System.currentTimeMillis();
+                Date lastWeek = new Date(now - now % secs - secs * 7 - 1);
+                return idDate.after(lastWeek) || new Date(id.getTime2() - id.getTime2() % secs).after(lastWeek);
+            }
+            case ON:
+                long diff1 = id.getTime1() - filters.dateRestriction.getTime();
+                long diff2 = id.getTime2() - filters.dateRestriction.getTime();
+                return (diff1 > 0 && diff1 < secs) || (diff2 > 0 && diff2 < secs);
+            case AFTER:
+                return new Date(id.getTime1()).after(filters.dateRestriction) || new Date(id.getTime2()).after(filters.dateRestriction);
+            case BEFORE:
+                return (new Date(id.getTime1()).before(filters.dateRestriction) && (id.getTime1() != 0)) || (new Date(id.getTime2()).before(filters.dateRestriction) && (id.getTime2() != 0));
+            case NONE:
+                return true;
+        }
+        return true;
     }
 
     private Set<ItemNode> orMerge(Set<ItemNode> left, Set<ItemNode> right, boolean preserveRankings) {
