@@ -550,7 +550,9 @@ public class Main extends Application {
                 if (isCaps())
                     getSubtitle().setText("Live your life in ALL CAPS today.");
                 else {
-                    getSubtitle().setText(getSubtitles()[getCurrentMenu()]);
+                    if (state == SEARCH_STATE) {
+                        getSubtitle().setText(searchBox.getDescription());
+                    } else getSubtitle().setText(getSubtitles()[getCurrentMenu()]);
                 }
             }
         });
@@ -570,7 +572,7 @@ public class Main extends Application {
         allMenusAndSearchBar.getChildren().get(0).setVisible(true);  //show menus
         allMenusAndSearchBar.getChildren().get(1).setVisible(false); //hide search box
         searchBox.collapse();
-        subtitle.setText(subtitles[currentMenu]);
+        subtitle.setText(caps ? "Live life in ALL CAPS today." : subtitles[currentMenu]);
         state = BASE_STATE;
     }
 

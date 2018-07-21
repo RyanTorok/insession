@@ -7,8 +7,8 @@ public class Trie implements Comparable<Trie> {
     private String stem;
     private HashMap<Character, Trie> children;
     private boolean isValid;
-    private int maxPriority;
-    private int priority;
+    private long maxPriority;
+    private long priority;
 
     private Trie(String stem, boolean isValid) {
         setChildren(new HashMap<>());
@@ -20,15 +20,14 @@ public class Trie implements Comparable<Trie> {
         this("", false);
     }
 
-    public void add(String stem) {
+    private long addItem(String stem) {
         if (stem == null)
-            return;
+            return maxPriority;
+        maxPriority++;
         if (stem.length() == 0) {
             isValid = true;
-            maxPriority++;
-            return;
+            return maxPriority;
         }
-        maxPriority++;
         Character first = stem.charAt(0);
         Trie child = getChildren().get(first);
         if (child == null) {
@@ -36,7 +35,17 @@ public class Trie implements Comparable<Trie> {
             getChildren().put(first, child);
         }
         if (stem.length() > 1)
-            child.add(stem.substring(1));
+            return Math.max(maxPriority, child.addItem(stem.substring(1)));
+        else {
+            if (isValid)
+                priority++;
+            maxPriority = Math.max(priority, maxPriority);
+            return maxPriority;
+        }
+    }
+
+    public void add(String stem) {
+        maxPriority = addItem(stem);
     }
 
     //returns the list of valid words/expressions which begin with the argument String, in decreasing order of access count
@@ -91,7 +100,7 @@ public class Trie implements Comparable<Trie> {
 
     private Node findBest() {
         String best = "";
-        int bestValue = -1;
+        long bestValue = -1;
         for (Map.Entry<Character, Trie> t : getChildren().entrySet()) {
             Node n = t.getValue().findBest();
             if (n.value > bestValue) {
@@ -132,36 +141,40 @@ public class Trie implements Comparable<Trie> {
         isValid = valid;
     }
 
-    public int getMaxPriority() {
+    public long getMaxPriority() {
         return maxPriority;
     }
 
-    public void setMaxPriority(int maxPriority) {
+    public void setMaxPriority(long maxPriority) {
         this.maxPriority = maxPriority;
     }
 
-    public int getPriority() {
+    public long getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(long priority) {
         this.priority = priority;
     }
 
     @Override
     public int compareTo(Trie o) {
-        int diff = priority - o.priority;
+        long diff = priority - o.priority;
         if (diff == 0) //prevent reduction in TreeSet
             return stem.compareTo(o.stem);
-        return diff;
+        if (diff > Integer.MAX_VALUE)
+            return Integer.MAX_VALUE;
+        if (diff < Integer.MIN_VALUE)
+            return Integer.MIN_VALUE;
+        return (int) diff;
     }
 
 
     private static class Node {
         String item;
-        int value;
+        long value;
 
-        public Node(String item, int value) {
+        public Node(String item, long value) {
             this.item = item;
             this.value = value;
         }

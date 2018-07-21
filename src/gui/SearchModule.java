@@ -2,10 +2,12 @@ package gui;
 
 import classes.ClassPd;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -38,11 +40,13 @@ public class SearchModule extends VBox {
     private Text topBarSubtitle;
     private ScrollPane filters;
     private boolean lastSearchType; //false for stem, true for full search
+    private String description = "What can I help you find?";
 
-    public SearchModule(QueryEngine engine, Main wrapper) {
+    SearchModule(QueryEngine engine, Main wrapper) {
         this.engine = engine;
         this.wrapper = wrapper;
         this.searchResultsDisplay = new VBox();
+        searchResultsDisplay.setPadding(new Insets(30, 0, 0, 0));
         textFillerStrings = new ArrayList<>();
         searchBox = new TextField("");
         searchBox.setEditable(true);
@@ -84,7 +88,7 @@ public class SearchModule extends VBox {
         getChildren().add(searchBox);
         setStyle("-fx-background-color: black");
         setPrefSize(1920, 100);
-        getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd());}}, 1);
+        getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd()); setTime1(System.currentTimeMillis());}}, 1);
         filters = new ScrollPane(new SearchFilterBox(this)) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
     }
 
@@ -137,7 +141,7 @@ public class SearchModule extends VBox {
             });
             textFillers.getChildren().add(box);
         }
-        TreeSet<Identifier> result = getEngine().incompleteQuery(textFillerStrings, new FilterSet((SearchFilterBox) filters.getContent()));
+        TreeSet<Identifier> result = getEngine().incompleteQuery(beginning, orig.substring(partition), textFillerStrings, new FilterSet((SearchFilterBox) filters.getContent()));
         for (Identifier id : result) {
             searchResultsDisplay.getChildren().add(new ResultBlock(id));
         }
@@ -151,8 +155,9 @@ public class SearchModule extends VBox {
     private void setSubHeaderText() {
         int size = searchResultsDisplay.getChildren().size();
         if (size == 0)
-            topBarSubtitle.setText("No results were returned.");
-        else topBarSubtitle.setText("Returned " + size + (size == 1 ? " result" : " results") + " in " + UtilAndConstants.parseTimeNanos(getEngine().getLastQueryTimeNanos()));
+            description = "No results were returned.";
+        else description = "Returned " + size + (size == 1 ? " result" : " results") + " in " + UtilAndConstants.parseTimeNanos(getEngine().getLastQueryTimeNanos());
+        topBarSubtitle.setText(description);
     }
 
     void search() {
@@ -191,23 +196,34 @@ public class SearchModule extends VBox {
         return lastSearchType;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     class ResultBlock extends HBox {
 
         private Identifier id;
+        private boolean expanded = false;
 
         ResultBlock(Identifier id) {
             this.id = id;
-            setStyle("-fx-background-color: #202020");
+            int size = 15;
+            setStyle("-fx-background-color: #000000");
             UtilAndConstants.highlightOnMouseOver(this);
             Text title = new Text(id.getName());
             title.setFill(Color.WHITE);
+            title.setFont(Font.font(size * 3/2));
             Text subtitle = new Text();
             subtitle.setFill(Color.WHITE);
-            subtitle.setFont(Font.font(subtitle.getFont().getFamily(), FontPosture.ITALIC, subtitle.getFont().getSize()));
+            subtitle.setFont(Font.font(subtitle.getFont().getFamily(), FontPosture.ITALIC, size));
             VBox titles = new VBox(title, subtitle);
             getChildren().add(titles);
             Text date1 = makeDate(id.getTime1());
-            VBox dates = new VBox(); //can hold other information besides dates if need be (see switch block below)
+            VBox dates = new VBox() {{setAlignment(Pos.CENTER_RIGHT);}}; //can hold other information besides dates if need be (see switch block below)
 
             switch (id.getType()) {
                 case Post: {
@@ -241,39 +257,50 @@ public class SearchModule extends VBox {
                     break;
                 case Utility: break;
             }
+            getChildren().add(new UtilAndConstants.Filler());
+            getChildren().add(dates);
 
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                //search feedback
-                String query = searchBox.getText();
-                int lastSpace = query.lastIndexOf("\\s+");
-                String lastWord = query.substring(lastSpace + 1);
-                String validWords = lastSpace == -1 ? "" : query.substring(0, lastSpace);
-                WeightedPredictor predictor = SearchModule.this.getEngine().getWeightedPredictor();
-                if (predictor.getRoot().getStemIndex().contains(lastWord))
-                    validWords += " " + lastWord;
-                if (validWords.trim().length() > 0)
-                SearchModule.this.getEngine().getWeightedPredictor().associate(validWords.toLowerCase().trim());
+                if (event.getButton().equals(MouseButton.SECONDARY)) {
+                    if (expanded) collapse();
+                    else expand();
+                } else {
+                    //search feedback
+                    String query = searchBox.getText();
+                    int lastSpace = query.lastIndexOf("\\s+");
+                    String lastWord = query.substring(lastSpace + 1);
+                    String validWords = lastSpace == -1 ? "" : query.substring(0, lastSpace);
+                    WeightedPredictor predictor = SearchModule.this.getEngine().getWeightedPredictor();
+                    if (predictor.getRoot().getStemIndex().contains(lastWord))
+                        validWords += " " + lastWord;
+                    if (validWords.trim().length() > 0)
+                        SearchModule.this.getEngine().getWeightedPredictor().associate(validWords.toLowerCase().trim());
 
-                //find object represented by identifier and trigger launch event
-                Indexable obj = id.find(getEngine().getIndex());
-                SearchModule.this.collapse();
-                if (obj == null)
-                    throw new IllegalStateException("Identifier pointing to null Indexable object - id: " + id.getId());
-                obj.launch();
+                    //find object represented by identifier and trigger launch event
+                    Indexable obj = id.find(getEngine().getIndex());
+                    SearchModule.this.collapse();
+                    if (obj == null)
+                        throw new IllegalStateException("Identifier pointing to null Indexable object - id: " + id.getId());
+                    obj.launch();
+                }
             });
+
+            setPadding(new Insets(10));
 
         }
 
         void expand() {
-            //TODO show detail text
+            getChildren().set(1, id.find(engine.getIndex()).getDetailText(textFillerStrings));
+            expanded = true;
         }
 
         void collapse() {
-            //TODO
+            getChildren().set(1, new UtilAndConstants.Filler());
+            expanded = false;
         }
 
         Text makeDate(long time) {
-            return new Text(UtilAndConstants.parseTimestamp(new Timestamp(time)));
+            return new Text(UtilAndConstants.parseTimestamp(new Timestamp(time))) {{setFont(Font.font(20)); setFill(Color.WHITE);}};
         }
     }
 
@@ -284,7 +311,7 @@ public class SearchModule extends VBox {
         return new DecimalFormat("%.1f").format((double) num / 1000000000.0) + "B";
     }
 
-    void expand() {
+    private void expand() {
         wrapper.expandTopBar();
         if (!getChildren().contains(searchResultsDisplay))
             getChildren().add(searchResultsDisplay);
@@ -308,10 +335,4 @@ public class SearchModule extends VBox {
         return searchBox;
     }
 
-    String frontTrim(String s) {
-        int n = 0;
-        while (s.charAt(n) == ' ')
-            n++;
-        return s.substring(n);
-    }
 }
