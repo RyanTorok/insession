@@ -88,8 +88,8 @@ public class TaskViewWrapper extends StackPane {
     }
 
     static final int centerLocX = 0;
-    static final double fullWidth = 1860;
-    static final double fullHeight = 945;
+    static final double fullWidth = Root.width(1860);
+    static final double fullHeight = Root.height(945);
     static final double smallWidth = fullWidth / 2;
     static final double smallHeight = fullHeight / 2;
 
@@ -174,13 +174,13 @@ public class TaskViewWrapper extends StackPane {
             return;
         int index = which;
         for (int i = 0; i < index; i++) {
-            Timeline goLeft = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), -2000)));
+            Timeline goLeft = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), Root.width(-2000))));
             goLeft.play();
         }
         TaskView me = activeViews.get(index);
         growView(me, millis);
         for (int i = index + 1; i < activeViews.size(); i++) {
-            Timeline goRight = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), 2000)));
+            Timeline goRight = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), Root.width(2000))));
             goRight.play();
         }
     }
@@ -301,7 +301,7 @@ public class TaskViewWrapper extends StackPane {
         shrinkView(view, 1);
         stack();
         scroll(getActiveViews().size() - 1);
-        Timeline initNew = new Timeline(new KeyFrame(Duration.millis(1), new KeyValue(view.translateYProperty(), 2000)));
+        Timeline initNew = new Timeline(new KeyFrame(Duration.millis(1), new KeyValue(view.translateYProperty(), Root.height(2000))));
         initNew.setOnFinished(event -> {
             Timeline delay = new Timeline(new KeyFrame(Duration.millis(millis)));
             delay.setOnFinished(event1 -> {

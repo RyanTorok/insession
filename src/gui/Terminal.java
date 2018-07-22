@@ -53,8 +53,8 @@ public class Terminal extends AnchorPane {
         previous_commands = new ArrayList<>();
 
         TranslateTransition init = new TranslateTransition();
-        init.setByY(250);
-        init.setByX(-2000);
+        init.setByY(Root.height(250));
+        init.setByX(Root.width(-2000));
         init.setDuration(Duration.millis(1));
         init.setNode(this.wrapper);
         init.play();
@@ -62,20 +62,20 @@ public class Terminal extends AnchorPane {
         ent = new TranslateTransition();
         ent.setDuration(Duration.millis(200));
         ent.setNode(this.wrapper);
-        ent.setByX(2300);
+        ent.setByX(Root.width(2300));
         ent.setAutoReverse(false);
 
         exit = new TranslateTransition();
         exit.setDuration(Duration.millis(200));
         exit.setNode(this.wrapper);
-        exit.setByX(-2300);
+        exit.setByX(Root.width(-2300));
         exit.setAutoReverse(false);
 
         eval = new TerminalUI();
         init();
         setStyle("-fx-background-color: #202020");
-        setPrefHeight(600);
-        setPrefWidth(1200);
+        setPrefHeight(Root.height(600));
+        setPrefWidth(Root.width(1200));
     }
 
     void start(){
@@ -236,7 +236,7 @@ public class Terminal extends AnchorPane {
         yindex = 1;
 
         pane.getChildren().addAll(prompt, field);
-        pane.setPadding(new Insets(10));
+        pane.setPadding(Root.insets(10));
         getChildren().add(pane);
     }
 }

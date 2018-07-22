@@ -59,18 +59,20 @@ public class QueryEngine {
     public TreeSet<Identifier> incompleteQuery(String base, String actualStem, ArrayList<String> textFillerStrings, FilterSet filters) {
         long queryTime = 0;
         TreeSet<Identifier> allResults = new TreeSet<>();
+
         //resolves removal of ending-negative-tied results, this query has highest priority.
         allResults.addAll(query(base + " " + actualStem, filters));
         queryTime += lastQueryTimeNanos;
-        for (String stem : textFillerStrings) {
-            System.out.println("here" + stem);
-            allResults.addAll(query(stem, filters));
+
+        for (String predictedQuery : textFillerStrings) {
+            allResults.addAll(query(predictedQuery, filters));
             queryTime += getLastQueryTimeNanos();
             if (queryTime > MAX_STEM_QUERY_TIME_NANOS) {
                 lastQueryTimeNanos = queryTime;
                 return allResults;
             }
         }
+
         lastQueryTimeNanos = queryTime;
         return allResults;
     }

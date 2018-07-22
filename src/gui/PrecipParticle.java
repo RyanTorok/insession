@@ -4,6 +4,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import main.Root;
 
 import java.util.Random;
 
@@ -28,15 +29,15 @@ public abstract class PrecipParticle {
         shape = get();
 
         //random start point
-        double rand = Math.random() * (1920 + 1080);
-        if (rand < 1080)
+        double rand = Math.random() * (Root.width(1920) + Root.height(1080));
+        if (rand < Root.height(1080))
             AnchorPane.setTopAnchor(shape, rand);
-        else AnchorPane.setLeftAnchor(shape, rand - 1080);
+        else AnchorPane.setLeftAnchor(shape, rand - Root.height(1080));
         TranslateTransition move = new TranslateTransition();
         move.setDuration(Duration.seconds((1.0 / speed) * ((4 - this.size) * 3 * (Math.random() / 4 + .875))));
         move.setNode(shape);
-        move.setByX(1000 + (Math.random() * 500) - 250);
-        move.setByY(2000);
+        move.setByX(Root.width(1000 + (Math.random() * 500) - 250));
+        move.setByY(Root.height(2000));
         move.play();
         move.setOnFinished(event -> holder.getChildren().remove(shape));
 

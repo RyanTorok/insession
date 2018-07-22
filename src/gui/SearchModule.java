@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import main.Root;
 import main.UtilAndConstants;
 import searchengine.*;
 
@@ -51,7 +52,7 @@ public class SearchModule extends VBox {
         searchBox = new TextField("");
         searchBox.setEditable(true);
         searchBox.setPrefColumnCount(40);
-        searchBox.setFont(Font.font("Sans Serif", 30));
+        searchBox.setFont(Font.font("Sans Serif", Root.fontSize(30)));
         searchBox.setOnAction(event -> search());
         searchBox.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode().equals(KeyCode.DOWN)) {
@@ -83,11 +84,11 @@ public class SearchModule extends VBox {
         });
         textFillers = new VBox();
         textFillers.setStyle("-fx-background-color: white");
-        textFillers.setPadding(new Insets(10));
+        textFillers.setPadding(Root.insets(10));
         topBarSubtitle = wrapper.getSubtitle();
         getChildren().add(searchBox);
         setStyle("-fx-background-color: black");
-        setPrefSize(1920, 100);
+        setPrefSize(Root.width(1920), Root.height(100));
         getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd()); setTime1(System.currentTimeMillis());}}, 1);
         filters = new ScrollPane(new SearchFilterBox(this)) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
     }
@@ -124,7 +125,7 @@ public class SearchModule extends VBox {
         for (String s : wordStems) {
             String full = beginning + s;
             textFillerStrings.add(full);
-            HBox box = new HBox(new Text(full.substring(0, orig.length())){{setFont(Font.font("Sans Serif", FontWeight.BOLD, 16));}}, new Text(full.substring(orig.length())) {{setFont(Font.font("Sans Serif", 16));}});
+            HBox box = new HBox(new Text(full.substring(0, orig.length())){{setFont(Font.font("Sans Serif", FontWeight.BOLD, Root.fontSize(16)));}}, new Text(full.substring(orig.length())) {{setFont(Font.font("Sans Serif", Root.fontSize(16)));}});
             box.setStyle("-fx-background-color: #ffffff");
             UtilAndConstants.highlightOnMouseOver(box);
             box.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
@@ -211,7 +212,7 @@ public class SearchModule extends VBox {
 
         ResultBlock(Identifier id) {
             this.id = id;
-            int size = 15;
+            double size = Root.fontSize(15);
             setStyle("-fx-background-color: #000000");
             UtilAndConstants.highlightOnMouseOver(this);
             Text title = new Text(id.getName());
@@ -285,7 +286,7 @@ public class SearchModule extends VBox {
                 }
             });
 
-            setPadding(new Insets(10));
+            setPadding(Root.insets(10));
 
         }
 
@@ -300,7 +301,7 @@ public class SearchModule extends VBox {
         }
 
         Text makeDate(long time) {
-            return new Text(UtilAndConstants.parseTimestamp(new Timestamp(time))) {{setFont(Font.font(20)); setFill(Color.WHITE);}};
+            return new Text(UtilAndConstants.parseTimestamp(new Timestamp(time))) {{setFont(Font.font(Root.fontSize(20))); setFill(Color.WHITE);}};
         }
     }
 

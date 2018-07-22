@@ -2,6 +2,7 @@ package gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -225,29 +226,19 @@ public class AcctSettings extends Stage {
             java.io.File selected = fileChooser.showOpenDialog(Root.getPortal().getPrimaryStage());
             Image new_image = new Image("file:" + selected.getPath());
             if (new_image.isError()) {
-                pictureInvalidMessage.setText("Unable to parse image file " + selected.getName() + ".");
+                pictureInvalidMessage.setText("Unable to parse " + selected.getName() + ".");
             } else {
-                Shape newShape = new ShapeImage(new Circle(30), new_image).apply();
-                newShape.setOnMouseClicked(event1 ->  UtilAndConstants.fireMouse(Root.getPortal().getName(), MouseEvent.MOUSE_CLICKED));
-                //copied becuase we cannot use the same node twice.
+                Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new_image).apply().getFill());
+                //copied becuase we cannot use the same node twice. -- this comment is from the old, more cumbersome implementation. This code may be able to be simplified further.
                 profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), new_image).apply());
                 Root.getActiveUser().setImageFN("file:" + selected.getPath());
-                int pictureIndex = Root.getPortal().getTop_bar().getChildren().indexOf(Root.getPortal().getPicture());
-                Root.getPortal().getTop_bar().getChildren().set(pictureIndex, newShape);
-                Root.getPortal().setPicture(newShape);
             }
         });
         Button resetToDefault = new Button("Reset to Default");
         resetToDefault.setOnAction(event -> {
             pictureInvalidMessage.setText("");
             Root.getActiveUser().setImageFN("file:" + new java.io.File(Address.root_addr + File.separator + "resources" + File.separator + "default_user.png").getPath());
-            int pictureIndex = Root.getPortal().getTop_bar().getChildren().indexOf(Root.getPortal().getPicture());
-            Shape newShape = new ShapeImage(new Circle(30), Root.getActiveUser().getAcctImage()).apply();
-            //copied becuase we cannot use the same node twice.
-            profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), Root.getActiveUser().getAcctImage()).apply());
-            newShape.setOnMouseClicked(event1 ->  UtilAndConstants.fireMouse(Root.getPortal().getName(), MouseEvent.MOUSE_CLICKED));
-            Root.getPortal().getTop_bar().getChildren().set(pictureIndex, newShape);
-            Root.getPortal().setPicture(newShape);
+            Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new Image(Root.getActiveUser().getImageFN())).apply().getFill());
         });
         profilePicture.getChildren().addAll(ppPrompt, picture, browse, resetToDefault, pictureInvalidMessage);
 

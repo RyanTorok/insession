@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import main.Root;
 import main.UtilAndConstants;
 
 import java.util.*;
@@ -31,12 +32,12 @@ public class LatestPane extends VBox {
         int annoucementsToDisplay = 10;
 
         Text header = new Text(title);
-        header.setFont(Font.font("Sans Serif",25));
+        header.setFont(Font.font("Sans Serif", Root.fontSize(25)));
         header.setFill(Color.WHITE);
         getChildren().add(new HBox(header) {
             {
                 getChildren().add(new UtilAndConstants.Filler());
-                setPadding(new Insets(20));
+                setPadding(Root.insets(20));
                 getChildren().add(new Text(Character.toString((char) 8635)) {
                     {
                         setFill(Color.WHITE);
@@ -81,7 +82,7 @@ public class LatestPane extends VBox {
         Text placeholder = new Text(textIfEmpty) {
             {
                 setFill(Color.WHITE);
-                setFont(Font.font("Comfortaa", 15));
+                setFont(Font.font("Comfortaa", Root.fontSize(15)));
             }
         };
         ifEmpty = new HBox(placeholder) {
@@ -93,9 +94,9 @@ public class LatestPane extends VBox {
         if (!atLeastOne)
             getChildren().add(ifEmpty);
 
-        setMinWidth(350);
-        setMinHeight(850);
-        setMaxHeight(850);
+        setMinWidth(Root.width(350));
+        setMinHeight(Root.height(850));
+        setMaxHeight(Root.height(850));
 
     }
 

@@ -24,6 +24,8 @@ import java.util.Date;
  */
 public class UtilAndConstants {
 
+    public static final double DEFAULT_WIDTH = 1920, DEFAULT_HEIGHT = 1080;
+    private double screenWidth = DEFAULT_WIDTH, screenHeight = DEFAULT_HEIGHT;
     /**
      * @return the operatingSystem
      */
@@ -58,6 +60,10 @@ public class UtilAndConstants {
         MAX_ATTENDANCE_EXTRA_TIME = mAET;
         this.attendanceCodes = attendanceCodes;
         this.attendanceStartTime = attendanceStartTime;
+    }
+
+    public UtilAndConstants() {
+
     }
 
     private static void initOS() {
@@ -238,6 +244,22 @@ public class UtilAndConstants {
         else return textFill(c).equals(Color.WHITE) ? c.brighter() : c.darker();
     }
 
+    public double getScreenHeight() {
+        return screenHeight;
+    }
+
+    public void setScreenHeight(double screenHeight) {
+        this.screenHeight = screenHeight;
+    }
+
+    public double getScreenWidth() {
+        return screenWidth;
+    }
+
+    public void setScreenWidth(double screenWidth) {
+        this.screenWidth = screenWidth;
+    }
+
     public static class Filler extends Region {
         public Filler() {
             HBox.setHgrow(this, Priority.ALWAYS);
@@ -301,5 +323,17 @@ public class UtilAndConstants {
             throw new IllegalArgumentException("Not enough splits in post encoding");
         }
         return split;
+    }
+
+    double height(double height) {
+        return height * screenHeight / DEFAULT_HEIGHT;
+    }
+
+    double width(double width) {
+        return width * screenWidth / DEFAULT_WIDTH;
+    }
+
+    double fontSize(double fontSize) {
+        return Math.min(fontSize * screenWidth / DEFAULT_WIDTH, fontSize * screenHeight / DEFAULT_HEIGHT);
     }
 }

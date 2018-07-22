@@ -19,15 +19,15 @@ public class UpdateWrapper extends GridPane {
     public UpdateWrapper(RecordEntry record, LatestPane holder) {
         Text message = new Text(record.toMessage());
         message.setFill(Color.WHITE);
-        message.setFont(Font.font("Sans Serif", 15));
+        message.setFont(Font.font("Sans Serif", Root.fontSize(15)));
         Text classTag = new Text(record.getBelongsTo().getCastOf().getName());
         classTag.setFill(Color.WHITE);
-        classTag.setFont(Font.font("Sans Serif", 15));
+        classTag.setFont(Font.font("Sans Serif", Root.fontSize(15)));
         Text timing = new Text(UtilAndConstants.parseTimestamp(record.getTimestamp()));
         timing.setFont(Font.font(12));
         timing.setFill(Color.WHITE);
         Text closeX = new Text(Character.toString((char) 0x00D7));
-        closeX.setFont(Font.font("Sans Serif", 20));
+        closeX.setFont(Font.font("Sans Serif", Root.fontSize(20)));
         Color fill = Color.WHITE;
         closeX.setFill(fill);
         closeX.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> closeX.setFill(UtilAndConstants.highlightColor((Color) closeX.getFill())));
@@ -56,7 +56,7 @@ public class UpdateWrapper extends GridPane {
         add(timing, 2, 0, 1, 2);
         add(closeX, 3, 0, 1, 2);
         setHgap(10);
-        setPadding(new Insets(10));
+        setPadding(Root.insets(10));
 
     }
 }

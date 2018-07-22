@@ -31,7 +31,7 @@ public class SearchFilterBox extends VBox {
 
     public SearchFilterBox(SearchModule wrapper) {
         this.wrapper = wrapper;
-        header = new Text("Filter Results") {{setFill(Color.WHITE); setFont(Font.font("Sans Serif", FontWeight.BOLD, 20));}};
+        header = new Text("Filter Results") {{setFill(Color.WHITE); setFont(Font.font("Sans Serif", FontWeight.BOLD, Root.fontSize(20)));}};
         filterSets = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
         types.add("Files and Assignments");
@@ -115,8 +115,8 @@ public class SearchFilterBox extends VBox {
 
 
 
-        setSpacing(20);
-        setPadding(new Insets(20));
+        setSpacing(Root.height(20));
+        setPadding(Root.insets(20));
     }
 
     private void fireUpdate() {

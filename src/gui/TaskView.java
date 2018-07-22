@@ -4,6 +4,7 @@ package gui;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import main.Root;
 
 import java.util.Random;
 
@@ -11,6 +12,8 @@ public class TaskView extends ScrollPane {
 
     private TaskViewWrapper wrapper;
     private boolean lockedFullScreen;
+    private TaskViewContents onMinimized;
+    private TaskViewContents onFullScreen;
 
     public TaskView(String title) {
         super();
@@ -19,7 +22,7 @@ public class TaskView extends ScrollPane {
         int x = new Random().nextInt(10);
         AnchorPane test = new AnchorPane();
         test.setStyle("-fx-background-color: #" + x + "00000");
-        test.setPrefSize(400, 400);
+        test.setPrefSize(Root.width(400), Root.height(400));
         test.getChildren().add(new Text("test"));
         getChildren().add(test);
     }
@@ -49,4 +52,11 @@ public class TaskView extends ScrollPane {
         return wrapper;
     }
 
+    public TaskViewContents getOnFullScreen() {
+        return onFullScreen;
+    }
+
+    public TaskViewContents getOnMinimized() {
+        return onMinimized;
+    }
 }
