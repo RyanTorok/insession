@@ -24,8 +24,9 @@ import java.util.Date;
  */
 public class UtilAndConstants {
 
-    public static final double DEFAULT_WIDTH = 1920, DEFAULT_HEIGHT = 1080;
+    public static final double DEFAULT_WIDTH = 1861, DEFAULT_HEIGHT = 1056;
     private double screenWidth = DEFAULT_WIDTH, screenHeight = DEFAULT_HEIGHT;
+
     /**
      * @return the operatingSystem
      */
@@ -53,7 +54,7 @@ public class UtilAndConstants {
     private ArrayList<String> attendanceCodes;
     private Time attendanceStartTime;
     private static String operatingSystem;
-    
+
     private static String startScreenTimeFormat;
 
     public UtilAndConstants(int mAET, ArrayList<String> attendanceCodes, Time attendanceStartTime) {
@@ -68,11 +69,11 @@ public class UtilAndConstants {
 
     private static void initOS() {
         String os = System.getProperty("os.name").toLowerCase();
-        if(os.indexOf("win") >= 0)
+        if (os.contains("win"))
             setOperatingSystem("win");
-        else if(os.indexOf("linux") >= 0)
+        else if (os.contains("linux"))
             setOperatingSystem("linux");
-        else if (os.indexOf("mac") >= 0)
+        else if (os.contains("mac"))
             setOperatingSystem("mac");
     }
 
@@ -91,10 +92,10 @@ public class UtilAndConstants {
                     double minutesAgo = 60 * hoursAgo;
                     if (minutesAgo < 1) {
                         //less than one minute
-                        return ((int) (60 * minutesAgo)) + pluralizeTimeUnits(" second", (int)(60 * minutesAgo)) + " ago";
+                        return ((int) (60 * minutesAgo)) + pluralizeTimeUnits(" second", (int) (60 * minutesAgo)) + " ago";
                     } else return ((int) minutesAgo) + pluralizeTimeUnits(" minute", (int) minutesAgo) + " ago";
                 } else return ((int) hoursAgo) + pluralizeTimeUnits(" hour", (int) hoursAgo) + " ago";
-            } else  return ((int) daysAgo) + pluralizeTimeUnits(" day", (int) daysAgo) + " ago";
+            } else return ((int) daysAgo) + pluralizeTimeUnits(" day", (int) daysAgo) + " ago";
         } else {
             SimpleDateFormat year = new SimpleDateFormat("YYYY");
             String thenYear = year.format(new Date(then)), nowYear = year.format(new Date(now));
@@ -220,10 +221,10 @@ public class UtilAndConstants {
     }
 
     public static String colorToHex(Color color) {
-            return String.format( "#%02X%02X%02X",
-                    (int)( color.getRed() * 255 ),
-                    (int)( color.getGreen() * 255 ),
-                    (int)( color.getBlue() * 255 ));
+        return String.format("#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255));
     }
 
     public static Color textFill(Color background) {
@@ -235,7 +236,7 @@ public class UtilAndConstants {
     }
 
     public static void fireMouse(Node n, EventType<MouseEvent> type) {
-        n.fireEvent(new MouseEvent(type, 0,0,0,0,null, 0, false, false,false, false, false, false, false, false, false, false, null));
+        n.fireEvent(new MouseEvent(type, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
     }
 
     public static Color highlightColor(Color c) {

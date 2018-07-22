@@ -2,7 +2,13 @@ package main;
 
 import javafx.geometry.Insets;
 
+/**
+ * Utility class for scalable size calculations. Actual scalability data is in UtilAndConstants.java.
+ * Methods here only call this class, where the actual calculations are done.
+ */
+
 public class Size {
+
     public static double fontSize(int i) {
         return Root.getUtilAndConstants().fontSize(i);
     }

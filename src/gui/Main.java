@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -24,6 +25,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Root;
@@ -116,6 +118,9 @@ public class Main extends Application {
         //create taskbar icon
         try {
             this.primaryStage = primaryStage;
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+            Root.getUtilAndConstants().setScreenWidth(visualBounds.getWidth());
+            Root.getUtilAndConstants().setScreenHeight(visualBounds.getHeight());
             contentPanes = new Pane[5];
             Root.setPortal(this);
             User user = User.read();
