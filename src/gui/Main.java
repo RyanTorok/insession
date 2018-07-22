@@ -7,7 +7,6 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -28,12 +27,12 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Root;
+import main.Size;
 import main.User;
 import main.UtilAndConstants;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.QueryEngine;
-import searchengine.Trie;
 import terminal.Address;
 
 import java.awt.*;
@@ -144,18 +143,18 @@ public class Main extends Application {
         String title_name = Root.getActiveUser() != null && Root.getActiveUser().getFirst() != null ? Root.getActiveUser().getFirst() : "Guest";
         getPrimaryStage().setTitle("Welcome, " + title_name + " - Paintbrush LMS");
         Text mainlogo = new Text("paintbrush.    ");
-        mainlogo.setFont(Font.font("Comfortaa", Root.fontSize(60)));
+        mainlogo.setFont(Font.font("Comfortaa", Size.fontSize(60)));
         mainlogo.setFill(Color.WHITE);
         final String upper = mainlogo.getText().substring(0, mainlogo.getText().length() - 2).toUpperCase();
         final String lower = mainlogo.getText();
 
         Text subText = new Text("Let's get something done today.");
         subtitle = subText;
-        subText.setFont(Font.font("Sans Serif", FontPosture.ITALIC,  Root.fontSize(20)));
+        subText.setFont(Font.font("Sans Serif", FontPosture.ITALIC,  Size.fontSize(20)));
         subText.setFill(Color.WHITE);
         titles = new VBox(mainlogo, subText);
         titles.setSpacing(5);
-        titles.setPadding(Root.insets(10, 0, 0, 0));
+        titles.setPadding(Size.insets(10, 0, 0, 0));
 
         //scroll links
         getMenus()[0] = new BarMenu("Latest", 0);
@@ -191,34 +190,34 @@ public class Main extends Application {
         });
 
         Image image = Root.getActiveUser().getAcctImage();
-        Shape picture = new ShapeImage(new Circle(Root.lessWidthHeight(30)), image).apply();
+        Shape picture = new ShapeImage(new Circle(Size.lessWidthHeight(30)), image).apply();
         this.picture = picture;
         HBox menusWrapper = new HBox(menus[0], menus[1], menus[2], menus[3], menus[4]);
         menusWrapper.setAlignment(Pos.CENTER_LEFT);
-        menusWrapper.setSpacing(Root.width(30));
+        menusWrapper.setSpacing(Size.width(30));
         allMenusAndSearchBar = new StackPane(menusWrapper);
         HBox topbar = new HBox(titles, allMenusAndSearchBar, new UtilAndConstants.Filler(), new AnchorPane(name), new AnchorPane(picture));
-        AnchorPane.setTopAnchor(name, Root.height(40));
-        AnchorPane.setLeftAnchor(picture, Root.width(5));
-        AnchorPane.setTopAnchor(picture, Root.height(22.5));
+        AnchorPane.setTopAnchor(name, Size.height(40));
+        AnchorPane.setLeftAnchor(picture, Size.width(5));
+        AnchorPane.setTopAnchor(picture, Size.height(22.5));
         topbarPictureIndex = topbar.getChildren().size() - 1; //picture is last item in top bar.
         top_bar = topbar;
-        topbar.setSpacing(Root.width(35));
+        topbar.setSpacing(Size.width(35));
         topbar.setAlignment(Pos.TOP_LEFT);
         String color = UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor());
         String borderWidth = ".67em";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
-        topbar.setPadding(Root.insets(15));
-        top_bar.setPrefHeight(Root.height(135));
-        top_bar.setMinHeight(Root.height(135));
+        topbar.setPadding(Size.insets(15));
+        top_bar.setPrefHeight(Size.height(135));
+        top_bar.setMinHeight(Size.height(135));
 
         //top bar scroll bar
         topBarScrollBar = new Line();
         topBarScrollBar.setStartX(0);
-        topBarScrollBar.setEndX(Root.width(75));
+        topBarScrollBar.setEndX(Size.width(75));
         topBarScrollBar.setStartY(0);
         topBarScrollBar.setEndY(topBarScrollBar.getStartY());
-        topBarScrollBar.setStrokeWidth(Root.lessWidthHeight(8));
+        topBarScrollBar.setStrokeWidth(Size.lessWidthHeight(8));
         topBarScrollBar.setStroke(UtilAndConstants.highlightColor(Root.getActiveUser().getAccentColor()));
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
@@ -228,7 +227,7 @@ public class Main extends Application {
             if (event.getTarget() == topbar.getChildren().get(topbarPictureIndex) || event.getTarget() == name || event.getTarget() == ((AnchorPane) topbar.getChildren().get(topbarPictureIndex)).getChildren().get(0))
                 return;
             topBarScrollBar.setTranslateX(event.getSceneX());
-            contentPanesWrapper.setTranslateX(Root.width(Math.max(-4 * 1920, Math.min(0, -5 * (event.getSceneX() - 450) * 4))));
+            contentPanesWrapper.setTranslateX(Size.width(Math.max(-4 * 1920, Math.min(0, -5 * (event.getSceneX() - 450) * 4))));
             tbsbDrag = true;
         });
 
@@ -261,9 +260,9 @@ public class Main extends Application {
         final Text date = new Text("");
         this.date = date;
         clock.setFill(Color.WHITE);
-        clock.setFont(Font.font("Sans Serif", FontWeight.NORMAL, Root.fontSize(100)));
+        clock.setFont(Font.font("Sans Serif", FontWeight.NORMAL, Size.fontSize(100)));
         date.setFill(Color.WHITE);
-        date.setFont(Font.font("Sans Serif", FontWeight.NORMAL, Root.fontSize(45)));
+        date.setFont(Font.font("Sans Serif", FontWeight.NORMAL, Size.fontSize(45)));
         Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> Main.this.updateTime()));
         clockTimeline.setCycleCount(Animation.INDEFINITE);
         clockTimeline.play();
@@ -280,11 +279,11 @@ public class Main extends Application {
         temperature = new Text();
         setTemperatureDisplay();
         getTemperature().setFill(Color.WHITE);
-        getTemperature().setFont(Font.font("Sans Serif", FontWeight.NORMAL, Root.fontSize(100)));
+        getTemperature().setFont(Font.font("Sans Serif", FontWeight.NORMAL, Size.fontSize(100)));
         getTemperature().setTextAlignment(TextAlignment.RIGHT);
         weatherDesc = new Text(getManager().getDescription());
         getWeatherDesc().setFill(Color.WHITE);
-        getWeatherDesc().setFont(Font.font("Sans Serif", FontWeight.NORMAL, Root.fontSize(45)));
+        getWeatherDesc().setFont(Font.font("Sans Serif", FontWeight.NORMAL, Size.fontSize(45)));
         getWeatherDesc().setTextAlignment(TextAlignment.RIGHT);
         VBox weatherDetails = new VBox(getWeatherDesc());
         weatherDetails.setAlignment(Pos.CENTER_RIGHT);
@@ -295,20 +294,20 @@ public class Main extends Application {
 
         //synthesize sleep body
         sleepbody.setBottom(sleep_btm);
-        sleepbody.setPadding(Root.insets(30));
+        sleepbody.setPadding(Size.insets(30));
         sleepbody.setVisible(false);
 
         BorderPane body = new BorderPane();
         mainBody = body;
         ImageView backgd = new ImageView();
         this.background = backgd;
-        backgd.setFitWidth(Root.width(1900));
+        backgd.setFitWidth(Size.width(1900));
         backgd.setPreserveRatio(true);
         setWeatherGraphics(background, weatherPane);
         mainBodyAndTaskViews = new StackPane();
         StackPane allBodyPanes = new StackPane(sleepbody, mainBodyAndTaskViews);
         VBox root = new VBox(topbarWrapper, allBodyPanes);
-        root.setMinHeight(Root.height(1080));
+        root.setMinHeight(Size.height(1080));
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
         this.term = term;
@@ -321,8 +320,8 @@ public class Main extends Application {
         terminalWrapper.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         terminalWrapper.setFitToWidth(true);
         AnchorPane terminalpane = new AnchorPane(terminalWrapper);
-        terminalpane.setPrefHeight(Root.height(649));
-        terminalpane.setPrefWidth(Root.width(999));
+        terminalpane.setPrefHeight(Size.height(649));
+        terminalpane.setPrefWidth(Size.width(999));
         terminalpane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             //not the actual terminal
             if (getState() == TERMINAL_STATE && event.getTarget() == terminalpane)
@@ -333,7 +332,7 @@ public class Main extends Application {
 
         StackPane mainArea = new StackPane(backgd, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
-        getPrimaryStage().setScene(new Scene(mainArea, Root.width(1920), Root.height(1080)));
+        getPrimaryStage().setScene(new Scene(mainArea, Size.width(1920), Size.height(1080)));
         getPrimaryStage().setMaximized(true);
 
         //sidebar
@@ -380,19 +379,19 @@ public class Main extends Application {
 
         allMenusAndSearchBar.getChildren().add(searchBox);
         searchBox.setVisible(false);
-        searchBox.setPadding(Root.insets(19, 0, 0, 0));
+        searchBox.setPadding(Size.insets(19, 0, 0, 0));
 
         //content panes
         contentPanesWrapper = new HBox();
-        contentPanesWrapper.setPrefWidth(Root.width(1920 * contentPanes.length));
-        contentPanesWrapper.setPrefHeight(Root.height(1080));
+        contentPanesWrapper.setPrefWidth(Size.width(1920 * contentPanes.length));
+        contentPanesWrapper.setPrefHeight(Size.height(1080));
 
         //latest
         GridPane latestGrid = new GridPane();
-        latestGrid.setPadding(Root.insets(30));
+        latestGrid.setPadding(Size.insets(30));
         contentPanes[0] = latestGrid;
-        latestGrid.setHgap(Root.width(50));
-        latestGrid.setVgap(Root.height(20));
+        latestGrid.setHgap(Size.width(50));
+        latestGrid.setVgap(Size.height(20));
 
         ArrayList<Record> updates = Root.getActiveUser().getUpdates();
 
@@ -421,18 +420,18 @@ public class Main extends Application {
         allClasses.addAll(Root.getActiveUser().getClassesStudent());
 
         ArrayList<ClassLauncher> launchers = new ArrayList<>();
-        classLauncherGrid.setHgap(Root.width(40));
-        classLauncherGrid.setVgap(Root.height(40));
+        classLauncherGrid.setHgap(Size.width(40));
+        classLauncherGrid.setVgap(Size.height(40));
 
         if (allClasses.size() > 0) {
 
             int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
 
             int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
-            int clWidth = (int) Root.width(1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
+            int clWidth = (int) Size.width(1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
 
-            int remainder = (int) Root.height(1900 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
-            classLauncherGrid.setPadding(Root.insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
+            int remainder = (int) Size.height(1900 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
+            classLauncherGrid.setPadding(Size.insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
 
             ClassPd test = new ClassPd();
             test.setPeriodNo(1);
@@ -468,7 +467,7 @@ public class Main extends Application {
         GridPane communityGrid = new GridPane();
         contentPanes[4] = communityGrid;
 
-        double cpX = Root.width(1860), cpY = Root.height(1000);
+        double cpX = Size.width(1860), cpY = Size.height(1000);
 
         for (Pane p : contentPanes) {
             p.setMaxSize(cpX, cpY);
@@ -678,7 +677,7 @@ public class Main extends Application {
             int hourOfNight = (currentHr + 3) % 24 + 1;
             Image moon = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + getMoonFN() + ".png");
             ImageView moonNode = new ImageView(moon);
-            double moonImgRadius = Root.lessWidthHeight(40);
+            double moonImgRadius = Size.lessWidthHeight(40);
             moonNode.setFitWidth(moonImgRadius);
             moonNode.setFitHeight(moonImgRadius);
             double xradius = 800;
@@ -692,8 +691,8 @@ public class Main extends Application {
             double centerX = 1920 / 2;
             double centerY = 1080 / 2;
 
-            AnchorPane.setLeftAnchor(moonNode, Root.width(centerX + dx_pixels));
-            AnchorPane.setTopAnchor(moonNode, Root.height(1080 - (centerY + dy_pixels)));
+            AnchorPane.setLeftAnchor(moonNode, Size.width(centerX + dx_pixels));
+            AnchorPane.setTopAnchor(moonNode, Size.height(1080 - (centerY + dy_pixels)));
             weatherPane.getChildren().add(moonNode);
         }
     }
@@ -926,12 +925,12 @@ public class Main extends Application {
     }
 
     public void expandTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), Root.height(1080)), new KeyValue(top_bar.minHeightProperty(), Root.height(1080))));
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), Size.height(1080)), new KeyValue(top_bar.minHeightProperty(), Size.height(1080))));
         expansion.play();
     }
 
     public void collapseTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), Root.height(135)), new KeyValue(top_bar.minHeightProperty(), Root.height(135))));
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), Size.height(135)), new KeyValue(top_bar.minHeightProperty(), Size.height(135))));
         expansion.play();
     }
 
@@ -947,7 +946,7 @@ public class Main extends Application {
             scrollPos = order;
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> this.setUnderline(true));
             addEventFilter(MouseEvent.MOUSE_EXITED, event -> this.setUnderline(false));
-            setFont(Font.font("Confortaa", Root.fontSize(20)));
+            setFont(Font.font("Confortaa", Size.fontSize(20)));
             setFill(Color.WHITE);
             setTextAlignment(TextAlignment.CENTER);
         }
@@ -975,7 +974,7 @@ public class Main extends Application {
         m.setFont(Font.font(m.getFont().getFamily(), FontPosture.ITALIC, m.getFont().getSize()));
         int duration = 200;
         TranslateTransition bodyTransition = new TranslateTransition(Duration.millis(duration), contentPanesWrapper);
-        bodyTransition.setToX(Root.width(-1920 * scrollPos));
+        bodyTransition.setToX(Size.width(-1920 * scrollPos));
         bodyTransition.play();
 
         repositionTopBarScrollBar(scrollPos, duration);
@@ -983,7 +982,7 @@ public class Main extends Application {
 
     private void repositionTopBarScrollBar(int scrollPos, int duration) {
         TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
-        scrollBarTransition.setToX(menus[scrollPos].getLayoutX() + Root.width(445));
+        scrollBarTransition.setToX(menus[scrollPos].getLayoutX() + Size.width(445));
         Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), 10 * menus[scrollPos].getText().length())));
         growShrink.setCycleCount(1);
         growShrink.play();
@@ -1022,14 +1021,14 @@ public class Main extends Application {
             this.holder = holder;
             setVisible(false);
 
-            setPrefWidth(Root.width(200));
-            setPrefHeight(Root.height(1000));
+            setPrefWidth(Size.width(200));
+            setPrefHeight(Size.height(1000));
             setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor()));
             //initial placement
             init = new TranslateTransition();
             init.setNode(this);
             init.setDuration(Duration.millis(1));
-            init.setByX(Root.width(1900));
+            init.setByX(Size.width(1900));
             init.setAutoReverse(false);
             init.play();
 
@@ -1037,14 +1036,14 @@ public class Main extends Application {
             in = new TranslateTransition();
             in.setNode(this);
             in.setDuration(Duration.millis(200));
-            in.setToX(Root.width(1600));
+            in.setToX(Size.width(1600));
             in.setAutoReverse(false);
 
             //exit screen animation
             out = new TranslateTransition();
             out.setNode(this);
             out.setDuration(Duration.millis(200));
-            out.setToX(Root.width(1900));
+            out.setToX(Size.width(1900));
             out.setAutoReverse(false);
 
             menus = new ArrayList<>();
@@ -1166,12 +1165,12 @@ public class Main extends Application {
                 color = Root.getActiveUser().getAccentColor();
                 String colorHex = UtilAndConstants.colorToHex(color);
                 setStyle("-fx-background-color: " + colorHex);
-                setPadding(Root.insets(15));
-                setPrefWidth(Root.width(200));
+                setPadding(Size.insets(15));
+                setPrefWidth(Size.width(200));
                 Text prompt = new Text(text);
                 Color textFill = UtilAndConstants.textFill(color, 2);
                 prompt.setFill(textFill);
-                prompt.setFont(Font.font("Comfortaa", FontWeight.NORMAL, Root.fontSize(20)));
+                prompt.setFont(Font.font("Comfortaa", FontWeight.NORMAL, Size.fontSize(20)));
                 this.getChildren().add(prompt);
                 this.text = prompt;
                 setAlignment(Pos.CENTER);

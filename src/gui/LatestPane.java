@@ -3,7 +3,6 @@ package gui;
 import classes.Record;
 import classes.RecordEntry;
 import javafx.animation.*;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -12,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import main.Root;
+import main.Size;
 import main.UtilAndConstants;
 
 import java.util.*;
@@ -32,12 +31,12 @@ public class LatestPane extends VBox {
         int annoucementsToDisplay = 10;
 
         Text header = new Text(title);
-        header.setFont(Font.font("Sans Serif", Root.fontSize(25)));
+        header.setFont(Font.font("Sans Serif", Size.fontSize(25)));
         header.setFill(Color.WHITE);
         getChildren().add(new HBox(header) {
             {
                 getChildren().add(new UtilAndConstants.Filler());
-                setPadding(Root.insets(20));
+                setPadding(Size.insets(20));
                 getChildren().add(new Text(Character.toString((char) 8635)) {
                     {
                         setFill(Color.WHITE);
@@ -82,7 +81,7 @@ public class LatestPane extends VBox {
         Text placeholder = new Text(textIfEmpty) {
             {
                 setFill(Color.WHITE);
-                setFont(Font.font("Comfortaa", Root.fontSize(15)));
+                setFont(Font.font("Comfortaa", Size.fontSize(15)));
             }
         };
         ifEmpty = new HBox(placeholder) {
@@ -94,9 +93,9 @@ public class LatestPane extends VBox {
         if (!atLeastOne)
             getChildren().add(ifEmpty);
 
-        setMinWidth(Root.width(350));
-        setMinHeight(Root.height(850));
-        setMaxHeight(Root.height(850));
+        setMinWidth(Size.width(350));
+        setMinHeight(Size.height(850));
+        setMaxHeight(Size.height(850));
 
     }
 

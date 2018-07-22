@@ -1,7 +1,6 @@
 package gui;
 
 import classes.ClassPd;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -9,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.Root;
+import main.Size;
 import searchengine.FilterSet;
 import searchengine.Identifier;
 
@@ -31,7 +31,7 @@ public class SearchFilterBox extends VBox {
 
     public SearchFilterBox(SearchModule wrapper) {
         this.wrapper = wrapper;
-        header = new Text("Filter Results") {{setFill(Color.WHITE); setFont(Font.font("Sans Serif", FontWeight.BOLD, Root.fontSize(20)));}};
+        header = new Text("Filter Results") {{setFill(Color.WHITE); setFont(Font.font("Sans Serif", FontWeight.BOLD, Size.fontSize(20)));}};
         filterSets = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
         types.add("Files and Assignments");
@@ -115,8 +115,8 @@ public class SearchFilterBox extends VBox {
 
 
 
-        setSpacing(Root.height(20));
-        setPadding(Root.insets(20));
+        setSpacing(Size.height(20));
+        setPadding(Size.insets(20));
     }
 
     private void fireUpdate() {

@@ -4,7 +4,7 @@ package gui;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import main.Root;
+import main.Size;
 
 import java.util.Random;
 
@@ -22,7 +22,7 @@ public class TaskView extends ScrollPane {
         int x = new Random().nextInt(10);
         AnchorPane test = new AnchorPane();
         test.setStyle("-fx-background-color: #" + x + "00000");
-        test.setPrefSize(Root.width(400), Root.height(400));
+        test.setPrefSize(Size.width(400), Size.height(400));
         test.getChildren().add(new Text("test"));
         getChildren().add(test);
     }

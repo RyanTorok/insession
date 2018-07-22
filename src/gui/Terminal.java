@@ -2,8 +2,6 @@ package gui;
 
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -14,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.Root;
+import main.Size;
 import terminal.Address;
 import terminal.TerminalException;
 import terminal.TerminalRet;
@@ -23,11 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Terminal extends AnchorPane {
 
@@ -53,8 +50,8 @@ public class Terminal extends AnchorPane {
         previous_commands = new ArrayList<>();
 
         TranslateTransition init = new TranslateTransition();
-        init.setByY(Root.height(250));
-        init.setByX(Root.width(-2000));
+        init.setByY(Size.height(250));
+        init.setByX(Size.width(-2000));
         init.setDuration(Duration.millis(1));
         init.setNode(this.wrapper);
         init.play();
@@ -62,20 +59,20 @@ public class Terminal extends AnchorPane {
         ent = new TranslateTransition();
         ent.setDuration(Duration.millis(200));
         ent.setNode(this.wrapper);
-        ent.setByX(Root.width(2300));
+        ent.setByX(Size.width(2300));
         ent.setAutoReverse(false);
 
         exit = new TranslateTransition();
         exit.setDuration(Duration.millis(200));
         exit.setNode(this.wrapper);
-        exit.setByX(Root.width(-2300));
+        exit.setByX(Size.width(-2300));
         exit.setAutoReverse(false);
 
         eval = new TerminalUI();
         init();
         setStyle("-fx-background-color: #202020");
-        setPrefHeight(Root.height(600));
-        setPrefWidth(Root.width(1200));
+        setPrefHeight(Size.height(600));
+        setPrefWidth(Size.width(1200));
     }
 
     void start(){
@@ -236,7 +233,7 @@ public class Terminal extends AnchorPane {
         yindex = 1;
 
         pane.getChildren().addAll(prompt, field);
-        pane.setPadding(Root.insets(10));
+        pane.setPadding(Size.insets(10));
         getChildren().add(pane);
     }
 }

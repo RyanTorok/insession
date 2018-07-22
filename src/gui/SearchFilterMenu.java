@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import main.Root;
+import main.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +27,13 @@ public class SearchFilterMenu extends VBox {
         //button action implementations are in SearchFilterBox.java due to need for access to fireUpdate() method
         selectAll = new Button("Select All");
         selectNone = new Button("Select None");
-        HBox buttons = new HBox(selectAll, selectNone) {{setSpacing(Root.height(5));}};
+        HBox buttons = new HBox(selectAll, selectNone) {{setSpacing(Size.height(5));}};
 
         getChildren().add(header);
         getChildren().addAll(fields);
         getChildren().add(buttons);
 
-        setSpacing(Root.height(10));
+        setSpacing(Size.height(10));
     }
 
     public Text getHeader() {
