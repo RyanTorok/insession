@@ -15,6 +15,7 @@ public class Tokenizer {
 
     public Tokenizer(String query) {
         this.query = query;
+        tags = new ArrayList<>();
     }
 
     public Token peek() {
@@ -23,7 +24,6 @@ public class Tokenizer {
 
     public Token consume() {
         current = consumeToken();
-        while (current.getType() == Token.Type.TAG)
         while (current.getType() == Token.Type.TAG) {
             tags.add(new Tag(current.getText()));
             current = consumeToken();

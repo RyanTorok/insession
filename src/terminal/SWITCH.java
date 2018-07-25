@@ -15,7 +15,7 @@ public class SWITCH extends Command{
         if (tokens.size() == 1) {
             Root.saveAll();
             Root.getPortal().newUser();
-            return new TerminalRet("", true, true);
+            return new TerminalRet("", TerminalDrivenEvent.CLEAR, TerminalDrivenEvent.HIDE);
         }
         if (tokens.get(1).getType() == Token.Type.TAG) {
             if (tokens.get(1).getTokenLabel().equalsIgnoreCase("login")) {
@@ -42,6 +42,6 @@ public class SWITCH extends Command{
             throw new TerminalException("switch - user '" + tokens.get(1).getTokenLabel() + "' was not found.");
         }
         Root.getPortal().resetMain();
-        return new TerminalRet("", false, false);
+        return new TerminalRet("");
     }
 }

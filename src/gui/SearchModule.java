@@ -56,6 +56,10 @@ public class SearchModule extends VBox {
         searchBox.setOnAction(event -> search());
         searchBox.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode().equals(KeyCode.DOWN)) {
+                if (!expanded)
+                    expand();
+                if (!getChildren().contains(textFillers))
+                    getChildren().add(1, textFillers);
                 lastChangeFromUser = false;
                 if (fillersIndex < textFillers.getChildren().size() - 1)
                     setFillerSelected(fillersIndex + 1);
@@ -164,7 +168,7 @@ public class SearchModule extends VBox {
     void search() {
         if (!expanded)
             expand();
-        fillersIndex = -1;
+//        fillersIndex = -1;
         getChildren().remove(textFillers);
         searchResultsDisplay.getChildren().clear();
         List<Identifier> result = getEngine().query(searchBox.getText(), new FilterSet((SearchFilterBox) filters.getContent()));

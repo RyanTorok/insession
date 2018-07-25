@@ -18,6 +18,6 @@ public class MKDIR extends Command{
             if (!b)
                 throw new TerminalException("mkdir - an error occurred when creating direcory '" + directoryName + "'.");
         }
-        return new TerminalRet("", false, false);
+        return new TerminalRet("");
     }
 }

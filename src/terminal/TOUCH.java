@@ -16,6 +16,6 @@ public class TOUCH extends Command {
         } catch (IOException e) {
             throw new TerminalException("An error occurred creating " + f.getName() + ".");
         }
-        return new TerminalRet("", false, false);
+        return new TerminalRet("");
     }
 }

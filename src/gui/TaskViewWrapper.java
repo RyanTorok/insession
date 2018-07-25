@@ -3,13 +3,18 @@ package gui;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import main.Root;
 import main.Size;
+import main.UtilAndConstants;
 
 import java.util.ArrayList;
 
@@ -19,14 +24,23 @@ public class TaskViewWrapper extends StackPane {
     private boolean changeLock;
     private int which;
     long lastShift = 1;
+    private EventHandler<MouseEvent> drag;
 
     public TaskViewWrapper() {
         activeViews = new ArrayList<>();
         changeLock = false;
         which = -1;
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getTarget() == this)
-                Root.getPortal().hideTaskViews();
+            if (event.getTarget() == this) {
+                boolean anyDragged = false;
+                for (TaskView v : activeViews) {
+                    if (v.isDragged()) {
+                        anyDragged = true;
+                    }
+                }
+                if (!anyDragged)
+                    Root.getPortal().hideTaskViews();
+            }
         });
         Root.getPortal().getPrimaryStage().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (Root.getPortal().getState() != Main.BASE_STATE)
@@ -90,7 +104,7 @@ public class TaskViewWrapper extends StackPane {
 
     static final int centerLocX = 0;
     static final double fullWidth = Size.width(1860);
-    static final double fullHeight = Size.height(945);
+    static final double fullHeight = Size.height(937);
     static final double smallWidth = fullWidth / 2;
     static final double smallHeight = fullHeight / 2;
 
@@ -137,13 +151,15 @@ public class TaskViewWrapper extends StackPane {
         shrinkActive(millis);
         Timeline delay = new Timeline(new KeyFrame(Duration.millis(millis)));
         delay.setOnFinished(event -> stackTileSlideIn(millis));
+        delay.play();
         state = STACK_STATE;
     }
 
     private void stackTileSlideIn(int millis) {
         if (which == -1)
             return;
-        int index = which, stretch = 200;
+        int index = which;
+        double stretch = Size.width(200);
         for (int i = 0; i < index; i++) {
             int distance = index - i;
             double offset = stretch * Math.sqrt(distance);
@@ -194,27 +210,36 @@ public class TaskViewWrapper extends StackPane {
     }
 
     private void shrinkView(TaskView me, int millis) {
-        Timeline shrink = new Timeline(new KeyFrame(Duration.millis(millis),
-                new KeyValue(me.translateXProperty(), centerLocX),
-                new KeyValue(me.maxWidthProperty(), smallWidth),
-                new KeyValue(me.prefWidthProperty(), smallWidth),
-                new KeyValue(me.minWidthProperty(), smallWidth),
-                new KeyValue(me.maxHeightProperty(), smallHeight),
-                new KeyValue(me.prefHeightProperty(), smallHeight),
-                new KeyValue(me.minHeightProperty(), smallHeight)));
-        shrink.play();
+        changeSize(me, millis, centerLocX, 0, smallWidth, smallHeight, false, false);
     }
 
     private void growView(TaskView me, int millis) {
-        Timeline grow = new Timeline(new KeyFrame(Duration.millis(millis),
-                new KeyValue(me.translateXProperty(), 0),
-                new KeyValue(me.maxWidthProperty(), fullWidth),
-                new KeyValue(me.prefWidthProperty(), fullWidth),
-                new KeyValue(me.minWidthProperty(), fullWidth),
-                new KeyValue(me.maxHeightProperty(), fullHeight),
-                new KeyValue(me.prefHeightProperty(), fullHeight),
-                new KeyValue(me.minHeightProperty(), fullHeight)));
-        grow.play();
+        changeSize(me, millis, 0, Size.height(-5), fullWidth, fullHeight, true, false);
+    }
+
+    private void initView(TaskView me) {
+        changeSize(me, 1, centerLocX, 0, smallWidth, smallHeight, false, true);
+    }
+
+    private void changeSize(TaskView me, int millis, double toX, Number toY, double newWidth, double newHeight, boolean modifiableAfter, boolean initial) {
+        if (me.getContent() == null)
+            me.initMinimizedDisplay();
+        if (!initial && !modifiableAfter)
+            me.collapse();
+        Timeline change = new Timeline(new KeyFrame(Duration.millis(millis),
+                new KeyValue(me.translateXProperty(), toX),
+                new KeyValue(me.translateYProperty(), toY),
+                new KeyValue(me.maxWidthProperty(), newWidth),
+                new KeyValue(me.prefWidthProperty(), newWidth),
+                new KeyValue(me.minWidthProperty(), newWidth),
+                new KeyValue(me.maxHeightProperty(), newHeight),
+                new KeyValue(me.prefHeightProperty(), newHeight),
+                new KeyValue(me.minHeightProperty(), newHeight),
+                new KeyValue(((ImageView) ((HBox) me.getContent()).getChildren().get(0)).fitHeightProperty(), newHeight),
+                new KeyValue(((ImageView) ((HBox) me.getContent()).getChildren().get(0)).fitWidthProperty(), newWidth)));
+        if (!initial && modifiableAfter)
+                change.setOnFinished(event -> me.expand());
+        change.play();
     }
 
     public void tile() {
@@ -288,20 +313,42 @@ public class TaskViewWrapper extends StackPane {
 
     public void launch(TaskView view) {
         int millis = 200;
+        view.setWrapper(this);
         view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (state == STACK_STATE) {
+            if (state == STACK_STATE && !view.isDragged()) {
                 int indexOf = activeViews.indexOf(view);
                 if (which == indexOf)
                     select(view);
                 else
                     scroll(activeViews.indexOf(view));
             }
+            view.setDragged(false);
+        });
+
+        view.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            view.setLastClickY(event.getY());
+        });
+
+        view.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+            if (state == STACK_STATE && view.isDragged()) {
+                double dy = view.getDy();
+                double endPos = Size.height(dy < Size.height(-400) ? -1500 : dy > Size.height(400) ? 1500 : 0);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(view.translateYProperty(), endPos)));
+                timeline.play();
+                if (endPos != 0) {
+                    removeView(view);
+                    timeline.setOnFinished(event1 -> getChildren().remove(view));
+                }
+            }
         });
         this.getActiveViews().add(view);
         this.getChildren().add(view);
-        shrinkView(view, 1);
+        view.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        view.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        initView(view);
         stack();
         scroll(getActiveViews().size() - 1);
+        view.setTranslateY(Size.height(2000));
         Timeline initNew = new Timeline(new KeyFrame(Duration.millis(1), new KeyValue(view.translateYProperty(), Size.height(2000))));
         initNew.setOnFinished(event -> {
             Timeline delay = new Timeline(new KeyFrame(Duration.millis(millis)));
@@ -322,6 +369,13 @@ public class TaskViewWrapper extends StackPane {
         initNew.play();
         which = activeViews.size() - 1;
         state = BASE_STATE;
+    }
+
+    private void removeView(TaskView view) {
+        int oldIndex = activeViews.indexOf(view);
+        int newIndex = which >= oldIndex && which > 0 ? which - 1 : which;
+        activeViews.remove(view);
+        scroll(newIndex);
     }
 
     public void close(TaskView view) {
@@ -347,5 +401,33 @@ public class TaskViewWrapper extends StackPane {
             return;
         which = index;
         stackTileSlideIn(400);
+    }
+
+    public TaskView current() {
+        if (which < 0 || which >= activeViews.size())
+            return null;
+        return activeViews.get(which);
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getWhich() {
+        return which;
+    }
+
+    void autoCloseTaskView(TaskView view) {
+        int index = activeViews.indexOf(view);
+        if (index == -1)
+            return;
+        stack();
+        view.setDy(-401);
+        view.setDragged(true);
+        UtilAndConstants.fireMouse(view, MouseEvent.MOUSE_RELEASED);
     }
 }

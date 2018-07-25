@@ -37,4 +37,12 @@ public class Size {
     public static double lessWidthHeight(double i) {
         return Math.min(width(i), height(i));
     }
+
+    public static double scaledWidth(double actualWidth) {
+        return Root.getUtilAndConstants().scaledWidth(actualWidth);
+    }
+
+    public static double scaledHeight(double actualHeight) {
+        return Root.getUtilAndConstants().scaledHeight(actualHeight);
+    }
 }

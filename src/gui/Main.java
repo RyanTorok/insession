@@ -52,12 +52,11 @@ public class Main extends Application {
     private Text subtitle;
     private boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
 
-
     public static final int BASE_STATE = 0;
     public static final int SLEEP_STATE = 1;
     public static final int TERMINAL_STATE = 2;
     public static final int SIDEBAR_STATE = 3;
-    private static final int SEARCH_STATE = 4;
+    public static final int SEARCH_STATE = 4;
 
     private Pane[] contentPanes;
     private HBox contentPanesWrapper;
@@ -74,7 +73,7 @@ public class Main extends Application {
     private Text name;
     private Shape picture;
     private int topbarPictureIndex = -1;
-    private Terminal term;
+    private Terminal terminal;
     private StackPane mainArea;
     private SideBar sideBar;
     private Text temperature;
@@ -315,7 +314,7 @@ public class Main extends Application {
         root.setMinHeight(Size.height(1080));
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
-        this.term = term;
+        this.terminal = term;
         terminalWrapper.setContent(term);
         terminalWrapper.setFitToHeight(true);
         terminalWrapper.setStyle("-fx-background-color: #202020");
@@ -360,20 +359,7 @@ public class Main extends Application {
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (event.getCode().equals(KeyCode.SPACE)) {
                 if (state == BASE_STATE && !event.isControlDown()) {
-                    allMenusAndSearchBar.getChildren().get(0).setVisible(false); //hide menus
-                    allMenusAndSearchBar.getChildren().get(1).setVisible(true);  //show search box
-                    subtitle.setText("What can I help you find?");
-                    state = SEARCH_STATE;
-                    searchBox.getSearchBox().setText("");
-                    searchBox.getSearchBox().requestFocus();
-
-                    //fade in transition
-                    FadeTransition transition = new FadeTransition(Duration.millis(200));
-                    transition.setNode(searchBox);
-                    transition.setFromValue(0);
-                    transition.setToValue(1);
-                    transition.play();
-
+                    openSearchBar();
                 }
             } else if (event.getCode().equals(KeyCode.ESCAPE)) {
                 if (state == SEARCH_STATE) {
@@ -516,6 +502,8 @@ public class Main extends Application {
                     ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
                     Collections.swap(workingCollection, 2, 3);
                     mainArea.getChildren().setAll(workingCollection);
+                    if (term.current != null)
+                        term.current.requestFocus();
                 }
             }
 
@@ -868,8 +856,8 @@ public class Main extends Application {
         return picture;
     }
 
-    public Terminal getTerm() {
-        return term;
+    public Terminal getTerminal() {
+        return terminal;
     }
 
     public StackPane getMainArea() {
@@ -994,10 +982,10 @@ public class Main extends Application {
         scrollBarTransition.play();
     }
 
-    void quitTerminal() {
-        getTerm().exit();
-        getTerm().exit.setOnFinished(event -> {
-            state = BASE_STATE;
+    public void quitTerminal() {
+        getTerminal().exit();
+        state = BASE_STATE;
+        getTerminal().exit.setOnFinished(event -> {
             ObservableList<Node> workingCollection = FXCollections.observableArrayList(getMainArea().getChildren());
             Collections.swap(workingCollection, 3, 2);
             getMainArea().getChildren().setAll(workingCollection);
@@ -1078,32 +1066,48 @@ public class Main extends Application {
             menus.add(switch_user);
             menus.add(save);
 
-
             openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot()
                     .fireEvent(new KeyEvent(KeyEvent.KEY_RELEASED, " ", " ", KeyCode.TAB, false, false, false, false)));
 
-            calendar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Calendar()));
+            calendar.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                closeSideBar();
+                Main.this.launchTaskView(new Calendar());
+            });
 
-            grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Grades()));
+            grades.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                closeSideBar();
+                Main.this.launchTaskView(new Grades());
+            });
 
-            attendance.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Attendance()));
+            attendance.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                closeSideBar();
+                Main.this.launchTaskView(new Attendance());
+            });
 
             accountSettings.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 sideBar.requestFocus();
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.NORMAL, name.getFont().getSize()));
-                getSideBar().disappear();
-                state = BASE_STATE;
+                closeSideBar();
                 if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
                     UtilAndConstants.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED);
                     new AcctSettings().show();
                 }
             });
 
-            history.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new History()));
+            history.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                closeSideBar();
+                Main.this.launchTaskView(new History());
+            });
 
-            privacy.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new PrivacyPolicy()));
+            privacy.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                closeSideBar();
+                Main.this.launchTaskView(new PrivacyPolicy());
+            });
 
-            help.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.launchTaskView(new Help()));
+            help.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                closeSideBar();
+                Main.this.launchTaskView(new Help());
+            });
 
             switch_user.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 Main.this.getPrimaryStage().setMaximized(false);
@@ -1144,6 +1148,17 @@ public class Main extends Application {
             //resolves strange behavior on first load
             selectedMenu = -1;
             in.play();
+        }
+
+        @Deprecated
+        public void instantDisappear() {
+            if (selectedMenu != -1)
+                UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
+            selectedMenu = -1;
+            Duration old = out.getDuration();
+            out.setDuration(Duration.ZERO);
+            out.play();
+            out.setOnFinished(event -> out.setDuration(old));
         }
 
         public void disappear() {
@@ -1248,4 +1263,39 @@ public class Main extends Application {
         homeScreen = true;
     }
 
+    void closeSideBar() {
+        if (state != SIDEBAR_STATE)
+            return;
+        sideBar.selectedMenu = -1;
+        sideBar.disappear();
+        state = BASE_STATE;
+    }
+
+    public TaskViewWrapper getTaskViews() {
+        return taskViews;
+    }
+
+    public SearchModule getSearchBox() {
+        return searchBox;
+    }
+
+    public SearchModule openSearchBar() {
+        if (state == SEARCH_STATE)
+            return searchBox;
+        allMenusAndSearchBar.getChildren().get(0).setVisible(false); //hide menus
+        allMenusAndSearchBar.getChildren().get(1).setVisible(true);  //show search box
+        subtitle.setText("What can I help you find?");
+        state = SEARCH_STATE;
+        searchBox.getSearchBox().setText("");
+        searchBox.getSearchBox().requestFocus();
+
+        //fade in transition
+        FadeTransition transition = new FadeTransition(Duration.millis(200));
+        transition.setNode(searchBox);
+        transition.setFromValue(0);
+        transition.setToValue(1);
+        transition.play();
+
+        return searchBox;
+    }
 }

@@ -25,6 +25,6 @@ public class RM extends Command {
             throw new TerminalException("rm - an error occurred when deleting file '" + Address.parse(fn, true, false, false, false, false).getName() + "'.");
         }
 
-        return new TerminalRet("", false, false);
+        return new TerminalRet("");
     }
 }

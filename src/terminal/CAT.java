@@ -22,6 +22,6 @@ public class CAT extends Command {
                 in += "\n";
             in += reader.nextLine();
         }
-        return new TerminalRet(in, false, false);
+        return new TerminalRet(in);
     }
 }

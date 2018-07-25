@@ -13,10 +13,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.Root;
 import main.Size;
-import terminal.Address;
-import terminal.TerminalException;
-import terminal.TerminalRet;
-import terminal.TerminalUI;
+import terminal.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,9 +100,7 @@ public class Terminal extends AnchorPane {
                 pane.getChildren().add(outputTXT);
             }
 
-            if (terminalRet.isClear()) {
-                clearTerminal();
-            } else {
+            if (!terminalRet.getEvents().getEvents().contains(TerminalDrivenEvent.CLEAR)) {
                 field.setEditable(false);
                 Text prompt_new = new Text(eval.getPrompt());
                 prompt_new.setFill(Color.WHITE);
@@ -127,16 +122,9 @@ public class Terminal extends AnchorPane {
                 });
                 wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
             }
-            if (terminalRet.isHide()) {
-                holder.quitTerminal();
-            }
-            if (out.trim().equals("Bye") && !terminalRet.isHide() && !terminalRet.isClear()) {
-                try {
-                    holder.stop();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+
+            //execute event(s) tied to command
+            terminalRet.getEvents().run();
         }
         if (event.getCode().equals(KeyCode.UP)) {
             if (pc_index > 0) {

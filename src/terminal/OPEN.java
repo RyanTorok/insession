@@ -25,6 +25,6 @@ public class OPEN extends Command {
         } catch (IOException e) {
             throw new TerminalException("open - an error occurred when opening file '" + f.getName() + "'.");
         }
-        return new TerminalRet("", false, false);
+        return new TerminalRet("");
     }
 }

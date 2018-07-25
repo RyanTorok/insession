@@ -1,5 +1,7 @@
 package gui;
 
-public class MyGradesPortal extends TaskViewContents {
+import javafx.scene.layout.GridPane;
+
+public class MyGradesPortal extends GridPane {
 
 }

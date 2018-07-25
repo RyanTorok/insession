@@ -26,7 +26,7 @@ public class Tokenizer {
                 case "run": return new Token(Command.CommandType.RUN);
                 case "cat": return new Token(Command.CommandType.CAT);
                 case "see": return new Token(Command.CommandType.SEE);
-                case "searchengine": return new Token(Command.CommandType.SEARCH);
+                case "search": return new Token(Command.CommandType.SEARCH);
                 case "switch": return new Token(Command.CommandType.SWITCH);
                 case "submit": return new Token(Command.CommandType.SUBMIT);
                 case "turnin": return new Token(Command.CommandType.TURNIN);
@@ -83,6 +83,7 @@ public class Tokenizer {
             case SWITCH: return new SWITCH();
             case EDIT: return new EDIT();
             case SETTINGS: return new SETTINGS();
+            case SEARCH: return new SEARCH();
         }
         return null;
     }

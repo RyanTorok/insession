@@ -26,7 +26,7 @@ public class TerminalUI {
         try {
             ret = Command.command(input);
         } catch (TerminalException e) {
-            ret = new TerminalRet("Terminal: " + e.getMessage(), false, false);
+            ret = new TerminalRet("Terminal: " + e.getMessage());
         }
         if (ret.getText().length() == 0)
             return ret;

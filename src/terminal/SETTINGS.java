@@ -14,6 +14,6 @@ public class SETTINGS extends Command {
         } else {
             throw new TerminalException("settings - cannot open account settings when browsing as a guest.");
         }
-        return new TerminalRet("", true, false);
+        return new TerminalRet("");
     }
 }

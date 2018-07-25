@@ -10,6 +10,6 @@ public class CD extends Command {
         String dest = tokens.get(1).getTokenLabel();
         File current = Address.parse(dest, true, false, true, false, false);
         System.setProperty("user.dir", current.getPath());
-        return new TerminalRet("", false, false);
+        return new TerminalRet("");
     }
 }

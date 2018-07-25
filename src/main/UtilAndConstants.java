@@ -337,4 +337,12 @@ public class UtilAndConstants {
     double fontSize(double fontSize) {
         return Math.min(fontSize * screenWidth / DEFAULT_WIDTH, fontSize * screenHeight / DEFAULT_HEIGHT);
     }
+
+    double scaledWidth(double actualWidth) {
+        return actualWidth * DEFAULT_WIDTH / screenWidth;
+    }
+
+    double scaledHeight(double actualHeight) {
+        return actualHeight * DEFAULT_HEIGHT / screenHeight;
+    }
 }

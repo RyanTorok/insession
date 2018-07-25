@@ -15,7 +15,7 @@ static int test = 0;
     static TerminalRet command(String input) throws TerminalException {
         input = input.trim();
         if (input.length() == 0) {
-            return new TerminalRet("", false, false);
+            return new TerminalRet("");
         }
         Tokenizer tok = new Tokenizer();
         Command c;
@@ -23,7 +23,7 @@ static int test = 0;
             tok.loadCommand(input);
             c = tok.get();
         } catch (TerminalException e) {
-            return new TerminalRet("Terminal: " + e.getMessage(), false, false);
+            return new TerminalRet("Terminal: " + e.getMessage());
         }
         return c.execute(tok.getTokens());
     }

@@ -24,10 +24,10 @@ public class LS extends Command {
             Path path = FileSystems.getDefault().getPath(System.getProperty("user.dir"));
             walk = Files.walk(path, depth, FileVisitOption.FOLLOW_LINKS);
         } catch (SecurityException e) {
-            return new TerminalRet("ls: Permission denied for folder: " + System.getProperty("user.dir"), false, false);
+            return new TerminalRet("ls: Permission denied for folder: " + System.getProperty("user.dir"));
         }
         catch (IOException e) {
-            return new TerminalRet("ls: an error occured when parsing folder: " + System.getProperty("user.dir"), false, false);
+            return new TerminalRet("ls: an error occured when parsing folder: " + System.getProperty("user.dir"));
         }
         List<Path> list = walk.collect(Collectors.toList());
         String out = "";
@@ -39,6 +39,6 @@ public class LS extends Command {
             }
             out += p.toFile().getName() + "      ";
         }
-        return new TerminalRet(out, false, false);
+        return new TerminalRet(out);
     }
 }

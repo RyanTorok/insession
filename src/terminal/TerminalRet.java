@@ -2,13 +2,16 @@ package terminal;
 
 public class TerminalRet {
     private String text;
-    private boolean hide;
-    private boolean clear;
+    private TerminalEventHandler events;
 
-    public TerminalRet(String text, boolean hide, boolean clear) {
+    public TerminalRet(String text) {
         this.text = text;
-        this.hide = hide;
-        this.clear = clear;
+        events = new TerminalEventHandler();
+    }
+
+    public TerminalRet(String text, TerminalDrivenEvent... events) {
+        this.text = text;
+        this.events = new TerminalEventHandler(events);
     }
 
     public String getText() {
@@ -19,19 +22,7 @@ public class TerminalRet {
         this.text = text;
     }
 
-    public boolean isHide() {
-        return hide;
-    }
-
-    public void setHide(boolean hide) {
-        this.hide = hide;
-    }
-
-    public boolean isClear() {
-        return clear;
-    }
-
-    public void setClear(boolean clear) {
-        this.clear = clear;
+    public TerminalEventHandler getEvents() {
+        return events;
     }
 }
