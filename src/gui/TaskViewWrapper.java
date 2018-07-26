@@ -29,6 +29,7 @@ public class TaskViewWrapper extends StackPane {
     private EventHandler<MouseEvent> drag;
     private TaskView lastViewed, lastClosed;
     private long lastManualScroll = 1;
+    private long lastAutoScroll = 1;
 
     public TaskViewWrapper() {
         activeViews = new ArrayList<>();
@@ -156,10 +157,12 @@ public class TaskViewWrapper extends StackPane {
         if (lastClosed != null && lastClosed != activeViews.get(index)) {
             lastViewed = lastClosed;
         }
-        scroll(index);
-        long manualScrollDelay = Math.max(0, SCROLL_MILLIS - (System.currentTimeMillis() - lastManualScroll));
+        long manualScrollDelay = Math.max(0, SCROLL_MILLIS - (System.currentTimeMillis() - Math.max(lastManualScroll, lastAutoScroll)));
         Timeline delay =  new Timeline(new KeyFrame(Duration.millis((orig == index ? 0 : 400) + manualScrollDelay)));
-        delay.setOnFinished(event -> stackTileSlideOut(millis));
+        delay.setOnFinished(event -> {
+            scroll(index);
+            stackTileSlideOut(millis);
+        });
         delay.play();
         which = index;
         state = BASE_STATE;
@@ -179,6 +182,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     private void stackTileSlideIn(int millis) {
+        lastAutoScroll = System.currentTimeMillis();
         if (which == -1)
             return;
         int index = which;
@@ -362,6 +366,8 @@ public class TaskViewWrapper extends StackPane {
                 }
             }
         });
+        lastClosed = current();
+        lastViewed = current();
         this.getActiveViews().add(view);
         this.getChildren().add(view);
         view.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
