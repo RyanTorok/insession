@@ -20,11 +20,15 @@ import java.util.ArrayList;
 
 public class TaskViewWrapper extends StackPane {
 
+    public static final int SCROLL_MILLIS = 400;
     private ArrayList<TaskView> activeViews;
     private boolean changeLock;
     private int which;
     long lastShift = 1;
+    private int shiftCount;
     private EventHandler<MouseEvent> drag;
+    private TaskView lastViewed, lastClosed;
+    private long lastManualScroll = 1;
 
     public TaskViewWrapper() {
         activeViews = new ArrayList<>();
@@ -49,14 +53,27 @@ public class TaskViewWrapper extends StackPane {
                 //double shift for stack active views
                 Long now = System.currentTimeMillis();
                 if (now - lastShift < 500) {
-                    lastShift = 1;
-                    Root.getPortal().showTaskViews();
-                    stack();
-                    //used to overcome freezing from previous mouse click
-                    scroll(which);
+                    if (shiftCount != 2) {
+                        if (state == STACK_STATE && !Root.getPortal().isHomeScreen()) {
+                            lastShift = 1;
+                            shiftCount = 2;
+                            if (lastViewed != null)
+                                select(lastViewed);
+                            else if (lastClosed != null) {
+                                select(lastClosed);
+                            }
+                        } else {
+                            shiftCount = 1;
+                            Root.getPortal().showTaskViews();
+                            stack();
+                            //used to overcome freezing from previous mouse click
+                            scroll(which);
+                        }
+                    }
                 } else {
-                    lastShift = now;
+                    shiftCount = 0;
                 }
+                lastShift = now;
             }
             if (Root.getPortal().isHomeScreen()) {
                 return;
@@ -65,11 +82,13 @@ public class TaskViewWrapper extends StackPane {
                 case LEFT:
                     if (which > 0 && state == STACK_STATE) {
                         scroll(event.isShiftDown() ? 0 : which - 1);
+                        lastManualScroll = System.currentTimeMillis();
                     }
                     break;
                 case RIGHT:
                     if (which < activeViews.size() - 1 && state == STACK_STATE) {
                         scroll(event.isShiftDown() ? activeViews.size() - 1 : which + 1);
+                        lastManualScroll = System.currentTimeMillis();
                     }
                     break;
                 case ENTER: {
@@ -134,11 +153,13 @@ public class TaskViewWrapper extends StackPane {
             stack();
         }
         int orig = which;
+        if (lastClosed != null && lastClosed != activeViews.get(index)) {
+            lastViewed = lastClosed;
+        }
         scroll(index);
-        Timeline delay =  new Timeline(new KeyFrame(Duration.millis(orig == index ? 0 : 400)));
-        delay.setOnFinished(event -> {
-            stackTileSlideOut(millis);
-        });
+        long manualScrollDelay = Math.max(0, SCROLL_MILLIS - (System.currentTimeMillis() - lastManualScroll));
+        Timeline delay =  new Timeline(new KeyFrame(Duration.millis((orig == index ? 0 : 400) + manualScrollDelay)));
+        delay.setOnFinished(event -> stackTileSlideOut(millis));
         delay.play();
         which = index;
         state = BASE_STATE;
@@ -148,6 +169,8 @@ public class TaskViewWrapper extends StackPane {
         if (state != BASE_STATE || changeLock)
             return;
         int millis = 200;
+        if (which != -1)
+            lastClosed = activeViews.get(which);
         shrinkActive(millis);
         Timeline delay = new Timeline(new KeyFrame(Duration.millis(millis)));
         delay.setOnFinished(event -> stackTileSlideIn(millis));
@@ -325,9 +348,7 @@ public class TaskViewWrapper extends StackPane {
             view.setDragged(false);
         });
 
-        view.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            view.setLastClickY(event.getY());
-        });
+        view.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> view.setLastClickY(event.getY()));
 
         view.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             if (state == STACK_STATE && view.isDragged()) {
@@ -400,7 +421,7 @@ public class TaskViewWrapper extends StackPane {
         if (state != STACK_STATE || index >= activeViews.size())
             return;
         which = index;
-        stackTileSlideIn(400);
+        stackTileSlideIn(SCROLL_MILLIS);
     }
 
     public TaskView current() {

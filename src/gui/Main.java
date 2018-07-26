@@ -515,7 +515,10 @@ public class Main extends Application {
 
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 if (getState() == BASE_STATE) {
-                    sleep();
+                    if (!homeScreen && taskViews.getState() == TaskViewWrapper.STACK_STATE)
+                        hideTaskViews();
+                    else
+                        sleep();
                 } else if (getState() == TERMINAL_STATE) {
                     if (event.isControlDown()) {
                         term.clearTerminal();
