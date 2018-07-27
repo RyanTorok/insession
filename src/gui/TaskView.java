@@ -4,15 +4,21 @@ package gui;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import main.Root;
 import main.Size;
 import main.UtilAndConstants;
+import terminal.Address;
+
+import java.io.File;
 
 public abstract class TaskView extends ScrollPane {
 
@@ -23,6 +29,7 @@ public abstract class TaskView extends ScrollPane {
     private boolean dragged;
     private double dy;
     private double lastClickY;
+    private long fileId = -1;
 
     public TaskView(String title) {
         super();

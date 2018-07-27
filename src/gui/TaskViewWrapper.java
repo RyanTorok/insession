@@ -28,8 +28,9 @@ public class TaskViewWrapper extends StackPane {
     private int shiftCount;
     private EventHandler<MouseEvent> drag;
     private TaskView lastViewed, lastClosed;
-    private long lastManualScroll = 1;
     private long lastAutoScroll = 1;
+    private long lastStackTransition;
+    private long lastStackTransitionLength;
 
     public TaskViewWrapper() {
         activeViews = new ArrayList<>();
@@ -83,13 +84,11 @@ public class TaskViewWrapper extends StackPane {
                 case LEFT:
                     if (which > 0 && state == STACK_STATE) {
                         scroll(event.isShiftDown() ? 0 : which - 1);
-                        lastManualScroll = System.currentTimeMillis();
                     }
                     break;
                 case RIGHT:
                     if (which < activeViews.size() - 1 && state == STACK_STATE) {
                         scroll(event.isShiftDown() ? activeViews.size() - 1 : which + 1);
-                        lastManualScroll = System.currentTimeMillis();
                     }
                     break;
                 case ENTER: {
@@ -157,7 +156,7 @@ public class TaskViewWrapper extends StackPane {
         if (lastClosed != null && lastClosed != activeViews.get(index)) {
             lastViewed = lastClosed;
         }
-        long manualScrollDelay = Math.max(0, SCROLL_MILLIS - (System.currentTimeMillis() - Math.max(lastManualScroll, lastAutoScroll)));
+        long manualScrollDelay = Math.max(0, SCROLL_MILLIS - (System.currentTimeMillis() - lastAutoScroll));
         Timeline delay =  new Timeline(new KeyFrame(Duration.millis((orig == index ? 0 : 400) + manualScrollDelay)));
         delay.setOnFinished(event -> {
             scroll(index);
@@ -214,6 +213,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     private void stackTileSlideOut(int millis) {
+        lastAutoScroll = System.currentTimeMillis();
         if (which == -1)
             return;
         int index = which;
@@ -267,6 +267,8 @@ public class TaskViewWrapper extends StackPane {
         if (!initial && modifiableAfter)
                 change.setOnFinished(event -> me.expand());
         change.play();
+        lastStackTransition = System.currentTimeMillis();
+        lastStackTransitionLength = millis;
     }
 
     public void tile() {
@@ -366,8 +368,7 @@ public class TaskViewWrapper extends StackPane {
                 }
             }
         });
-        lastClosed = current();
-        lastViewed = current();
+        lastClosed = lastViewed = current();
         this.getActiveViews().add(view);
         this.getChildren().add(view);
         view.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -427,7 +428,9 @@ public class TaskViewWrapper extends StackPane {
         if (state != STACK_STATE || index >= activeViews.size())
             return;
         which = index;
-        stackTileSlideIn(SCROLL_MILLIS);
+        Timeline delay = new Timeline(new KeyFrame(Duration.millis(Math.max(0, (lastStackTransition + lastStackTransitionLength) - System.currentTimeMillis()))));
+        delay.setOnFinished(event -> stackTileSlideIn(SCROLL_MILLIS));
+        delay.play();
     }
 
     public TaskView current() {

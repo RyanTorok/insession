@@ -3,9 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Indexable$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Indexable$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Indexable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Indexable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/TaskView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/TaskView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/searchengine/Indexable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/Indexable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,7 +49,7 @@
       <file leaf-file-name="TerminalEventHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/terminal/TerminalEventHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
+            <state relative-caret-position="240">
               <caret line="26" selection-start-line="26" selection-end-line="26" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -51,8 +61,8 @@
       <file leaf-file-name="SEARCH.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/terminal/SEARCH.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="420">
+              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -60,28 +70,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SearchModule.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/SearchModule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="287" selection-start-line="287" selection-end-line="287" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
+            <state relative-caret-position="12330">
               <caret line="915" selection-start-line="915" selection-end-line="915" />
               <folding>
-                <element signature="e#35500#35501#0" expanded="true" />
-                <element signature="e#35528#35529#0" expanded="true" />
-                <element signature="e#36113#36114#0" expanded="true" />
-                <element signature="e#50306#50307#0" expanded="true" />
-                <element signature="e#50338#50339#0" expanded="true" />
-                <element signature="e#50335#50336#0" expanded="true" />
-                <element signature="e#50367#50368#0" expanded="true" />
+                <element signature="e#35529#35530#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -99,28 +94,10 @@
       <file leaf-file-name="TaskViewWrapper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/TaskViewWrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="395" selection-start-line="395" selection-end-line="395" />
+            <state relative-caret-position="584">
+              <caret line="453" column="18" lean-forward="true" selection-start-line="453" selection-start-column="18" selection-end-line="453" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9506#9507#0" expanded="true" />
-                <element signature="e#9592#9593#0" expanded="true" />
-                <element signature="e#11431#11432#0" expanded="true" />
-                <element signature="e#11484#11485#0" expanded="true" />
-                <element signature="e#12146#12147#0" expanded="true" />
-                <element signature="e#12180#12181#0" expanded="true" />
-                <element signature="e#12247#12248#0" expanded="true" />
-                <element signature="e#12293#12294#0" expanded="true" />
-                <element signature="e#12330#12331#0" expanded="true" />
-                <element signature="e#12363#12364#0" expanded="true" />
-                <element signature="e#12416#12417#0" expanded="true" />
-                <element signature="e#12460#12461#0" expanded="true" />
-                <element signature="e#16198#16199#0" expanded="true" />
-                <element signature="e#16226#16227#0" expanded="true" />
-                <element signature="e#16265#16266#0" expanded="true" />
-                <element signature="e#16299#16300#0" expanded="true" />
-                <element signature="e#16328#16329#0" expanded="true" />
-                <element signature="e#16356#16357#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,8 +106,29 @@
       <file leaf-file-name="Tokenizer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/terminal/Tokenizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+            <state relative-caret-position="120">
+              <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Indexable.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/searchengine/Indexable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2580">
+              <caret line="189" selection-start-line="189" selection-end-line="189" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="103" column="30" lean-forward="true" selection-start-line="103" selection-start-column="30" selection-end-line="103" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -138,7 +136,7 @@
       <file leaf-file-name="Terminal.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
+            <state relative-caret-position="2775">
               <caret line="206" column="8" selection-start-line="206" selection-start-column="8" selection-end-line="206" selection-end-column="8" />
             </state>
           </provider>
@@ -147,45 +145,10 @@
       <file leaf-file-name="TerminalDrivenEvent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/terminal/TerminalDrivenEvent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
+            <state relative-caret-position="570">
               <caret line="60" selection-start-line="60" selection-end-line="60" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1316#1317#0" expanded="true" />
-                <element signature="e#1354#1355#0" expanded="true" />
-                <element signature="e#1441#1442#0" expanded="true" />
-                <element signature="e#1479#1480#0" expanded="true" />
-                <element signature="e#1389#1390#0" expanded="true" />
-                <element signature="e#1407#1408#0" expanded="true" />
-                <element signature="e#2724#2725#0" expanded="true" />
-                <element signature="e#2764#2765#0" expanded="true" />
-                <element signature="e#3265#3266#0" expanded="true" />
-                <element signature="e#3307#3308#0" expanded="true" />
-                <element signature="e#3344#3345#0" expanded="true" />
-                <element signature="e#3381#3382#0" expanded="true" />
-                <element signature="e#3420#3421#0" expanded="true" />
-                <element signature="e#3458#3459#0" expanded="true" />
-                <element signature="e#4044#4045#0" expanded="true" />
-                <element signature="e#4079#4080#0" expanded="true" />
-                <element signature="e#4130#4131#0" expanded="true" />
-                <element signature="e#4165#4166#0" expanded="true" />
-                <element signature="e#4265#4266#0" expanded="true" />
-                <element signature="e#4300#4301#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UtilAndConstants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="238" selection-start-line="238" selection-end-line="238" />
-              <folding>
-                <element signature="e#11522#11523#0" expanded="true" />
-                <element signature="e#11583#11584#0" expanded="true" />
-                <element signature="e#11874#11875#0" expanded="true" />
-                <element signature="e#11938#11939#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -246,7 +209,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/searchengine/Index.java" />
         <option value="$PROJECT_DIR$/src/searchengine/FilterSet.java" />
-        <option value="$PROJECT_DIR$/src/searchengine/Indexable.java" />
         <option value="$PROJECT_DIR$/src/searchengine/WeightedPredictor.java" />
         <option value="$PROJECT_DIR$/src/searchengine/Trie.java" />
         <option value="$PROJECT_DIR$/src/searchengine/QueryEngine.java" />
@@ -269,7 +231,6 @@
         <option value="$PROJECT_DIR$/src/gui/PrivacyPolicy.java" />
         <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/main/Size.java" />
-        <option value="$PROJECT_DIR$/src/gui/TaskView.java" />
         <option value="$PROJECT_DIR$/src/terminal/CAT.java" />
         <option value="$PROJECT_DIR$/src/terminal/CLEAR.java" />
         <option value="$PROJECT_DIR$/src/terminal/Command.java" />
@@ -294,6 +255,8 @@
         <option value="$PROJECT_DIR$/src/terminal/TerminalDrivenEvent.java" />
         <option value="$PROJECT_DIR$/src/terminal/SEARCH.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/searchengine/Indexable.java" />
+        <option value="$PROJECT_DIR$/src/gui/TaskView.java" />
         <option value="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" />
       </list>
     </option>
@@ -334,7 +297,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Command.java&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Termi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalUI.java&#10;Qu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/QUIT.java&#10;Term&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalDrivenEvent.java&#10;Terminal.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Terminal.java&#10;TerminalRet&#9;PSI&#9;JAVA://terminal.TerminalRet&#10;CLEAR&#9;PSI&#9;JAVA://terminal.CLEAR&#10;Statistic&#9;ACTION&#9;ActivateStatisticToolWindow&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;TaskVieww&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Task&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewContents.java&#10;util&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Indexab&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Indexable.java&#10;Index&#9;PSI&#9;JAVA://searchengine.Index&#10;main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;tas&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;taskview&#9;PSI&#9;JAVA://gui.TaskView&#10;tokenizer&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Tokenizer.java&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;identifier&#9;PSI&#9;JAVA://searchengine.Identifier&#10;settings&#9;ACTION&#9;Database.Settings&#10;passwordmanager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;getStyle&#9;PSI&#9;JAVA://javax.swing.JTextPane#getStyle&#10;filler&#9;PSI&#9;JAVA://gui.AcctSettings.Filler&#10;Settings&#9;ACTION&#9;Database.Settings" />
+    <property name="SearchEverywhereHistoryKey" value="TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Command.java&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Termi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalUI.java&#10;Qu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/QUIT.java&#10;Term&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalDrivenEvent.java&#10;Terminal.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Terminal.java&#10;TerminalRet&#9;PSI&#9;JAVA://terminal.TerminalRet&#10;CLEAR&#9;PSI&#9;JAVA://terminal.CLEAR&#10;Statistic&#9;ACTION&#9;ActivateStatisticToolWindow&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;TaskVieww&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Task&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewContents.java&#10;util&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Indexab&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Indexable.java&#10;Index&#9;PSI&#9;JAVA://searchengine.Index&#10;main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;tas&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;taskview&#9;PSI&#9;JAVA://gui.TaskView&#10;tokenizer&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Tokenizer.java&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;identifier&#9;PSI&#9;JAVA://searchengine.Identifier&#10;settings&#9;ACTION&#9;Database.Settings&#10;passwordmanager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;getStyle&#9;PSI&#9;JAVA://javax.swing.JTextPane#getStyle&#10;filler&#9;PSI&#9;JAVA://gui.AcctSettings.Filler&#10;Settings&#9;ACTION&#9;Database.Settings" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
@@ -637,7 +600,10 @@
       <workItem from="1532468429592" duration="9216000" />
       <workItem from="1532481175051" duration="1903000" />
       <workItem from="1532483126381" duration="8883000" />
-      <workItem from="1532527199432" duration="18178000" />
+      <workItem from="1532527199432" duration="18238000" />
+      <workItem from="1532638973093" duration="4595000" />
+      <workItem from="1532651443357" duration="3337000" />
+      <workItem from="1532715795254" duration="2492000" />
     </task>
     <servers />
   </component>
@@ -674,7 +640,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="833339000" />
+    <option name="totallyTimeSpent" value="843823000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
@@ -699,8 +665,8 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49917355" visible="true" weight="0.54564536" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32423925" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49917355" visible="true" weight="0.14375655" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3235602" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
       <window_info id="Learn" order="6" weight="0.3294766" />
       <window_info anchor="right" id="Theme Preview" order="5" />
@@ -715,15 +681,13 @@
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32948583" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.24958678" />
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.32948583" />
       <window_info anchor="right" id="Palette" order="2" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.2644281" />
       <window_info id="Image Layers" order="7" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.2644281" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="10" side_tool="true" weight="0.3294766" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.24958678" />
       <window_info anchor="right" id="Cargo" order="7" weight="0.3294766" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32460734" />
@@ -735,11 +699,10 @@
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5008264" side_tool="true" weight="0.55718786" />
       <window_info anchor="bottom" id="Statistic" order="13" weight="0.32948583" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.3294766" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
       <window_info id="Learn" order="6" weight="0.3294766" />
       <window_info anchor="right" id="Database" order="9" weight="0.3294766" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -747,6 +710,9 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Coverage" order="10" side_tool="true" weight="0.3294766" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
       <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3210913" />
     </layout-to-restore>
   </component>
@@ -769,13 +735,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/UpdateWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="557">
-          <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/WeatherManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="557">
@@ -879,9 +838,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -896,20 +852,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="495" column="24" selection-start-line="495" selection-start-column="24" selection-end-line="495" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1185">
-          <caret line="98" column="5" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4916#4917#0" expanded="true" />
-            <element signature="e#4949#4950#0" expanded="true" />
-            <element signature="e#5001#5002#0" expanded="true" />
-            <element signature="e#5045#5046#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1042,10 +984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding>
-            <element signature="e#1003#1004#0" expanded="true" />
-            <element signature="e#1032#1033#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1072,7 +1010,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
+        <state relative-caret-position="3015">
           <caret line="238" selection-start-line="238" selection-end-line="238" />
           <folding>
             <element signature="e#11522#11523#0" expanded="true" />
@@ -1085,51 +1023,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/SearchModule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
+        <state relative-caret-position="3735">
           <caret line="287" selection-start-line="287" selection-end-line="287" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="206" column="8" selection-start-line="206" selection-start-column="8" selection-end-line="206" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/TerminalDrivenEvent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
+        <state relative-caret-position="570">
           <caret line="60" selection-start-line="60" selection-end-line="60" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1316#1317#0" expanded="true" />
-            <element signature="e#1354#1355#0" expanded="true" />
-            <element signature="e#1441#1442#0" expanded="true" />
-            <element signature="e#1479#1480#0" expanded="true" />
-            <element signature="e#1389#1390#0" expanded="true" />
-            <element signature="e#1407#1408#0" expanded="true" />
-            <element signature="e#2724#2725#0" expanded="true" />
-            <element signature="e#2764#2765#0" expanded="true" />
-            <element signature="e#3265#3266#0" expanded="true" />
-            <element signature="e#3307#3308#0" expanded="true" />
-            <element signature="e#3344#3345#0" expanded="true" />
-            <element signature="e#3381#3382#0" expanded="true" />
-            <element signature="e#3420#3421#0" expanded="true" />
-            <element signature="e#3458#3459#0" expanded="true" />
-            <element signature="e#4044#4045#0" expanded="true" />
-            <element signature="e#4079#4080#0" expanded="true" />
-            <element signature="e#4130#4131#0" expanded="true" />
-            <element signature="e#4165#4166#0" expanded="true" />
-            <element signature="e#4265#4266#0" expanded="true" />
-            <element signature="e#4300#4301#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/TerminalEventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
+        <state relative-caret-position="240">
           <caret line="26" selection-start-line="26" selection-end-line="26" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1139,8 +1050,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/SEARCH.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        <state relative-caret-position="420">
+          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1154,53 +1065,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/Tokenizer.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+        <state relative-caret-position="12330">
+          <caret line="915" selection-start-line="915" selection-end-line="915" />
+          <folding>
+            <element signature="e#35529#35530#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="915" selection-start-line="915" selection-end-line="915" />
+        <state relative-caret-position="2775">
+          <caret line="206" column="8" selection-start-line="206" selection-start-column="8" selection-end-line="206" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/terminal/Tokenizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/searchengine/Indexable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2580">
+          <caret line="189" selection-start-line="189" selection-end-line="189" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="103" column="30" lean-forward="true" selection-start-line="103" selection-start-column="30" selection-end-line="103" selection-end-column="30" />
           <folding>
-            <element signature="e#35500#35501#0" expanded="true" />
-            <element signature="e#35528#35529#0" expanded="true" />
-            <element signature="e#36113#36114#0" expanded="true" />
-            <element signature="e#50306#50307#0" expanded="true" />
-            <element signature="e#50338#50339#0" expanded="true" />
-            <element signature="e#50335#50336#0" expanded="true" />
-            <element signature="e#50367#50368#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/TaskViewWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="395" selection-start-line="395" selection-end-line="395" />
+        <state relative-caret-position="584">
+          <caret line="453" column="18" lean-forward="true" selection-start-line="453" selection-start-column="18" selection-end-line="453" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9506#9507#0" expanded="true" />
-            <element signature="e#9592#9593#0" expanded="true" />
-            <element signature="e#11431#11432#0" expanded="true" />
-            <element signature="e#11484#11485#0" expanded="true" />
-            <element signature="e#12146#12147#0" expanded="true" />
-            <element signature="e#12180#12181#0" expanded="true" />
-            <element signature="e#12247#12248#0" expanded="true" />
-            <element signature="e#12293#12294#0" expanded="true" />
-            <element signature="e#12330#12331#0" expanded="true" />
-            <element signature="e#12363#12364#0" expanded="true" />
-            <element signature="e#12416#12417#0" expanded="true" />
-            <element signature="e#12460#12461#0" expanded="true" />
-            <element signature="e#16198#16199#0" expanded="true" />
-            <element signature="e#16226#16227#0" expanded="true" />
-            <element signature="e#16265#16266#0" expanded="true" />
-            <element signature="e#16299#16300#0" expanded="true" />
-            <element signature="e#16328#16329#0" expanded="true" />
-            <element signature="e#16356#16357#0" expanded="true" />
           </folding>
         </state>
       </provider>
