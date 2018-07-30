@@ -47,6 +47,7 @@ public abstract class User implements Classifiable, Serializable {
     private HashSet<ClassPd> classesStudent;
     private HashSet<ClassPd> classesTeacher;
     private Timestamp serFileTimestamp = null;
+    private String savedFileSeparator = null;
 
     public User(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -360,11 +361,12 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public String getImageFN() {
-        return imageFN;
+        return imageFN.replaceAll(savedFileSeparator, File.separator);
     }
 
     public void setImageFN(String imageFN) {
         this.imageFN = imageFN;
+        savedFileSeparator = File.separator;
     }
 
     public boolean isClock24Hour() {

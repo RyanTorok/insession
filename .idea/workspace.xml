@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/gui/CustomFonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomFonts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,21 +44,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Filter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/Filter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
-              <folding>
-                <element signature="e#2660#2661#0" expanded="true" />
-                <element signature="e#2697#2698#0" expanded="true" />
-                <element signature="e#2755#2756#0" expanded="true" />
-                <element signature="e#2807#2808#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="FilterBlock.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/FilterBlock.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -71,31 +59,30 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="1195" column="57" selection-start-line="1195" selection-start-column="57" selection-end-line="1195" selection-end-column="57" />
-              <folding>
-                <element signature="e#35496#35497#0" expanded="true" />
-                <element signature="e#35529#35530#0" expanded="true" />
-                <element signature="e#49792#49793#0" expanded="true" />
-                <element signature="e#49824#49825#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="15">
+              <caret line="719" column="26" selection-start-line="719" selection-start-column="26" selection-end-line="719" selection-end-column="26" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomFonts.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="248" column="12" lean-forward="true" selection-start-line="248" selection-start-column="12" selection-end-line="248" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomFonts.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="225">
+              <caret line="23" column="60" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#873#874#0" expanded="true" />
-                <element signature="e#943#944#0" expanded="true" />
-                <element signature="e#921#922#0" expanded="true" />
                 <element signature="e#987#988#0" expanded="true" />
-                <element signature="e#1046#1047#0" expanded="true" />
-                <element signature="e#1079#1080#0" expanded="true" />
+                <element signature="e#1054#1055#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -174,7 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>500</find>
       <find>wakeup</find>
       <find>expand</find>
       <find>minheightproperty</find>
@@ -204,6 +190,7 @@
       <find>showtaskv</find>
       <find>swap</find>
       <find>comfortaa</find>
+      <find>file:</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -212,7 +199,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/Root.java" />
         <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
         <option value="$PROJECT_DIR$/src/searchengine/Tokenizer.java" />
         <option value="$PROJECT_DIR$/src/gui/TaskViewContents.java" />
@@ -261,8 +247,9 @@
         <option value="$PROJECT_DIR$/src/net/PostEngine.java" />
         <option value="$PROJECT_DIR$/src/classes/ClassPd.java" />
         <option value="$PROJECT_DIR$/src/gui/ClassView.java" />
-        <option value="$PROJECT_DIR$/src/gui/Main.java" />
         <option value="$PROJECT_DIR$/src/gui/CustomFonts.java" />
+        <option value="$PROJECT_DIR$/src/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/User.java" />
       </list>
     </option>
   </component>
@@ -297,7 +284,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="Main.java&#9;null&#9;null&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;Datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;QueryEn&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;Classitem&#9;PSI&#9;JAVA://classes.ClassItem&#10;Utila&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Command.java&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Termi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalUI.java&#10;Qu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/QUIT.java&#10;Term&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalDrivenEvent.java&#10;Terminal.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Terminal.java&#10;TerminalRet&#9;PSI&#9;JAVA://terminal.TerminalRet&#10;CLEAR&#9;PSI&#9;JAVA://terminal.CLEAR&#10;Statistic&#9;ACTION&#9;ActivateStatisticToolWindow&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;TaskVieww&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Task&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewContents.java&#10;util&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Indexab&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Indexable.java&#10;Index&#9;PSI&#9;JAVA://searchengine.Index&#10;main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;tas&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;taskview&#9;PSI&#9;JAVA://gui.TaskView&#10;tokenizer&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Tokenizer.java&#10;identifier&#9;PSI&#9;JAVA://searchengine.Identifier&#10;settings&#9;ACTION&#9;Database.Settings&#10;passwordmanager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;getStyle&#9;PSI&#9;JAVA://javax.swing.JTextPane#getStyle&#10;filler&#9;PSI&#9;JAVA://gui.AcctSettings.Filler&#10;Settings&#9;ACTION&#9;Database.Settings" />
+    <property name="SearchEverywhereHistoryKey" value="User.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Main.java&#9;null&#9;null&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;Datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;QueryEn&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;Classitem&#9;PSI&#9;JAVA://classes.ClassItem&#10;Utila&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Command.java&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Termi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalUI.java&#10;Qu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/QUIT.java&#10;Term&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalDrivenEvent.java&#10;Terminal.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Terminal.java&#10;TerminalRet&#9;PSI&#9;JAVA://terminal.TerminalRet&#10;CLEAR&#9;PSI&#9;JAVA://terminal.CLEAR&#10;Statistic&#9;ACTION&#9;ActivateStatisticToolWindow&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;TaskVieww&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Task&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewContents.java&#10;util&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Indexab&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Indexable.java&#10;Index&#9;PSI&#9;JAVA://searchengine.Index&#10;main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;tas&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;taskview&#9;PSI&#9;JAVA://gui.TaskView&#10;tokenizer&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Tokenizer.java&#10;identifier&#9;PSI&#9;JAVA://searchengine.Identifier&#10;settings&#9;ACTION&#9;Database.Settings&#10;passwordmanager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;getStyle&#9;PSI&#9;JAVA://javax.swing.JTextPane#getStyle&#10;filler&#9;PSI&#9;JAVA://gui.AcctSettings.Filler&#10;Settings&#9;ACTION&#9;Database.Settings" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
@@ -609,7 +596,8 @@
       <workItem from="1532883647245" duration="15159000" />
       <workItem from="1532957376057" duration="6274000" />
       <workItem from="1532992247518" duration="393000" />
-      <workItem from="1532992676914" duration="878000" />
+      <workItem from="1532992676914" duration="1144000" />
+      <workItem from="1532994314364" duration="343000" />
     </task>
     <servers />
   </component>
@@ -646,7 +634,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="886225000" />
+    <option name="totallyTimeSpent" value="886834000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
@@ -672,7 +660,7 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.62224555" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3231899" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.03567681" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
       <window_info id="Learn" order="6" weight="0.3294766" />
       <window_info anchor="right" id="Theme Preview" order="5" />
@@ -706,13 +694,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/terminal/HIDE.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="59" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/LS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -1071,32 +1052,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="1195" column="57" selection-start-line="1195" selection-start-column="57" selection-end-line="1195" selection-end-column="57" />
+        <state relative-caret-position="225">
+          <caret line="23" column="60" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
           <folding>
-            <element signature="e#35496#35497#0" expanded="true" />
-            <element signature="e#35529#35530#0" expanded="true" />
-            <element signature="e#49792#49793#0" expanded="true" />
-            <element signature="e#49824#49825#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#987#988#0" expanded="true" />
+            <element signature="e#1054#1055#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#873#874#0" expanded="true" />
-            <element signature="e#943#944#0" expanded="true" />
-            <element signature="e#921#922#0" expanded="true" />
-            <element signature="e#987#988#0" expanded="true" />
-            <element signature="e#1046#1047#0" expanded="true" />
-            <element signature="e#1079#1080#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="15">
+          <caret line="719" column="26" selection-start-line="719" selection-start-column="26" selection-end-line="719" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="248" column="12" lean-forward="true" selection-start-line="248" selection-start-column="12" selection-end-line="248" selection-end-column="12" />
         </state>
       </provider>
     </entry>
