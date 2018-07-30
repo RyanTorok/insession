@@ -16,4 +16,9 @@ public class PrivacyPolicy extends TaskView {
     ImageView getPlaceholderImage() {
         return null;
     }
+
+    @Override
+    protected Pane initDisplay() {
+        return null;
+    }
 }

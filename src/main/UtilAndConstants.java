@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,6 +16,9 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -119,6 +123,13 @@ public class UtilAndConstants {
         if (nanos < 1000000000)
             return nanos / 1000000 + " ms";
         return nanos / 1000000000 + " sec";
+    }
+
+    public static Date date(LocalDate localDate) {
+        if (localDate == null)
+            return new Date(System.currentTimeMillis());
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        return Date.from(instant);
     }
 
     public int getMAX_ATTENDANCE_EXTRA_TIME() {
@@ -289,6 +300,11 @@ public class UtilAndConstants {
         n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             n.setStyle(newStyle);
         });
+    }
+
+    public static void underlineOnMouseOver(Text text) {
+        text.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> text.setUnderline(true));
+        text.addEventHandler(MouseEvent.MOUSE_EXITED, event -> text.setUnderline(false));
     }
 
     public static String[] parsePHPDataOutBase64(String base64, int expectedLength) {

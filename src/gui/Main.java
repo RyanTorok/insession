@@ -147,7 +147,7 @@ public class Main extends Application {
         String title_name = Root.getActiveUser() != null && Root.getActiveUser().getFirst() != null ? Root.getActiveUser().getFirst() : "Guest";
         getPrimaryStage().setTitle("Welcome, " + title_name + " - Paintbrush LMS");
         Text mainlogo = new Text("paintbrush.    ");
-        mainlogo.setFont(Font.font("Comfortaa", Size.fontSize(60)));
+        mainlogo.setFont(CustomFonts.comfortaa_bold(60));
         mainlogo.setFill(Color.WHITE);
         final String upper = mainlogo.getText().substring(0, mainlogo.getText().length() - 2).toUpperCase();
         final String lower = mainlogo.getText();
@@ -1193,7 +1193,7 @@ public class Main extends Application {
                 Text prompt = new Text(text);
                 Color textFill = UtilAndConstants.textFill(color, 2);
                 prompt.setFill(textFill);
-                prompt.setFont(Font.font("Comfortaa", FontWeight.NORMAL, Size.fontSize(20)));
+                prompt.setFont(CustomFonts.comfortaa_bold(20));
                 this.getChildren().add(prompt);
                 this.text = prompt;
                 setAlignment(Pos.CENTER);

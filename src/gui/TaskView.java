@@ -101,14 +101,9 @@ public abstract class TaskView extends ScrollPane {
     //resets the display to the actual contents.
     void expand() {
         if (fullDisplay == null) {
-            fullDisplay = new GridPane() {{
-                getChildren().add(new Text("This is a test") {{
-                    setFont(Font.font(30));
-                }});
-                setStyle("-fx-background-color: white");
-                setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
-            }};
-            GridPane.setConstraints(fullDisplay.getChildren().get(0), 0, 0);
+            fullDisplay = initDisplay();
+            fullDisplay.setStyle("-fx-background-color: white");
+            fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
         }
         setContent(fullDisplay);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
@@ -149,4 +144,6 @@ public abstract class TaskView extends ScrollPane {
     public void setLastClickY(double lastClickY) {
         this.lastClickY = lastClickY;
     }
+
+    protected abstract Pane initDisplay();
 }

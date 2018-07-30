@@ -37,6 +37,7 @@ public class Post implements Indexable, Serializable {
     private long parentId;
     private boolean currentUserLikedThis;
     private boolean currentUserViewedThis;
+    private List<PostStatus> statusLabels;
 
     public Post(User postedBy, Type type, String title, String text, boolean posterNameVisible) {
         this.setType(type);
@@ -204,6 +205,78 @@ public class Post implements Indexable, Serializable {
 
     public void setCreated(long created) {
         this.created = created;
+    }
+
+    public List<PostStatus> getStatusLabels() {
+        return statusLabels;
+    }
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(long postId) {
+        this.postId = postId;
+    }
+
+    public long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(long classId) {
+        this.classId = classId;
+    }
+
+    public long getClassItemId() {
+        return classItemId;
+    }
+
+    public void setClassItemId(long classItemId) {
+        this.classItemId = classItemId;
+    }
+
+    public long getPosterId() {
+        return posterId;
+    }
+
+    public void setPosterId(long posterId) {
+        this.posterId = posterId;
+    }
+
+    public long getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(long visibleTo) {
+        this.visibleTo = visibleTo;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
+    public boolean isCurrentUserLikedThis() {
+        return currentUserLikedThis;
+    }
+
+    public void setCurrentUserLikedThis(boolean currentUserLikedThis) {
+        this.currentUserLikedThis = currentUserLikedThis;
+    }
+
+    public boolean isCurrentUserViewedThis() {
+        return currentUserViewedThis;
+    }
+
+    public void setCurrentUserViewedThis(boolean currentUserViewedThis) {
+        this.currentUserViewedThis = currentUserViewedThis;
+    }
+
+    public void setStatusLabels(List<PostStatus> statusLabels) {
+        this.statusLabels = statusLabels;
     }
 }
 

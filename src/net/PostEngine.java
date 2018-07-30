@@ -21,6 +21,11 @@ public class PostEngine implements Serializable {
     private long lastUpdate;
     private ClassPd belongsTo;
     private ArrayList<Post> posts;
+    private ArrayList<Post> displayedPosts;
+
+    public PostEngine(ClassPd belongsTo) {
+        this.belongsTo = belongsTo;
+    }
 
     public void update() {
         try {
@@ -57,11 +62,19 @@ public class PostEngine implements Serializable {
     public void index() {
     }
 
-    private List<Post> getPosts() {
+    public ArrayList<Post> getPosts() {
         return posts;
     }
 
     public ClassPd getBelongsTo() {
         return belongsTo;
+    }
+
+    public ArrayList<Post> getDisplayedPosts() {
+        return displayedPosts;
+    }
+
+    public void setDisplayedPosts(ArrayList<Post> displayedPosts) {
+        this.displayedPosts = displayedPosts;
     }
 }

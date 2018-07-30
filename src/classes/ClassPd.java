@@ -3,13 +3,13 @@ package classes;
 import javafx.scene.paint.Color;
 import main.Root;
 import main.Student;
-import main.Teacher;
 
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by S507098 on 4/13/2017.
@@ -27,8 +27,6 @@ public class ClassPd implements Serializable {
     private String teacherFirst;
     private String teacherLast;
     private long uniqueId;
-
-
 
     public int getCapacity() {
         return capacity;
@@ -122,5 +120,9 @@ public class ClassPd implements Serializable {
         if (castOf == null)
             return "null " + getPeriodNo();
         return getCastOf().getName() + " - " + getPeriodNo();
+    }
+
+    public List<ClassItem> getAssignmentsWithPostsDesc(int i) {
+        return new ArrayList<>(); //        TODO
     }
 }

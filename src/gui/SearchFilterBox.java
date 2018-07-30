@@ -9,6 +9,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.Root;
 import main.Size;
+import main.UtilAndConstants;
 import searchengine.FilterSet;
 import searchengine.Identifier;
 
@@ -100,9 +101,7 @@ public class SearchFilterBox extends VBox {
         });
 
         datePicker = new DatePicker();
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            fireUpdate();
-        });
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> fireUpdate());
 
         Text dateHeader = new Text("By Date") {{setFill(Color.WHITE); setFont(filterSets.get(0).getHeader().getFont());}};
         Button resetDateFilter = new Button("Reset") {{setOnAction(event -> {dateConstraintGroup.selectToggle(null); datePicker.setValue(null);});}};
@@ -146,11 +145,7 @@ public class SearchFilterBox extends VBox {
     }
 
     public Date getDateRestriction() {
-        LocalDate localDate = datePicker.getValue();
-        if (localDate == null)
-            return new Date(System.currentTimeMillis());
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        return Date.from(instant);
+        return UtilAndConstants.date(datePicker.getValue());
     }
 
     public FilterSet.DateConstraint getDateConstraint() {

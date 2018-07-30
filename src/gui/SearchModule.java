@@ -29,6 +29,7 @@ import java.util.TreeSet;
 public class SearchModule extends VBox {
 
     private final Main wrapper;
+    private final SearchFilterBox filterBox;
     private TextField searchBox;
     private VBox textFillers;
     private ArrayList<String> textFillerStrings;
@@ -94,7 +95,8 @@ public class SearchModule extends VBox {
         setStyle("-fx-background-color: black");
         setPrefSize(Size.width(1920), Size.height(100));
         getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd()); setTime1(System.currentTimeMillis());}}, 1);
-        filters = new ScrollPane(new SearchFilterBox(this)) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
+        filterBox = new SearchFilterBox(this);
+        filters = new ScrollPane(filterBox) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
     }
 
     private void setFillerSelected(int i) {
@@ -207,6 +209,10 @@ public class SearchModule extends VBox {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public SearchFilterBox getFilterBox() {
+        return filterBox;
     }
 
     class ResultBlock extends HBox {
