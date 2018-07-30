@@ -717,6 +717,8 @@ public class Main extends Application {
     }
 
     private Image parseBackgroundImage(String fn) {
+        File f = new File(Address.root_addr + File.separator + "resources" + File.separator + fn);
+        System.out.println(f.exists());
         return new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + fn);
     }
 
