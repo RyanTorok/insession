@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ZipMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ZipMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/AcctSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AcctSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/CustomFonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomFonts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/ZipMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ZipMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/DefaultUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/DefaultUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/searchengine/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/Index.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/searchengine/WeightedPredictor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/WeightedPredictor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terminal/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
-    </list>
+    <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,10 +30,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ClassView.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ClassView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
+            <state relative-caret-position="15">
               <caret line="57" selection-start-line="57" selection-end-line="57" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -67,7 +45,7 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="1035">
               <caret line="115" selection-start-line="115" selection-end-line="115" />
               <folding>
                 <element signature="e#29701#29702#0" expanded="true" />
@@ -77,17 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Address.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Address.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/terminal/Address.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="631">
+            <state relative-caret-position="603">
               <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
-              <folding>
-                <element signature="e#3545#3546#0" expanded="true" />
-                <element signature="e#3589#3590#0" expanded="true" />
-                <element signature="e#3680#3681#0" expanded="true" />
-                <element signature="e#3724#3725#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -114,7 +86,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/DefaultUser.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
-              <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+              <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -122,7 +94,7 @@
       <file leaf-file-name="AcctSettings.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
+            <state relative-caret-position="3165">
               <caret line="239" column="74" selection-start-line="239" selection-start-column="74" selection-end-line="239" selection-end-column="74" />
             </state>
           </provider>
@@ -143,7 +115,7 @@
       <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
+            <state relative-caret-position="885">
               <caret line="74" column="36" selection-start-line="74" selection-start-column="36" selection-end-line="74" selection-end-column="36" />
             </state>
           </provider>
@@ -152,8 +124,8 @@
       <file leaf-file-name="CustomFonts.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+            <state relative-caret-position="90">
+              <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -618,6 +590,7 @@
       <workItem from="1532996621848" duration="261000" />
       <workItem from="1532997825469" duration="227000" />
       <workItem from="1533053400019" duration="3800000" />
+      <workItem from="1533063195805" duration="796000" />
     </task>
     <servers />
   </component>
@@ -654,37 +627,36 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="891888000" />
+    <option name="totallyTimeSpent" value="892684000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="59" y="-4" width="1861" height="1084" extended-state="6" />
-    <editor active="true" />
+    <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="2" />
-      <window_info anchor="right" id="Cargo" order="7" weight="0.3294766" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5008264" side_tool="true" weight="0.55718786" />
-      <window_info anchor="right" id="Maven Projects" order="8" weight="0.3294766" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" id="Statistic" order="13" weight="0.32948583" />
-      <window_info anchor="right" id="Database" order="9" weight="0.3294766" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.24958678" />
-      <window_info id="UI Designer" order="5" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3210913" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.32948583" />
+      <window_info anchor="right" id="Cargo" order="7" weight="0.3294766" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5008264" side_tool="true" weight="0.55718786" />
+      <window_info anchor="right" id="Maven Projects" order="8" weight="0.3294766" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.06400839" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.34554973" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3452256" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
+      <window_info anchor="bottom" id="Statistic" order="13" weight="0.32948583" />
+      <window_info anchor="right" id="Database" order="9" weight="0.3294766" />
       <window_info id="Learn" order="6" weight="0.3294766" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.24958678" />
+      <window_info id="UI Designer" order="5" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3210913" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.32948583" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
@@ -982,10 +954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-          <folding>
-            <element signature="e#3006#3007#0" expanded="true" />
-            <element signature="e#3061#3062#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1005,7 +973,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="1035">
           <caret line="115" selection-start-line="115" selection-end-line="115" />
           <folding>
             <element signature="e#29701#29702#0" expanded="true" />
@@ -1016,7 +984,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
+        <state relative-caret-position="885">
           <caret line="74" column="36" selection-start-line="74" selection-start-column="36" selection-end-line="74" selection-end-column="36" />
         </state>
       </provider>
@@ -1033,25 +1001,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
+        <state relative-caret-position="3165">
           <caret line="239" column="74" selection-start-line="239" selection-start-column="74" selection-end-line="239" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+        <state relative-caret-position="90">
+          <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1061,7 +1019,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/DefaultUser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
-          <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+          <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -1088,13 +1046,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
+        <state relative-caret-position="603">
           <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
           <folding>
-            <element signature="e#3545#3546#0" expanded="true" />
-            <element signature="e#3589#3590#0" expanded="true" />
-            <element signature="e#3680#3681#0" expanded="true" />
-            <element signature="e#3724#3725#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
