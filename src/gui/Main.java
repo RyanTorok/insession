@@ -980,7 +980,13 @@ public class Main extends Application {
 
     private void repositionTopBarScrollBar(int scrollPos, int duration) {
         TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
-        scrollBarTransition.setToX(menus[scrollPos].getLayoutX() + Size.width(445));
+        double offset = 0;
+        Node n = menus[scrollPos];
+        while (n != null) {
+            offset += n.getLayoutX();
+            n = n.getParent();
+        }
+        scrollBarTransition.setToX(offset);
         Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), 10 * menus[scrollPos].getText().length())));
         growShrink.setCycleCount(1);
         growShrink.play();

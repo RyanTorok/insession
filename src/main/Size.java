@@ -9,7 +9,7 @@ import javafx.geometry.Insets;
 
 public class Size {
 
-    public static double fontSize(int i) {
+    public static double fontSize(double i) {
         return Root.getUtilAndConstants().fontSize(i);
     }
 
