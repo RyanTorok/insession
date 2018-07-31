@@ -33,8 +33,8 @@
       <file leaf-file-name="ClassView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="57" selection-start-line="57" selection-end-line="57" />
+            <state>
+              <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -590,7 +590,7 @@
       <workItem from="1532996621848" duration="261000" />
       <workItem from="1532997825469" duration="227000" />
       <workItem from="1533053400019" duration="3800000" />
-      <workItem from="1533063195805" duration="796000" />
+      <workItem from="1533063195805" duration="1906000" />
     </task>
     <servers />
   </component>
@@ -627,10 +627,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="892684000" />
+    <option name="totallyTimeSpent" value="893794000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="2" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -643,7 +644,7 @@
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.06400839" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3452256" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3452256" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
@@ -1053,8 +1054,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
+        <state>
+          <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
