@@ -16,7 +16,7 @@ public class Address {
         if (isDirectory && notDirectory)
             throw new TerminalException("file parser - argument error in is directory and is not directory flags.");
         // replaces one backslash in the split regex with two, avoids regex error when File.separator is a backslash.
-        String[] split = dest.split(File.separator.replaceAll("\\\\", "\\\\"));
+        String[] split = dest.split(File.separator.replaceAll("\\\\", "\\\\\\\\"));
         File current = new File(System.getProperty("user.dir"));
         int ind = 0;
         for (String fn : split) {
