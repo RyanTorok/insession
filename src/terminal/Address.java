@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 public class Address {
 
     public static final File root_addr = new File(System.getProperty("user.dir"));
+    public static final File user_addr = new File(System.getProperty("user.dir"));
     
 
     public static File parse(String dest, boolean mustExist, boolean cannotExist, boolean isDirectory, boolean notDirectory, boolean executable) throws TerminalException {
@@ -14,7 +15,8 @@ public class Address {
         }
         if (isDirectory && notDirectory)
             throw new TerminalException("file parser - argument error in is directory and is not directory flags.");
-        String[] split = dest.split(File.separator);
+        // replaces one backslash in the split regex with two, avoids regex error when File.separator is a backslash.
+        String[] split = dest.split(File.separator.replaceAll("\\\\", "\\\\"));
         File current = new File(System.getProperty("user.dir"));
         int ind = 0;
         for (String fn : split) {
