@@ -218,7 +218,7 @@ public class Main extends Application {
         //top bar scroll bar
         topBarScrollBar = new Line();
         topBarScrollBar.setStartX(0);
-        topBarScrollBar.setEndX(Size.width(75));
+        topBarScrollBar.setEndX(Size.fontDimension(75));
         topBarScrollBar.setStartY(0);
         topBarScrollBar.setEndY(topBarScrollBar.getStartY());
         topBarScrollBar.setStrokeWidth(Size.lessWidthHeight(8));
@@ -717,8 +717,6 @@ public class Main extends Application {
     }
 
     private Image parseBackgroundImage(String fn) {
-        File f = new File(Address.root_addr + File.separator + "resources" + File.separator + fn);
-        System.out.println(f.exists());
         return new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + fn);
     }
 
@@ -987,7 +985,7 @@ public class Main extends Application {
             n = n.getParent();
         }
         scrollBarTransition.setToX(offset);
-        Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), 10 * menus[scrollPos].getText().length())));
+        Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), Size.fontDimension(10 * menus[scrollPos].getText().length()))));
         growShrink.setCycleCount(1);
         growShrink.play();
         scrollBarTransition.play();

@@ -45,4 +45,8 @@ public class Size {
     public static double scaledHeight(double actualHeight) {
         return Root.getUtilAndConstants().scaledHeight(actualHeight);
     }
+
+    public static double fontDimension(double widthHeight) {
+        return Root.getUtilAndConstants().fontDimension(widthHeight);
+    }
 }

@@ -272,6 +272,7 @@ public class UtilAndConstants {
         this.screenWidth = screenWidth;
     }
 
+
     public static class Filler extends Region {
         public Filler() {
             HBox.setHgrow(this, Priority.ALWAYS);
@@ -360,5 +361,9 @@ public class UtilAndConstants {
 
     double scaledHeight(double actualHeight) {
         return actualHeight * DEFAULT_HEIGHT / screenHeight;
+    }
+
+    double fontDimension(double widthHeight) {
+        return widthHeight * Math.min(screenHeight / DEFAULT_HEIGHT, screenWidth / DEFAULT_WIDTH);
     }
 }
