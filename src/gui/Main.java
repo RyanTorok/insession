@@ -555,6 +555,7 @@ public class Main extends Application {
         state = BASE_STATE;
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
+        launchClass(new ClassPd() {{setCastOf(new Course() {{setName("Test Class");}}); setPeriodNo(4);}});
 
         for (Collection<Indexable> list :
                 QueryEngine.getPrimaryIndexSets()) {
@@ -894,9 +895,9 @@ public class Main extends Application {
         return subtitles;
     }
 
-    public void launchClass(ClassPd classPd) {
+    void launchClass(ClassPd classPd) {
         assert state == BASE_STATE;
-        System.out.println("Launch " + classPd.getCastOf().getName());
+        launchTaskView(new ClassView(classPd));
     }
 
     public void setPicture(Shape newShape) {
@@ -1222,7 +1223,6 @@ public class Main extends Application {
                 setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(c));
                 text.setFill(UtilAndConstants.textFill(c));
             }
-
             public void setText(String txt) {
                 text.setText(txt);
             }

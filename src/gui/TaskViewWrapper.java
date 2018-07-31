@@ -264,8 +264,9 @@ public class TaskViewWrapper extends StackPane {
                 new KeyValue(me.minHeightProperty(), newHeight),
                 new KeyValue(((ImageView) ((HBox) me.getContent()).getChildren().get(0)).fitHeightProperty(), newHeight),
                 new KeyValue(((ImageView) ((HBox) me.getContent()).getChildren().get(0)).fitWidthProperty(), newWidth)));
-        if (!initial && modifiableAfter)
-                change.setOnFinished(event -> me.expand());
+        if (!initial && modifiableAfter) {
+            change.setOnFinished(event -> me.expand());
+        }
         change.play();
         lastStackTransition = System.currentTimeMillis();
         lastStackTransitionLength = millis;
@@ -385,8 +386,8 @@ public class TaskViewWrapper extends StackPane {
                 riseUp.setOnFinished(event2 -> {
                     Timeline delay2 = new Timeline(new KeyFrame(Duration.millis(millis * 2)));
                     delay2.setOnFinished(event3 -> {
+                        which = activeViews.size() - 1;
                         stackTileSlideOut(millis / 2);
-                        growView(view, millis / 2);
                     });
                     delay2.play();
                 });
@@ -395,7 +396,6 @@ public class TaskViewWrapper extends StackPane {
             delay.play();
         });
         initNew.play();
-        which = activeViews.size() - 1;
         state = BASE_STATE;
     }
 

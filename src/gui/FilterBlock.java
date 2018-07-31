@@ -20,18 +20,20 @@ class FilterBlock extends VBox {
     private final ToggleGroup toggleGroup;
     private final List<Filter> filters;
 
-    FilterBlock(String header, boolean multiple, List<Filter> filters) {
+    FilterBlock(ClassView wrapper, String header, boolean multiple, List<Filter> filters) {
         this.header = new Text(header);
         options = new ArrayList<>();
         toggleGroup = new ToggleGroup();
         if (multiple)
-            options = filters.stream().map(filter -> (new CheckBox(filter.name))).collect(Collectors.toList());
-        else options = filters.stream().map(filter -> (new RadioButton(filter.name) {{setToggleGroup(toggleGroup);}})).collect(Collectors.toList());
+            options = filters.stream().map(filter -> (new CheckBox(filter.name) {{setTextFill(wrapper.getTextFill());}})).collect(Collectors.toList());
+        else options = filters.stream().map(filter -> (new RadioButton(filter.name) {{setTextFill(wrapper.getTextFill()); setToggleGroup(toggleGroup);}})).collect(Collectors.toList());
         this.filters = filters;
+//        System.out.println(filters.get(0).name);
+        getChildren().addAll(options);
     }
 
-    FilterBlock(String header, boolean multiple, Filter... filters) {
-        this(header, multiple, Arrays.asList(filters));
+    FilterBlock(ClassView wrapper, String header, boolean multiple, Filter... filters) {
+        this(wrapper, header, multiple, Arrays.asList(filters));
     }
 
     boolean matches(Post post) {

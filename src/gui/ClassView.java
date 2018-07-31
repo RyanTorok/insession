@@ -9,8 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import main.Size;
 import main.UtilAndConstants;
 import net.PostEngine;
 
@@ -36,7 +38,8 @@ public class ClassView extends TaskView {
     public ClassView(ClassPd classPd) {
         super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
         this.classPd = classPd;
-        textFill = UtilAndConstants.textFill(classPd.getColor());
+        Color color = classPd.getColor();
+        textFill = UtilAndConstants.textFill(color == null ? Color.BLACK : color);
     }
 
     public Pane getFullDisplay() {
@@ -77,7 +80,11 @@ public class ClassView extends TaskView {
     }
 
     private VBox[] makeSideBars() {
-        return new VBox[]{makePostsSB(), makeFilesSB(), makeGradesSB()};
+        VBox[] sidebars = {makePostsSB(), makeFilesSB(), makeGradesSB()};
+        for (VBox sidebar : sidebars) {
+            sidebar.setPrefWidth(Size.width(400));
+        }
+        return sidebars;
     }
 
     private VBox makePostsSB() {
@@ -93,7 +100,7 @@ public class ClassView extends TaskView {
     private VBox makeFilters() {
         List<FilterBlock> filters = new ArrayList<>();
 
-        filters.add(new FilterBlock("By Status", true,
+        filters.add(new FilterBlock(this, "By Status", true,
                 new Filter("Unread", PostStatus.UNREAD),
                 new Filter("Updated", PostStatus.UPDATED),
                 new Filter("Unanswered", PostStatus.UNANSWERED),
@@ -108,10 +115,10 @@ public class ClassView extends TaskView {
         ));
         List<ClassItem> items = classPd.getAssignmentsWithPostsDesc(10);
         List<Filter> assignments = items.stream().map(item -> new Filter(item.getName(), 0, item.getId())).collect(Collectors.toList());
-        filters.add(new FilterBlock("By Assignment", true, assignments));
+        filters.add(new FilterBlock(this, "By Assignment", true, assignments));
         DatePicker picker = new DatePicker();
         picker.valueProperty().addListener((observable, oldvalue, newvalue) -> filters.get(2).getFilters().forEach(filter -> filter.setComparisonTime(UtilAndConstants.date(picker.getValue()))));
-        filters.add(new FilterBlock("By Date", false,
+        filters.add(new FilterBlock(this, "By Date", false,
                 new Filter("Today", TODAY),
                 new Filter("This Week", THIS_WEEK),
                 new Filter("On", ON),
@@ -188,6 +195,10 @@ public class ClassView extends TaskView {
 
     private GridPane makeGradesPane() {
         return new GridPane();
+    }
+
+    public Color getTextFill() {
+        return textFill;
     }
 
     private class Tab extends Pane {
