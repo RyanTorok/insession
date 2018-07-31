@@ -72,7 +72,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public static User read(String tokenLabel) {
-        File ser = new File(Address.root_addr + File.separator + "usr" + File.separator + tokenLabel + ".ser");
+        File ser = new File(Address.fromRootAddr("usr", tokenLabel + ".ser"));
         if (!ser.exists())
             return null;
         try {
@@ -267,7 +267,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public static User read() {
-        File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
+        File dir = new File(Address.fromRootAddr("usr"));
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
         if (sers.length == 0) {
             return null;
@@ -297,7 +297,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public static ArrayList<User> readAll() {
-        File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
+        File dir = new File(Address.fromRootAddr("usr"));
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
         ArrayList<User> out = new ArrayList<>();
         if (sers.length == 0) {
@@ -330,7 +330,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public static int getSerCount() {
-        File dir = new File(Address.root_addr.getPath() + File.separator + "usr");
+        File dir = new File(Address.fromRootAddr("usr"));
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
         return sers.length;
     }
@@ -348,12 +348,11 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public Image getAcctImage() {
-//        setImageFN("file:" + Address.root_addr + File.separator + "resources" + File.separator + "pic.jpg");
         try {
             return new Image(getImageFN());
         } catch (Exception e) {
             try {
-                return new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + "default_user.png");
+                return new Image("file:" + Address.fromRootAddr("resources", "default_user.png"));
             } catch (Exception e1) {
                 return null;
             }
@@ -459,7 +458,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public byte[] getSerFileBytes() {
-        File serFile = new File(Address.root_addr + File.separator + "usr" + File.separator + Root.getActiveUser().getUsername() + ".ser");
+        File serFile = new File(Address.fromRootAddr("usr", Root.getActiveUser().getUsername() + ".ser"));
         try {
             FileInputStream input = new FileInputStream(serFile);
             return input.readAllBytes();

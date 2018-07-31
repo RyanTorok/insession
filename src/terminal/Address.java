@@ -2,6 +2,9 @@ package terminal;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Address {
 
@@ -56,5 +59,27 @@ public class Address {
         } else {
             throw new TerminalException("file parser - permission denied for " + current.getPath() + ".");
         }
+    }
+
+    public static String makeFilename(String... paths) {
+        StringBuilder fn = new StringBuilder();
+        final boolean[] first = {true};
+        Arrays.asList(paths).forEach(s -> {
+            fn.append(first[0] ? "" : File.separator).append(s);
+            first[0] = false;
+        });
+        return fn.toString();
+    }
+
+    private static String makeFileNameFromBase(File root, String... paths) {
+        return root.toString() + File.separator + makeFilename(paths);
+    }
+
+    public static String fromRootAddr(String... paths) {
+        return makeFileNameFromBase(root_addr, paths);
+    }
+
+    public static String fromUserAddr(String... paths) {
+        return makeFileNameFromBase(user_addr, paths);
     }
 }

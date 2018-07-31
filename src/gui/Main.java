@@ -38,7 +38,6 @@ import searchengine.QueryEngine;
 import terminal.Address;
 
 import java.awt.*;
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -123,7 +122,7 @@ public class Main extends Application {
             contentPanes = new Pane[5];
             Root.setPortal(this);
             User user = User.read();
-            String icon_path = "file:" + Address.root_addr + File.separator + "resources" + File.separator + "icon.png";
+            String icon_path = "file:" + Address.fromRootAddr("resources", "icon.png");
             Image iconImg = new Image(icon_path);
             primaryStage.getIcons().add(0, iconImg);
             primaryStage.setTitle("Paintbrush LMS");
@@ -671,7 +670,7 @@ public class Main extends Application {
         }
         if (needMoon) {
             int hourOfNight = (currentHr + 3) % 24 + 1;
-            Image moon = new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + getMoonFN() + ".png");
+            Image moon = new Image("file:" + Address.fromRootAddr("resources", getMoonFN() + ".png"));
             ImageView moonNode = new ImageView(moon);
             double moonImgRadius = Size.lessWidthHeight(40);
             moonNode.setFitWidth(moonImgRadius);
@@ -717,7 +716,7 @@ public class Main extends Application {
     }
 
     private Image parseBackgroundImage(String fn) {
-        return new Image("file:" + Address.root_addr + File.separator + "resources" + File.separator + fn);
+        return new Image("file:" + Address.fromRootAddr("resources", fn));
     }
 
     private void fog(ImageView background) {

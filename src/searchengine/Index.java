@@ -20,7 +20,7 @@ public class Index implements Serializable {
 
     public static Index loadLocal() {
         try {
-            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(Address.root_addr + File.separator + "resources" + File.separator + "index.ser")));
+            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(Address.fromRootAddr("resources", "index.ser"))));
             return (Index) stream.readObject();
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             return new Index();
@@ -29,7 +29,7 @@ public class Index implements Serializable {
 
     public void write() {
         try {
-            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(Address.root_addr + File.separator + "resources" + File.separator + "index.ser")));
+            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(Address.fromRootAddr("resources", "index.ser"))));
             stream.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();

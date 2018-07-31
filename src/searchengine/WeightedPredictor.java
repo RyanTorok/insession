@@ -16,11 +16,11 @@ public class WeightedPredictor {
     }
 
     public static WeightedPredictor read() {
-        File f = new File(Address.root_addr + File.separator + "resources" + File.separator + "stemIndex.ser");
+        File f = new File(Address.fromRootAddr("resources", "stemIndex.ser"));
         if (!f.exists())
             try {
                 return new WeightedPredictor() {{
-                    initialize(Address.root_addr + File.separator + "resources" + File.separator + "dictionary.txt");
+                    initialize(Address.fromRootAddr("resources", "dictionary.txt"));
                 }};
             } catch (Exception e) {
                 return new WeightedPredictor();
@@ -39,7 +39,7 @@ public class WeightedPredictor {
 
     public void write() {
         try {
-            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(Address.root_addr + File.separator + "resources" + File.separator + "stemIndex.ser")));
+            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(Address.fromRootAddr("resources", "stemIndex.ser"))));
             stream.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="" />
+    <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ZipMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ZipMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AcctSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AcctSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomFonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomFonts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ZipMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ZipMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/DefaultUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/DefaultUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/searchengine/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/searchengine/WeightedPredictor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/searchengine/WeightedPredictor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terminal/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terminal/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +55,11 @@
       <file leaf-file-name="ClassView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="720">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -42,8 +67,12 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="998" column="53" selection-start-line="998" selection-start-column="53" selection-end-line="998" selection-end-column="53" />
+            <state relative-caret-position="15">
+              <caret line="115" selection-start-line="115" selection-end-line="115" />
+              <folding>
+                <element signature="e#29701#29702#0" expanded="true" />
+                <element signature="e#29782#29783#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,8 +80,62 @@
       <file leaf-file-name="Address.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/terminal/Address.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="18" column="79" selection-start-line="18" selection-start-column="79" selection-end-line="18" selection-end-column="79" />
+            <state relative-caret-position="631">
+              <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+              <folding>
+                <element signature="e#3545#3546#0" expanded="true" />
+                <element signature="e#3589#3590#0" expanded="true" />
+                <element signature="e#3680#3681#0" expanded="true" />
+                <element signature="e#3724#3725#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeightedPredictor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/searchengine/WeightedPredictor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="41" column="143" selection-start-line="41" selection-start-column="143" selection-end-line="41" selection-end-column="143" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/searchengine/Index.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="22" column="96" selection-start-line="22" selection-start-column="96" selection-end-line="22" selection-end-column="96" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DefaultUser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/DefaultUser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AcctSettings.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="451">
+              <caret line="239" column="74" selection-start-line="239" selection-start-column="74" selection-end-line="239" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZipMap.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/ZipMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="11" selection-start-column="11" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,8 +143,8 @@
       <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2820">
-              <caret line="247" column="38" selection-start-line="247" selection-start-column="38" selection-end-line="247" selection-end-column="38" />
+            <state relative-caret-position="409">
+              <caret line="74" column="36" selection-start-line="74" selection-start-column="36" selection-end-line="74" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -69,64 +152,10 @@
       <file leaf-file-name="CustomFonts.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="24" column="73" selection-start-line="24" selection-start-column="73" selection-end-line="24" selection-end-column="73" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Size.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Size.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="48" column="38" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UtilAndConstants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4605">
-              <caret line="366" column="26" selection-start-line="366" selection-start-column="26" selection-end-line="366" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QueryEngine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/searchengine/QueryEngine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassPd.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/ClassPd.java">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-              <folding>
-                <element signature="e#3006#3007#0" expanded="true" />
-                <element signature="e#3061#3062#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TaskView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1620">
-              <caret line="147" column="29" selection-start-line="147" selection-start-column="29" selection-end-line="147" selection-end-column="29" />
+              <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4540#4541#0" expanded="true" />
-                <element signature="e#4578#4579#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,8 +176,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>minheightproperty</find>
-      <find>stemindex</find>
       <find>collapsetopbar</find>
       <find>subtitle</find>
       <find>caps</find>
@@ -177,6 +204,8 @@
       <find>file:</find>
       <find>scrollbar</find>
       <find>repositiontopbar</find>
+      <find>address.r</find>
+      <find>Address.roo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -185,11 +214,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/searchengine/Tokenizer.java" />
-        <option value="$PROJECT_DIR$/src/gui/TaskViewContents.java" />
-        <option value="$PROJECT_DIR$/src/gui/Grades.java" />
-        <option value="$PROJECT_DIR$/src/gui/Calendar.java" />
-        <option value="$PROJECT_DIR$/src/gui/Help.java" />
         <option value="$PROJECT_DIR$/src/gui/History.java" />
         <option value="$PROJECT_DIR$/src/gui/Attendance.java" />
         <option value="$PROJECT_DIR$/src/terminal/CAT.java" />
@@ -230,12 +254,17 @@
         <option value="$PROJECT_DIR$/src/net/PostEngine.java" />
         <option value="$PROJECT_DIR$/src/classes/ClassPd.java" />
         <option value="$PROJECT_DIR$/src/gui/ClassView.java" />
-        <option value="$PROJECT_DIR$/src/main/User.java" />
-        <option value="$PROJECT_DIR$/src/gui/CustomFonts.java" />
         <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/main/Size.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/User.java" />
+        <option value="$PROJECT_DIR$/src/gui/ZipMap.java" />
+        <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
         <option value="$PROJECT_DIR$/src/terminal/Address.java" />
+        <option value="$PROJECT_DIR$/src/gui/CustomFonts.java" />
+        <option value="$PROJECT_DIR$/src/main/DefaultUser.java" />
+        <option value="$PROJECT_DIR$/src/searchengine/Index.java" />
+        <option value="$PROJECT_DIR$/src/searchengine/WeightedPredictor.java" />
       </list>
     </option>
   </component>
@@ -256,9 +285,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="59" />
-    <option name="y" value="3" />
-    <option name="width" value="919" />
-    <option name="height" value="1036" />
+    <option name="y" value="-4" />
+    <option name="width" value="1861" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -270,7 +299,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="Address&#9;PSI&#9;JAVA://terminal.Address&#10;User.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Main.java&#9;null&#9;null&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;Datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;QueryEn&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;Classitem&#9;PSI&#9;JAVA://classes.ClassItem&#10;Utila&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Command.java&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Termi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalUI.java&#10;Qu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/QUIT.java&#10;Term&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalDrivenEvent.java&#10;Terminal.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Terminal.java&#10;TerminalRet&#9;PSI&#9;JAVA://terminal.TerminalRet&#10;CLEAR&#9;PSI&#9;JAVA://terminal.CLEAR&#10;Statistic&#9;ACTION&#9;ActivateStatisticToolWindow&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;TaskVieww&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Task&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewContents.java&#10;util&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Indexab&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Indexable.java&#10;Index&#9;PSI&#9;JAVA://searchengine.Index&#10;main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;tas&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;taskview&#9;PSI&#9;JAVA://gui.TaskView&#10;tokenizer&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Tokenizer.java&#10;identifier&#9;PSI&#9;JAVA://searchengine.Identifier&#10;settings&#9;ACTION&#9;Database.Settings&#10;passwordmanager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;getStyle&#9;PSI&#9;JAVA://javax.swing.JTextPane#getStyle&#10;filler&#9;PSI&#9;JAVA://gui.AcctSettings.Filler&#10;Settings&#9;ACTION&#9;Database.Settings" />
+    <property name="SearchEverywhereHistoryKey" value="Address&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Address.java&#10;User.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Main.java&#9;null&#9;null&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;Datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;QueryEn&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;Classitem&#9;PSI&#9;JAVA://classes.ClassItem&#10;Utila&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Command.java&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Termi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalUI.java&#10;Qu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/QUIT.java&#10;Term&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalDrivenEvent.java&#10;Terminal.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Terminal.java&#10;TerminalRet&#9;PSI&#9;JAVA://terminal.TerminalRet&#10;CLEAR&#9;PSI&#9;JAVA://terminal.CLEAR&#10;Statistic&#9;ACTION&#9;ActivateStatisticToolWindow&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;TaskVieww&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Task&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewContents.java&#10;util&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;Indexab&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Indexable.java&#10;Index&#9;PSI&#9;JAVA://searchengine.Index&#10;main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;tas&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;taskview&#9;PSI&#9;JAVA://gui.TaskView&#10;tokenizer&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Tokenizer.java&#10;identifier&#9;PSI&#9;JAVA://searchengine.Identifier&#10;settings&#9;ACTION&#9;Database.Settings&#10;passwordmanager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;getStyle&#9;PSI&#9;JAVA://javax.swing.JTextPane#getStyle&#10;filler&#9;PSI&#9;JAVA://gui.AcctSettings.Filler&#10;Settings&#9;ACTION&#9;Database.Settings" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
@@ -587,6 +616,8 @@
       <workItem from="1532994964495" duration="468000" />
       <workItem from="1532995797771" duration="298000" />
       <workItem from="1532996621848" duration="261000" />
+      <workItem from="1532997825469" duration="227000" />
+      <workItem from="1533053400019" duration="3800000" />
     </task>
     <servers />
   </component>
@@ -623,36 +654,37 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="887861000" />
+    <option name="totallyTimeSpent" value="891888000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="58" y="-11" width="1863" height="1092" extended-state="6" />
+    <frame x="59" y="-4" width="1861" height="1084" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="2" />
-      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Cargo" order="7" weight="0.3294766" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5008264" side_tool="true" weight="0.55718786" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.3294766" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.62224555" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.34732425" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
       <window_info anchor="bottom" id="Statistic" order="13" weight="0.32948583" />
       <window_info anchor="right" id="Database" order="9" weight="0.3294766" />
-      <window_info id="Learn" order="6" weight="0.3294766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.24958678" />
       <window_info id="UI Designer" order="5" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3210913" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.32948583" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32948583" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49917355" weight="0.06400839" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.34554973" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2369146" />
+      <window_info id="Learn" order="6" weight="0.3294766" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3210913" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.32948583" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
@@ -682,48 +714,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/terminal/OPEN.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/PWD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="60" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/RM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/SETTINGS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/CD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/SWITCH.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/TOUCH.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -999,30 +989,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2820">
-          <caret line="247" column="38" selection-start-line="247" selection-start-column="38" selection-end-line="247" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="24" column="73" selection-start-line="24" selection-start-column="73" selection-end-line="24" selection-end-column="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4605">
@@ -1039,15 +1005,97 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="115" selection-start-line="115" selection-end-line="115" />
+          <folding>
+            <element signature="e#29701#29702#0" expanded="true" />
+            <element signature="e#29782#29783#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="74" column="36" selection-start-line="74" selection-start-column="36" selection-end-line="74" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/ZipMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="239" column="74" selection-start-line="239" selection-start-column="74" selection-end-line="239" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="998" column="53" selection-start-line="998" selection-start-column="53" selection-end-line="998" selection-end-column="53" />
+          <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/DefaultUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/searchengine/Index.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="22" column="96" selection-start-line="22" selection-start-column="96" selection-end-line="22" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/db/SQLInstitution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="16" column="110" selection-start-line="16" selection-start-column="110" selection-end-line="16" selection-end-column="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/searchengine/WeightedPredictor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="41" column="143" selection-start-line="41" selection-start-column="143" selection-end-line="41" selection-end-column="143" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/terminal/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="79" selection-start-line="18" selection-start-column="79" selection-end-line="18" selection-end-column="79" />
+        <state relative-caret-position="631">
+          <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+          <folding>
+            <element signature="e#3545#3546#0" expanded="true" />
+            <element signature="e#3589#3590#0" expanded="true" />
+            <element signature="e#3680#3681#0" expanded="true" />
+            <element signature="e#3724#3725#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

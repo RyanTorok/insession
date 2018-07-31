@@ -8,10 +8,9 @@ import java.io.File;
 
 public class CustomFonts {
 
-    private static final Font COMFORTAA = Font.loadFont("file:" + Address.root_addr + File.separator + "resources" + File.separator + "fonts" + File.separator + "Comfortaa-Regular.ttf" , 12);
-    private static final Font COMFORTAA_BOLD = Font.loadFont("file:" + Address.root_addr + File.separator + "resources" + File.separator + "fonts" + File.separator + "Comfortaa-Bold.ttf" , 12);
-    private static final Font COMFORTAA_LIGHT = Font.loadFont("file:" + Address.root_addr + File.separator + "resources" + File.separator + "fonts" + File.separator + "Comfortaa-Light.ttf" , 12);
-
+    private static final Font COMFORTAA = Font.loadFont("file:" + Address.fromRootAddr("resources", "fonts", "Comfortaa-Regular.ttf") , 12);
+    private static final Font COMFORTAA_BOLD = Font.loadFont("file:" + Address.fromRootAddr("resources", "fonts", "Comfortaa-Bold.ttf") , 12);
+    private static final Font COMFORTAA_LIGHT = Font.loadFont("file:" + Address.fromRootAddr("resources", "fonts", "Comfortaa-Light.ttf") , 12);
 
     public static Font comfortaa(double size) {
         return Font.font(COMFORTAA.getFamily(), Size.fontSize(size));

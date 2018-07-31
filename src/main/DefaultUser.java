@@ -20,7 +20,7 @@ public class DefaultUser implements Serializable {
 
     public String read() {
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File(Address.root_addr.getPath() + File.separator + "default.ser")));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File(Address.fromRootAddr("default.ser"))));
             defaultUser = (String) in.readObject();
         } catch (Exception e) {
             defaultUser = null;
@@ -31,7 +31,7 @@ public class DefaultUser implements Serializable {
     //writes the default user filename to the disk and returns true if the write is successful
     public boolean write() {
         try {
-            File f = new File(Address.root_addr.getPath() + File.separator + "default.ser");
+            File f = new File(Address.fromRootAddr("default.ser"));
             if (!f.exists()) {
                 boolean success = f.createNewFile();
                 if (!success) {

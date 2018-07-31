@@ -25,7 +25,7 @@ public class ZipMap implements Serializable {
     }
 
     private void write() {
-        File f = new File(Address.root_addr + File.separator + "resources" + File.separator + "zip.ser");
+        File f = new File(Address.fromRootAddr("resources", "zip.ser"));
         try {
             new ObjectOutputStream(new FileOutputStream(f)).writeObject(this);
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public class ZipMap implements Serializable {
     }
 
     static ZipMap read() {
-        File f = new File(Address.root_addr + File.separator + "resources" + File.separator + "zip.ser");
+        File f = new File(Address.fromRootAddr("resources", "zip.ser"));
         try {
             return (ZipMap) new ObjectInputStream(new FileInputStream(f)).readObject();
         } catch (ClassNotFoundException | IOException e) {
@@ -43,7 +43,7 @@ public class ZipMap implements Serializable {
     }
 
     private void create() {
-       File f = new File(Address.root_addr + File.separator + "resources" + File.separator + "zip.txt");
+        File f = new File(Address.fromRootAddr("resources", "zip.txt"));
         try {
             Scanner s = new Scanner(f);
             map = new HashMap<>();

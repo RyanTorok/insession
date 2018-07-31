@@ -222,7 +222,7 @@ public class AcctSettings extends Stage {
             List<String> extensions = Arrays.asList("*.png", "*.jpeg", "*.jpg", "*.tiff", "*.gif", "*.webp", "*.svg", "*.bmp");
             fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("All Image Files", extensions));
             fileChooser.setTitle("Select Profile Picture");
-            fileChooser.setInitialDirectory(new java.io.File(Address.root_addr + java.io.File.separator + "resources"));
+            fileChooser.setInitialDirectory(new java.io.File(Address.fromRootAddr("resources")));
             java.io.File selected = fileChooser.showOpenDialog(Root.getPortal().getPrimaryStage());
             Image new_image = new Image("file:" + selected.getPath());
             if (new_image.isError()) {
@@ -237,7 +237,7 @@ public class AcctSettings extends Stage {
         Button resetToDefault = new Button("Reset to Default");
         resetToDefault.setOnAction(event -> {
             pictureInvalidMessage.setText("");
-            Root.getActiveUser().setImageFN("file:" + new java.io.File(Address.root_addr + File.separator + "resources" + File.separator + "default_user.png").getPath());
+            Root.getActiveUser().setImageFN("file:" + new java.io.File(Address.fromRootAddr("resources", "default_user.png")).getPath());
             Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new Image(Root.getActiveUser().getImageFN())).apply().getFill());
         });
         profilePicture.getChildren().addAll(ppPrompt, picture, browse, resetToDefault, pictureInvalidMessage);
