@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -122,7 +123,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     static final int centerLocX = 0;
-    static final double fullWidth = Size.width(1860);
+    static final double fullWidth = Size.width(1870);
     static final double fullHeight = Size.height(937);
     static final double smallWidth = fullWidth / 2;
     static final double smallHeight = fullHeight / 2;
@@ -429,7 +430,10 @@ public class TaskViewWrapper extends StackPane {
             return;
         which = index;
         Timeline delay = new Timeline(new KeyFrame(Duration.millis(Math.max(0, (lastStackTransition + lastStackTransitionLength) - System.currentTimeMillis()))));
-        delay.setOnFinished(event -> stackTileSlideIn(SCROLL_MILLIS));
+        delay.setOnFinished(event -> {
+            stackTileSlideIn(SCROLL_MILLIS);
+            Root.getPortal().getSubtitle().setText(activeViews.get(index).getTitle());
+        });
         delay.play();
     }
 

@@ -1,17 +1,25 @@
 package filesystem;
 
+import classes.ClassItem;
+import searchengine.Identifier;
+import searchengine.Indexable;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public abstract class FileSystemElement implements Indexed, Comparable<FileSystemElement> {
+public abstract class FileSystemElement extends ClassItem implements Indexed, Indexable, Comparable<FileSystemElement> {
 
     private ArrayList<Directory> parents;
     private ArrayList<FileSystemElement> children;
     private String name;
     private Date dateModified;
+    private Timestamp lastIndexed;
 
     public FileSystemElement(String name) {
         this.setName(name);
+        lastIndexed = new Timestamp(1);
     }
 
     public void setParents(ArrayList<Directory> parents) {
@@ -38,11 +46,11 @@ public abstract class FileSystemElement implements Indexed, Comparable<FileSyste
 
     @Override
     public String ls() {
-        String ls = "";
+        StringBuilder ls = new StringBuilder();
         for (FileSystemElement element : children) {
-            ls += element.getNameWithExtension() + " ";
+            ls.append(element.getNameWithExtension()).append(" ");
         }
-        return ls.trim();
+        return ls.toString().trim();
     }
 
     private String getNameWithExtension() {
@@ -71,5 +79,20 @@ public abstract class FileSystemElement implements Indexed, Comparable<FileSyste
 
     public Date getDateModified() {
         return dateModified;
+    }
+
+    public abstract List<Identifier> grep();
+
+    @Override
+    public Timestamp lastIndexed() {
+        return lastIndexed;
+    }
+
+    public void setLastIndexed(Timestamp lastIndexed) {
+        this.lastIndexed = lastIndexed;
+    }
+
+    public void setLastIndexedAsNow() {
+        setLastIndexed(new Timestamp(System.currentTimeMillis()));
     }
 }

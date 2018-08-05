@@ -28,8 +28,9 @@ class FilterBlock extends VBox {
             options = filters.stream().map(filter -> (new CheckBox(filter.name) {{setTextFill(wrapper.getTextFill());}})).collect(Collectors.toList());
         else options = filters.stream().map(filter -> (new RadioButton(filter.name) {{setTextFill(wrapper.getTextFill()); setToggleGroup(toggleGroup);}})).collect(Collectors.toList());
         this.filters = filters;
-//        System.out.println(filters.get(0).name);
+        getChildren().add(this.header);
         getChildren().addAll(options);
+        getChildren().forEach(node -> node.setFocusTraversable(false));
     }
 
     FilterBlock(ClassView wrapper, String header, boolean multiple, Filter... filters) {

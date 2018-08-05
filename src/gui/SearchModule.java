@@ -177,7 +177,7 @@ public class SearchModule extends VBox {
         for (Identifier id : result) {
             searchResultsDisplay.getChildren().add(new ResultBlock(id));
         }
-        if (result.size() == 0)
+        if (result.size() == 0 && !getFilterBox().isDefault())
             collapse();
         setSubHeaderText();
         lastSearchType = true;

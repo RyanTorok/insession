@@ -1,6 +1,7 @@
 package gui;
 
 import classes.ClassPd;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -160,5 +161,30 @@ public class SearchFilterBox extends VBox {
 
     public ArrayList<ClassPd> getIndexedClasses() {
         return indexedClasses;
+    }
+
+    //returns true if the filters are all set to their default options.
+    // Used to allow or suppress the search module collapse when no results are returned.
+    public boolean isDefault() {
+        for (SearchFilterMenu menu :
+                filterSets) {
+            for (Node n :
+                    menu.getChildren()) {
+                if (n instanceof CheckBox) {
+                    if (!((CheckBox) n).isSelected())
+                        return false;
+                } else if (n instanceof RadioButton) {
+                    if (!((RadioButton) n).isSelected())
+                        return false;
+                }
+            }
+        }
+        for (Node n :
+                dateFilter.getChildren()) {
+            if (n instanceof RadioButton)
+                if (!((RadioButton) n).isSelected())
+                    return false;
+        }
+        return true;
     }
 }

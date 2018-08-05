@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 
 public class Main extends Application {
 
+    public static final String ALL_CAPS_SUBTITLE = "Live your life in ALL CAPS today.";
     private BarMenu[] menus = new BarMenu[5];
     private int currentMenu = 0;
     private Text subtitle;
@@ -542,15 +543,14 @@ public class Main extends Application {
                 caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
                 mainlogo.setText(isCaps() ? upper : lower);
                 if (isCaps())
-                    getSubtitle().setText("Live your life in ALL CAPS today.");
+                    getSubtitle().setText(ALL_CAPS_SUBTITLE);
                 else {
                     if (state == SEARCH_STATE) {
                         getSubtitle().setText(searchBox.getDescription());
-                    } else getSubtitle().setText(getSubtitles()[getCurrentMenu()]);
+                    } else getSubtitle().setText(homeScreen ? getSubtitles()[getCurrentMenu()] : taskViews.current().getTitle());
                 }
             }
         });
-
 
         state = BASE_STATE;
         getPrimaryStage().show();
@@ -567,10 +567,9 @@ public class Main extends Application {
         allMenusAndSearchBar.getChildren().get(0).setVisible(true);  //show menus
         allMenusAndSearchBar.getChildren().get(1).setVisible(false); //hide search box
         searchBox.collapse();
-        subtitle.setText(caps ? "Live life in ALL CAPS today." : subtitles[currentMenu]);
+        subtitle.setText(caps ? ALL_CAPS_SUBTITLE : homeScreen ? subtitles[currentMenu] : taskViews.current().getTitle());
         state = BASE_STATE;
     }
-
 
     void updateWeather() {
         getManager().update();
@@ -1258,6 +1257,8 @@ public class Main extends Application {
         mainBodyAndTaskViews.getChildren().setAll(workingCollection);
         taskViews.setVisible(true);
         homeScreen = false;
+        TaskView current = taskViews.current();
+        if (current != null) subtitle.setText(taskViews.current().getTitle());
     }
 
     void hideTaskViews() {
@@ -1269,6 +1270,7 @@ public class Main extends Application {
         mainBodyAndTaskViews.getChildren().setAll(workingCollection);
         taskViews.setVisible(false);
         homeScreen = true;
+        subtitle.setText(caps ? ALL_CAPS_SUBTITLE : subtitles[currentMenu]);
     }
 
     void closeSideBar() {

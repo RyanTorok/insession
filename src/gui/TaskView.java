@@ -4,24 +4,18 @@ package gui;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import main.Root;
 import main.Size;
 import main.UtilAndConstants;
-import terminal.Address;
-
-import java.io.File;
 
 public abstract class TaskView extends ScrollPane {
 
+    private String title;
     private TaskViewWrapper wrapper;
     private boolean lockedFullScreen;
     private HBox minimizedDisplay;
@@ -33,6 +27,7 @@ public abstract class TaskView extends ScrollPane {
 
     public TaskView(String title) {
         super();
+        this.title = title;
         setStyle("-fx-background-color: transparent ; -fx-background: transparent");
     }
 
@@ -102,11 +97,13 @@ public abstract class TaskView extends ScrollPane {
     void expand() {
         if (fullDisplay == null) {
             fullDisplay = initDisplay();
+            fullDisplay.setPadding(Size.insets(10));
             fullDisplay.setStyle("-fx-background-color: white");
             fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
         }
         setContent(fullDisplay);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        Root.getPortal().getSubtitle().setText(title);
     }
 
     public HBox getMinimizedDisplay() {
@@ -143,6 +140,14 @@ public abstract class TaskView extends ScrollPane {
 
     public void setLastClickY(double lastClickY) {
         this.lastClickY = lastClickY;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     protected abstract Pane initDisplay();

@@ -1,15 +1,20 @@
 package gui;
 
-import classes.*;
+import classes.ClassItem;
+import classes.ClassPd;
+import classes.Post;
+import classes.PostStatus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.Size;
@@ -39,7 +44,7 @@ public class ClassView extends TaskView {
         super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
         this.classPd = classPd;
         Color color = classPd.getColor();
-        textFill = UtilAndConstants.textFill(color == null ? Color.BLACK : color);
+        textFill = UtilAndConstants.textFill(color == null ? Color.WHITE : color);
     }
 
     public Pane getFullDisplay() {
@@ -55,11 +60,8 @@ public class ClassView extends TaskView {
     protected Pane initDisplay() {
 
         VBox titleBar = makeTitleBar();
-
         sideBars = makeSideBars();
-
         bodyPanes = makeBodyPanes();
-
         sideBarAndBody = new HBox(sideBars[0], bodyPanes[0]);
         VBox root = new VBox(titleBar, sideBarAndBody);
 
@@ -67,9 +69,7 @@ public class ClassView extends TaskView {
     }
 
     private VBox makeTitleBar() {
-        Text title = new Text(classPd.getCastOf().getName());
-        title.setFill(textFill);
-        HBox titleAndControls = new HBox(title);
+        HBox titleAndControls = new HBox();
 
         Tab posts = new Tab(0, "posts"),
                 files = new Tab(2, "files"),
@@ -171,9 +171,20 @@ public class ClassView extends TaskView {
         ObservableList<Node> workingCollection = FXCollections.observableArrayList(postFiltersAndList.getChildren());
         Collections.swap(workingCollection, 0, 1);
         postFiltersAndList.getChildren().setAll(workingCollection);
+        final int[] i = {0};
+        postFiltersAndList.getChildren().forEach(node -> {
+            if (node instanceof Pane) {
+                ((Pane) node).getChildren().forEach(node1 -> node1.setFocusTraversable(i[0] == 1));
+            }
+            node.setFocusTraversable(i[0] == 1);
+            i[0]++;
+        });
+        postFiltersAndList.getChildren().get(1).requestFocus();
+
     }
 
     private VBox makeFilesSB() {
+
         return new VBox();
     }
 
