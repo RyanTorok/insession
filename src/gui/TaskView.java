@@ -96,14 +96,18 @@ public abstract class TaskView extends ScrollPane {
     //resets the display to the actual contents.
     void expand() {
         if (fullDisplay == null) {
-            fullDisplay = initDisplay();
-            fullDisplay.setPadding(Size.insets(10));
-            fullDisplay.setStyle("-fx-background-color: white");
-            fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
+            initialize();
         }
         setContent(fullDisplay);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         Root.getPortal().getSubtitle().setText(title);
+    }
+
+    protected void initialize() {
+        fullDisplay = initDisplay();
+        fullDisplay.setPadding(Size.insets(10));
+        fullDisplay.setStyle("-fx-background-color: white");
+        fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
     }
 
     public HBox getMinimizedDisplay() {
@@ -151,4 +155,12 @@ public abstract class TaskView extends ScrollPane {
     }
 
     protected abstract Pane initDisplay();
+
+    public Pane getFullDisplay() {
+        return fullDisplay;
+    }
+
+    public void setFullDisplay(Pane fullDisplay) {
+        this.fullDisplay = fullDisplay;
+    }
 }

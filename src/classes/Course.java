@@ -24,6 +24,7 @@ public class Course implements Serializable {
     transient Image graphic;
 
     private MarkingPeriod[] markingPeriods;
+    private CourseSchedule schedule;
 
     public void newGrade(String name, ArrayList<Attempt> attempts){
 
@@ -113,5 +114,13 @@ public class Course implements Serializable {
     public void setGraphic(Image graphic) {
         imageFN = graphic.getUrl();
         this.graphic = graphic;
+    }
+
+    public CourseSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(CourseSchedule schedule) {
+        this.schedule = schedule;
     }
 }

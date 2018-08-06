@@ -31,6 +31,7 @@ class FilterBlock extends VBox {
         getChildren().add(this.header);
         getChildren().addAll(options);
         getChildren().forEach(node -> node.setFocusTraversable(false));
+        setSpacing(5);
     }
 
     FilterBlock(ClassView wrapper, String header, boolean multiple, Filter... filters) {

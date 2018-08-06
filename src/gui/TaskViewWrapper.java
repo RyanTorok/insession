@@ -3,6 +3,8 @@ package gui;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -387,6 +389,7 @@ public class TaskViewWrapper extends StackPane {
                 riseUp.setOnFinished(event2 -> {
                     Timeline delay2 = new Timeline(new KeyFrame(Duration.millis(millis * 2)));
                     delay2.setOnFinished(event3 -> {
+                        view.initialize();
                         which = activeViews.size() - 1;
                         stackTileSlideOut(millis / 2);
                     });

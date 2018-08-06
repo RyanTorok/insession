@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class MasterSchedule {
     private String scheduleCode;
     private ArrayList<MSClass> schedule;
+    private int markingPeriods;
 
     public MasterSchedule(String scheduleRegex) {
         scheduleCode = scheduleRegex;
@@ -48,5 +49,9 @@ public class MasterSchedule {
 
     public Integer numPeriods() {
         return schedule.size();
+    }
+
+    public int getMarkingPeriods() {
+        return markingPeriods;
     }
 }

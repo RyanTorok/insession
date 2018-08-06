@@ -1,6 +1,7 @@
 package main;
 
 import classes.MasterSchedule;
+import classes.School;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +31,7 @@ public class UtilAndConstants {
 
     public static final double DEFAULT_WIDTH = 1861, DEFAULT_HEIGHT = 1056;
     private double screenWidth = DEFAULT_WIDTH, screenHeight = DEFAULT_HEIGHT;
+    private School school;
 
     /**
      * @return the operatingSystem
@@ -272,6 +274,14 @@ public class UtilAndConstants {
         this.screenWidth = screenWidth;
     }
 
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
 
     public static class Filler extends Region {
         public Filler() {
@@ -365,5 +375,18 @@ public class UtilAndConstants {
 
     double fontDimension(double widthHeight) {
         return widthHeight * Math.min(screenHeight / DEFAULT_HEIGHT, screenWidth / DEFAULT_WIDTH);
+    }
+
+    public static String ordinal(int i) {
+        String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+        switch (i % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return i + "th";
+            default:
+                return i + sufixes[i % 10];
+
+        }
     }
 }

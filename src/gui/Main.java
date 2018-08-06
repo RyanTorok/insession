@@ -52,11 +52,14 @@ public class Main extends Application {
     private Text subtitle;
     private boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
 
-    public static final int BASE_STATE = 0;
-    public static final int SLEEP_STATE = 1;
-    public static final int TERMINAL_STATE = 2;
-    public static final int SIDEBAR_STATE = 3;
-    public static final int SEARCH_STATE = 4;
+    public static final int BASE_STATE = 1;
+    public static final int SLEEP_STATE = 2;
+    public static final int TERMINAL_STATE = 3;
+    public static final int SIDEBAR_STATE = 4;
+    public static final int SEARCH_STATE = 5;
+
+    //KeyMap
+    private KeyMap keyMap;
 
     private Pane[] contentPanes;
     private HBox contentPanesWrapper;

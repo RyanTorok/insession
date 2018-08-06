@@ -1,5 +1,7 @@
 package classes;
 
+import gui.ClassView;
+import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
 import main.Root;
 import main.Student;
@@ -10,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by S507098 on 4/13/2017.
@@ -27,6 +30,27 @@ public class ClassPd implements Serializable {
     private String teacherFirst;
     private String teacherLast;
     private long uniqueId;
+
+    public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, String teacherFirst, String teacherLast, long uniqueId) {
+        this.castOf = castOf;
+        this.studentList = studentList;
+        this.periodNo = periodNo;
+        this.capacity = capacity;
+        this.color = color;
+        this.teacherFirst = teacherFirst;
+        this.teacherLast = teacherLast;
+        this.uniqueId = uniqueId;
+        sidebarHotLinks = new ArrayList<>();
+        for (int i = 0; i < castOf.getSchedule().getMarkingPeriods(); i++)
+            sidebarHotLinks.add(new SidebarHotLink(this, "Grading Period " + (i + 1), null)); //TODO set auto-target
+        sidebarHotLinks.add(new SidebarHotLink(this, "Course Information", null));
+    }
+
+    private List<SidebarHotLink> sidebarHotLinks;
+
+    public ClassPd() {
+        //for debug only
+    }
 
     public int getCapacity() {
         return capacity;
@@ -125,4 +149,10 @@ public class ClassPd implements Serializable {
     public List<ClassItem> getAssignmentsWithPostsDesc(int i) {
         return new ArrayList<>(); //        TODO
     }
+
+    public List<SidebarHotLink> getActiveSidebarHotLinks() {
+        return sidebarHotLinks.stream().filter(SidebarHotLink::isActive).collect(Collectors.toList());
+    }
+
+
 }

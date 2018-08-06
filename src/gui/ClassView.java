@@ -1,9 +1,6 @@
 package gui;
 
-import classes.ClassItem;
-import classes.ClassPd;
-import classes.Post;
-import classes.PostStatus;
+import classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -17,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import main.Root;
 import main.Size;
 import main.UtilAndConstants;
 import net.PostEngine;
@@ -30,7 +28,7 @@ import static classes.TimeStatus.*;
 
 public class ClassView extends TaskView {
 
-    private ClassPd classPd;
+    private final ClassPd classPd;
     private HBox sideBarAndBody;
     private VBox[] sideBars;
     private GridPane[] bodyPanes;
@@ -45,10 +43,6 @@ public class ClassView extends TaskView {
         this.classPd = classPd;
         Color color = classPd.getColor();
         textFill = UtilAndConstants.textFill(color == null ? Color.WHITE : color);
-    }
-
-    public Pane getFullDisplay() {
-        return null;
     }
 
     @Override
@@ -156,6 +150,7 @@ public class ClassView extends TaskView {
                     swapPostFilters();
                 });
             }});
+            setSpacing(20);
         }};
     }
 
@@ -184,8 +179,8 @@ public class ClassView extends TaskView {
     }
 
     private VBox makeFilesSB() {
-
-        return new VBox();
+        List<SidebarHotLink> linksList = classPd.getActiveSidebarHotLinks();
+        return new VBox(linksList.toArray(new SidebarHotLink[linksList.size()]));
     }
 
     private VBox makeGradesSB() {
@@ -210,6 +205,10 @@ public class ClassView extends TaskView {
 
     public Color getTextFill() {
         return textFill;
+    }
+
+    public ClassPd getClassPd() {
+        return classPd;
     }
 
     private class Tab extends Pane {
