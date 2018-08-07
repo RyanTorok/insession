@@ -37,6 +37,7 @@ import searchengine.Indexable;
 import searchengine.QueryEngine;
 import terminal.Address;
 
+import javax.swing.text.Keymap;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -99,6 +100,9 @@ public class Main extends Application {
     //Search Interface
     private SearchModule searchBox;
     private StackPane allMenusAndSearchBar;
+    private Text mainlogo;
+    private String upper;
+    private String lower;
 
     public static void main(String[] args) {
         launch(args);
@@ -146,14 +150,17 @@ public class Main extends Application {
     }
 
     public void switchToMain() {
+
+        keyMap = Root.getActiveUser().getKeyMap();
+
         getPrimaryStage().setMaximized(false);
         String title_name = Root.getActiveUser() != null && Root.getActiveUser().getFirst() != null ? Root.getActiveUser().getFirst() : "Guest";
         getPrimaryStage().setTitle("Welcome, " + title_name + " - Paintbrush LMS");
-        Text mainlogo = new Text("paintbrush.    ");
+        mainlogo = new Text("paintbrush.");
         mainlogo.setFont(CustomFonts.comfortaa_bold(60));
         mainlogo.setFill(Color.WHITE);
-        final String upper = mainlogo.getText().substring(0, mainlogo.getText().length() - 2).toUpperCase();
-        final String lower = mainlogo.getText();
+        upper = mainlogo.getText().toUpperCase();
+        lower = mainlogo.getText();
 
         Text subText = new Text("Let's get something done today.");
         subtitle = subText;
@@ -162,7 +169,8 @@ public class Main extends Application {
         titles = new VBox(mainlogo, subText);
         titles.setSpacing(5);
         titles.setPadding(Size.insets(10, 0, 0, 0));
-
+        titles.setPrefWidth(Size.width(300));
+        titles.setMinWidth(Size.width(400));
         //scroll links
         getMenus()[0] = new BarMenu("Latest", 0);
         getMenus()[1] = new BarMenu("Classes", 1);
@@ -359,15 +367,10 @@ public class Main extends Application {
         //search box
         searchBox = new SearchModule(new QueryEngine(searchIndex), this);
 
+
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (event.getCode().equals(KeyCode.SPACE)) {
-                if (state == BASE_STATE && !event.isControlDown()) {
-                    openSearchBar();
-                }
-            } else if (event.getCode().equals(KeyCode.ESCAPE)) {
-                if (state == SEARCH_STATE) {
-                    closeSearchBar();
-                }
+            if (keyMap.fireEvent(event, state, homeScreen))  {
+                event.consume();
             }
         });
 
@@ -484,76 +487,6 @@ public class Main extends Application {
             }
         });
 
-
-        getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (getState() == SLEEP_STATE) {
-                if (event.getCode().equals(KeyCode.ESCAPE))
-                    return;
-                wakeup();
-                if (event.getCode().equals(KeyCode.CAPS)) {
-                    caps = !isCaps();
-                }
-                event.consume();
-                return;
-            }
-            if (event.getCode().equals(KeyCode.TAB)) {
-
-                if (getState() == BASE_STATE) {
-                    term.setVisible(true);
-                    term.start();
-                    state = TERMINAL_STATE;
-                    ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
-                    Collections.swap(workingCollection, 2, 3);
-                    mainArea.getChildren().setAll(workingCollection);
-                    if (term.current != null)
-                        term.current.requestFocus();
-                }
-            }
-
-            if (event.getCode().equals(KeyCode.SPACE) && event.isControlDown()) {
-                if (state == BASE_STATE || state == SIDEBAR_STATE) {
-                    UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
-                }
-            }
-
-            if (event.getCode().equals(KeyCode.ESCAPE)) {
-                if (getState() == BASE_STATE) {
-                    if (!homeScreen && taskViews.getState() == TaskViewWrapper.STACK_STATE)
-                        hideTaskViews();
-                    else
-                        sleep();
-                } else if (getState() == TERMINAL_STATE) {
-                    if (event.isControlDown()) {
-                        term.clearTerminal();
-                    }
-                    quitTerminal();
-                } else if (getState() == SIDEBAR_STATE) {
-                    UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
-                }
-            }
-        });
-
-        getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (event.getCode().equals(KeyCode.LEFT) && getState() == BASE_STATE && homeScreen) {
-                if (getCurrentMenu() != 0)
-                    scrollBody(getCurrentMenu() - 1, getSubtitle());
-            }
-            if (event.getCode().equals(KeyCode.RIGHT) && getState() == BASE_STATE && homeScreen) {
-                if (getCurrentMenu() != getMenus().length - 1)
-                    scrollBody(getCurrentMenu() + 1, getSubtitle());
-            }
-            if (event.getCode().equals(KeyCode.CAPS)) {
-                caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
-                mainlogo.setText(isCaps() ? upper : lower);
-                if (isCaps())
-                    getSubtitle().setText(ALL_CAPS_SUBTITLE);
-                else {
-                    if (state == SEARCH_STATE) {
-                        getSubtitle().setText(searchBox.getDescription());
-                    } else getSubtitle().setText(homeScreen ? getSubtitles()[getCurrentMenu()] : taskViews.current().getTitle());
-                }
-            }
-        });
 
         state = BASE_STATE;
         getPrimaryStage().show();
@@ -1129,25 +1062,8 @@ public class Main extends Application {
             save.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.stop());
             getChildren().addAll(menus);
             setAlignment(Pos.TOP_CENTER);
-            getPrimaryStage().getScene().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-                if (getState() == SIDEBAR_STATE) {
-                    if (event.getCode().equals(KeyCode.UP)) {
-                        if (selectedMenu == 0 || selectedMenu == -1) {
-                            scroll(0, menus.size() - 1);
-                            selectedMenu = menus.size() - 1;
-                        } else scroll(selectedMenu, --selectedMenu);
 
-                    } else if (event.getCode().equals(KeyCode.DOWN)) {
-                        if (selectedMenu == menus.size() - 1) {
-                            scroll(menus.size() - 1, 0);
-                            selectedMenu = 0;
-                        } else scroll(selectedMenu == -1 ? menus.size() - 1 : selectedMenu, ++selectedMenu);
-                    } else if (event.getCode().equals(KeyCode.ENTER) && selectedMenu != -1) {
-                        UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_CLICKED);
-                    }
-                    event.consume();
-                }
-            });
+
             setVisible(true);
         }
 
@@ -1272,6 +1188,7 @@ public class Main extends Application {
         Collections.swap(workingCollection, 0, 1);
         mainBodyAndTaskViews.getChildren().setAll(workingCollection);
         taskViews.setVisible(false);
+        taskViews.stack();
         homeScreen = true;
         subtitle.setText(caps ? ALL_CAPS_SUBTITLE : subtitles[currentMenu]);
     }
@@ -1310,5 +1227,89 @@ public class Main extends Application {
         transition.play();
 
         return searchBox;
+    }
+
+    public KeyMap defaultKeyMap() {
+        KeyMap newKeyMap = new KeyMap();
+        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Space", event -> openSearchBar());
+        newKeyMap.associate(SEARCH_STATE, KeyMap.BOTH, "Escape", event -> closeSearchBar());
+        newKeyMap.associate(SLEEP_STATE, KeyMap.BOTH, "Escape", event -> {}); // overrides next statement
+        newKeyMap.associate(SLEEP_STATE, KeyMap.BOTH, KeyMap.ALL, event -> {
+            wakeup();
+            getKeyMap().consume();
+        });
+        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Tab", event -> {
+            terminal.setVisible(true);
+            terminal.start();
+            state = TERMINAL_STATE;
+            ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainArea.getChildren());
+            Collections.swap(workingCollection, 2, 3);
+            mainArea.getChildren().setAll(workingCollection);
+            if (terminal.current != null)
+                terminal.current.requestFocus();
+        });
+        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Ctrl + Space", event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Ctrl + Space", event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+        newKeyMap.associate(BASE_STATE, false, "Escape", event -> {
+            if (taskViews.getState() == TaskViewWrapper.STACK_STATE)
+                hideTaskViews();
+            else sleep();
+        });
+        newKeyMap.associate(BASE_STATE, true, "Escape", event -> sleep());
+        newKeyMap.associate(TERMINAL_STATE, KeyMap.BOTH, "Ctrl + Escape", event -> {
+            terminal.clearTerminal();
+            quitTerminal();
+        });
+        newKeyMap.associate(TERMINAL_STATE, KeyMap.BOTH, "Escape", event -> quitTerminal());
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Escape", event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+
+        newKeyMap.associate(BASE_STATE, true, "Left", event -> {
+            if (getCurrentMenu() != 0)
+                scrollBody(getCurrentMenu() - 1, getSubtitle());
+        });
+        newKeyMap.associate(BASE_STATE, true, "Right", event -> {
+            if (getCurrentMenu() != getMenus().length - 1)
+                scrollBody(getCurrentMenu() + 1, getSubtitle());
+        });
+
+        newKeyMap.associate(KeyMap.ALL_STATES, KeyMap.BOTH, "Caps", event -> {
+            caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
+            mainlogo.setText(isCaps() ? upper : lower);
+            if (isCaps())
+                getSubtitle().setText(ALL_CAPS_SUBTITLE);
+            else {
+                if (state == SEARCH_STATE) {
+                    getSubtitle().setText(searchBox.getDescription());
+                } else getSubtitle().setText(homeScreen ? getSubtitles()[getCurrentMenu()] : taskViews.current().getTitle());
+            }
+        });
+
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Up", event -> {
+            if (sideBar.selectedMenu == 0 || sideBar.selectedMenu == -1) {
+                sideBar.scroll(0, sideBar.menus.size() - 1);
+                sideBar.selectedMenu = sideBar.menus.size() - 1;
+            } else sideBar.scroll(sideBar.selectedMenu, --sideBar.selectedMenu);
+            getKeyMap().consume();
+        });
+
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Down", event -> {
+            if (sideBar.selectedMenu == sideBar.menus.size() - 1) {
+                sideBar.scroll(sideBar.menus.size() - 1, 0);
+                sideBar.selectedMenu = 0;
+            } else sideBar.scroll(sideBar.selectedMenu == -1 ? sideBar.menus.size() - 1 : sideBar.selectedMenu, ++sideBar.selectedMenu);
+            getKeyMap().consume();
+        });
+
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Enter", event -> {
+            if (sideBar.selectedMenu != -1)
+                UtilAndConstants.fireMouse(sideBar.menus.get(sideBar.selectedMenu), MouseEvent.MOUSE_CLICKED);
+            getKeyMap().consume();
+        });
+
+        return newKeyMap;
+    }
+
+    private KeyMap getKeyMap() {
+        return keyMap;
     }
 }

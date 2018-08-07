@@ -107,7 +107,7 @@ public abstract class TaskView extends ScrollPane {
         fullDisplay = initDisplay();
         fullDisplay.setPadding(Size.insets(10));
         fullDisplay.setStyle("-fx-background-color: white");
-        fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
+        fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth() + Size.width(5), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
     }
 
     public HBox getMinimizedDisplay() {

@@ -3,6 +3,7 @@ package main;
 import classes.ClassPd;
 import classes.Record;
 import classes.setbuilder.Classifiable;
+import gui.KeyMap;
 import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -48,6 +49,7 @@ public abstract class User implements Classifiable, Serializable {
     private HashSet<ClassPd> classesTeacher;
     private Timestamp serFileTimestamp = null;
     private String savedFileSeparator = null;
+    private transient KeyMap keyMap;
 
     public User(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -477,6 +479,16 @@ public abstract class User implements Classifiable, Serializable {
 
     public int getPictureVisibility() {
         return pictureVisibility;
+    }
+
+    public KeyMap getKeyMap() {
+        if (keyMap == null)
+            setKeyMap(Root.getPortal().defaultKeyMap());
+        return keyMap;
+    }
+
+    public void setKeyMap(KeyMap keyMap) {
+        this.keyMap = keyMap;
     }
 }
 

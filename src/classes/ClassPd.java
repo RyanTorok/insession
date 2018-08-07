@@ -40,6 +40,10 @@ public class ClassPd implements Serializable {
         this.teacherFirst = teacherFirst;
         this.teacherLast = teacherLast;
         this.uniqueId = uniqueId;
+        initSidebarHotLinks();
+    }
+
+    private void initSidebarHotLinks() {
         sidebarHotLinks = new ArrayList<>();
         for (int i = 0; i < castOf.getSchedule().getMarkingPeriods(); i++)
             sidebarHotLinks.add(new SidebarHotLink(this, "Grading Period " + (i + 1), null)); //TODO set auto-target
@@ -50,6 +54,11 @@ public class ClassPd implements Serializable {
 
     public ClassPd() {
         //for debug only
+        castOf = new Course() {{setName("Test Class");}};
+        castOf.setSchedule(new CourseSchedule() {{setMarkingPeriods(6);}});
+        setColor(Color.FORESTGREEN);
+        setPeriodNo(4);
+        initSidebarHotLinks();
     }
 
     public int getCapacity() {

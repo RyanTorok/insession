@@ -125,7 +125,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     static final int centerLocX = 0;
-    static final double fullWidth = Size.width(1870);
+    static final double fullWidth = Size.width(1860);
     static final double fullHeight = Size.height(937);
     static final double smallWidth = fullWidth / 2;
     static final double smallHeight = fullHeight / 2;
@@ -251,7 +251,7 @@ public class TaskViewWrapper extends StackPane {
         changeSize(me, 1, centerLocX, 0, smallWidth, smallHeight, false, true);
     }
 
-    private void changeSize(TaskView me, int millis, double toX, Number toY, double newWidth, double newHeight, boolean modifiableAfter, boolean initial) {
+    private void changeSize(TaskView me, int millis, double toX, double toY, double newWidth, double newHeight, boolean modifiableAfter, boolean initial) {
         if (me.getContent() == null)
             me.initMinimizedDisplay();
         if (!initial && !modifiableAfter)
