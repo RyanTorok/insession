@@ -13,7 +13,7 @@ public class MasterSchedule {
 
     public MasterSchedule(String scheduleRegex) {
         scheduleCode = scheduleRegex;
-        schedule = new ArrayList<MSClass>();
+        schedule = new ArrayList<>();
         //regex format: [classPd(startTime,endTime,nextClassPd)]
         for (int i = 0; i < scheduleRegex.length(); i++) {
             if (scheduleRegex.charAt(i) == '[') {
@@ -53,5 +53,9 @@ public class MasterSchedule {
 
     public int getMarkingPeriods() {
         return markingPeriods;
+    }
+
+    public Integer currentMarkingPeriod() {
+        return -1; //TODO
     }
 }

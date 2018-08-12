@@ -1,20 +1,20 @@
 package terminal;
 
-import main.Root;
+import main.User;
 
 public class TerminalUI {
     public String getPrompt() {
-        if (Root.getActiveUser() == null) {
+        if (User.active() == null) {
             return "null@null >";
         }
-        if (Root.getActiveUser().getUsername() == null) {
+        if (User.active().getUsername() == null) {
             return "guest > ";
         }
         String toReturn = null;
-        if (Root.getActiveUser().getSchoolCode() == null)
-            toReturn =  Root.getActiveUser().getUsername() + " >";
+        if (User.active().getSchoolCode() == null)
+            toReturn =  User.active().getUsername() + " >";
         else
-            toReturn = Root.getActiveUser().getUsername() + "@" + Root.getActiveUser().getSchoolCode() + " > ";
+            toReturn = User.active().getUsername() + "@" + User.active().getSchoolCode() + " > ";
         if (toReturn.length() > 30)
             return toReturn.substring(0, 31) + "...";
         return toReturn;

@@ -1,10 +1,9 @@
 package classes;
 
-import gui.ClassView;
 import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
-import main.Root;
 import main.Student;
+import main.User;
 
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
@@ -30,6 +29,7 @@ public class ClassPd implements Serializable {
     private String teacherFirst;
     private String teacherLast;
     private long uniqueId;
+    private Gradebook gradebook;
 
     public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, String teacherFirst, String teacherLast, long uniqueId) {
         this.castOf = castOf;
@@ -123,10 +123,10 @@ public class ClassPd implements Serializable {
 
     public void fireUpdate(Record.Type type, Date end, String message) {
         //TODO check for existing record chain
-        Root.getActiveUser().getUpdates().add(new Record(type, end) {
+        User.active().getUpdates().add(new Record(type, end) {
             {
                 ArrayList<RecordEntry> entries = new ArrayList<>();
-                entries.add(new RecordEntry(Root.getActiveUser(), message, new Timestamp(System.currentTimeMillis()), this, ClassPd.this));
+                entries.add(new RecordEntry(User.active(), message, new Timestamp(System.currentTimeMillis()), this, ClassPd.this));
                 setHistory(entries);
             }
             @Override
@@ -164,4 +164,11 @@ public class ClassPd implements Serializable {
     }
 
 
+    public Gradebook getGradebook() {
+        return gradebook;
+    }
+
+    public void setGradebook(Gradebook gradebook) {
+        this.gradebook = gradebook;
+    }
 }

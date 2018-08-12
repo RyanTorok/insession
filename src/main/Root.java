@@ -1,7 +1,6 @@
 package main;
 
 import gui.Main;
-import javafx.geometry.Insets;
 
 import java.net.*;
 import java.util.Enumeration;
@@ -17,7 +16,6 @@ public class Root {
     private static Integer activeID;
     private static Main activeFrame;
     private static UtilAndConstants utilAndConstants;
-    private static User active = null;
     private static Main portal;
     private static String macAddress;
 
@@ -85,10 +83,6 @@ public class Root {
         return portal;
     }
 
-    public static User getActiveUser() {
-        return active;
-    }
-
     public static String getMACAddress() {
         return macAddress;
     }
@@ -98,17 +92,13 @@ public class Root {
     }
 
     public static void saveAll() {
-        if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
-            Root.getActiveUser().write();
+        if (User.active() != null && User.active().getUsername() != null) {
+            User.active().write();
             net.Net.syncSerFileUp();
         }
         DefaultUser def = new DefaultUser();
         def.read();
         def.write();
-    }
-
-    public static void setActiveUser(User read) {
-        active = read;
     }
 
     public static void setPortal(Main main) {

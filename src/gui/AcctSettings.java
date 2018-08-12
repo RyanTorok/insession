@@ -2,11 +2,9 @@ package gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,15 +16,11 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.PasswordManager;
-import main.Root;
-import main.UnknownZipCodeException;
-import main.UtilAndConstants;
+import main.*;
 import net.Login;
 import net.Net;
 import terminal.Address;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -81,13 +75,13 @@ public class AcctSettings extends Stage {
             invalidMsg.setText(error);
             if (error.length() == 0) {
                 //confirm old password
-                Login login = new Login(Root.getActiveUser().getUsername(), oldPassword.getText(), false);
+                Login login = new Login(User.active().getUsername(), oldPassword.getText(), false);
                 login.setOnSucceeded(event1 -> {
                     net.Net.UserMaybe testOldPwd = (Net.UserMaybe) login.getValue();
                     boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
                     if (oldPasswordMatches) {
                         //try to set new password
-                        boolean success = net.Net.changePassword(newPassword.getText(), testOldPwd.getUniqueID(), Root.getActiveUser().getUsername(), Root.getActiveUser().getPassword());
+                        boolean success = net.Net.changePassword(newPassword.getText(), testOldPwd.getUniqueID(), User.active().getUsername(), User.active().getPassword());
                         if (!success) {
                             invalidMsg.setText("A connection error occurred. Please try again.");
                         } else {
@@ -117,13 +111,13 @@ public class AcctSettings extends Stage {
         //accent color
         Text accentColorPrompt = new Text("Accent Color");
         Shape colorSquare = new Rectangle(50, 50);
-        Color original = Root.getActiveUser().getAccentColor();
+        Color original = User.active().getAccentColor();
         colorSquare.setFill(original);
         ColorPicker colorPicker = new ColorPicker();
-        colorPicker.setValue(Root.getActiveUser().getAccentColor());
+        colorPicker.setValue(User.active().getAccentColor());
         colorPicker.setOnAction(event1 -> {
             colorSquare.setFill(colorPicker.getValue());
-            Root.getActiveUser().setAccentColor(colorPicker.getValue());
+            User.active().setAccentColor(colorPicker.getValue());
             Root.getPortal().getTop_bar().setStyle(Root.getPortal().getTop_bar().getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + UtilAndConstants.colorToHex(colorPicker.getValue())));
             Root.getPortal().getSideBar().setColor(colorPicker.getValue());
             Root.getPortal().topBarScrollBar.setStroke(UtilAndConstants.highlightColor(colorPicker.getValue()));
@@ -143,8 +137,8 @@ public class AcctSettings extends Stage {
         RadioButton twentyFour = new RadioButton("24 Hour");
         twelve.setToggleGroup(cfGroup);
         twentyFour.setToggleGroup(cfGroup);
-        cfGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> Root.getActiveUser().setClock24Hour(newValue == twentyFour));
-        if (Root.getActiveUser().isClock24Hour())
+        cfGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> User.active().setClock24Hour(newValue == twentyFour));
+        if (User.active().isClock24Hour())
             twentyFour.setSelected(true);
         else twelve.setSelected(true);
 
@@ -155,7 +149,7 @@ public class AcctSettings extends Stage {
 
         //Zip Code for Weather
         Text zcPrompt = new Text("Zip Code for Weather");
-        TextField zcField = new TextField(String.format("%05d", Root.getActiveUser().getZipcode()));
+        TextField zcField = new TextField(String.format("%05d", User.active().getZipcode()));
         zcField.setPrefColumnCount(5);
         zcField.setEditable(true);
         zcField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -169,7 +163,7 @@ public class AcctSettings extends Stage {
             zcInvalidMsg.setText("");
             if (zcField.getText().length() == 5) {
                 try {
-                    Root.getActiveUser().setLocation(Integer.parseInt(zcField.getText()));
+                    User.active().setLocation(Integer.parseInt(zcField.getText()));
                     Root.getPortal().updateWeather();
                 } catch (UnknownZipCodeException e) {
                    zcInvalidMsg.setText("Invalid Zip Code");
@@ -191,12 +185,12 @@ public class AcctSettings extends Stage {
         fahrenheit.setToggleGroup(tuGroup);
         celsius.setToggleGroup(tuGroup);
         tuGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            Root.getActiveUser().setTempUnits(newValue == fahrenheit);
+            User.active().setTempUnits(newValue == fahrenheit);
             Root.getPortal().updateWeatherDisplay();
         });
 
         tuGroup.selectToggle(fahrenheit);
-        if (Root.getActiveUser().usesFahrenheit())
+        if (User.active().usesFahrenheit())
             fahrenheit.setSelected(true);
         else celsius.setSelected(true);
         Text courtesy = new Text("Weather provided by NOAA");
@@ -212,7 +206,7 @@ public class AcctSettings extends Stage {
         profilePicture.setPadding(new Insets(10, 10, 10, 10));
 
         Text ppPrompt = new Text("Profile Picture");
-        Image image = Root.getActiveUser().getAcctImage();
+        Image image = User.active().getAcctImage();
         Shape picture = new ShapeImage(new Circle(30), image).apply();
         Button browse = new Button("Browse...");
         Text pictureInvalidMessage = new Text("");
@@ -231,14 +225,14 @@ public class AcctSettings extends Stage {
                 Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new_image).apply().getFill());
                 //copied becuase we cannot use the same node twice. -- this comment is from the old, more cumbersome implementation. This code may be able to be simplified further.
                 profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), new_image).apply());
-                Root.getActiveUser().setImageFN("file:" + selected.getPath());
+                User.active().setImageFN("file:" + selected.getPath());
             }
         });
         Button resetToDefault = new Button("Reset to Default");
         resetToDefault.setOnAction(event -> {
             pictureInvalidMessage.setText("");
-            Root.getActiveUser().setImageFN("file:" + new java.io.File(Address.fromRootAddr("resources", "default_user.png")).getPath());
-            Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new Image(Root.getActiveUser().getImageFN())).apply().getFill());
+            User.active().setImageFN("file:" + new java.io.File(Address.fromRootAddr("resources", "default_user.png")).getPath());
+            Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new Image(User.active().getImageFN())).apply().getFill());
         });
         profilePicture.getChildren().addAll(ppPrompt, picture, browse, resetToDefault, pictureInvalidMessage);
 
@@ -254,9 +248,9 @@ public class AcctSettings extends Stage {
         justMe.setToggleGroup(ipGroup);
         classmatesAndInstructorsOnly.setToggleGroup(ipGroup);
         everyone.setToggleGroup(ipGroup);
-        int oldIPValue = Root.getActiveUser().getPictureVisibility();
+        int oldIPValue = User.active().getPictureVisibility();
         ipGroup.selectToggle(oldIPValue == 0 ? justMe : oldIPValue == 1 ? classmatesAndInstructorsOnly : everyone);
-        ipGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> Root.getActiveUser().setPictureVisibility(newValue == justMe ? 0 : newValue == classmatesAndInstructorsOnly ? 1 : 2));
+        ipGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> User.active().setPictureVisibility(newValue == justMe ? 0 : newValue == classmatesAndInstructorsOnly ? 1 : 2));
         VBox imagePermissions = new VBox(ipPrompt, justMe, classmatesAndInstructorsOnly, everyone);
         imagePermissions.setSpacing(10);
         imagePermissions.setPadding(new Insets(10, 10, 10, 60));

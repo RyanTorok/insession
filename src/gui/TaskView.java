@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import main.Root;
 import main.Size;
+import main.User;
 import main.UtilAndConstants;
 
 public abstract class TaskView extends ScrollPane {
@@ -66,7 +67,7 @@ public abstract class TaskView extends ScrollPane {
         minimizedDisplay = new HBox(screenshot ? new ImageView(new WritableImage(this.getContent().snapshot(new SnapshotParameters(), null).getPixelReader(), 0, 0, (int) this.getContent().getLayoutBounds().getWidth(), (int) this.getContent().getLayoutBounds().getHeight()))
             {{setPreserveRatio(true); setFitWidth(width); setFitHeight(height);}} //ImageView properties
             : placeholder) // initial case, get icon or saved placeholder, depending on TaskView subclass implementation
-            {{setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor())); setAlignment(screenshot ? Pos.TOP_LEFT : Pos.CENTER);}}; //HBox (with one element) properties
+            {{setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(User.active().getAccentColor())); setAlignment(screenshot ? Pos.TOP_LEFT : Pos.CENTER);}}; //HBox (with one element) properties
 
         minimizedDisplay.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             TaskView view = TaskView.this;

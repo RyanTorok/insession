@@ -1,14 +1,11 @@
 package gui;
 
-import main.Root;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import main.UnknownZipCodeException;
+import main.User;
 import org.json.*;
 
 /**
@@ -33,14 +30,14 @@ public class WeatherManager {
             boolean success = false;
             int stationIndex = 0;
             while (!success) {
-                double[] latlon = Root.getActiveUser().getLatlon();
+                double[] latlon = User.active().getLatlon();
                 if (latlon == null || latlon[0] == 0 && latlon[1] == 0) {
                     try {
-                        Root.getActiveUser().setLocation(getZipCode());
+                        User.active().setLocation(getZipCode());
                     } catch (UnknownZipCodeException e) {
-                        Root.getActiveUser().setLocation(77379);
+                        User.active().setLocation(77379);
                     }
-                    latlon = Root.getActiveUser().getLatlon();
+                    latlon = User.active().getLatlon();
                 }
 
                 URL api = new URL("https://api.weather.gov/");

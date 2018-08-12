@@ -71,7 +71,7 @@ public class NewUserWindow extends Pane {
                             break;
                         case 2: {
                             //valid user login
-                            Root.setActiveUser(userMaybe.getUser());
+                            User.setActive(userMaybe.getUser());
                             Root.getPortal().switchToMain();
                         }
                     }
@@ -121,7 +121,7 @@ public class NewUserWindow extends Pane {
                 user = newUser;
                 newUser.setPassword(status.getPasswordCombo().getEncryptedPassword());
                 newUser.setPasswordSalt(status.getPasswordCombo().getSalt());
-                Root.setActiveUser(newUser);
+                User.setActive(newUser);
                 main.switchToMain();
             }
         });
@@ -152,7 +152,7 @@ public class NewUserWindow extends Pane {
                 userPane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> userPane.setStyle("-fx-background-color: " + bgcStr));
                 userPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     user = u;
-                    Root.setActiveUser(u);
+                    User.setActive(u);
                     main.switchToMain();
                 });
                 userPane.setStyle("-fx-background-color: " + bgcStr);

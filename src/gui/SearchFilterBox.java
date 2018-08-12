@@ -8,15 +8,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import main.Root;
 import main.Size;
+import main.User;
 import main.UtilAndConstants;
 import searchengine.FilterSet;
 import searchengine.Identifier;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -29,6 +27,7 @@ public class SearchFilterBox extends VBox {
     private LocalDate datePickerLastDate;
     private final ToggleGroup dateConstraintGroup;
     private final VBox dateFilter;
+    private FilterSet.DateConstraint selectedDateConstraint = FilterSet.DateConstraint.NONE;
     private SearchModule wrapper;
 
     public SearchFilterBox(SearchModule wrapper) {
@@ -45,8 +44,8 @@ public class SearchFilterBox extends VBox {
         types.add("Settings");
         filterSets.add(new SearchFilterMenu("By Type", types));
         indexedClasses = new ArrayList<>();
-        indexedClasses.addAll(Root.getActiveUser().getClassesTeacher());
-        indexedClasses.addAll(Root.getActiveUser().getClassesStudent());
+        indexedClasses.addAll(User.active().getClassesTeacher());
+        indexedClasses.addAll(User.active().getClassesStudent());
         filterSets.add(new SearchFilterMenu("By Class", indexedClasses.stream().map(ClassPd::toString).collect(Collectors.toList())));
         filterSets.forEach(set -> {
             set.getFields().forEach(field -> field.checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -70,42 +69,62 @@ public class SearchFilterBox extends VBox {
 
         //date constraint filter
         dateConstraintGroup = new ToggleGroup();
-        dateConstraintGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> fireUpdate());
-        RadioButton on = new RadioButton("On"), after = new RadioButton("After"), before = new RadioButton("Before"), today = new RadioButton("Today"), thisWeek = new RadioButton("Past Week");
 
-        on.setTextFill(Color.WHITE);
-        on.setToggleGroup(dateConstraintGroup);
-        on.setOnAction(event -> datePicker.setValue(datePickerLastDate));
-
-        after.setTextFill(Color.WHITE);
-        after.setToggleGroup(dateConstraintGroup);
-        after.setOnAction(event -> datePicker.setValue(datePickerLastDate));
-
-        before.setTextFill(Color.WHITE);
-        before.setToggleGroup(dateConstraintGroup);
-        before.setOnAction(event -> datePicker.setValue(datePickerLastDate));
+        RadioButton today = new RadioButton("Today");
+        RadioButton thisWeek = new RadioButton("Past Week");
+        RadioButton on = new RadioButton("On");
+        RadioButton after = new RadioButton("After");
+        RadioButton before = new RadioButton("Before");
 
         today.setTextFill(Color.WHITE);
         today.setToggleGroup(dateConstraintGroup);
         today.setOnAction(event -> {
-            if (datePicker.getValue() != null)
-                datePickerLastDate = datePicker.getValue();
             datePicker.setValue(null);
+            selectedDateConstraint = FilterSet.DateConstraint.TODAY;
+            fireUpdate();
         });
 
         thisWeek.setTextFill(Color.WHITE);
         thisWeek.setToggleGroup(dateConstraintGroup);
         thisWeek.setOnAction(event -> {
-            if (datePicker.getValue() != null)
-                datePickerLastDate = datePicker.getValue();
             datePicker.setValue(null);
+            selectedDateConstraint = FilterSet.DateConstraint.PAST_WEEK;
+            fireUpdate();
         });
 
+        on.setTextFill(Color.WHITE);
+        on.setToggleGroup(dateConstraintGroup);
+        on.setOnAction(event -> {
+            datePicker.setValue(datePickerLastDate);
+            selectedDateConstraint = FilterSet.DateConstraint.ON;
+            fireUpdate();
+        });
+
+        after.setTextFill(Color.WHITE);
+        after.setToggleGroup(dateConstraintGroup);
+        after.setOnAction(event -> {
+            datePicker.setValue(datePickerLastDate);
+            selectedDateConstraint = FilterSet.DateConstraint.AFTER;
+            fireUpdate();
+        });
+
+        before.setTextFill(Color.WHITE);
+        before.setToggleGroup(dateConstraintGroup);
+        before.setOnAction(event -> {
+            datePicker.setValue(datePickerLastDate);
+            selectedDateConstraint = FilterSet.DateConstraint.BEFORE;
+            fireUpdate();
+        });
+
+
         datePicker = new DatePicker();
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> fireUpdate());
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            fireUpdate();
+            datePickerLastDate = datePicker.getValue();
+        });
 
         Text dateHeader = new Text("By Date") {{setFill(Color.WHITE); setFont(filterSets.get(0).getHeader().getFont());}};
-        Button resetDateFilter = new Button("Reset") {{setOnAction(event -> {dateConstraintGroup.selectToggle(null); datePicker.setValue(null);});}};
+        Button resetDateFilter = new Button("Reset") {{setOnAction(event -> {dateConstraintGroup.selectToggle(null); datePicker.setValue(null); datePickerLastDate = null;});}};
 
         dateFilter = new VBox(dateHeader, today, thisWeek, on, after, before, datePicker, resetDateFilter) {{setSpacing(filterSets.get(0).getSpacing());}};
 
@@ -150,13 +169,7 @@ public class SearchFilterBox extends VBox {
     }
 
     public FilterSet.DateConstraint getDateConstraint() {
-        int i = 0;
-        for (Toggle toggle : dateConstraintGroup.getToggles()) {
-            if (toggle.isSelected())
-                return FilterSet.DateConstraint.values()[i];
-            i++;
-        }
-        return FilterSet.DateConstraint.NONE;
+        return selectedDateConstraint;
     }
 
     public ArrayList<ClassPd> getIndexedClasses() {

@@ -11,8 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import main.Root;
 import main.Size;
+import main.User;
 import main.UtilAndConstants;
 
 public class UpdateWrapper extends GridPane {
@@ -37,7 +37,7 @@ public class UpdateWrapper extends GridPane {
             closeAnimation.setCycleCount(1);
             closeAnimation.setOnFinished(event1 -> {
                 holder.remove(UpdateWrapper.this);
-                Root.getActiveUser().getUpdates().remove(record.getChain());
+                User.active().getUpdates().remove(record.getChain());
                 //need to remove from server, too (TODO)
             });
             closeAnimation.play();

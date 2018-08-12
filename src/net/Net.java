@@ -8,8 +8,6 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 
 public class Net {
@@ -46,8 +44,8 @@ public class Net {
             BufferedReader readDone = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
             String in = readDone.readLine();
             if (in.contains("done")) {
-                main.Root.getActiveUser().setPassword(newCombo.getEncryptedPassword());
-                main.Root.getActiveUser().setPasswordSalt(newCombo.getSalt());
+                User.active().setPassword(newCombo.getEncryptedPassword());
+                User.active().setPasswordSalt(newCombo.getSalt());
                 return true;
             } else {
                 System.out.println(in);
@@ -138,10 +136,10 @@ public class Net {
 
     public static boolean syncSerFileUp() {
         try {
-            UserMaybe checkAccount = Login.loginSingle(main.Root.getActiveUser().getUsername(), urlEncode(main.Root.getActiveUser().getPassword()), false);
+            UserMaybe checkAccount = Login.loginSingle(User.active().getUsername(), urlEncode(User.active().getPassword()), false);
             if (checkAccount.getExistsCode() == 1) {
                 //user is valid
-                byte[] serFileBytes = main.Root.getActiveUser().getSerFileBytes();
+                byte[] serFileBytes = User.active().getSerFileBytes();
                 if (serFileBytes == null)
                     return false;
                 String data = "id=" + checkAccount.getUniqueID() +"&serfile=" + urlEncode(serFileBytes);
@@ -183,7 +181,7 @@ public class Net {
 
     public static User syncSerFileDown() {
         try {
-            UserMaybe checkAccount = Login.loginSingle(main.Root.getActiveUser().getUsername(), urlEncode(main.Root.getActiveUser().getPassword()), false);
+            UserMaybe checkAccount = Login.loginSingle(User.active().getUsername(), urlEncode(User.active().getPassword()), false);
             if (checkAccount.getExistsCode() == 2) {
                 return checkAccount.getUser();
             } else return null;

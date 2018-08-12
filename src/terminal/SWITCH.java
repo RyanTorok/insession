@@ -2,7 +2,6 @@ package terminal;
 
 import db.LoginException;
 import db.SQLMaster;
-import gui.NewUserWindow;
 import main.Root;
 import main.User;
 
@@ -22,7 +21,7 @@ public class SWITCH extends Command{
                 assertTokenCount(4, tokens, "username and password of destination account after \\l");
                 try {
                     User newUser = SQLMaster.login(tokens.get(2).getTokenLabel(), tokens.get(3).getTokenLabel());
-                    Root.setActiveUser(newUser);
+                    User.setActive(newUser);
                     Root.getPortal().clearStage();
                     Root.getPortal().switchToMain();
                 } catch (LoginException e) {
@@ -34,7 +33,7 @@ public class SWITCH extends Command{
             }
         }
         assertTokenCount(2, tokens, "username of destination account");
-        if (tokens.get(1).getTokenLabel().equals(Root.getActiveUser().getUsername())) {
+        if (tokens.get(1).getTokenLabel().equals(User.active().getUsername())) {
             throw new TerminalException("switch - user '" + tokens.get(1).getTokenLabel() + "' is already signed in.");
         }
         User newUser = User.read(tokens.get(1).getTokenLabel());

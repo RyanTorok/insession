@@ -15,7 +15,7 @@ public class FilterSet {
 
     //order here matters due to the implementation in SearchFilterBox.java
     public enum  DateConstraint {
-        TODAY, PAST_WEEK, ON, AFTER, BEFORE, NONE;
+        TODAY, PAST_WEEK, ON, AFTER, BEFORE, NONE
     }
 
     public FilterSet(SearchFilterBox box) {

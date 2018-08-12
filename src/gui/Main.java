@@ -1,8 +1,6 @@
 package gui;
 
-import classes.ClassPd;
-import classes.Course;
-import classes.Record;
+import classes.*;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -37,7 +35,6 @@ import searchengine.Indexable;
 import searchengine.QueryEngine;
 import terminal.Address;
 
-import javax.swing.text.Keymap;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -134,7 +131,7 @@ public class Main extends Application {
             Image iconImg = new Image(icon_path);
             primaryStage.getIcons().add(0, iconImg);
             primaryStage.setTitle("Paintbrush LMS");
-            Root.setActiveUser(user);
+            User.setActive(user);
             if (user == null || User.getSerCount() > 1) {
                 newUser();
             } else {
@@ -151,10 +148,10 @@ public class Main extends Application {
 
     public void switchToMain() {
 
-        keyMap = Root.getActiveUser().getKeyMap();
+        keyMap = User.active().getKeyMap();
 
         getPrimaryStage().setMaximized(false);
-        String title_name = Root.getActiveUser() != null && Root.getActiveUser().getFirst() != null ? Root.getActiveUser().getFirst() : "Guest";
+        String title_name = User.active() != null && User.active().getFirst() != null ? User.active().getFirst() : "Guest";
         getPrimaryStage().setTitle("Welcome, " + title_name + " - Paintbrush LMS");
         mainlogo = new Text("paintbrush.");
         mainlogo.setFont(CustomFonts.comfortaa_bold(60));
@@ -177,7 +174,7 @@ public class Main extends Application {
         getMenus()[2] = new BarMenu("Organizations", 2);
         getMenus()[3] = new BarMenu("Browse Lessons", 3);
         getMenus()[4] = new BarMenu("Community", 4);
-        BarMenu name = new BarMenu(Root.getActiveUser() == null || Root.getActiveUser().getUsername() == null ? "Not signed in" : Root.getActiveUser().getFirst() + " " + Root.getActiveUser().getLast(), -1);
+        BarMenu name = new BarMenu(User.active() == null || User.active().getUsername() == null ? "Not signed in" : User.active().getFirst() + " " + User.active().getLast(), -1);
         this.setName(name);
         for (BarMenu m : getMenus()
                 ) {
@@ -204,7 +201,7 @@ public class Main extends Application {
             }
         });
 
-        Image image = Root.getActiveUser().getAcctImage();
+        Image image = User.active().getAcctImage();
         Shape picture = new ShapeImage(new Circle(Size.lessWidthHeight(30)), image).apply();
         this.picture = picture;
         HBox menusWrapper = new HBox(menus[0], menus[1], menus[2], menus[3], menus[4]);
@@ -219,7 +216,7 @@ public class Main extends Application {
         top_bar = topbar;
         topbar.setSpacing(Size.width(35));
         topbar.setAlignment(Pos.TOP_LEFT);
-        String color = UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor());
+        String color = UtilAndConstants.colorToHex(User.active().getAccentColor());
         String borderWidth = ".67em";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(Size.insets(15));
@@ -233,7 +230,7 @@ public class Main extends Application {
         topBarScrollBar.setStartY(0);
         topBarScrollBar.setEndY(topBarScrollBar.getStartY());
         topBarScrollBar.setStrokeWidth(Size.lessWidthHeight(8));
-        topBarScrollBar.setStroke(UtilAndConstants.highlightColor(Root.getActiveUser().getAccentColor()));
+        topBarScrollBar.setStroke(UtilAndConstants.highlightColor(User.active().getAccentColor()));
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             if (state == SEARCH_STATE)
@@ -286,7 +283,7 @@ public class Main extends Application {
 
         //weather display
         weatherPane = new AnchorPane();
-        manager = new WeatherManager(Root.getActiveUser().getZipcode());
+        manager = new WeatherManager(User.active().getZipcode());
         getManager().update();
         Timeline weatherUpdateTimer = new Timeline(new KeyFrame(Duration.millis(300000), event -> updateWeather()));
         weatherUpdateTimer.setCycleCount(Animation.INDEFINITE);
@@ -390,7 +387,7 @@ public class Main extends Application {
         latestGrid.setHgap(Size.width(50));
         latestGrid.setVgap(Size.height(20));
 
-        ArrayList<Record> updates = Root.getActiveUser().getUpdates();
+        ArrayList<Record> updates = User.active().getUpdates();
 
         List<Record> r_announcements = updates.stream().filter(record -> record.getMenuPlacement() == Record.Sorting.Announcements).collect(Collectors.toList());
         List<Record> r_coming_up = updates.stream().filter(record -> record.getMenuPlacement() == Record.Sorting.Coming_Up).collect(Collectors.toList());
@@ -413,8 +410,8 @@ public class Main extends Application {
         contentPanes[1] = classLauncherGrid;
 
         List<ClassPd> allClasses = new ArrayList<>();
-        allClasses.addAll(Root.getActiveUser().getClassesTeacher());
-        allClasses.addAll(Root.getActiveUser().getClassesStudent());
+        allClasses.addAll(User.active().getClassesTeacher());
+        allClasses.addAll(User.active().getClassesStudent());
 
         ArrayList<ClassLauncher> launchers = new ArrayList<>();
         classLauncherGrid.setHgap(Size.width(40));
@@ -520,9 +517,9 @@ public class Main extends Application {
 
     private void setTemperatureDisplay() {
         if (getManager().getTempCelsius() == null) {
-            getTemperature().setText("----" + (char) 0x00B0 + (Root.getActiveUser().usesFahrenheit() ? "F" : "C"));
+            getTemperature().setText("----" + (char) 0x00B0 + (User.active().usesFahrenheit() ? "F" : "C"));
         } else {
-            if (Root.getActiveUser().usesFahrenheit()) {
+            if (User.active().usesFahrenheit()) {
                 getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
             } else {
                 getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
@@ -701,7 +698,7 @@ public class Main extends Application {
         Date date = new Date();
         if (getState() == SLEEP_STATE) {
             String time;
-            if (Root.getActiveUser().isClock24Hour())
+            if (User.active().isClock24Hour())
                 time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM d, YYYY  H:mm:ss").format(date);
             else
                 time = new SimpleDateFormat("EEEEEEEE, MMMMMMMMM d, YYYY  h:mm:ss aa").format(date);
@@ -835,6 +832,11 @@ public class Main extends Application {
         launchTaskView(new ClassView(classPd));
     }
 
+    public void launchClass(ClassPd pd, ClassItem item) {
+        assert state == BASE_STATE;
+        launchTaskView(new ClassView(pd, item));
+    }
+
     public void setPicture(Shape newShape) {
         this.picture = newShape;
     }
@@ -868,6 +870,7 @@ public class Main extends Application {
     public VBox getTitles() {
         return titles;
     }
+
 
     class BarMenu extends Text {
         int scrollPos;
@@ -960,7 +963,7 @@ public class Main extends Application {
 
             setPrefWidth(Size.width(200));
             setPrefHeight(Size.height(1000));
-            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(Root.getActiveUser().getAccentColor()));
+            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(User.active().getAccentColor()));
             //initial placement
             init = new TranslateTransition();
             init.setNode(this);
@@ -985,7 +988,7 @@ public class Main extends Application {
 
             menus = new ArrayList<>();
 
-            boolean signedIn = Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null;
+            boolean signedIn = User.active() != null && User.active().getUsername() != null;
             Menu openTerminal = new Menu("Open Terminal");
             Menu calendar = new Menu("Calendar");
             Menu grades = new Menu("My Grades");
@@ -1032,7 +1035,7 @@ public class Main extends Application {
                 sideBar.requestFocus();
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.NORMAL, name.getFont().getSize()));
                 closeSideBar();
-                if (Root.getActiveUser() != null && Root.getActiveUser().getUsername() != null) {
+                if (User.active() != null && User.active().getUsername() != null) {
                     UtilAndConstants.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED);
                     new AcctSettings().show();
                 }
@@ -1109,7 +1112,7 @@ public class Main extends Application {
             Color color;
 
             Menu(String text) {
-                color = Root.getActiveUser().getAccentColor();
+                color = User.active().getAccentColor();
                 String colorHex = UtilAndConstants.colorToHex(color);
                 setStyle("-fx-background-color: " + colorHex);
                 setPadding(Size.insets(15));

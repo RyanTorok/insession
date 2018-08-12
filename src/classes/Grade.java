@@ -2,6 +2,7 @@ package classes;
 
 import exceptions.Warning;
 import main.Student;
+import main.User;
 
 import java.awt.event.ActionEvent;
 
@@ -15,12 +16,18 @@ public class Grade extends Record {
     private double pointsPossible;
     private Assignment belongsTo;
     private int roundBehavior; // 0: nothing, 1: always round normally, 2: always floor, 3: always ceil
+    private GradeCategory category;
 
     public Grade(double lb, double ub,  double pointsPossible, Assignment belongsTo, boolean alwaysRound){
         acceptableRange = new double[2];
         acceptableRange[0] = Math.min(lb, ub);
         acceptableRange[1] = Math.max(lb, ub);
     }
+
+    public Grade(Double value) {
+        this.value = value;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         //notify all students in course of assignment change
@@ -60,5 +67,17 @@ public class Grade extends Record {
                 this.value = value;
             }
         }
+    }
+
+    public GradeCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(GradeCategory category) {
+        this.category = category;
+    }
+
+    public String getDisplayText(User active) {
+        return Double.toString(value); //TODO add support for user-level and class-level mnemonics
     }
 }

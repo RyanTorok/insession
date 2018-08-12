@@ -4,18 +4,15 @@ import classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import main.Root;
 import main.Size;
+import main.User;
 import main.UtilAndConstants;
 import net.PostEngine;
 
@@ -37,12 +34,18 @@ public class ClassView extends TaskView {
     private VBox postsList;
     private boolean displayPostTextOnSidebar = false;
     private StackPane postFiltersAndList;
+    private GradesBody gradesBody;
 
     public ClassView(ClassPd classPd) {
         super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
         this.classPd = classPd;
         Color color = classPd.getColor();
         textFill = UtilAndConstants.textFill(color == null ? Color.WHITE : color);
+    }
+
+    public ClassView(ClassPd pd, ClassItem item) {
+        this(pd);
+        //TODO navigate to item
     }
 
     @Override
@@ -180,11 +183,23 @@ public class ClassView extends TaskView {
 
     private VBox makeFilesSB() {
         List<SidebarHotLink> linksList = classPd.getActiveSidebarHotLinks();
-        return new VBox(linksList.toArray(new SidebarHotLink[linksList.size()]));
+        return new VBox(linksList.toArray(new SidebarHotLink[0]));
     }
 
     private VBox makeGradesSB() {
-        return new VBox();
+        VBox gradesSB = new VBox();
+
+        Spinner<Integer> markingPeriodSpinner = new Spinner<>();
+        markingPeriodSpinner.getValueFactory().setWrapAround(true);
+        markingPeriodSpinner.getValueFactory().setValue(School.active().getSchedule().currentMarkingPeriod());
+        StudentGrades grades = classPd.getGradebook().get(markingPeriodSpinner.getValue(), User.active());
+        classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, grades, gradesBody)));
+        markingPeriodSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            StudentGrades newGrades = classPd.getGradebook().get(newValue, User.active());
+            gradesSB.getChildren().clear();
+            classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, newGrades, gradesBody)));
+        });
+        return gradesSB;
     }
 
     private GridPane[] makeBodyPanes() {
@@ -200,7 +215,7 @@ public class ClassView extends TaskView {
     }
 
     private GridPane makeGradesPane() {
-        return new GridPane();
+        return new GradesBody();
     }
 
     public Color getTextFill() {

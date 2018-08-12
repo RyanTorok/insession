@@ -45,25 +45,25 @@ class Filter {
 
     private boolean timeMatches(Post post) {
         Identifier id = post.getIdentifier();
-        long secs = 86400;
+        long ms = 86400000;
         switch (timeStatus) {
             case TODAY: {
                 long now = System.currentTimeMillis();
-                long today = now - now % secs;
+                long today = now - now % ms;
                 long diff1 = id.getTime1() - today;
                 long diff2 = id.getTime2() - today;
-                return (diff1 > 0 && diff1 < secs) || (diff2 > 0 && diff2 < secs);
+                return (diff1 > 0 && diff1 < ms) || (diff2 > 0 && diff2 < ms);
             }
             case THIS_WEEK: {
-                Date idDate = new Date(id.getTime1() - id.getTime1() % secs);
+                Date idDate = new Date(id.getTime1() - id.getTime1() % ms);
                 long now = System.currentTimeMillis();
-                Date lastWeek = new Date(now - now % secs - secs * 7 - 1);
-                return idDate.after(lastWeek) || new Date(id.getTime2() - id.getTime2() % secs).after(lastWeek);
+                Date lastWeek = new Date(Math.max(0, now - (now % ms + ms * 7)));
+                return idDate.after(lastWeek) || new Date(id.getTime2() - id.getTime2() % ms).after(lastWeek);
             }
             case ON:
                 long diff1 = id.getTime1() - comparisonTime.getTime();
                 long diff2 = id.getTime2() - comparisonTime.getTime();
-                return (diff1 > 0 && diff1 < secs) || (diff2 > 0 && diff2 < secs);
+                return (diff1 > 0 && diff1 < ms) || (diff2 > 0 && diff2 < ms);
             case AFTER:
                 return new Date(id.getTime1()).after(comparisonTime) || new Date(id.getTime2()).after(comparisonTime);
             case BEFORE:

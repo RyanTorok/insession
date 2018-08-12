@@ -24,6 +24,9 @@ import java.util.HashSet;
 public abstract class User implements Classifiable, Serializable {
 
     static final long serialVersionUID = 42L;
+
+    private static User active = null;
+
     private String mac;
     private String username;
     private byte[] password;
@@ -83,6 +86,14 @@ public abstract class User implements Classifiable, Serializable {
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             return null;
         }
+    }
+
+    public static User active() {
+        return active;
+    }
+
+    public static void setActive(User user) {
+        active = user;
     }
 
     public String getUsername() {
@@ -460,7 +471,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public byte[] getSerFileBytes() {
-        File serFile = new File(Address.fromRootAddr("usr", Root.getActiveUser().getUsername() + ".ser"));
+        File serFile = new File(Address.fromRootAddr("usr", active().getUsername() + ".ser"));
         try {
             FileInputStream input = new FileInputStream(serFile);
             return input.readAllBytes();

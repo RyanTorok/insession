@@ -5,6 +5,10 @@ package classes;
  */
 public class School {
 
+    public static School active() {
+        return active;
+    }
+
     public MasterSchedule getSchedule() {
         return schedule;
     }

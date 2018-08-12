@@ -2,14 +2,13 @@ package net;
 
 import classes.ClassPd;
 import classes.Post;
-import main.Root;
+import main.User;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 
 import static net.Net.root;
 import static net.Net.urlEncode;
@@ -30,7 +29,7 @@ public class PostEngine implements Serializable {
     public void update() {
         try {
             //post data
-            String data = "id=" + Root.getActiveUser().getID() + "&username="+ Root.getActiveUser().getUsername() + "&password=" + urlEncode(Root.getActiveUser().getPassword()) + "&classId=" + belongsTo.getUniqueId();
+            String data = "id=" + User.active().getID() + "&username="+ User.active().getUsername() + "&password=" + urlEncode(User.active().getPassword()) + "&classId=" + belongsTo.getUniqueId();
             byte[] postData = data.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
             //start connection
