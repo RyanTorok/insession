@@ -240,6 +240,11 @@ public class UtilAndConstants {
                 (int) (color.getBlue() * 255));
     }
 
+    //returns an fxml string of the argument color and opacity. Note this format is incompatible with the highlightOnMouseOver() method.
+    public static String rgba(Color color, double opacity) {
+        return "rgba(" + color.getRed() * 255 + ", " + color.getGreen() * 255 + ", " + color.getBlue() * 255 + ", " + opacity + ")";
+    }
+
     public static Color textFill(Color background) {
         return textFill(background, 1.5);
     }
@@ -290,7 +295,12 @@ public class UtilAndConstants {
     }
 
     public static void highlightOnMouseOver(Node n) {
-
+        if (n instanceof Text && ((Text) n).getFill() instanceof Color) {
+            Color orig = (Color) ((Text) n).getFill();
+            n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> ((Text) n).setFill(highlightColor(orig)));
+            n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> ((Text) n).setFill(orig));
+            return;
+        }
         String oldStyle_ = n.getStyle();
         if (!oldStyle_.contains("-fx-background-color")) {
             if (n.getStyle() == null || n.getStyle().length() == 0)

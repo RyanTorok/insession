@@ -32,7 +32,10 @@ public class SearchFilterBox extends VBox {
 
     public SearchFilterBox(SearchModule wrapper) {
         this.wrapper = wrapper;
-        header = new Text("Filter Results") {{setFill(Color.WHITE); setFont(Font.font("Sans Serif", FontWeight.BOLD, Size.fontSize(20)));}};
+        header = new Text("Filter Results") {{
+            setFill(Color.WHITE);
+            setFont(Font.font("Sans Serif", FontWeight.BOLD, Size.fontSize(20)));
+        }};
         filterSets = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
         types.add("Files and Assignments");
@@ -123,15 +126,26 @@ public class SearchFilterBox extends VBox {
             datePickerLastDate = datePicker.getValue();
         });
 
-        Text dateHeader = new Text("By Date") {{setFill(Color.WHITE); setFont(filterSets.get(0).getHeader().getFont());}};
-        Button resetDateFilter = new Button("Reset") {{setOnAction(event -> {dateConstraintGroup.selectToggle(null); datePicker.setValue(null); datePickerLastDate = null;});}};
+        Text dateHeader = new Text("By Date") {{
+            setFill(Color.WHITE);
+            setFont(filterSets.get(0).getHeader().getFont());
+        }};
+        Button resetDateFilter = new Button("Reset") {{
+            setOnAction(event -> {
+                dateConstraintGroup.selectToggle(null);
+                datePicker.setValue(null);
+                datePickerLastDate = null;
+                selectedDateConstraint = FilterSet.DateConstraint.NONE;
+            });
+        }};
 
-        dateFilter = new VBox(dateHeader, today, thisWeek, on, after, before, datePicker, resetDateFilter) {{setSpacing(filterSets.get(0).getSpacing());}};
+        dateFilter = new VBox(dateHeader, today, thisWeek, on, after, before, datePicker, resetDateFilter) {{
+            setSpacing(filterSets.get(0).getSpacing());
+        }};
 
         getChildren().add(header);
         getChildren().addAll(filterSets);
         getChildren().add(dateFilter);
-
 
 
         setSpacing(Size.height(20));
@@ -146,13 +160,20 @@ public class SearchFilterBox extends VBox {
 
     public boolean isSelected(Identifier.Type type) {
         switch (type) {
-            case Class_Item:   return filterSets.get(0).getFields().get(0).checkBox.isSelected();
-            case Module:       return filterSets.get(0).getFields().get(1).checkBox.isSelected();
-            case Post:         return filterSets.get(0).getFields().get(2).checkBox.isSelected();
-            case Class:        return filterSets.get(0).getFields().get(3).checkBox.isSelected();
-            case Organization: return filterSets.get(0).getFields().get(4).checkBox.isSelected();
-            case Utility:      return filterSets.get(0).getFields().get(5).checkBox.isSelected();
-            case Setting:      return filterSets.get(0).getFields().get(6).checkBox.isSelected();
+            case Class_Item:
+                return filterSets.get(0).getFields().get(0).checkBox.isSelected();
+            case Module:
+                return filterSets.get(0).getFields().get(1).checkBox.isSelected();
+            case Post:
+                return filterSets.get(0).getFields().get(2).checkBox.isSelected();
+            case Class:
+                return filterSets.get(0).getFields().get(3).checkBox.isSelected();
+            case Organization:
+                return filterSets.get(0).getFields().get(4).checkBox.isSelected();
+            case Utility:
+                return filterSets.get(0).getFields().get(5).checkBox.isSelected();
+            case Setting:
+                return filterSets.get(0).getFields().get(6).checkBox.isSelected();
         }
         return false;
     }

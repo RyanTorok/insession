@@ -1,6 +1,5 @@
 package classes;
 
-import gui.Clock;
 import main.User;
 
 import java.awt.event.ActionListener;
@@ -35,7 +34,7 @@ public abstract class Record implements ActionListener, Serializable {
     }
 
     public void createUpdate(String record, User triggeredBy){
-        getHistory().add(new RecordEntry(triggeredBy, record, new Timestamp(Clock.currentSafeTime()), this, null));
+        getHistory().add(new RecordEntry(triggeredBy, record, new Timestamp(System.currentTimeMillis()), this, null));
     }
 
     public ArrayList<RecordEntry> getHistory() {

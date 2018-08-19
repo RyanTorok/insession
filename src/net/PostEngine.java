@@ -62,6 +62,8 @@ public class PostEngine implements Serializable {
     }
 
     public ArrayList<Post> getPosts() {
+        if (posts == null)
+            return new ArrayList<>();
         return posts;
     }
 

@@ -96,9 +96,7 @@ public abstract class TaskView extends ScrollPane {
 
     //resets the display to the actual contents.
     void expand() {
-        if (fullDisplay == null) {
-            initialize();
-        }
+        if (fullDisplay == null) initialize();
         setContent(fullDisplay);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         Root.getPortal().getSubtitle().setText(title);
@@ -106,7 +104,6 @@ public abstract class TaskView extends ScrollPane {
 
     protected void initialize() {
         fullDisplay = initDisplay();
-        fullDisplay.setPadding(Size.insets(10));
         fullDisplay.setStyle("-fx-background-color: white");
         fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth() + Size.width(5), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTop_bar().getLayoutBounds().getHeight() + Size.height(10));
     }

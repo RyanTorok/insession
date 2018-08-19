@@ -8,6 +8,7 @@ import gui.ZipMap;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import module.Module;
+import net.Net;
 import searchengine.SearchRecord;
 import searchengine.WatchRecord;
 import terminal.Address;
@@ -53,6 +54,7 @@ public abstract class User implements Classifiable, Serializable {
     private Timestamp serFileTimestamp = null;
     private String savedFileSeparator = null;
     private transient KeyMap keyMap;
+    private double sleepTime;
 
     public User(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -70,6 +72,7 @@ public abstract class User implements Classifiable, Serializable {
         this.classesTeacher = new HashSet<>();
         this.classesStudent = new HashSet<>();
         pictureVisibility = 0;
+        sleepTime = 300; //in seconds
     }
 
     protected User() {
@@ -481,7 +484,7 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public void syncSerFileWithServer() {
-        syncExternal(net.Net.syncSerFileDown());
+        syncExternal(Net.syncSerFileDown());
     }
 
     public void setPictureVisibility(int pictureVisibility) {
@@ -500,6 +503,18 @@ public abstract class User implements Classifiable, Serializable {
 
     public void setKeyMap(KeyMap keyMap) {
         this.keyMap = keyMap;
+    }
+
+    public double getSleepTime() {
+        if (sleepTime == 0.0) {
+            setSleepTime(300);
+            return 300;
+        }
+        return sleepTime;
+    }
+
+    public void setSleepTime(double sleepTime) {
+        this.sleepTime = sleepTime;
     }
 }
 

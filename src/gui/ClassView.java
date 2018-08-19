@@ -4,11 +4,16 @@ import classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.Size;
@@ -28,8 +33,11 @@ public class ClassView extends TaskView {
     private final ClassPd classPd;
     private HBox sideBarAndBody;
     private VBox[] sideBars;
-    private GridPane[] bodyPanes;
+    private Pane[] bodyPanes;
     private Color textFill;
+    private Color lighterTextFill;
+    private Color primary;
+    private Color lighter;
     private PostEngine postEngine;
     private VBox postsList;
     private boolean displayPostTextOnSidebar = false;
@@ -39,8 +47,10 @@ public class ClassView extends TaskView {
     public ClassView(ClassPd classPd) {
         super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
         this.classPd = classPd;
-        Color color = classPd.getColor();
-        textFill = UtilAndConstants.textFill(color == null ? Color.WHITE : color);
+        primary = classPd.getColor();
+        lighter = UtilAndConstants.highlightColor(primary).desaturate().desaturate();
+        textFill = UtilAndConstants.textFill(primary == null ? Color.WHITE : primary);
+        lighterTextFill = UtilAndConstants.textFill(lighter == null ? Color.WHITE : lighter);
     }
 
     public ClassView(ClassPd pd, ClassItem item) {
@@ -59,39 +69,57 @@ public class ClassView extends TaskView {
         VBox titleBar = makeTitleBar();
         sideBars = makeSideBars();
         bodyPanes = makeBodyPanes();
-        sideBarAndBody = new HBox(sideBars[0], bodyPanes[0]);
-        VBox root = new VBox(titleBar, sideBarAndBody);
-
-        return root;
+        sideBarAndBody = new HBox(sideBars[0], bodyPanes[0]) {{
+            setHgrow(bodyPanes[0], Priority.ALWAYS);
+        }};
+        return new VBox(titleBar, sideBarAndBody) {{
+            setVgrow(sideBarAndBody, Priority.ALWAYS);
+        }};
     }
 
     private VBox makeTitleBar() {
         HBox titleAndControls = new HBox();
 
         Tab posts = new Tab(0, "posts"),
-                files = new Tab(2, "files"),
-                grades = new Tab(1, "assignments and grades");
+                files = new Tab(1, "files"),
+                grades = new Tab(2, "assignments and grades");
 
-        HBox tabs = new HBox(posts, files, grades);
-        return new VBox(titleAndControls, tabs);
+        HBox tabs = new HBox(posts, files, grades) {{setSpacing(Size.width(20));}};
+        return new VBox(titleAndControls, tabs) {{
+            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(Color.LIGHTGRAY));
+        }};
     }
 
     private VBox[] makeSideBars() {
         VBox[] sidebars = {makePostsSB(), makeFilesSB(), makeGradesSB()};
         for (VBox sidebar : sidebars) {
             sidebar.setPrefWidth(Size.width(400));
+            sidebar.setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(lighter));
         }
         return sidebars;
     }
 
     private VBox makePostsSB() {
-        postEngine = new PostEngine(classPd);
+        postEngine = classPd.getPostEngine();
         List<Post> posts = postEngine.getPosts();
 
         VBox filters = makeFilters();
-        postsList = new VBox();
+        postsList = makePostsList();
         postFiltersAndList = new StackPane(filters, postsList);
         return new VBox(postFiltersAndList);
+    }
+
+    private VBox makePostsList() {
+        Text newThread = new Text("New Thread") {{
+            setFill(lighterTextFill);
+            UtilAndConstants.underlineOnMouseOver(this);
+            setFont(CustomFonts.comfortaa(16));
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newPost());
+        }};
+        HBox controls = new HBox();
+        return new VBox() {{
+            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(lighter));
+        }};
     }
 
     private VBox makeFilters() {
@@ -159,9 +187,11 @@ public class ClassView extends TaskView {
 
     private Pane makePostSBItem(Post post) {
         return new VBox() {{
-            getChildren().add(new Text(post.getTitle()));
+            getChildren().add(new Text(post.getTitle()) {{setFont(Font.font("Sans Serif", FontWeight.BOLD, Font.getDefault().getSize()));}});
             if (displayPostTextOnSidebar)
                 getChildren().add(new TextFlow(new Text(post.getText())));
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).fire(post));
+
         }};
     }
 
@@ -178,7 +208,6 @@ public class ClassView extends TaskView {
             i[0]++;
         });
         postFiltersAndList.getChildren().get(1).requestFocus();
-
     }
 
     private VBox makeFilesSB() {
@@ -188,26 +217,45 @@ public class ClassView extends TaskView {
 
     private VBox makeGradesSB() {
         VBox gradesSB = new VBox();
-
-        Spinner<Integer> markingPeriodSpinner = new Spinner<>();
-        markingPeriodSpinner.getValueFactory().setWrapAround(true);
-        markingPeriodSpinner.getValueFactory().setValue(School.active().getSchedule().currentMarkingPeriod());
-        StudentGrades grades = classPd.getGradebook().get(markingPeriodSpinner.getValue(), User.active());
+        School.initActiveDebug(); //TODO support school serialization
+        final int[] markingPd = {School.active().getSchedule().getCurrentMarkingPeriod()};
+        Text lArrow = new Text(Character.toString((char) 0x276e)) {{
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, --markingPd[0]));
+        }};
+        Text mpDisplay = new Text("  Grading Period " + markingPd[0] + "  ");
+        Text rArrow = new Text(Character.toString((char) 0x276f)) {{
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, ++markingPd[0]));
+            setVisible(false);
+        }};
+        UtilAndConstants.highlightOnMouseOver(lArrow);
+        UtilAndConstants.highlightOnMouseOver(rArrow);
+        TextFlow markingPeriodScroll = new TextFlow(lArrow, mpDisplay, rArrow);
+        StudentGrades grades = classPd.getGradebook().get(markingPd[0], User.active());
         classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, grades, gradesBody)));
-        markingPeriodSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            StudentGrades newGrades = classPd.getGradebook().get(newValue, User.active());
-            gradesSB.getChildren().clear();
-            classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, newGrades, gradesBody)));
-        });
+        gradesSB.getChildren().add(markingPeriodScroll);
         return gradesSB;
     }
 
-    private GridPane[] makeBodyPanes() {
-        return new GridPane[]{makePostsPane(), makeFilesPane(), makeGradesPane()};
+    private void shiftGradesSB(VBox gradesSB, int newValue) {
+        StudentGrades newGrades = classPd.getGradebook().get(newValue, User.active());
+        Node mps = gradesSB.getChildren().remove(0);
+        gradesSB.getChildren().clear();
+        gradesSB.getChildren().add(mps);
+        ObservableList<Node> arrowsAndHeader = ((TextFlow) mps).getChildren();
+        arrowsAndHeader.get(0).setVisible(true);
+        arrowsAndHeader.get(2).setVisible(true);
+        if (newValue <= 1) arrowsAndHeader.get(0).setVisible(false);
+        if (newValue >= School.active().getSchedule().getCurrentMarkingPeriod()) arrowsAndHeader.get(2).setVisible(false);
+        ((Text) arrowsAndHeader.get(1)).setText("  Grading Period " + newValue + "  ");
+        classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, newGrades, gradesBody)));
     }
 
-    private GridPane makePostsPane() {
-        return new GridPane();
+    private Pane[] makeBodyPanes() {
+        return new Pane[]{makePostsPane(), makeFilesPane(), makeGradesPane()};
+    }
+
+    private PostsBody makePostsPane() {
+        return new PostsBody(postEngine);
     }
 
     private GridPane makeFilesPane() {
@@ -226,17 +274,24 @@ public class ClassView extends TaskView {
         return classPd;
     }
 
-    private class Tab extends Pane {
+    public Color getLighterTextFill() {
+        return lighterTextFill;
+    }
+
+    private class Tab extends HBox {
 
         private int index;
         private Text text;
 
         Tab(int index, String text) {
             this.index = index;
-            this.text = new Text(text);
+            this.text = new Text(text) {{
+                setFont(Font.font(Size.fontSize(16)));
+            }};
             getChildren().add(this.text);
             UtilAndConstants.underlineOnMouseOver(this.text);
             this.text.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> switchPane(index));
+
         }
     }
 

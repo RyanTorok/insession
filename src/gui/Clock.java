@@ -72,31 +72,4 @@ public class Clock extends JLabel {
         updateOffset();
     }
 
-    public static long currentSafeTime() {
-        long ctm;
-        try {
-            ctm = getOnlineTime();
-            return ctm;
-        } catch (Exception e) {
-            long diffNanos = System.nanoTime() - timeOnStartup;
-            return CTMonStartup + diffNanos/1000000;
-        }
-    }
-
-    private static long getOnlineTime() throws IOException {
-        String url = "http://paintbrusheducation.com/logs/time";
-        long diff = System.nanoTime() - lastOnlineQuery;
-        if(diff < 5000000000l){
-            try {
-                //Thread.sleep((5000000000l-diff)/1000000);
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        lastOnlineQuery = System.nanoTime();
-        InetAddress connection = Inet6Address.getByName(url);
-        
-        return 1;
-    }
 }

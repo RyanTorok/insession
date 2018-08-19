@@ -139,11 +139,11 @@ public class KeyMap implements Serializable {
         return null; //should never get here
     }
 
-    public boolean fireEvent(KeyEvent event, int state, boolean negative) {
+    boolean fireEvent(KeyEvent event, int state, boolean negative) {
        return fireEvent(event, null, state, negative);
     }
 
-    public boolean fireEvent(KeyEvent event, Node target, int state, boolean homescreen) {
+    private boolean fireEvent(KeyEvent event, Node target, int state, boolean homescreen) {
         if (state == 0 || state < -10 || state > 10)
             throw new IllegalArgumentException("Illegal state parameter for event");
         KeyCombo gen = new KeyCombo(new HashSet<>(), event.getCode());

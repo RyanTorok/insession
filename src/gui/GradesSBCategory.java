@@ -14,7 +14,10 @@ import main.Root;
 import main.User;
 import main.UtilAndConstants;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -31,9 +34,11 @@ public class GradesSBCategory extends VBox {
     public GradesSBCategory(ClassPd pd, GradeCategory cat, StudentGrades allGrades, GradesBody counterpart) {
         this.pd = pd;
         this.counterpart = counterpart;
-        categoryTitle = new Text(cat.getName());
+        NumberFormat percentInstance = DecimalFormat.getPercentInstance();
+        percentInstance.setMaximumFractionDigits(2);
+        categoryTitle = new Text(cat.getName() + " - (" + percentInstance.format(cat.getWeight()) + ")");
         // downward facing triangle
-        dropArrow = new Text(Character.toString((char) 0x2bc6)) {
+        dropArrow = new Text(Character.toString((char) 0xfe40)) {
             {
                 Color orig = UtilAndConstants.textFill(pd.getColor());
                 setFill(orig);

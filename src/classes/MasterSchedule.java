@@ -1,15 +1,20 @@
 package classes;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 
 /**
  * Created by 11ryt on 7/13/2017.
  */
-public class MasterSchedule {
+public class MasterSchedule implements Serializable {
+
+    static final long serialVersionUID = 105L;
+
     private String scheduleCode;
     private ArrayList<MSClass> schedule;
     private int markingPeriods;
+    private int currentMarkingPeriod;
 
     public MasterSchedule(String scheduleRegex) {
         scheduleCode = scheduleRegex;
@@ -25,12 +30,17 @@ public class MasterSchedule {
         }
     }
 
+    MasterSchedule() {
+        //for debug only
+        currentMarkingPeriod = 6;
+    }
+
     private MSClass resolveClassRegex(String regex) {
         Long[] params = new Long[4];
         int paramIndex = 0;
         int lastborderindex = 0;
         for (int i = 0; i < regex.length(); i++) {
-            if(regex.charAt(i) == '(' || regex.charAt(i) == ','){
+            if (regex.charAt(i) == '(' || regex.charAt(i) == ',') {
                 params[paramIndex] = Long.parseLong(regex.substring(lastborderindex + 1, i));
                 paramIndex++;
                 lastborderindex = i;
@@ -55,7 +65,11 @@ public class MasterSchedule {
         return markingPeriods;
     }
 
-    public Integer currentMarkingPeriod() {
-        return -1; //TODO
+    public int getCurrentMarkingPeriod() {
+        return currentMarkingPeriod;
+    }
+
+    public void setMarkingPeriods(int markingPeriods) {
+        this.markingPeriods = markingPeriods;
     }
 }

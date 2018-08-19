@@ -13,22 +13,14 @@ import java.util.Map;
 
 public class Root {
 
-    private static Integer activeID;
-    private static Main activeFrame;
     private static UtilAndConstants utilAndConstants;
     private static Main portal;
     private static String macAddress;
+    private static Integer activeID;
 
 
     public static void main(String[] args) {
         String startupError = null;
-        /*try {
-           // SQL.connect();
-        } catch (OfflineException e) {
-            //TODO setup offline setup edge case handle
-            e.printStackTrace();
-        }*/
-        //utilAndConstants = SQL.initUtilAndConstants();
         try {
             macAddress = searchForMACAddress();
         } catch (Exception e) {

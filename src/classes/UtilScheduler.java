@@ -1,7 +1,7 @@
 package classes;
 
-import gui.Clock;
 import main.Student;
+import main.Time;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class UtilScheduler {
 
         public StudentSchedulePackage(Student student, StudentSchedule proposedSchedule) {
             this.student = student;
-            this.timeSubmitted = new Timestamp(Clock.currentSafeTime());
+            this.timeSubmitted = new Timestamp(Time.currentSafeTime());
         }
 
         Student getStudent() {

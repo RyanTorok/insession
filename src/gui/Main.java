@@ -49,6 +49,7 @@ public class Main extends Application {
     private int currentMenu = 0;
     private Text subtitle;
     private boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(java.awt.event.KeyEvent.VK_CAPS_LOCK);
+    private double lastInteractSecs = 0;
 
     public static final int BASE_STATE = 1;
     public static final int SLEEP_STATE = 2;
@@ -275,7 +276,16 @@ public class Main extends Application {
         clock.setFont(Font.font("Sans Serif", FontWeight.NORMAL, Size.fontSize(100)));
         date.setFill(Color.WHITE);
         date.setFont(Font.font("Sans Serif", FontWeight.NORMAL, Size.fontSize(45)));
-        Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> Main.this.updateTime()));
+        Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
+            Main.this.updateTime();
+            lastInteractSecs += 0.5;
+            if (lastInteractSecs >= User.active().getSleepTime() && state != SLEEP_STATE) {
+                quitTerminal();
+                closeSearchBar();
+                closeSideBar();
+                sleep();
+            }
+        }));
         clockTimeline.setCycleCount(Animation.INDEFINITE);
         clockTimeline.play();
         BorderPane sleepbody = new BorderPane();
@@ -369,7 +379,10 @@ public class Main extends Application {
             if (keyMap.fireEvent(event, state, homeScreen))  {
                 event.consume();
             }
+            lastInteractSecs = 0;
         });
+
+        primaryStage.addEventHandler(MouseEvent.ANY, event -> lastInteractSecs = 0);
 
         allMenusAndSearchBar.getChildren().add(searchBox);
         searchBox.setVisible(false);
@@ -497,6 +510,8 @@ public class Main extends Application {
     }
 
     private void closeSearchBar() {
+        if (state != SEARCH_STATE)
+            return;
         allMenusAndSearchBar.getChildren().get(0).setVisible(true);  //show menus
         allMenusAndSearchBar.getChildren().get(1).setVisible(false); //hide search box
         searchBox.collapse();
@@ -930,6 +945,8 @@ public class Main extends Application {
     }
 
     public void quitTerminal() {
+        if (state != TERMINAL_STATE)
+            return;
         getTerminal().exit();
         state = BASE_STATE;
         getTerminal().exit.setOnFinished(event -> {

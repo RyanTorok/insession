@@ -4,6 +4,7 @@ import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
 import main.Student;
 import main.User;
+import net.PostEngine;
 
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * Created by S507098 on 4/13/2017.
  */
 
-public class ClassPd implements Serializable {
+public class ClassPd extends MSClass implements Serializable {
 
     static final long serialVersionUID = 100L;
 
@@ -30,6 +31,7 @@ public class ClassPd implements Serializable {
     private String teacherLast;
     private long uniqueId;
     private Gradebook gradebook;
+    private PostEngine postEngine;
 
     public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, String teacherFirst, String teacherLast, long uniqueId) {
         this.castOf = castOf;
@@ -41,6 +43,8 @@ public class ClassPd implements Serializable {
         this.teacherLast = teacherLast;
         this.uniqueId = uniqueId;
         initSidebarHotLinks();
+        gradebook = new Gradebook();
+        postEngine = new PostEngine(this);
     }
 
     private void initSidebarHotLinks() {
@@ -59,6 +63,8 @@ public class ClassPd implements Serializable {
         setColor(Color.FORESTGREEN);
         setPeriodNo(4);
         initSidebarHotLinks();
+        gradebook = new Gradebook();
+        postEngine = new PostEngine(this);
     }
 
     public int getCapacity() {
@@ -170,5 +176,9 @@ public class ClassPd implements Serializable {
 
     public void setGradebook(Gradebook gradebook) {
         this.gradebook = gradebook;
+    }
+
+    public PostEngine getPostEngine() {
+        return postEngine;
     }
 }

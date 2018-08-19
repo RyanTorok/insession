@@ -21,7 +21,9 @@ class FilterBlock extends VBox {
     private final List<Filter> filters;
 
     FilterBlock(ClassView wrapper, String header, boolean multiple, List<Filter> filters) {
-        this.header = new Text(header);
+        this.header = new Text(header) {{
+            setFill(wrapper.getLighterTextFill());
+        }};
         options = new ArrayList<>();
         toggleGroup = new ToggleGroup();
         if (multiple)

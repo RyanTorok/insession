@@ -8,7 +8,9 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.stream.Collectors;
 
 public class Net {
 
@@ -105,6 +107,34 @@ public class Net {
             return new CreateAccountStatus(-2, null);
         }
         return new CreateAccountStatus(-2, null);
+    }
+
+    public static URL makeURL(String... names) {
+        try {
+            return new URL(new URL(ROOT_URL), Arrays.stream(names).map(directory -> directory + "/").collect(Collectors.joining()));
+        } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return null;
+        }
+    }
+
+    public static long getOnlineTime() {
+        try {
+            URL url = makeURL("util", "time.php");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setInstanceFollowRedirects(false);
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Length", Integer.toString(0));
+            conn.setUseCaches(false);
+            conn.setDoOutput(true);
+            BufferedReader readTime = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+            long time = Long.parseLong(readTime.readLine().trim());
+            readTime.close();
+            return time;
+        } catch (IOException | NumberFormatException e) {
+            return -1;
+        }
     }
 
     public static class CreateAccountStatus {
