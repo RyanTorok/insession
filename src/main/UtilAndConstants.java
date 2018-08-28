@@ -233,36 +233,6 @@ public class UtilAndConstants {
         this.attendanceStartTime = attendanceStartTime;
     }
 
-    public static String colorToHex(Color color) {
-        return String.format("#%02X%02X%02X",
-                (int) (color.getRed() * 255),
-                (int) (color.getGreen() * 255),
-                (int) (color.getBlue() * 255));
-    }
-
-    //returns an fxml string of the argument color and opacity. Note this format is incompatible with the highlightOnMouseOver() method.
-    public static String rgba(Color color, double opacity) {
-        return "rgba(" + color.getRed() * 255 + ", " + color.getGreen() * 255 + ", " + color.getBlue() * 255 + ", " + opacity + ")";
-    }
-
-    public static Color textFill(Color background) {
-        return textFill(background, 1.5);
-    }
-
-    public static Color textFill(Color background, double threshold) {
-        return background.getRed() + background.getGreen() + background.getBlue() > threshold ? Color.BLACK : Color.WHITE;
-    }
-
-    public static void fireMouse(Node n, EventType<MouseEvent> type) {
-        n.fireEvent(new MouseEvent(type, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
-    }
-
-    public static Color highlightColor(Color c) {
-        if (c.equals(Color.BLACK))
-            return Color.web("#505050");
-        else return textFill(c).equals(Color.WHITE) ? c.brighter() : c.darker();
-    }
-
     public double getScreenHeight() {
         return screenHeight;
     }
@@ -277,55 +247,6 @@ public class UtilAndConstants {
 
     public void setScreenWidth(double screenWidth) {
         this.screenWidth = screenWidth;
-    }
-
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
-    }
-
-
-    public static class Filler extends Region {
-        public Filler() {
-            HBox.setHgrow(this, Priority.ALWAYS);
-        }
-    }
-
-    public static void highlightOnMouseOver(Node n) {
-        if (n instanceof Text && ((Text) n).getFill() instanceof Color) {
-            Color orig = (Color) ((Text) n).getFill();
-            n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> ((Text) n).setFill(highlightColor(orig)));
-            n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> ((Text) n).setFill(orig));
-            return;
-        }
-        String oldStyle_ = n.getStyle();
-        if (!oldStyle_.contains("-fx-background-color")) {
-            if (n.getStyle() == null || n.getStyle().length() == 0)
-                n.setStyle("-fx-background-color: #000000");
-            else n.setStyle(n.getStyle() + "; -fx-background-color: #000000");
-            oldStyle_ = n.getStyle();
-        }
-        final String oldStyle = oldStyle_;
-        int colorIndex = n.getStyle().indexOf("-fx-background-color: #") + 22;
-        String oldColorStr = n.getStyle().substring(colorIndex, colorIndex + 7);
-        Color oldColor = Color.web(oldColorStr);
-        Color newColor = UtilAndConstants.highlightColor(oldColor);
-        String newColorStr = UtilAndConstants.colorToHex(newColor);
-        String newStyle = oldStyle.replaceAll("-fx-background-color: #......", "-fx-background-color: " + newColorStr);
-        n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-            n.setStyle(oldStyle);
-        });
-        n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-            n.setStyle(newStyle);
-        });
-    }
-
-    public static void underlineOnMouseOver(Text text) {
-        text.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> text.setUnderline(true));
-        text.addEventHandler(MouseEvent.MOUSE_EXITED, event -> text.setUnderline(false));
     }
 
     public static String[] parsePHPDataOutBase64(String base64, int expectedLength) {

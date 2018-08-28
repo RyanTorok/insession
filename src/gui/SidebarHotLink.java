@@ -4,7 +4,8 @@ import classes.ClassPd;
 import filesystem.FileSystemElement;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import main.UtilAndConstants;
+import main.Colors;
+import main.Events;
 
 public class SidebarHotLink extends HBox {
 
@@ -18,8 +19,8 @@ public class SidebarHotLink extends HBox {
         this.target = target;
         text = new Text(name);
         getChildren().add(text);
-        setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(UtilAndConstants.highlightColor(wrapper.getColor())));
-        UtilAndConstants.highlightOnMouseOver(this);
+        setStyle("-fx-background-color: " + Colors.colorToHex(Colors.highlightColor(wrapper.getColor())));
+        Events.highlightOnMouseOver(this);
     }
 
     public boolean isActive() {

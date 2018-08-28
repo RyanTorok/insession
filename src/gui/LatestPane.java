@@ -11,8 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import main.Colors;
+import main.Layouts;
 import main.Size;
-import main.UtilAndConstants;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class LatestPane extends VBox {
         header.setFill(Color.WHITE);
         getChildren().add(new HBox(header) {
             {
-                getChildren().add(new UtilAndConstants.Filler());
+                getChildren().add(new Layouts.Filler());
                 setPadding(Size.insets(20));
                 getChildren().add(new Text(Character.toString((char) 8635)) {
                     {
@@ -67,7 +68,7 @@ public class LatestPane extends VBox {
                                 }
                             });
                         });
-                        setOnMouseEntered(event -> setFill(refreshColor.equals(Color.WHITE) ? UtilAndConstants.highlightColor((Color) getFill()) : (Color) getFill()));
+                        setOnMouseEntered(event -> setFill(refreshColor.equals(Color.WHITE) ? Colors.highlightColor((Color) getFill()) : (Color) getFill()));
                         setOnMouseExited(event -> setFill(refreshColor));
                     }
                 });

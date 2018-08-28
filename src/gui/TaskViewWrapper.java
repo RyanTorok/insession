@@ -12,9 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import main.Events;
 import main.Root;
 import main.Size;
-import main.UtilAndConstants;
 
 import java.util.ArrayList;
 
@@ -462,6 +462,6 @@ public class TaskViewWrapper extends StackPane {
         stack();
         view.setDy(-401);
         view.setDragged(true);
-        UtilAndConstants.fireMouse(view, MouseEvent.MOUSE_RELEASED);
+        Events.fireMouse(view, MouseEvent.MOUSE_RELEASED);
     }
 }

@@ -11,9 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import main.Size;
-import main.User;
-import main.UtilAndConstants;
+import main.*;
 
 public class UpdateWrapper extends GridPane {
     public UpdateWrapper(RecordEntry record, LatestPane holder) {
@@ -30,7 +28,7 @@ public class UpdateWrapper extends GridPane {
         closeX.setFont(Font.font("Sans Serif", Size.fontSize(20)));
         Color fill = Color.WHITE;
         closeX.setFill(fill);
-        closeX.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> closeX.setFill(UtilAndConstants.highlightColor((Color) closeX.getFill())));
+        closeX.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> closeX.setFill(Colors.highlightColor((Color) closeX.getFill())));
         closeX.addEventHandler(MouseEvent.MOUSE_EXITED, event -> closeX.setFill(fill));
         closeX.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             Timeline closeAnimation = new Timeline(new KeyFrame(Duration.millis(200), event1 -> UpdateWrapper.this.setMaxHeight(0)));
@@ -47,7 +45,7 @@ public class UpdateWrapper extends GridPane {
                 record.fireEvent();
         });
         this.setStyle("-fx-background-color: #000000;");
-        UtilAndConstants.highlightOnMouseOver(this);
+        Events.highlightOnMouseOver(this);
         add(message, 0, 0);
         add(classTag, 0, 1);
         Region filler = new Region();

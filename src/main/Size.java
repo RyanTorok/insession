@@ -29,7 +29,7 @@ public class Size {
         return new Insets(height(top), width(right), height(bottom), width(left));
     }
 
-    public static Insets insets(double vertical, double horizontal) {
+    public static Insets insets(double horizontal, double vertical) {
         double w = width(horizontal), h = height(vertical);
         return new Insets(h, w, h, w);
     }

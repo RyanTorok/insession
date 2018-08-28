@@ -137,7 +137,7 @@ public class NewUserWindow extends Pane {
                 existingUser = existingUser || !u.getFirst().equals("Preview as Guest");
                 Text user_name = new Text(u.getFirst() + " " + u.getLast());
                 Color backgd = u.getAccentColor();
-                Color whiteBlack = UtilAndConstants.textFill(backgd, 2);
+                Color whiteBlack = Colors.textFill(backgd, 2);
                 user_name.setFill(whiteBlack);
                 user_name.setFont(Font.font("Sans Serif", FontWeight.NORMAL, 20));
                 Text user_username = new Text(u.getUsername());
@@ -145,9 +145,9 @@ public class NewUserWindow extends Pane {
                 user_username.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 20));
                 VBox names = new VBox(user_name, user_username);
                 HBox userPane = new HBox(names);
-                Color lightBackgd = UtilAndConstants.highlightColor(backgd);
-                final String bgcStr = UtilAndConstants.colorToHex(backgd);
-                final String lbgStr = UtilAndConstants.colorToHex(lightBackgd);
+                Color lightBackgd = Colors.highlightColor(backgd);
+                final String bgcStr = Colors.colorToHex(backgd);
+                final String lbgStr = Colors.colorToHex(lightBackgd);
                 userPane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> userPane.setStyle("-fx-background-color: " + lbgStr));
                 userPane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> userPane.setStyle("-fx-background-color: " + bgcStr));
                 userPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

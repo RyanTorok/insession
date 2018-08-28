@@ -16,9 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import main.Size;
-import main.User;
-import main.UtilAndConstants;
+import main.*;
 import net.PostEngine;
 
 import java.util.ArrayList;
@@ -48,9 +46,9 @@ public class ClassView extends TaskView {
         super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
         this.classPd = classPd;
         primary = classPd.getColor();
-        lighter = UtilAndConstants.highlightColor(primary).desaturate().desaturate();
-        textFill = UtilAndConstants.textFill(primary == null ? Color.WHITE : primary);
-        lighterTextFill = UtilAndConstants.textFill(lighter == null ? Color.WHITE : lighter);
+        lighter = Colors.highlightColor(primary).desaturate().desaturate();
+        textFill = Colors.textFill(primary == null ? Color.WHITE : primary);
+        lighterTextFill = Colors.textFill(lighter == null ? Color.WHITE : lighter);
     }
 
     public ClassView(ClassPd pd, ClassItem item) {
@@ -65,7 +63,6 @@ public class ClassView extends TaskView {
 
     @Override
     protected Pane initDisplay() {
-
         VBox titleBar = makeTitleBar();
         sideBars = makeSideBars();
         bodyPanes = makeBodyPanes();
@@ -86,7 +83,7 @@ public class ClassView extends TaskView {
 
         HBox tabs = new HBox(posts, files, grades) {{setSpacing(Size.width(20));}};
         return new VBox(titleAndControls, tabs) {{
-            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(Color.LIGHTGRAY));
+            setStyle("-fx-background-color: " + Colors.colorToHex(Color.LIGHTGRAY));
         }};
     }
 
@@ -94,7 +91,7 @@ public class ClassView extends TaskView {
         VBox[] sidebars = {makePostsSB(), makeFilesSB(), makeGradesSB()};
         for (VBox sidebar : sidebars) {
             sidebar.setPrefWidth(Size.width(400));
-            sidebar.setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(lighter));
+            sidebar.setStyle("-fx-background-color: " + Colors.colorToHex(lighter));
         }
         return sidebars;
     }
@@ -112,13 +109,13 @@ public class ClassView extends TaskView {
     private VBox makePostsList() {
         Text newThread = new Text("New Thread") {{
             setFill(lighterTextFill);
-            UtilAndConstants.underlineOnMouseOver(this);
+            Events.underlineOnMouseOver(this);
             setFont(CustomFonts.comfortaa(16));
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newPost());
         }};
         HBox controls = new HBox();
         return new VBox() {{
-            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(lighter));
+            setStyle("-fx-background-color: " + Colors.colorToHex(lighter));
         }};
     }
 
@@ -227,8 +224,8 @@ public class ClassView extends TaskView {
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, ++markingPd[0]));
             setVisible(false);
         }};
-        UtilAndConstants.highlightOnMouseOver(lArrow);
-        UtilAndConstants.highlightOnMouseOver(rArrow);
+        Events.highlightOnMouseOver(lArrow);
+        Events.highlightOnMouseOver(rArrow);
         TextFlow markingPeriodScroll = new TextFlow(lArrow, mpDisplay, rArrow);
         StudentGrades grades = classPd.getGradebook().get(markingPd[0], User.active());
         classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, grades, gradesBody)));
@@ -289,7 +286,7 @@ public class ClassView extends TaskView {
                 setFont(Font.font(Size.fontSize(16)));
             }};
             getChildren().add(this.text);
-            UtilAndConstants.underlineOnMouseOver(this.text);
+            Events.underlineOnMouseOver(this.text);
             this.text.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> switchPane(index));
 
         }

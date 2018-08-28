@@ -16,8 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import main.Size;
-import main.UtilAndConstants;
+import main.*;
 import searchengine.*;
 
 import java.sql.Timestamp;
@@ -101,10 +100,10 @@ public class SearchModule extends VBox {
 
     private void setFillerSelected(int i) {
         if (fillersIndex >= 0)
-            UtilAndConstants.fireMouse(textFillers.getChildren().get(fillersIndex), MouseEvent.MOUSE_EXITED);
+            Events.fireMouse(textFillers.getChildren().get(fillersIndex), MouseEvent.MOUSE_EXITED);
         if (i < 0) searchBox.setText(lastActualTyped);
         else {
-            UtilAndConstants.fireMouse(textFillers.getChildren().get(i), MouseEvent.MOUSE_ENTERED);
+            Events.fireMouse(textFillers.getChildren().get(i), MouseEvent.MOUSE_ENTERED);
             if (fillersIndex < 0)
                 lastActualTyped = searchBox.getText();
 
@@ -133,10 +132,10 @@ public class SearchModule extends VBox {
             textFillerStrings.add(full);
             HBox box = new HBox(new Text(full.substring(0, orig.length())){{setFont(Font.font("Sans Serif", FontWeight.BOLD, Size.fontSize(16)));}}, new Text(full.substring(orig.length())) {{setFont(Font.font("Sans Serif", Size.fontSize(16)));}});
             box.setStyle("-fx-background-color: #ffffff");
-            UtilAndConstants.highlightOnMouseOver(box);
+            Events.highlightOnMouseOver(box);
             box.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
                 if (textFillers.getChildren().indexOf(box) == fillersIndex && lastChangeFromUser) {
-                    String newColorStr = UtilAndConstants.colorToHex(UtilAndConstants.highlightColor(Color.WHITE));
+                    String newColorStr = Colors.colorToHex(Colors.highlightColor(Color.WHITE));
                     String newStyle = box.getStyle().replaceAll("-fx-background-color: #......", "-fx-background-color: " + newColorStr);
                     box.setStyle(newStyle);
                     event.consume(); //prevent highlightOnMouseOver() from triggering after this event
@@ -224,7 +223,7 @@ public class SearchModule extends VBox {
             this.id = id;
             double size = Size.fontSize(15);
             setStyle("-fx-background-color: #000000");
-            UtilAndConstants.highlightOnMouseOver(this);
+            Events.highlightOnMouseOver(this);
             Text title = new Text(id.getName());
             title.setFill(Color.WHITE);
             title.setFont(Font.font(size * 3/2));
@@ -268,7 +267,7 @@ public class SearchModule extends VBox {
                     break;
                 case Utility: break;
             }
-            getChildren().add(new UtilAndConstants.Filler());
+            getChildren().add(new Layouts.Filler());
             getChildren().add(dates);
 
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -306,7 +305,7 @@ public class SearchModule extends VBox {
         }
 
         void collapse() {
-            getChildren().set(1, new UtilAndConstants.Filler());
+            getChildren().set(1, new Layouts.Filler());
             expanded = false;
         }
 

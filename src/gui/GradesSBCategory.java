@@ -10,14 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import main.Root;
-import main.User;
-import main.UtilAndConstants;
+import main.*;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -40,23 +37,23 @@ public class GradesSBCategory extends VBox {
         // downward facing triangle
         dropArrow = new Text(Character.toString((char) 0xfe40)) {
             {
-                Color orig = UtilAndConstants.textFill(pd.getColor());
+                Color orig = Colors.textFill(pd.getColor());
                 setFill(orig);
                 addEventHandler(MouseEvent.MOUSE_ENTERED, event -> setFill(orig.brighter()));
                 addEventHandler(MouseEvent.MOUSE_EXITED, event -> setFill(orig));
             }
         };
         this.allGrades = allGrades;
-        HBox header = new HBox(categoryTitle, new UtilAndConstants.Filler(), dropArrow);
+        HBox header = new HBox(categoryTitle, new Layouts.Filler(), dropArrow);
         this.getChildren().add(header);
         entries = new ArrayList<>();
         entries.addAll(allGrades.getGrades().entrySet().stream().filter(entry -> entry.getValue().getCategory().equals(cat)).map(entry -> new HBox() {{
-            Text name = new Text(entry.getKey().getName()) {{setFill(UtilAndConstants.textFill(pd.getColor()));}};
+            Text name = new Text(entry.getKey().getName()) {{setFill(Colors.textFill(pd.getColor()));}};
             Text grade = new Text(entry.getValue().getDisplayText(User.active()));
-            getChildren().addAll(name, new UtilAndConstants.Filler(), grade);
+            getChildren().addAll(name, new Layouts.Filler(), grade);
 
-            UtilAndConstants.underlineOnMouseOver(name);
-            UtilAndConstants.underlineOnMouseOver(grade);
+            Events.underlineOnMouseOver(name);
+            Events.underlineOnMouseOver(grade);
             name.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 switch (entry.getKey().getType()) {
                     case Housed:

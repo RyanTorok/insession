@@ -2,38 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/gui/PostsBody.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Time.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Colors.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Events.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Layouts.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MSClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/MSClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MasterSchedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/MasterSchedule.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$Sorting.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$Sorting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/School.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/School.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler$StudentSchedulePackage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler$StudentSchedulePackage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$2$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$11.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$7$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$7$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$8$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$8$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$9$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$9$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Clock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Clock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$2$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/KeyMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/KeyMap.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" afterDir="false" />
@@ -42,44 +48,50 @@
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$3$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$3$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SidebarHotLink.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/SidebarHotLink.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Root.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Root.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants$Filler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants$Filler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/UpdateWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/UpdateWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Size.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/Size.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants$Filler.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Net$CreateAccountStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/Net$CreateAccountStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Net$UserMaybe.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/Net$UserMaybe.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Net.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/Net.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/PostEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/PostEngine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/ClassPd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/ClassPd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/MSClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/MSClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/MasterSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/MasterSchedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Record.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/UtilScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/UtilScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AcctSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AcctSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/ClassView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ClassView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Clock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Clock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/FilterBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/FilterBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/GradesSBCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GradesSBCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/KeyMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/KeyMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/LatestPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/LatestPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SearchFilterBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchFilterBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/NewUserWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/NewUserWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/PostsBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PostsBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SearchModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SidebarHotLink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SidebarHotLink.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/TaskView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/TaskView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Root.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/UpdateWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UpdateWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Size.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Size.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/UtilAndConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/UtilAndConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/net/Net.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/Net.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/PostEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/PostEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
     </list>
@@ -112,45 +124,45 @@
     <session id="-851402937">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="28" />
+          <entry key="project.closed" value="33" />
           <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.15" value="3" />
+          <entry key="project.open.time.15" value="5" />
           <entry key="project.open.time.16" value="3" />
           <entry key="project.open.time.17" value="3" />
           <entry key="project.open.time.18" value="5" />
           <entry key="project.open.time.19" value="5" />
           <entry key="project.open.time.20" value="4" />
           <entry key="project.open.time.21" value="5" />
-          <entry key="project.open.time.22" value="2" />
-          <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.22" value="4" />
+          <entry key="project.open.time.26" value="2" />
           <entry key="project.open.time.27" value="1" />
-          <entry key="project.opened" value="33" />
+          <entry key="project.opened" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="62" />
-          <entry key="java" value="25141" />
+          <entry key="java" value="25953" />
           <entry key="txt" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="25141" />
+          <entry key="JAVA" value="25953" />
           <entry key="PLAIN_TEXT" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="1" />
+          <entry key="class" value="2" />
           <entry key="gitignore" value="1" />
-          <entry key="java" value="117" />
+          <entry key="java" value="126" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="117" />
+          <entry key="CLASS" value="2" />
+          <entry key="JAVA" value="126" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -158,27 +170,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="150" column="48" lean-forward="true" selection-start-line="150" selection-start-column="48" selection-end-line="150" selection-end-column="48" />
-              <folding>
-                <element signature="e#10779#10780#0" expanded="true" />
-                <element signature="e#10827#10828#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="570">
+              <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/ClassPd.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="66" column="8" lean-forward="true" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="8" />
+            <state relative-caret-position="270">
+              <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
               <folding>
-                <element signature="e#4818#4819#0" expanded="true" />
-                <element signature="e#4851#4852#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -187,20 +194,65 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="242" column="56" selection-start-line="242" selection-start-column="56" selection-end-line="242" selection-end-column="56" />
+            <state relative-caret-position="2010">
+              <caret line="160" column="4" selection-start-line="160" selection-start-column="4" selection-end-line="160" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
+        <entry file="file://$PROJECT_DIR$/src/main/Events.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="75" column="56" lean-forward="true" selection-start-line="75" selection-start-column="56" selection-end-line="75" selection-end-column="56" />
+            <state relative-caret-position="150">
+              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/Layouts.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#216#217#0" expanded="true" />
+                <element signature="e#276#277#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/Colors.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+              <folding>
+                <element signature="e#337#338#0" expanded="true" />
+                <element signature="e#385#386#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/classes/ClassPd.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1890">
+              <caret line="186" column="43" selection-start-line="186" selection-start-column="43" selection-end-line="186" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1425">
+              <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -208,46 +260,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/PostEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/Form.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
-              <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/UtilScheduler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="80" column="60" selection-start-line="80" selection-start-column="60" selection-end-line="80" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/Record.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/Net.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
-              <caret line="132" selection-start-line="132" selection-end-line="132" />
+            <state relative-caret-position="930">
+              <caret line="81" selection-start-line="81" selection-end-line="81" />
             </state>
           </provider>
         </entry>
@@ -256,7 +270,7 @@
         <entry file="file://$PROJECT_DIR$/src/gui/SidebarHotLink.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="15" column="83" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="83" />
+              <caret line="16" column="83" selection-start-line="16" selection-start-column="83" selection-end-line="16" selection-end-column="83" />
             </state>
           </provider>
         </entry>
@@ -276,8 +290,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>address.r</find>
-      <find>Address.roo</find>
       <find>system</find>
       <find>color</find>
       <find>scheduleatfixedrate</find>
@@ -306,6 +318,8 @@
       <find>padding</find>
       <find>postsbody</find>
       <find>lighter</find>
+      <find>border</find>
+      <find>full</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -318,10 +332,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/classes/TimeStatus.java" />
-        <option value="$PROJECT_DIR$/src/main/Size.java" />
-        <option value="$PROJECT_DIR$/src/gui/ZipMap.java" />
-        <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
         <option value="$PROJECT_DIR$/src/terminal/Address.java" />
         <option value="$PROJECT_DIR$/src/gui/CustomFonts.java" />
         <option value="$PROJECT_DIR$/src/main/DefaultUser.java" />
@@ -336,7 +346,6 @@
         <option value="$PROJECT_DIR$/src/classes/CourseSchedule.java" />
         <option value="$PROJECT_DIR$/src/gui/SidebarHotLink.java" />
         <option value="$PROJECT_DIR$/src/gui/IllegalKeyComboException.java" />
-        <option value="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" />
         <option value="$PROJECT_DIR$/src/gui/Gradebook.java" />
         <option value="$PROJECT_DIR$/src/classes/StudentGrades.java" />
         <option value="$PROJECT_DIR$/src/classes/GradeCategory.java" />
@@ -362,13 +371,18 @@
         <option value="$PROJECT_DIR$/src/main/Time.java" />
         <option value="$PROJECT_DIR$/src/classes/Record.java" />
         <option value="$PROJECT_DIR$/src/main/Root.java" />
+        <option value="$PROJECT_DIR$/src/main/Size.java" />
+        <option value="$PROJECT_DIR$/src/gui/TaskViewWrapper.java" />
+        <option value="$PROJECT_DIR$/src/gui/ClassView.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
         <option value="$PROJECT_DIR$/src/gui/TaskView.java" />
-        <option value="$PROJECT_DIR$/src/gui/PostsBody.java" />
         <option value="$PROJECT_DIR$/src/net/PostEngine.java" />
-        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/classes/ClassPd.java" />
-        <option value="$PROJECT_DIR$/src/gui/ClassView.java" />
+        <option value="$PROJECT_DIR$/src/main/Layouts.java" />
+        <option value="$PROJECT_DIR$/src/main/Events.java" />
+        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/Colors.java" />
+        <option value="$PROJECT_DIR$/src/gui/PostsBody.java" />
       </list>
     </option>
   </component>
@@ -405,7 +419,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Utila&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;ClassView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Root.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;Root&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;currentSafeTime&#9;PSI&#9;JAVA://gui.Clock#currentSafeTime&#10;Settings&#9;ACTION&#9;Database.Settings&#10;keymap&#9;ACTION&#9;ChangeKeymap&#10;Schoo&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/School.java&#10;user&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Filter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchFilterBox.java&#10;Query&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/QueryEngine.java&#10;TaskViewWra&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Today&#9;PSI&#9;JAVA://searchengine.FilterSet.DateConstraint#TODAY&#10;Assignment&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Assignment.java&#10;ClassView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Node.java&#9;FILE&#9;jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/Node.java&#10;TaskViewwr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Taskview&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Termina&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Ter&#9;null&#9;null&#10;java.compiler&#9;FILE&#9;jrt:///usr/lib/jvm/java-10-openjdk-amd64!/java.compiler&#10;filter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/FilterBlock.java&#10;TaskV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;SearchModu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;filesystem&#9;PSI&#9;JAVA://filesystem.FileSystemElement&#10;Search&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;Classpd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;Vim &#9;ACTION&#9;VimPluginToggle&#10;System.out&#9;null&#9;null&#10;FilterBlock&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/FilterBlock.java&#10;Address&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Address.java&#10;User.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;Datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;QueryEn&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;Classitem&#9;PSI&#9;JAVA://classes.ClassItem&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java" />
+    <property name="SearchEverywhereHistoryKey" value="Utila&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java&#10;ClassPd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;TaskView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Settings&#9;ACTION&#9;Database.Settings&#10;ClassView&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Root.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;Root&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;currentSafeTime&#9;PSI&#9;JAVA://gui.Clock#currentSafeTime&#10;keymap&#9;ACTION&#9;ChangeKeymap&#10;Schoo&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/School.java&#10;user&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Filter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchFilterBox.java&#10;Query&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/QueryEngine.java&#10;TaskViewWra&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Main.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Today&#9;PSI&#9;JAVA://searchengine.FilterSet.DateConstraint#TODAY&#10;Assignment&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Assignment.java&#10;ClassView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Node.java&#9;FILE&#9;jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/Node.java&#10;TaskViewwr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;Taskview&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Termina&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Ter&#9;null&#9;null&#10;java.compiler&#9;FILE&#9;jrt:///usr/lib/jvm/java-10-openjdk-amd64!/java.compiler&#10;filter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/FilterBlock.java&#10;TaskV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;SearchModu&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;filesystem&#9;PSI&#9;JAVA://filesystem.FileSystemElement&#10;Search&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;Classpd&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/ClassPd.java&#10;Plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;Vim &#9;ACTION&#9;VimPluginToggle&#10;System.out&#9;null&#9;null&#10;FilterBlock&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/FilterBlock.java&#10;Address&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/Address.java&#10;User.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;Datepicker&#9;PSI&#9;JAVA://gui.SearchFilterBox#datePicker&#10;QueryEn&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;Classitem&#9;PSI&#9;JAVA://classes.ClassItem&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;TaskView.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskView.java&#10;Indexable&#9;PSI&#9;JAVA://searchengine.Indexable&#10;Terminal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/TerminalEventHandler.java&#10;Searchm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;SEAR&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/terminal/SEARCH.java&#10;Utilan&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/UtilAndConstants.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534386073250" />
@@ -416,6 +430,7 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last.edited.regexp" value="\\" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -423,7 +438,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -433,10 +448,11 @@
       <recent name="gui" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
-      <recent name="net.Net" />
-      <recent name="main.Time" />
-      <recent name="main.User" />
-      <recent name="main.Size" />
+      <recent name="main.Colors" />
+      <recent name="main.Events" />
+      <recent name="Events" />
+      <recent name="main.Layouts" />
+      <recent name="Layouts" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -753,6 +769,11 @@
       <workItem from="1534535408844" duration="3366000" />
       <workItem from="1534548896915" duration="11301000" />
       <workItem from="1534608924175" duration="3156000" />
+      <workItem from="1534648964195" duration="606000" />
+      <workItem from="1534685001787" duration="3252000" />
+      <workItem from="1534694443211" duration="5024000" />
+      <workItem from="1534771247852" duration="2409000" />
+      <workItem from="1534894856834" duration="30000" />
     </task>
     <servers />
   </component>
@@ -789,11 +810,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1064194000" />
+    <option name="totallyTimeSpent" value="1075515000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="59" y="-4" width="1861" height="1084" extended-state="6" />
-    <editor active="true" />
+    <frame x="61" y="25" width="1859" height="1055" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.23966943" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -805,14 +825,14 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986226" weight="0.50941426" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986226" weight="0.5091892" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5167364" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4986226" weight="0.80648535" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.32845187" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.32756758" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32845187" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5013774" side_tool="true" weight="0.34414226" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32948583" />
@@ -885,41 +905,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/IllegalKeyComboException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/ClassItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Gradebook.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="37" column="33" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Grade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="80" column="98" selection-start-line="80" selection-start-column="98" selection-end-line="80" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="8714" column="40" selection-start-line="8714" selection-start-column="40" selection-end-line="8714" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/animation/Timeline.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1395">
@@ -966,13 +951,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1980">
           <caret line="140" selection-start-line="140" selection-end-line="140" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/TaskViewWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -1149,27 +1127,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="120" column="43" selection-start-line="120" selection-start-column="43" selection-end-line="120" selection-end-column="43" />
-          <folding>
-            <element signature="e#3171#3172#0" expanded="true" />
-            <element signature="e#3199#3200#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="51" column="37" selection-start-line="51" selection-start-column="37" selection-end-line="51" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -1180,19 +1137,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Record.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/TaskViewWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3405">
+          <caret line="243" column="43" selection-start-line="243" selection-start-column="43" selection-end-line="243" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2655">
+          <caret line="221" column="53" selection-start-line="221" selection-start-column="53" selection-end-line="221" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Size.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="31" column="66" selection-start-line="31" selection-start-column="66" selection-end-line="31" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/UtilScheduler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1095">
           <caret line="80" column="60" selection-start-line="80" selection-start-column="60" selection-end-line="80" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Record.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1203,55 +1175,90 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/SidebarHotLink.java">
+    <entry file="jrt:///usr/lib/jvm/java-10-openjdk-amd64!/java.desktop/javax/print/attribute/standard/ColorSupported.class">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="15" column="83" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="83" />
+        <state relative-caret-position="570">
+          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="242" column="56" selection-start-line="242" selection-start-column="56" selection-end-line="242" selection-end-column="56" />
+        <state relative-caret-position="2010">
+          <caret line="160" column="4" selection-start-line="160" selection-start-column="4" selection-end-line="160" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
+    <entry file="file://$PROJECT_DIR$/src/main/Events.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="75" column="56" lean-forward="true" selection-start-line="75" selection-start-column="56" selection-end-line="75" selection-end-column="56" />
+        <state relative-caret-position="150">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/PostEngine.java">
+    <entry file="file://$PROJECT_DIR$/src/main/Layouts.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        <state relative-caret-position="75">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#216#217#0" expanded="true" />
+            <element signature="e#276#277#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Colors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+          <folding>
+            <element signature="e#337#338#0" expanded="true" />
+            <element signature="e#385#386#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/ClassPd.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="66" column="8" lean-forward="true" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="8" />
-          <folding>
-            <element signature="e#4818#4819#0" expanded="true" />
-            <element signature="e#4851#4852#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1890">
+          <caret line="186" column="43" selection-start-line="186" selection-start-column="43" selection-end-line="186" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="150" column="48" lean-forward="true" selection-start-line="150" selection-start-column="48" selection-end-line="150" selection-end-column="48" />
+        <state relative-caret-position="1425">
+          <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/PostEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/SidebarHotLink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="16" column="83" selection-start-line="16" selection-start-column="83" selection-end-line="16" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
           <folding>
-            <element signature="e#10779#10780#0" expanded="true" />
-            <element signature="e#10827#10828#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

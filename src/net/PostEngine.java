@@ -78,4 +78,5 @@ public class PostEngine implements Serializable {
     public void setDisplayedPosts(ArrayList<Post> displayedPosts) {
         this.displayedPosts = displayedPosts;
     }
+
 }

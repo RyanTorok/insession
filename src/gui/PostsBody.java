@@ -8,8 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-import main.Size;
-import main.UtilAndConstants;
+import main.*;
 import net.PostEngine;
 
 import java.util.ArrayList;
@@ -26,28 +25,36 @@ public class PostsBody extends VBox {
     private static final int NUM_DISPLAY_ON_ROOT = 4;
 
     public PostsBody(PostEngine postEngine) {
-        setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(Color.LIGHTGRAY));
-        getChildren().add(makeTopUnanswered(postEngine));
-        getChildren().add(makePopularPosts(postEngine));
+        setStyle("-fx-background-color: " + Colors.colorToHex(Color.LIGHTGRAY));
+        getChildren().add(new HBox(new Layouts.Filler(), makeTopUnanswered(postEngine), new Layouts.Filler()) {{
+            setPadding(Size.insets(0, 100));
+        }});
+        getChildren().add(new HBox(new Layouts.Filler(), makePopularPosts(postEngine), new Layouts.Filler()) {{
+            setPadding(Size.insets(0, 0, 100, 0));
+        }});
     }
 
     private VBox makePopularPosts(PostEngine postEngine) {
         List<Post> mostPopular = postEngine.getPosts().stream()
                 .sorted(Comparator.comparing(post -> weight_views * post.getViews() + weight_likes * post.getLikes() + weight_date * (-1 * (System.currentTimeMillis() - post.getIdentifier().getTime1()) / 86400000)))
                 .collect(Collectors.toList());
-
-        Text header = new Text("Popular Posts");
+        Text header = new Text("Popular Posts") {{
+            setFill(postEngine.getBelongsTo().textFill());
+            setFont(Font.font(Size.fontSize(20)));
+        }};
         return new VBox(header) {{
             getChildren().addAll(makePostDisplay(mostPopular));
             if (mostPopular.size() == 0) {
-                getChildren().add(new VBox(new Text("This class has no posts.")) {{
+               getChildren().add(new VBox(new Text("This class has no posts.") {{
+                   setFont(Font.font(Size.fontSize(14)));
+                   setFill(postEngine.getBelongsTo().textFill());
+               }}) {{
+                    setMinSize(Size.width(600), Size.height(100));
                     setAlignment(Pos.CENTER);
                 }});
             }
-            getChildren().forEach(node -> {
-                if (node instanceof VBox)
-                    ((VBox) node).setPadding(Size.insets(10));
-            });
+            setStyle("-fx-background-color: " + Colors.colorToHex(postEngine.getBelongsTo().getColor()));
+            setPadding(Size.insets(10));
         }};
     }
 
@@ -56,18 +63,23 @@ public class PostsBody extends VBox {
                 .filter(post -> post.getStatusLabels().contains(PostStatus.UNANSWERED))
                 .sorted(Comparator.comparing(post -> weight_views * post.getViews() + weight_likes * post.getLikes() + weight_date * (-1 * (System.currentTimeMillis() - post.getIdentifier().getTime1()) / 86400000)))
                 .collect(Collectors.toList());
-        Text header = new Text("Top Unanswered Questions");
+        Text header = new Text("Top Unanswered Questions") {{
+            setFill(postEngine.getBelongsTo().textFill());
+            setFont(Font.font(Size.fontSize(20)));
+        }};
         return new VBox(header) {{
             getChildren().addAll(makePostDisplay(topUnanswered));
             if (topUnanswered.size() == 0) {
-                getChildren().add(new VBox(new Text("This class has no unanswered questions.")) {{
+                getChildren().add(new VBox(new Text("This class has no unanswered questions.") {{
+                    setFont(Font.font(Size.fontSize(14)));
+                    setFill(postEngine.getBelongsTo().textFill());
+                }}) {{
+                    setMinSize(Size.width(600), Size.height(100));
                     setAlignment(Pos.CENTER);
                 }});
             }
-            getChildren().forEach(node -> {
-                if (node instanceof VBox)
-                    ((VBox) node).setPadding(Size.insets(10));
-            });
+            setPadding(Size.insets(10));
+            setStyle("-fx-background-color: " + Colors.colorToHex(postEngine.getBelongsTo().getColor()));
         }};
 
     }
@@ -83,7 +95,7 @@ public class PostsBody extends VBox {
                     setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(18)));
                 }}));
                 getChildren().add(new TextFlow(new Text(p.getText())));
-                UtilAndConstants.highlightOnMouseOver(this);
+                Events.highlightOnMouseOver(this);
                 addEventHandler(MouseEvent.MOUSE_CLICKED, event -> PostsBody.this.fire(p));
             }});
         }

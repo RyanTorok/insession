@@ -26,10 +26,7 @@ import javafx.scene.text.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import main.Root;
-import main.Size;
-import main.User;
-import main.UtilAndConstants;
+import main.*;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.QueryEngine;
@@ -181,7 +178,7 @@ public class Main extends Application {
                 ) {
             m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (getState() == SIDEBAR_STATE)
-                    UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
+                    Events.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 scrollBody(m.scrollPos, getSubtitle());
             });
         }
@@ -209,7 +206,7 @@ public class Main extends Application {
         menusWrapper.setAlignment(Pos.CENTER_LEFT);
         menusWrapper.setSpacing(Size.width(30));
         allMenusAndSearchBar = new StackPane(menusWrapper);
-        HBox topbar = new HBox(titles, allMenusAndSearchBar, new UtilAndConstants.Filler(), new AnchorPane(name), new AnchorPane(picture));
+        HBox topbar = new HBox(titles, allMenusAndSearchBar, new Layouts.Filler(), new AnchorPane(name), new AnchorPane(picture));
         AnchorPane.setTopAnchor(name, Size.height(40));
         AnchorPane.setLeftAnchor(picture, Size.width(5));
         AnchorPane.setTopAnchor(picture, Size.height(22.5));
@@ -217,8 +214,8 @@ public class Main extends Application {
         top_bar = topbar;
         topbar.setSpacing(Size.width(35));
         topbar.setAlignment(Pos.TOP_LEFT);
-        String color = UtilAndConstants.colorToHex(User.active().getAccentColor());
-        String borderWidth = ".67em";
+        String color = Colors.colorToHex(User.active().getAccentColor());
+        String borderWidth = (int) Size.height(8) + "px";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(Size.insets(15));
         top_bar.setPrefHeight(Size.height(135));
@@ -231,7 +228,7 @@ public class Main extends Application {
         topBarScrollBar.setStartY(0);
         topBarScrollBar.setEndY(topBarScrollBar.getStartY());
         topBarScrollBar.setStrokeWidth(Size.lessWidthHeight(8));
-        topBarScrollBar.setStroke(UtilAndConstants.highlightColor(User.active().getAccentColor()));
+        topBarScrollBar.setStroke(Colors.highlightColor(User.active().getAccentColor()));
 
         top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             if (state == SEARCH_STATE)
@@ -311,7 +308,7 @@ public class Main extends Application {
         weatherDetails.setAlignment(Pos.CENTER_RIGHT);
         VBox weatherDisplay = new VBox(getTemperature(), weatherDetails);
         weatherDisplay.setAlignment(Pos.CENTER_RIGHT);
-        HBox sleep_btm = new HBox(new VBox(clock, date), new UtilAndConstants.Filler(), weatherDisplay);
+        HBox sleep_btm = new HBox(new VBox(clock, date), new Layouts.Filler(), weatherDisplay);
         sleep_btm.setAlignment(Pos.BOTTOM_LEFT);
 
         //synthesize sleep body
@@ -362,7 +359,7 @@ public class Main extends Application {
         allBodyPanes.getChildren().add(getSideBar());
         body.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getTarget() != getSideBar() && getState() == SIDEBAR_STATE) {
-                UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED);
+                Events.fireMouse(name, MouseEvent.MOUSE_CLICKED);
                 state = BASE_STATE;
             }
         });
@@ -488,7 +485,7 @@ public class Main extends Application {
         mainBodyAndTaskViews.getChildren().addAll(taskViews, mainBody);
         homeScreen = true;
 
-        picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+        picture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Events.fireMouse(name, MouseEvent.MOUSE_CLICKED));
 
         getPrimaryStage().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (getState() == SLEEP_STATE) {
@@ -980,7 +977,7 @@ public class Main extends Application {
 
             setPrefWidth(Size.width(200));
             setPrefHeight(Size.height(1000));
-            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(User.active().getAccentColor()));
+            setStyle("-fx-background-color: " + Colors.colorToHex(User.active().getAccentColor()));
             //initial placement
             init = new TranslateTransition();
             init.setNode(this);
@@ -1053,7 +1050,7 @@ public class Main extends Application {
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.NORMAL, name.getFont().getSize()));
                 closeSideBar();
                 if (User.active() != null && User.active().getUsername() != null) {
-                    UtilAndConstants.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED);
+                    Events.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED);
                     new AcctSettings().show();
                 }
             });
@@ -1088,7 +1085,7 @@ public class Main extends Application {
         }
 
         private void scroll(int oldIndex, int newIndex) {
-            UtilAndConstants.fireMouse(menus.get(newIndex), MouseEvent.MOUSE_ENTERED);
+            Events.fireMouse(menus.get(newIndex), MouseEvent.MOUSE_ENTERED);
         }
 
         public void enter() {
@@ -1100,7 +1097,7 @@ public class Main extends Application {
         @Deprecated
         public void instantDisappear() {
             if (selectedMenu != -1)
-                UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
+                Events.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
             selectedMenu = -1;
             Duration old = out.getDuration();
             out.setDuration(Duration.ZERO);
@@ -1110,14 +1107,14 @@ public class Main extends Application {
 
         public void disappear() {
             if (selectedMenu != -1)
-                UtilAndConstants.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
+                Events.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
             selectedMenu = -1;
             out.play();
         }
 
         public void setColor(Color color) {
             this.color = color;
-            setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
+            setStyle("-fx-background-color: " + Colors.colorToHex(color));
             for (Menu m : menus) {
                 m.setColor(color);
             }
@@ -1130,36 +1127,36 @@ public class Main extends Application {
 
             Menu(String text) {
                 color = User.active().getAccentColor();
-                String colorHex = UtilAndConstants.colorToHex(color);
+                String colorHex = Colors.colorToHex(color);
                 setStyle("-fx-background-color: " + colorHex);
                 setPadding(Size.insets(15));
                 setPrefWidth(Size.width(200));
                 Text prompt = new Text(text);
-                Color textFill = UtilAndConstants.textFill(color, 2);
+                Color textFill = Colors.textFill(color, 2);
                 prompt.setFill(textFill);
                 prompt.setFont(CustomFonts.comfortaa_bold(20));
                 this.getChildren().add(prompt);
                 this.text = prompt;
                 setAlignment(Pos.CENTER);
 
-                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> UtilAndConstants.fireMouse(picture, MouseEvent.MOUSE_CLICKED));
+                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Events.fireMouse(picture, MouseEvent.MOUSE_CLICKED));
 
                 addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
                     for (Menu m : menus) {
-                        m.setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color));
+                        m.setStyle("-fx-background-color: " + Colors.colorToHex(color));
                     }
-                    setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(UtilAndConstants.highlightColor(color)));
+                    setStyle("-fx-background-color: " + Colors.colorToHex(Colors.highlightColor(color)));
                     selectedMenu = menus.indexOf(this);
                 });
-                addEventHandler(MouseEvent.MOUSE_EXITED, event -> setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(color)));
+                addEventHandler(MouseEvent.MOUSE_EXITED, event -> setStyle("-fx-background-color: " + Colors.colorToHex(color)));
                 AnchorPane.setTopAnchor(prompt, 8.5);
                 AnchorPane.setLeftAnchor(prompt, 5.0);
             }
 
             public void setColor(Color c) {
                 this.color = c;
-                setStyle("-fx-background-color: " + UtilAndConstants.colorToHex(c));
-                text.setFill(UtilAndConstants.textFill(c));
+                setStyle("-fx-background-color: " + Colors.colorToHex(c));
+                text.setFill(Colors.textFill(c));
             }
             public void setText(String txt) {
                 text.setText(txt);
@@ -1268,8 +1265,8 @@ public class Main extends Application {
             if (terminal.current != null)
                 terminal.current.requestFocus();
         });
-        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Ctrl + Space", event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
-        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Ctrl + Space", event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Ctrl + Space", event -> Events.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Ctrl + Space", event -> Events.fireMouse(name, MouseEvent.MOUSE_CLICKED));
         newKeyMap.associate(BASE_STATE, false, "Escape", event -> {
             if (taskViews.getState() == TaskViewWrapper.STACK_STATE)
                 hideTaskViews();
@@ -1281,7 +1278,7 @@ public class Main extends Application {
             quitTerminal();
         });
         newKeyMap.associate(TERMINAL_STATE, KeyMap.BOTH, "Escape", event -> quitTerminal());
-        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Escape", event -> UtilAndConstants.fireMouse(name, MouseEvent.MOUSE_CLICKED));
+        newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Escape", event -> Events.fireMouse(name, MouseEvent.MOUSE_CLICKED));
 
         newKeyMap.associate(BASE_STATE, true, "Left", event -> {
             if (getCurrentMenu() != 0)
@@ -1322,7 +1319,7 @@ public class Main extends Application {
 
         newKeyMap.associate(SIDEBAR_STATE, KeyMap.BOTH, "Enter", event -> {
             if (sideBar.selectedMenu != -1)
-                UtilAndConstants.fireMouse(sideBar.menus.get(sideBar.selectedMenu), MouseEvent.MOUSE_CLICKED);
+                Events.fireMouse(sideBar.menus.get(sideBar.selectedMenu), MouseEvent.MOUSE_CLICKED);
             getKeyMap().consume();
         });
 

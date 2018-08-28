@@ -2,6 +2,7 @@ package classes;
 
 import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
+import main.Colors;
 import main.Student;
 import main.User;
 import net.PostEngine;
@@ -180,5 +181,9 @@ public class ClassPd extends MSClass implements Serializable {
 
     public PostEngine getPostEngine() {
         return postEngine;
+    }
+
+    public Color textFill() {
+        return Colors.textFill(getColor());
     }
 }
