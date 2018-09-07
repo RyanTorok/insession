@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Form extends Assignment implements canDisplay {
 
     private ArrayList<FormElement> elements;
-    private HashMap<Integer, ArrayList<String>> records;
+    private HashMap<Long, ArrayList<String>> records;
 
     public Form(String name, String format) {
         super(name);
@@ -76,11 +76,11 @@ public class Form extends Assignment implements canDisplay {
         this.elements = elements;
     }
 
-    public HashMap<Integer, ArrayList<String>> getRecords() {
+    public HashMap<Long, ArrayList<String>> getRecords() {
         return records;
     }
 
-    public void setRecords(HashMap<Integer, ArrayList<String>> records) {
+    public void setRecords(HashMap<Long, ArrayList<String>> records) {
         this.records = records;
     }
 }

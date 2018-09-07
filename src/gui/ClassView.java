@@ -3,25 +3,26 @@ package gui;
 import classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.*;
 import main.*;
 import net.PostEngine;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static classes.TimeStatus.*;
@@ -41,6 +42,9 @@ public class ClassView extends TaskView {
     private boolean displayPostTextOnSidebar = false;
     private StackPane postFiltersAndList;
     private GradesBody gradesBody;
+    private VBox filters;
+    private Color backgroundColor = Color.LIGHTGRAY;
+    private DateFilter dateFilter;
 
     public ClassView(ClassPd classPd) {
         super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
@@ -66,8 +70,9 @@ public class ClassView extends TaskView {
         VBox titleBar = makeTitleBar();
         sideBars = makeSideBars();
         bodyPanes = makeBodyPanes();
-        sideBarAndBody = new HBox(sideBars[0], bodyPanes[0]) {{
+        sideBarAndBody = new HBox(makeSideBarsWrapper(), bodyPanes[0]) {{
             setHgrow(bodyPanes[0], Priority.ALWAYS);
+            setStyle("-fx-background-color: " + Colors.colorToHex(Color.LIGHTGRAY));
         }};
         return new VBox(titleBar, sideBarAndBody) {{
             setVgrow(sideBarAndBody, Priority.ALWAYS);
@@ -87,36 +92,106 @@ public class ClassView extends TaskView {
         }};
     }
 
+    private HBox makeSideBarsWrapper() {
+        Line border = new Line() {{
+            setStroke(Color.DARKGRAY);
+            setStartY(Size.height(50));
+            setEndY(TaskViewWrapper.fullHeight - Size.height(60));
+            setStrokeWidth(Size.width(2));
+            setStrokeLineCap(StrokeLineCap.ROUND);
+        }};
+        return new HBox(sideBars[0], border) {{setAlignment(Pos.CENTER);}};
+    }
+
     private VBox[] makeSideBars() {
         VBox[] sidebars = {makePostsSB(), makeFilesSB(), makeGradesSB()};
         for (VBox sidebar : sidebars) {
-            sidebar.setPrefWidth(Size.width(400));
-            sidebar.setStyle("-fx-background-color: " + Colors.colorToHex(lighter));
+            sidebar.setPrefWidth(Size.width(350));
         }
         return sidebars;
     }
 
     private VBox makePostsSB() {
-        postEngine = classPd.getPostEngine();
-        List<Post> posts = postEngine.getPosts();
-
-        VBox filters = makeFilters();
-        postsList = makePostsList();
-        postFiltersAndList = new StackPane(filters, postsList);
-        return new VBox(postFiltersAndList);
-    }
-
-    private VBox makePostsList() {
         Text newThread = new Text("New Thread") {{
-            setFill(lighterTextFill);
+            setFill(Colors.textFill(backgroundColor));
             Events.underlineOnMouseOver(this);
-            setFont(CustomFonts.comfortaa(16));
+            setFont(Font.font(Size.fontSize(14)));
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newPost());
         }};
-        HBox controls = new HBox();
-        return new VBox() {{
-            setStyle("-fx-background-color: " + Colors.colorToHex(lighter));
+        Text expandAllToggle = new Text("Expand All") {
+
+            private boolean state = false;
+
+            {
+                setFill(Colors.textFill(backgroundColor));
+                Events.underlineOnMouseOver(this);
+                setFont(Font.font(Size.fontSize(14)));
+                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    state = !state;
+                    if (state) {
+                        setText("Collapse All");
+                        postsList.getChildren().forEach(child -> ((PostSBItem) child).expand());
+                    }
+                    else {
+                        setText("Expand All");
+                        postsList.getChildren().forEach(child -> ((PostSBItem) child).collapse());
+                    }
+                });
+            }
+        };
+
+        Text filterToggle = new Text("Filter Results") {
+
+            private boolean state = false;
+
+            {
+                setFill(Colors.textFill(backgroundColor));
+                Events.underlineOnMouseOver(this);
+                setFont(Font.font(Size.fontSize(14)));
+                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    state = !state;
+                    if (state)
+                        setText("Back to Posts");
+                    else setText("Filter Results");
+                    swapPostFilters();
+                });
+            }
+        };
+        HBox controls = new HBox(newThread, new Layouts.Filler(), new Text("|") {{ setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Size.fontSize(14)));}}, new Layouts.Filler(), expandAllToggle, new Layouts.Filler(), new Text("|") {{ setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Size.fontSize(14)));}}, new Layouts.Filler(), filterToggle) {{
+            setPadding(Size.insets(20, 35, 10, 20));
         }};
+        postEngine = classPd.getPostEngine();
+        postEngine.getPosts().add(new Post(User.active(), Post.Type.Question, "Test post name", "This is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a test",true) {{
+            getStatusLabels().add(PostStatus.UNREAD);
+            getStatusLabels().add(PostStatus.UNANSWERED);
+            getStatusLabels().add(PostStatus.PRIVATE);
+            getIdentifier().setTime1(System.currentTimeMillis());
+        }});
+        filters = makeFilters();
+        postsList = makePostsList();
+        postFiltersAndList = new StackPane(filters, postsList);
+        return new VBox(controls, postFiltersAndList);
+    }
+
+    VBox makePostsList() {
+        List<VBox> collect = postEngine.getPosts().stream().filter(this::matchesFilter).sorted().map(this::makePostSBItem).collect(Collectors.toList());
+        return new VBox(collect.toArray(new VBox[]{})) {{
+            setPrefHeight(TaskViewWrapper.fullHeight);
+            setStyle("-fx-background-color: " + Colors.colorToHex(backgroundColor));
+        }};
+    }
+
+    private boolean matchesFilter(Post post) {
+        AtomicBoolean b = new AtomicBoolean(true);
+        filters.getChildren().forEach(node -> {
+            if (node instanceof FilterBlock) {
+                FilterBlock block = (FilterBlock) node;
+                boolean matches = block.matches(post);
+                if (!matches)
+                    b.set(false);
+            }
+        });
+        return b.get() && dateFilter.matches(post);
     }
 
     private VBox makeFilters() {
@@ -135,61 +210,24 @@ public class ClassView extends TaskView {
                 new Filter("Group-Visible Posts", PostStatus.GROUP),
                 new Filter("Private Posts", PostStatus.PRIVATE)
         ));
-        List<ClassItem> items = classPd.getAssignmentsWithPostsDesc(10);
+        dateFilter = new DateFilter(event -> filters.get(0).changeEvent(this), Color.BLACK);
+        List<ClassItem> items = classPd.getAssignmentsWithPostsDesc(8);
         List<Filter> assignments = items.stream().map(item -> new Filter(item.getName(), 0, item.getId())).collect(Collectors.toList());
         filters.add(new FilterBlock(this, "By Assignment", true, assignments));
-        DatePicker picker = new DatePicker();
-        picker.valueProperty().addListener((observable, oldvalue, newvalue) -> filters.get(2).getFilters().forEach(filter -> filter.setComparisonTime(UtilAndConstants.date(picker.getValue()))));
-        filters.add(new FilterBlock(this, "By Date", false,
-                new Filter("Today", TODAY),
-                new Filter("This Week", THIS_WEEK),
-                new Filter("On", ON),
-                new Filter("After", AFTER),
-                new Filter("Before", BEFORE)) {{
-            FilterBlock me = this;
-            getChildren().add(picker);
-            //button to reset the date filter
-            getChildren().add(new Button("Reset") {{
-                me.getChildren().forEach(node -> {
-                    if (node instanceof RadioButton) ((RadioButton) node).setSelected(false);
-                    if (node instanceof CheckBox) ((CheckBox) node).setSelected(false);
-                });
-                picker.setValue(null);
-            }});
-        }});
         return new VBox() {{
             getChildren().addAll(filters);
-            getChildren().add(new Button("Submit") {{
-                setOnAction(event -> {
-                    //confirm filter and switch back to post list pane
-                    postEngine.setDisplayedPosts(postEngine.getPosts());
-                    postEngine.getDisplayedPosts().forEach(post -> {
-                        //remove posts that don't match the filter
-                        for (FilterBlock block :
-                                filters) {
-                            if (!block.matches(post)) {
-                                postEngine.getDisplayedPosts().remove(post);
-                                break;
-                            }
-                        }
-                    });
-                    postsList.getChildren().clear();
-                    postsList.getChildren().addAll(postEngine.getDisplayedPosts().stream().map(ClassView.this::makePostSBItem).collect(Collectors.toList()));
-                    swapPostFilters();
-                });
-            }});
-            setSpacing(20);
+            VBox filterUI = dateFilter.get();
+            filterUI.setSpacing(Size.height(5));
+            getChildren().add(filterUI);
+            setPadding(Size.insets(20,0,0, 10));
+            setSpacing(Size.height(20));
+            setStyle("-fx-background-color: " + Colors.colorToHex(backgroundColor));
+            setPrefHeight(TaskViewWrapper.fullHeight);
         }};
     }
 
-    private Pane makePostSBItem(Post post) {
-        return new VBox() {{
-            getChildren().add(new Text(post.getTitle()) {{setFont(Font.font("Sans Serif", FontWeight.BOLD, Font.getDefault().getSize()));}});
-            if (displayPostTextOnSidebar)
-                getChildren().add(new TextFlow(new Text(post.getText())));
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).fire(post));
-
-        }};
+    private VBox makePostSBItem(Post post) {
+        return new PostSBItem(post);
     }
 
     private void swapPostFilters() {
@@ -275,6 +313,54 @@ public class ClassView extends TaskView {
         return lighterTextFill;
     }
 
+    public HBox getSideBarAndBody() {
+        return sideBarAndBody;
+    }
+
+    public VBox[] getSideBars() {
+        return sideBars;
+    }
+
+    public Pane[] getBodyPanes() {
+        return bodyPanes;
+    }
+
+    public Color getPrimary() {
+        return primary;
+    }
+
+    public Color getLighter() {
+        return lighter;
+    }
+
+    public PostEngine getPostEngine() {
+        return postEngine;
+    }
+
+    public VBox getPostsList() {
+        return postsList;
+    }
+
+    public boolean isDisplayPostTextOnSidebar() {
+        return displayPostTextOnSidebar;
+    }
+
+    public StackPane getPostFiltersAndList() {
+        return postFiltersAndList;
+    }
+
+    public GradesBody getGradesBody() {
+        return gradesBody;
+    }
+
+    public VBox getFilters() {
+        return filters;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
     private class Tab extends HBox {
 
         private int index;
@@ -294,8 +380,107 @@ public class ClassView extends TaskView {
 
     private void switchPane(int index) {
         ObservableList<Node> children = sideBarAndBody.getChildren();
-        children.set(0, sideBars[index]);
+        ((Pane) children.get(0)).getChildren().set(0, sideBars[index]);
         children.set(1, bodyPanes[index]);
     }
 
+    private class PostSBItem extends VBox {
+
+        private Post post;
+        private boolean expanded;
+
+        public PostSBItem(Post post) {
+            this.post = post;
+            expanded = false;
+            HBox main = new HBox(new Text(post.getTitle()) {{
+                setFont(Font.font("Sans Serif", FontWeight.BOLD, Font.getDefault().getSize()));
+            }}, new Layouts.Filler());
+            main.getChildren().add(new HBox() {
+                {
+                //insert status icons
+                if (post.getStatusLabels().contains(PostStatus.UNANSWERED))
+                    getChildren().add(new ColorText("?"));
+                else if (post.getStatusLabels().contains(PostStatus.QUESTIONS)) {
+                    if (post.getStudentAnswers().size() != 0) {
+                        getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "s")); //0x1f5e9 is the speech bubble
+                    }
+                    if (post.getInstructorAnswer() != null) {
+                        getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "i"));
+                    }
+                }
+                if (post.getStatusLabels().contains(PostStatus.INSTRUCTOR)) {
+                    getChildren().add(new ColorText("A"));
+                }
+                if (post.getStatusLabels().contains(PostStatus.GROUP)) {
+                    getChildren().add(new ColorText("G"));
+                }
+                if (post.getStatusLabels().contains(PostStatus.PRIVATE)) {
+                    getChildren().add(new ColorText("P"));
+                }
+                setSpacing(Size.width(5));
+                setPadding(Size.insets(5, 0, 0, 0));
+            }
+
+            class ColorText extends Text {
+                ColorText(String s) {
+                    super(s);
+                    setFill(Colors.textFill(ClassView.this.backgroundColor));
+                    setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, Font.getDefault().getSize()));
+                }
+            }
+
+            });
+            getChildren().add(main);
+            displayPostTextOnSidebar = true;
+            if (displayPostTextOnSidebar)
+            getChildren().add(new Region() {{
+                setPrefHeight(Size.height(5));
+            }});
+            getChildren().add(new Line() {{
+                setStroke(Color.DARKGRAY);
+                setStartX(Size.width(5));
+                setEndX(Size.width(345));
+                setStrokeWidth(Size.width(2));
+                setStrokeLineCap(StrokeLineCap.ROUND);
+            }});
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton().equals(MouseButton.SECONDARY))
+                    if (expanded)
+                        collapse();
+                    else
+                        expand();
+                else
+                    ((PostsBody) bodyPanes[0]).fire(post);
+            });
+            setPadding(Size.insets(10, 10, 0, 10));
+            setStyle("-fx-background-color: " + Colors.colorToHex(backgroundColor));
+            Events.highlightOnMouseOver(this);
+        }
+
+        void expand() {
+            if (expanded)
+                return;
+            getChildren().add(2, new HBox(new Text(post.getIdentifier().getAuthorName()) {{setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(12)));}}, new Layouts.Filler(),
+                    new Text(UtilAndConstants.parseTimestamp(new Timestamp(post.getIdentifier().getTime1()))) {{setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(12)));}}));
+            getChildren().add(3, new Region() {{setPrefHeight(Size.height(5));}});
+            getChildren().add(4, new TextFlow(new Text(post.collapseText(230)) {{setFont(Font.font(Size.fontSize(10)));}}));
+            getChildren().add(5, new Region() {{setPrefHeight(Size.height(5));}});
+            expanded = true;
+        }
+
+        void collapse() {
+            if (!expanded)
+                return;
+            getChildren().remove(5);
+            getChildren().remove(4);
+            getChildren().remove(3);
+            getChildren().remove(2);
+            expanded = false;
+
+        }
+
+        public Post getPost() {
+            return post;
+        }
+    }
 }

@@ -7,7 +7,7 @@ import searchengine.Identifier;
 
 import java.util.Date;
 
-class Filter {
+public class Filter {
 
     private TimeStatus timeStatus;
     private Date comparisonTime;

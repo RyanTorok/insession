@@ -16,7 +16,7 @@ public class Root {
     private static UtilAndConstants utilAndConstants;
     private static Main portal;
     private static String macAddress;
-    private static Integer activeID;
+    private static Long activeID;
 
 
     public static void main(String[] args) {
@@ -63,7 +63,7 @@ public class Root {
         return null;
     }
 
-    public static Integer getActiveID() {
+    public static Long getActiveID() {
         return activeID;
     }
 

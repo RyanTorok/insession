@@ -23,12 +23,9 @@ public class SearchFilterBox extends VBox {
     private Text header;
     private ArrayList<SearchFilterMenu> filterSets;
     private ArrayList<ClassPd> indexedClasses;
-    private DatePicker datePicker;
-    private LocalDate datePickerLastDate;
-    private final ToggleGroup dateConstraintGroup;
     private final VBox dateFilter;
-    private FilterSet.DateConstraint selectedDateConstraint = FilterSet.DateConstraint.NONE;
     private SearchModule wrapper;
+    private final DateFilter dateFilterWrapper;
 
     public SearchFilterBox(SearchModule wrapper) {
         this.wrapper = wrapper;
@@ -70,82 +67,13 @@ public class SearchFilterBox extends VBox {
             });
         });
 
-        //date constraint filter
-        dateConstraintGroup = new ToggleGroup();
-
-        RadioButton today = new RadioButton("Today");
-        RadioButton thisWeek = new RadioButton("Past Week");
-        RadioButton on = new RadioButton("On");
-        RadioButton after = new RadioButton("After");
-        RadioButton before = new RadioButton("Before");
-
-        today.setTextFill(Color.WHITE);
-        today.setToggleGroup(dateConstraintGroup);
-        today.setOnAction(event -> {
-            datePicker.setValue(null);
-            selectedDateConstraint = FilterSet.DateConstraint.TODAY;
-            fireUpdate();
-        });
-
-        thisWeek.setTextFill(Color.WHITE);
-        thisWeek.setToggleGroup(dateConstraintGroup);
-        thisWeek.setOnAction(event -> {
-            datePicker.setValue(null);
-            selectedDateConstraint = FilterSet.DateConstraint.PAST_WEEK;
-            fireUpdate();
-        });
-
-        on.setTextFill(Color.WHITE);
-        on.setToggleGroup(dateConstraintGroup);
-        on.setOnAction(event -> {
-            datePicker.setValue(datePickerLastDate);
-            selectedDateConstraint = FilterSet.DateConstraint.ON;
-            fireUpdate();
-        });
-
-        after.setTextFill(Color.WHITE);
-        after.setToggleGroup(dateConstraintGroup);
-        after.setOnAction(event -> {
-            datePicker.setValue(datePickerLastDate);
-            selectedDateConstraint = FilterSet.DateConstraint.AFTER;
-            fireUpdate();
-        });
-
-        before.setTextFill(Color.WHITE);
-        before.setToggleGroup(dateConstraintGroup);
-        before.setOnAction(event -> {
-            datePicker.setValue(datePickerLastDate);
-            selectedDateConstraint = FilterSet.DateConstraint.BEFORE;
-            fireUpdate();
-        });
-
-
-        datePicker = new DatePicker();
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            fireUpdate();
-            datePickerLastDate = datePicker.getValue();
-        });
-
-        Text dateHeader = new Text("By Date") {{
-            setFill(Color.WHITE);
-            setFont(filterSets.get(0).getHeader().getFont());
-        }};
-        Button resetDateFilter = new Button("Reset") {{
-            setOnAction(event -> {
-                dateConstraintGroup.selectToggle(null);
-                datePicker.setValue(null);
-                datePickerLastDate = null;
-                selectedDateConstraint = FilterSet.DateConstraint.NONE;
-            });
-        }};
-
-        dateFilter = new VBox(dateHeader, today, thisWeek, on, after, before, datePicker, resetDateFilter) {{
-            setSpacing(filterSets.get(0).getSpacing());
-        }};
-
         getChildren().add(header);
         getChildren().addAll(filterSets);
-        getChildren().add(dateFilter);
+        dateFilterWrapper = new DateFilter(event -> fireUpdate());
+        dateFilterWrapper.getDateHeader().setFont(filterSets.get(0).getHeader().getFont());
+        this.dateFilter = dateFilterWrapper.get();
+        this.dateFilter.setSpacing(filterSets.get(0).getSpacing());
+        getChildren().add(this.dateFilter);
 
 
         setSpacing(Size.height(20));
@@ -186,11 +114,11 @@ public class SearchFilterBox extends VBox {
     }
 
     public Date getDateRestriction() {
-        return UtilAndConstants.date(datePicker.getValue());
+        return UtilAndConstants.date(dateFilterWrapper.getDatePicker().getValue());
     }
 
     public FilterSet.DateConstraint getDateConstraint() {
-        return selectedDateConstraint;
+        return dateFilterWrapper.getSelectedDateConstraint();
     }
 
     public ArrayList<ClassPd> getIndexedClasses() {

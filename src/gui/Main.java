@@ -200,6 +200,7 @@ public class Main extends Application {
         });
 
         Image image = User.active().getAcctImage();
+        Images.addUserImage(User.active().getUniqueID(), image);
         Shape picture = new ShapeImage(new Circle(Size.lessWidthHeight(30)), image).apply();
         this.picture = picture;
         HBox menusWrapper = new HBox(menus[0], menus[1], menus[2], menus[3], menus[4]);
@@ -890,8 +891,7 @@ public class Main extends Application {
         public BarMenu(String text, int order) {
             super(text);
             scrollPos = order;
-            addEventHandler(MouseEvent.MOUSE_ENTERED, event -> this.setUnderline(true));
-            addEventFilter(MouseEvent.MOUSE_EXITED, event -> this.setUnderline(false));
+            Events.underlineOnMouseOver(this);
             setFont(Font.font("Confortaa", Size.fontSize(20)));
             setFill(Color.WHITE);
             setTextAlignment(TextAlignment.CENTER);
@@ -977,7 +977,7 @@ public class Main extends Application {
 
             setPrefWidth(Size.width(200));
             setPrefHeight(Size.height(1000));
-            setStyle("-fx-background-color: " + Colors.colorToHex(User.active().getAccentColor()));
+            Styles.setBackgroundColor(this, User.active().getAccentColor());
             //initial placement
             init = new TranslateTransition();
             init.setNode(this);

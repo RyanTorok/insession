@@ -3,6 +3,7 @@ package main;
 import classes.ClassPd;
 import classes.Record;
 import classes.setbuilder.Classifiable;
+import gui.Images;
 import gui.KeyMap;
 import gui.ZipMap;
 import javafx.scene.image.Image;
@@ -97,6 +98,10 @@ public abstract class User implements Classifiable, Serializable {
 
     public static void setActive(User user) {
         active = user;
+    }
+
+    public static User fromId(long uniqueId) {
+        return active(); //TODO
     }
 
     public String getUsername() {
@@ -367,11 +372,7 @@ public abstract class User implements Classifiable, Serializable {
         try {
             return new Image(getImageFN());
         } catch (Exception e) {
-            try {
-                return new Image("file:" + Address.fromRootAddr("resources", "default_user.png"));
-            } catch (Exception e1) {
-                return null;
-            }
+            return Images.defaultUserImage();
         }
     }
 
@@ -515,6 +516,10 @@ public abstract class User implements Classifiable, Serializable {
 
     public void setSleepTime(double sleepTime) {
         this.sleepTime = sleepTime;
+    }
+
+    public long getUniqueID() {
+        return 0;
     }
 }
 

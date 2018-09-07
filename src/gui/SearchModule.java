@@ -93,6 +93,7 @@ public class SearchModule extends VBox {
         getChildren().add(searchBox);
         setStyle("-fx-background-color: black");
         setPrefSize(Size.width(1920), Size.height(100));
+        //TODO delete this!
         getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd()); setTime1(System.currentTimeMillis());}}, 1);
         filterBox = new SearchFilterBox(this);
         filters = new ScrollPane(filterBox) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};

@@ -1,5 +1,6 @@
 package classes;
 
+import gui.RichText;
 import main.User;
 import main.UtilAndConstants;
 import searchengine.Identifier;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-public class Post implements Indexable, Serializable {
+public class Post implements Indexable, Serializable, Comparable<Post> {
 
     static final long serialVersionUID = 99L;
     private long postId;
@@ -27,7 +28,7 @@ public class Post implements Indexable, Serializable {
     private long likes;
     private long views;
     private String title;
-    private String text;
+    private RichText formattedText;
     private long lastIndexed;
     private long created;
     private long modified;
@@ -38,11 +39,15 @@ public class Post implements Indexable, Serializable {
     private boolean currentUserLikedThis;
     private boolean currentUserViewedThis;
     private List<PostStatus> statusLabels;
+    private boolean pinned;
+    private List<Post> studentAnswers;
+    private List<Post> comments;
+    private Post instructorAnswer;
 
-    public Post(User postedBy, Type type, String title, String text, boolean posterNameVisible) {
+    public Post(User postedBy, Type type, String title, String source, boolean posterNameVisible) {
         this.setType(type);
         this.setTitle(title);
-        this.setText(text);
+        formattedText = new RichText(source);
         this.posterId = Long.parseLong(postedBy.getID());
         this.posterFirst = postedBy.getFirst();
         this.posterLast = postedBy.getLast();
@@ -52,9 +57,13 @@ public class Post implements Indexable, Serializable {
         setViews(0);
         setLastIndexed(1);
         setIdentifier(new Identifier(title, Identifier.Type.Post, -1));
+        identifier.setAuthorName(posterNameVisible ? posterFirst + " " + posterLast : "Anonymous");
+        statusLabels = new ArrayList<>();
+        studentAnswers = new ArrayList<>();
+        comments = new ArrayList<>();
     }
 
-    public Post(long postId, long classId, long classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String text, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
+    public Post(long postId, long classId, long classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
         this.postId = postId;
         this.classId = classId;
         this.classItemId = classItemId;
@@ -68,13 +77,16 @@ public class Post implements Indexable, Serializable {
         this.views = views;
         this.currentUserViewedThis = currentUserViewedThis;
         this.title = title;
-        this.text = text;
+        this.formattedText = new RichText(source);
         this.lastIndexed = lastIndexed;
         this.created = created;
         this.modified = modified;
         this.posterNameVisible = posterNameVisible;
         this.visibleTo = visibleTo;
         this.parentId = parentId;
+        statusLabels = new ArrayList<>();
+        studentAnswers = new ArrayList<>();
+        comments = new ArrayList<>();
     }
 
     public static Post fromEncoding(String encoding) {
@@ -152,11 +164,11 @@ public class Post implements Indexable, Serializable {
     }
 
     public String getText() {
-        return text;
+        return formattedText.getUnformatted();
     }
 
     public void setText(String text) {
-        this.text = text;
+        formattedText.setUnformatted(text);
     }
 
     public long getLastIndexed() {
@@ -278,8 +290,74 @@ public class Post implements Indexable, Serializable {
     public void setStatusLabels(List<PostStatus> statusLabels) {
         this.statusLabels = statusLabels;
     }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        if (o.isPinned() == isPinned())
+            return Long.compare(identifier.getTime1(), o.identifier.getTime1());
+        return Boolean.compare(isPinned(), o.isPinned());
+    }
+
+    public List<Post> getStudentAnswers() {
+        return studentAnswers;
+    }
+
+    public Post getInstructorAnswer() {
+        return instructorAnswer;
+    }
+
+    public String getSource() {
+        return formattedText.getSource(); //TODO support encoding of symbols
+    }
+
+    public RichText getFormattedText() {
+        return formattedText;
+    }
+
+    public void setFormattedText(RichText formattedText) {
+        this.formattedText = formattedText;
+    }
+
+    public String getPosterUsername() {
+        return posterUsername;
+    }
+
+    public void setPosterUsername(String posterUsername) {
+        this.posterUsername = posterUsername;
+    }
+
+    public List<Post> getComments() {
+        return comments;
+    }
+
+    public enum Type {
+        Question, Student_Answer, Instructor_Answer, Note, Follow_Up
+    }
+
+    public String collapseText(int maxLength) {
+        String modified = getText().replaceAll("\n", "  ");
+        if (modified.length() <= maxLength)
+            return modified;
+        String max = modified.substring(0, maxLength - 3);
+        for (int i = maxLength - 4;  i > maxLength - 16;  i--) {
+            if (Character.isSpaceChar(max.charAt(i))) {
+                return max.substring(0, i) + "...";
+            }
+        }
+        return max.substring(0, maxLength - 4) + "...";
+    }
+
+    public void answer(Post child, boolean instructor) {
+        if (instructor) instructorAnswer = child;
+        else studentAnswers.add(child);
+    }
 }
 
-enum Type {
-    Question, Student_Answer, Instructor_Answer, Note, Follow_Up
-}

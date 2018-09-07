@@ -16,6 +16,8 @@ public class Teacher extends User {
 
     @Override
     public String getID() {
+        if (eid == null)
+            return "0";
         return eid;
     }
 }
