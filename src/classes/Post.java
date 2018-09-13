@@ -338,6 +338,24 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         return comments;
     }
 
+    public void like() {
+        if (isCurrentUserLikedThis())
+            return;
+        setCurrentUserLikedThis(true);
+        setLikes(getLikes() + 1);
+        if (ClassPd.fromId(classId) != null && (ClassPd.fromId(classId).getTeacher() != null && ClassPd.fromId(classId).getTeacher().equals(User.active())))
+            getStatusLabels().add(PostStatus.ENDORSED);
+    }
+
+    public void unlike() {
+        if (!isCurrentUserLikedThis())
+            return;
+        setCurrentUserLikedThis(false);
+        setLikes(getLikes() - 1);
+        if (ClassPd.fromId(classId) != null && (ClassPd.fromId(classId).getTeacher() != null && ClassPd.fromId(classId).getTeacher().equals(User.active())))
+            getStatusLabels().remove(PostStatus.ENDORSED);
+    }
+
     public enum Type {
         Question, Student_Answer, Instructor_Answer, Note, Follow_Up
     }

@@ -16,6 +16,7 @@ import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -132,6 +133,13 @@ public class UtilAndConstants {
             return new Date(System.currentTimeMillis());
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         return Date.from(instant);
+    }
+
+    public static String parseLargeNumber(long num) {
+        if (num < 1E4) return Long.toString(num);
+        if (num < 1E6) return num / 1000 + "K";
+        if (num < 1E9) return new DecimalFormat("%.1f").format((double) num / 1000000.0) + "M";
+        return new DecimalFormat("%.1f").format((double) num / 1000000000.0) + "B";
     }
 
     public int getMAX_ATTENDANCE_EXTRA_TIME() {

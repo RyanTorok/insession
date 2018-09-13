@@ -20,7 +20,6 @@ import main.*;
 import searchengine.*;
 
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -258,10 +257,10 @@ public class SearchModule extends VBox {
                 case Module: subtitle.setText("Lesson by " + id.getAuthorName());
                     date1.setText("Uploaded " + date1.getText());
                     dates.getChildren().add(date1);
-                    Text views = new Text(parseLargeNumber(id.getViews()) + " views");
+                    Text views = new Text(UtilAndConstants.parseLargeNumber(id.getViews()) + " views");
                     dates.getChildren().add(views);
                     Text likes = makeDate(id.getTime2()); //formatting only
-                    likes.setText(parseLargeNumber(id.getLikes()) + "likes");
+                    likes.setText(UtilAndConstants.parseLargeNumber(id.getLikes()) + "likes");
                     dates.getChildren().add(likes);
                     break;
                 case Setting: subtitle.setText("Account Settings");
@@ -313,13 +312,6 @@ public class SearchModule extends VBox {
         Text makeDate(long time) {
             return new Text(UtilAndConstants.parseTimestamp(new Timestamp(time))) {{setFont(Font.font(Size.fontSize(20))); setFill(Color.WHITE);}};
         }
-    }
-
-    private static String parseLargeNumber(long num) {
-        if (num < 1E4) return Long.toString(num);
-        if (num < 1E6) return num / 1000 + "K";
-        if (num < 1E9) return new DecimalFormat("%.1f").format((double) num / 1000000.0) + "M";
-        return new DecimalFormat("%.1f").format((double) num / 1000000000.0) + "B";
     }
 
     private void expand() {

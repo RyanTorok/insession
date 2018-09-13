@@ -12,6 +12,7 @@ public class Filter {
     private TimeStatus timeStatus;
     private Date comparisonTime;
     private PostStatus postStatus;
+    private Post.Type postType;
     String name;
     long userId;
     long classItemId;
@@ -37,8 +38,14 @@ public class Filter {
         this(name, status, -1);
     }
 
+    public Filter(String name, Post.Type type) {
+       this.name = name;
+       this.postType = type;
+    }
+
     boolean matches(Post post) {
         if (postStatus != null && !post.getStatusLabels().contains(postStatus)) return false;
+        if (postType != null && post.getType() != postType) return false;
         if (timeStatus != null && !timeMatches(post)) return false;
         return classItemId == -1 || post.getClassItemId() == classItemId;
     }

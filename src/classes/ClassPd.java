@@ -4,6 +4,7 @@ import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
 import main.Colors;
 import main.Student;
+import main.Teacher;
 import main.User;
 import net.PostEngine;
 
@@ -33,8 +34,9 @@ public class ClassPd extends MSClass implements Serializable {
     private long uniqueId;
     private Gradebook gradebook;
     private PostEngine postEngine;
+    private Teacher teacher;
 
-    public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, String teacherFirst, String teacherLast, long uniqueId) {
+    public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, Teacher teacher, long uniqueId) {
         this.castOf = castOf;
         this.studentList = studentList;
         this.periodNo = periodNo;
@@ -46,6 +48,11 @@ public class ClassPd extends MSClass implements Serializable {
         initSidebarHotLinks();
         gradebook = new Gradebook();
         postEngine = new PostEngine(this);
+        this.teacher = teacher;
+    }
+
+    public static ClassPd fromId(long classId) {
+        return null;
     }
 
     private void initSidebarHotLinks() {
@@ -185,5 +192,9 @@ public class ClassPd extends MSClass implements Serializable {
 
     public Color textFill() {
         return Colors.textFill(getColor());
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
     }
 }

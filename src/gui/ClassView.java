@@ -5,10 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -24,8 +20,6 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-
-import static classes.TimeStatus.*;
 
 public class ClassView extends TaskView {
 
@@ -201,8 +195,8 @@ public class ClassView extends TaskView {
                 new Filter("Unread", PostStatus.UNREAD),
                 new Filter("Updated", PostStatus.UPDATED),
                 new Filter("Unanswered", PostStatus.UNANSWERED),
-                new Filter("Notes", PostStatus.NOTES),
-                new Filter("Questions", PostStatus.QUESTIONS),
+                new Filter("Notes", Post.Type.Note),
+                new Filter("Questions", Post.Type.Question),
                 new Filter("My Posts", PostStatus.MINE),
                 new Filter("Liked", PostStatus.LIKED),
                 new Filter("Teacher Posts", PostStatus.INSTRUCTOR),
@@ -400,7 +394,7 @@ public class ClassView extends TaskView {
                 //insert status icons
                 if (post.getStatusLabels().contains(PostStatus.UNANSWERED))
                     getChildren().add(new ColorText("?"));
-                else if (post.getStatusLabels().contains(PostStatus.QUESTIONS)) {
+                else if (post.getType().equals(Post.Type.Question)) {
                     if (post.getStudentAnswers().size() != 0) {
                         getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "s")); //0x1f5e9 is the speech bubble
                     }

@@ -6,13 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.*;
 import main.*;
 import net.PostEngine;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -41,27 +38,26 @@ public class PostsBody extends VBox {
         List<Post> mostPopular = postEngine.getPosts().stream()
                 .sorted(Comparator.comparing(post -> weight_views * post.getViews() + weight_likes * post.getLikes() + weight_date * (-1 * (System.currentTimeMillis() - post.getIdentifier().getTime1()) / 86400000)))
                 .collect(Collectors.toList());
-        Text header = new Text("Popular Posts") {{
-            setFill(postEngine.getBelongsTo().textFill());
-            setFont(Font.font(Size.fontSize(20)));
-        }};
-        HBox headerWrapper = new HBox(header) {{
-            setPadding(Size.insets(30, 0, 30, 15));
-        }};
-        return new VBox(headerWrapper) {{
-            getChildren().addAll(makePostDisplay(mostPopular));
-            if (mostPopular.size() == 0) {
-                getChildren().add(new VBox(new Text("This class has no posts.") {{
-                    setFont(Font.font(Size.fontSize(14)));
-                    setFill(postEngine.getBelongsTo().textFill());
-                }}) {{
-                    setMinSize(Size.width(600), Size.height(100));
-                    setAlignment(Pos.CENTER);
-                }});
-            }
-            setStyle("-fx-background-color: " + Colors.colorToHex(postEngine.getBelongsTo().getColor()));
-            setPadding(Size.insets(10, 0, 0, 0));
-        }};
+        Text header = new Text("Popular Posts");
+        header.setFill(postEngine.getBelongsTo().textFill());
+        header.setFont(Font.font(Size.fontSize(20)));
+        HBox headerWrapper = new HBox(header);
+        headerWrapper.setPadding(Size.insets(30, 0, 30, 15));
+
+        VBox toReturn = new VBox(headerWrapper);
+        toReturn.getChildren().addAll(makePostDisplay(mostPopular));
+        if (mostPopular.size() == 0) {
+            Text placeholder = new Text("This class has no posts.");
+            placeholder.setFont(Font.font(Size.fontSize(14)));
+            placeholder.setFill(postEngine.getBelongsTo().textFill());
+            VBox placeholderWrapper = new VBox(placeholder);
+            placeholderWrapper.setMinSize(Size.width(600), Size.height(100));
+            placeholderWrapper.setAlignment(Pos.CENTER);
+            toReturn.getChildren().add(placeholderWrapper);
+        }
+        toReturn.setPadding(Size.insets(10, 0, 0, 0));
+        Styles.setBackgroundColor(toReturn, postEngine.getBelongsTo().getColor());
+        return toReturn;
     }
 
     private VBox makeTopUnanswered(PostEngine postEngine) {
@@ -69,31 +65,26 @@ public class PostsBody extends VBox {
                 .filter(post -> post.getStatusLabels().contains(PostStatus.UNANSWERED))
                 .sorted(Comparator.comparing(post -> weight_views * post.getViews() + weight_likes * post.getLikes() + weight_date * (-1 * (System.currentTimeMillis() - post.getIdentifier().getTime1()) / 86400000)))
                 .collect(Collectors.toList());
-        Text header = new Text("Top Unanswered Questions") {{
-            setFill(postEngine.getBelongsTo().textFill());
-            setFont(Font.font(Size.fontSize(20)));
-        }};
-        HBox headerWrapper = new HBox(header) {{
-            setPadding(Size.insets(30, 0, 30, 15));
-        }};
-        String testText = "This is a test post; does it show 0up? ";
-        for (int i = 0; i < 10; i++) {
-            testText = testText + testText;
+        Text header = new Text("Top Unanswered Questions");
+        header.setFill(postEngine.getBelongsTo().textFill());
+        header.setFont(Font.font(Size.fontSize(20)));
+        HBox headerWrapper = new HBox(header);
+        headerWrapper.setPadding(Size.insets(30, 0, 30, 15));
+
+        VBox toReturn = new VBox(headerWrapper);
+        toReturn.getChildren().addAll(makePostDisplay(topUnanswered));
+        if (topUnanswered.size() == 0) {
+            Text placeholder = new Text("This class has no unanswered questions.");
+            placeholder.setFont(Font.font(Size.fontSize(14)));
+            placeholder.setFill(postEngine.getBelongsTo().textFill());
+            VBox placeholderWrapper = new VBox(placeholder);
+            placeholderWrapper.setMinSize(Size.width(600), Size.height(100));
+            placeholderWrapper.setAlignment(Pos.CENTER);
+            toReturn.getChildren().add(placeholderWrapper);
         }
-        return new VBox(headerWrapper) {{
-            getChildren().addAll(makePostDisplay(topUnanswered));
-            if (topUnanswered.size() == 0) {
-                getChildren().add(new VBox(new Text("This class has no unanswered questions.") {{
-                    setFont(Font.font(Size.fontSize(14)));
-                    setFill(postEngine.getBelongsTo().textFill());
-                }}) {{
-                    setMinSize(Size.width(600), Size.height(100));
-                    setAlignment(Pos.CENTER);
-                }});
-            }
-            setPadding(Size.insets(10, 0, 0, 0));
-            setStyle("-fx-background-color: " + Colors.colorToHex(postEngine.getBelongsTo().getColor()));
-        }};
+        toReturn.setPadding(Size.insets(10, 0, 0, 0));
+        Styles.setBackgroundColor(toReturn, postEngine.getBelongsTo().getColor());
+        return toReturn;
 
     }
 
@@ -101,23 +92,23 @@ public class PostsBody extends VBox {
         ArrayList<VBox> postDisplay = new ArrayList<>();
         for (int i = postsDescending.size() - 1; i >= 0 && i > postsDescending.size() - 1 - NUM_DISPLAY_ON_ROOT; i--) {
             Post p = postsDescending.get(i);
-            postDisplay.add(new VBox() {{
-                setStyle("-fx-background-color: " + Colors.colorToHex(Color.LIGHTGRAY));
-                getChildren().add(new HBox(new Text(p.getTitle()) {{
-                    setFont(Font.font("Sans Serif", Size.fontSize(18)));
-                }}, new Layouts.Filler(), new Text(p.getIdentifier().getAuthorName()) {{
-                    setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(18)));
-                }}) {{
-                    setPadding(Size.insets(5));
-                }});
-                getChildren().add(new TextFlow(new Text(p.collapseText(370))) {{
-                    setPadding(Size.insets(5));
-                }});
-                Events.highlightOnMouseOver(this);
-                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> PostsBody.this.fire(p));
-                setMinSize(Size.width(600), Size.height(100));
-                setMaxSize(Size.width(600), Size.height(100));
-            }});
+            VBox headerAndPost = new VBox();
+            Styles.setBackgroundColor(headerAndPost, Color.LIGHTGRAY);
+            Text title = new Text(p.getTitle());
+            title.setFont(Font.font("Sans Serif", Size.fontSize(18)));
+            Text author = new Text(p.getIdentifier().getAuthorName());
+            author.setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(18)));
+            HBox head = new HBox(title, new Layouts.Filler(), author);
+            head.setPadding(Size.insets(5));
+            headerAndPost.getChildren().add(head);
+            TextFlow collapsed = new TextFlow(new Text(p.collapseText(370)));
+            collapsed.setPadding(Size.insets(5));
+            headerAndPost.getChildren().add(collapsed);
+            Events.highlightOnMouseOver(headerAndPost);
+            headerAndPost.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> PostsBody.this.fire(p));
+            headerAndPost.setMinSize(Size.width(600), Size.height(100));
+            headerAndPost.setMaxSize(Size.width(600), Size.height(100));
+            postDisplay.add(headerAndPost);
         }
         return postDisplay;
     }
@@ -131,43 +122,4 @@ public class PostsBody extends VBox {
         getChildren().add(new PostWindow(post));
     }
 
-    private class PostWindow extends VBox {
-
-        HBox titleBar;
-        TextFlow text;
-
-        PostWindow(Post post) {
-            titleBar = new HBox();
-
-            Text title = new Text(post.getTitle());
-            title.setFont(Font.font(Size.fontSize(24)));
-            titleBar.getChildren().add(title);
-            titleBar.getChildren().add(new Layouts.Filler());
-            boolean updated = post.getIdentifier().getTime1() < post.getIdentifier().getTime2();
-
-            Text uploadedText = new Text((updated ? "Updated " : "Uploaded ") + UtilAndConstants.parseTimestamp(new Timestamp(updated ? post.getIdentifier().getTime2() : post.getIdentifier().getTime1())) + " by ");
-            uploadedText.setFont(Font.font(Size.fontSize(14)));
-
-            Text name = new Text(post.getIdentifier().getAuthorName());
-            name.setFont(Font.font(Size.fontSize(14)));
-            Events.underlineOnMouseOver(name);
-            name.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Root.getPortal().launchTaskView(new UserProfile(User.fromId(post.getPosterId()))));
-
-            titleBar.getChildren().addAll(uploadedText, name);
-
-            Region gap = new Region();
-            gap.setPrefWidth(Size.width(10));
-            titleBar.getChildren().add(gap);
-
-            Shape userImage = new ShapeImage(new Circle(Size.lessWidthHeight(20)), post.isPosterNameVisible() || post.getPosterId() == User.active().getUniqueID() ? Images.getUserPicture(post.getPosterId()) : Images.defaultUserImage()).apply();
-            userImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Root.getPortal().launchTaskView(new UserProfile(User.fromId(post.getPosterId()))));
-            titleBar.getChildren().add(userImage);
-
-            titleBar.setAlignment(Pos.CENTER_LEFT);
-            text = post.getFormattedText().asTextFlow();
-            getChildren().addAll(titleBar, text);
-            setPadding(Size.insets(20));
-        }
-
-    }
 }
