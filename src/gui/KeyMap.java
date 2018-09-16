@@ -21,6 +21,7 @@ public class KeyMap implements Serializable {
     private HashMap<Integer, HashMap<KeyCombo, Consumer<Node>>> table;
     private HashMap<Integer, Consumer<Node>> defaultTable;
     private boolean consume = false;
+    private boolean locked = false;
 
     public KeyMap() {
         table = new HashMap<>();
@@ -144,6 +145,8 @@ public class KeyMap implements Serializable {
     }
 
     private boolean fireEvent(KeyEvent event, Node target, int state, boolean homescreen) {
+        if (locked)
+            return false;
         if (state == 0 || state < -10 || state > 10)
             throw new IllegalArgumentException("Illegal state parameter for event");
         KeyCombo gen = new KeyCombo(new HashSet<>(), event.getCode());
@@ -181,6 +184,14 @@ public class KeyMap implements Serializable {
 
     public void consume() {
         consume = true;
+    }
+
+    public void lock() {
+        locked = true;
+    }
+
+    public void unlock() {
+        locked = false;
     }
 
     enum FunctionKey {

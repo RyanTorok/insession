@@ -46,7 +46,7 @@ public class PostEngine implements Serializable {
             try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
                 wr.write(postData);
             }
-            BufferedReader readDone = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            BufferedReader readDone = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             String encoding = readDone.readLine();
             ArrayList<Post> newList = new ArrayList<>();
             while (encoding != null) {
@@ -55,6 +55,7 @@ public class PostEngine implements Serializable {
             }
             posts = newList;
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,4 +81,22 @@ public class PostEngine implements Serializable {
         this.displayedPosts = displayedPosts;
     }
 
+    public boolean deletePost(Post post) {
+        getPosts().remove(post);
+        //remove from server
+        BufferedReader outputReader = Net.call("post/deletePost.php", true,
+                new PostRequest("classId", post.getClassId()),
+                new PostRequest("postId", post.getIdentifier().getId()),
+                new PostRequest("classItemId", post.getClassItemId()));
+        if (outputReader == null)
+            return false;
+        try {
+            if (outputReader.readLine().equals("done"))
+                return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
 }

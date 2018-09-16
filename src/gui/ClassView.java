@@ -64,13 +64,12 @@ public class ClassView extends TaskView {
         VBox titleBar = makeTitleBar();
         sideBars = makeSideBars();
         bodyPanes = makeBodyPanes();
-        sideBarAndBody = new HBox(makeSideBarsWrapper(), bodyPanes[0]) {{
-            setHgrow(bodyPanes[0], Priority.ALWAYS);
-            setStyle("-fx-background-color: " + Colors.colorToHex(Color.LIGHTGRAY));
-        }};
-        return new VBox(titleBar, sideBarAndBody) {{
-            setVgrow(sideBarAndBody, Priority.ALWAYS);
-        }};
+        sideBarAndBody = new HBox(makeSideBarsWrapper(), bodyPanes[0]);
+        sideBarAndBody.setHgrow(bodyPanes[0], Priority.ALWAYS);
+        Styles.setBackgroundColor(sideBarAndBody, Color.LIGHTGRAY);
+        VBox toReturn = new VBox(titleBar, sideBarAndBody);
+        toReturn.setVgrow(sideBarAndBody, Priority.ALWAYS);
+        return toReturn;
     }
 
     private VBox makeTitleBar() {
@@ -80,21 +79,23 @@ public class ClassView extends TaskView {
                 files = new Tab(1, "files"),
                 grades = new Tab(2, "assignments and grades");
 
-        HBox tabs = new HBox(posts, files, grades) {{setSpacing(Size.width(20));}};
-        return new VBox(titleAndControls, tabs) {{
-            setStyle("-fx-background-color: " + Colors.colorToHex(Color.LIGHTGRAY));
-        }};
+        HBox tabs = new HBox(posts, files, grades);
+        tabs.setSpacing(Size.width(20));
+        VBox toReturn = new VBox(titleAndControls, tabs);
+        Styles.setBackgroundColor(toReturn, Color.LIGHTGRAY);
+        return toReturn;
     }
 
     private HBox makeSideBarsWrapper() {
-        Line border = new Line() {{
-            setStroke(Color.DARKGRAY);
-            setStartY(Size.height(50));
-            setEndY(TaskViewWrapper.fullHeight - Size.height(60));
-            setStrokeWidth(Size.width(2));
-            setStrokeLineCap(StrokeLineCap.ROUND);
-        }};
-        return new HBox(sideBars[0], border) {{setAlignment(Pos.CENTER);}};
+        Line border = new Line();
+        border.setStroke(Color.DARKGRAY);
+        border.setStartY(Size.height(50));
+        border.setEndY(TaskViewWrapper.fullHeight - Size.height(60));
+        border.setStrokeWidth(Size.width(2));
+        border.setStrokeLineCap(StrokeLineCap.ROUND);
+        HBox toReturn = new HBox(sideBars[0], border);
+        toReturn.setAlignment(Pos.CENTER);
+        return toReturn;
     }
 
     private VBox[] makeSideBars() {
@@ -151,11 +152,19 @@ public class ClassView extends TaskView {
                 });
             }
         };
-        HBox controls = new HBox(newThread, new Layouts.Filler(), new Text("|") {{ setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Size.fontSize(14)));}}, new Layouts.Filler(), expandAllToggle, new Layouts.Filler(), new Text("|") {{ setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Size.fontSize(14)));}}, new Layouts.Filler(), filterToggle) {{
-            setPadding(Size.insets(20, 35, 10, 20));
-        }};
+        Text divider = new Text("|");
+        divider.setFill(Colors.textFill(backgroundColor));
+        divider.setFont(Font.font(Size.fontSize(14)));
+
+        Text anotherDivider = new Text("|");
+        anotherDivider.setFill(Colors.textFill(backgroundColor));
+        anotherDivider.setFont(Font.font(Size.fontSize(14)));
+
+
+        HBox controls = new HBox(newThread, new Layouts.Filler(), divider, new Layouts.Filler(), expandAllToggle, new Layouts.Filler(), anotherDivider, new Layouts.Filler(), filterToggle);
+        controls.setPadding(Size.insets(20, 35, 10, 20));
         postEngine = classPd.getPostEngine();
-        postEngine.getPosts().add(new Post(User.active(), Post.Type.Question, "Test post name", "This is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a test",true) {{
+        postEngine.getPosts().add(new Post(User.active(), Post.Type.Question, "Test post name", "<p>This is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a test<p>",true) {{
             getStatusLabels().add(PostStatus.UNREAD);
             getStatusLabels().add(PostStatus.UNANSWERED);
             getStatusLabels().add(PostStatus.PRIVATE);
@@ -169,10 +178,10 @@ public class ClassView extends TaskView {
 
     VBox makePostsList() {
         List<VBox> collect = postEngine.getPosts().stream().filter(this::matchesFilter).sorted().map(this::makePostSBItem).collect(Collectors.toList());
-        return new VBox(collect.toArray(new VBox[]{})) {{
-            setPrefHeight(TaskViewWrapper.fullHeight);
-            setStyle("-fx-background-color: " + Colors.colorToHex(backgroundColor));
-        }};
+        VBox toReturn = new VBox(collect.toArray(new VBox[]{}));
+        toReturn.setPrefHeight(TaskViewWrapper.fullHeight);
+        Styles.setBackgroundColor(toReturn, backgroundColor);
+        return toReturn;
     }
 
     private boolean matchesFilter(Post post) {
@@ -208,16 +217,16 @@ public class ClassView extends TaskView {
         List<ClassItem> items = classPd.getAssignmentsWithPostsDesc(8);
         List<Filter> assignments = items.stream().map(item -> new Filter(item.getName(), 0, item.getId())).collect(Collectors.toList());
         filters.add(new FilterBlock(this, "By Assignment", true, assignments));
-        return new VBox() {{
-            getChildren().addAll(filters);
-            VBox filterUI = dateFilter.get();
-            filterUI.setSpacing(Size.height(5));
-            getChildren().add(filterUI);
-            setPadding(Size.insets(20,0,0, 10));
-            setSpacing(Size.height(20));
-            setStyle("-fx-background-color: " + Colors.colorToHex(backgroundColor));
-            setPrefHeight(TaskViewWrapper.fullHeight);
-        }};
+        VBox toReturn = new VBox();
+        toReturn.getChildren().addAll(filters);
+        VBox filterUI = dateFilter.get();
+        filterUI.setSpacing(Size.height(5));
+        toReturn.getChildren().add(filterUI);
+        toReturn.setPadding(Size.insets(20, 0, 0, 10));
+        toReturn.setSpacing(Size.height(20));
+        Styles.setBackgroundColor(toReturn, backgroundColor);
+        toReturn.setPrefHeight(TaskViewWrapper.fullHeight);
+        return toReturn;
     }
 
     private VBox makePostSBItem(Post post) {
@@ -248,14 +257,12 @@ public class ClassView extends TaskView {
         VBox gradesSB = new VBox();
         School.initActiveDebug(); //TODO support school serialization
         final int[] markingPd = {School.active().getSchedule().getCurrentMarkingPeriod()};
-        Text lArrow = new Text(Character.toString((char) 0x276e)) {{
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, --markingPd[0]));
-        }};
+        Text lArrow = new Text(Character.toString((char) 0x276e));
+        lArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, --markingPd[0]));
         Text mpDisplay = new Text("  Grading Period " + markingPd[0] + "  ");
-        Text rArrow = new Text(Character.toString((char) 0x276f)) {{
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, ++markingPd[0]));
-            setVisible(false);
-        }};
+        Text rArrow = new Text(Character.toString((char) 0x276f));
+        rArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> shiftGradesSB(gradesSB, ++markingPd[0]));
+        rArrow.setVisible(false);
         Events.highlightOnMouseOver(lArrow);
         Events.highlightOnMouseOver(rArrow);
         TextFlow markingPeriodScroll = new TextFlow(lArrow, mpDisplay, rArrow);
@@ -362,9 +369,8 @@ public class ClassView extends TaskView {
 
         Tab(int index, String text) {
             this.index = index;
-            this.text = new Text(text) {{
-                setFont(Font.font(Size.fontSize(16)));
-            }};
+            this.text = new Text(text);
+            this.text.setFont(Font.font(Size.fontSize(16)));
             getChildren().add(this.text);
             Events.underlineOnMouseOver(this.text);
             this.text.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> switchPane(index));
@@ -386,9 +392,9 @@ public class ClassView extends TaskView {
         public PostSBItem(Post post) {
             this.post = post;
             expanded = false;
-            HBox main = new HBox(new Text(post.getTitle()) {{
-                setFont(Font.font("Sans Serif", FontWeight.BOLD, Font.getDefault().getSize()));
-            }}, new Layouts.Filler());
+            Text text = new Text(post.getTitle());
+            text.setFont(Font.font("Sans Serif", FontWeight.BOLD, Font.getDefault().getSize()));
+            HBox main = new HBox(text, new Layouts.Filler());
             main.getChildren().add(new HBox() {
                 {
                 //insert status icons
@@ -426,17 +432,18 @@ public class ClassView extends TaskView {
             });
             getChildren().add(main);
             displayPostTextOnSidebar = true;
-            if (displayPostTextOnSidebar)
-            getChildren().add(new Region() {{
-                setPrefHeight(Size.height(5));
-            }});
-            getChildren().add(new Line() {{
-                setStroke(Color.DARKGRAY);
-                setStartX(Size.width(5));
-                setEndX(Size.width(345));
-                setStrokeWidth(Size.width(2));
-                setStrokeLineCap(StrokeLineCap.ROUND);
-            }});
+            if (displayPostTextOnSidebar) {
+                Region gap = new Region();
+                gap.setPrefHeight(Size.height(5));
+                getChildren().add(gap);
+            }
+            Line line = new Line();
+            line.setStroke(Color.DARKGRAY);
+            line.setStartX(Size.width(5));
+            line.setEndX(Size.width(345));
+            line.setStrokeWidth(Size.width(2));
+            line.setStrokeLineCap(StrokeLineCap.ROUND);
+            getChildren().add(line);
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getButton().equals(MouseButton.SECONDARY))
                     if (expanded)
@@ -447,18 +454,29 @@ public class ClassView extends TaskView {
                     ((PostsBody) bodyPanes[0]).fire(post);
             });
             setPadding(Size.insets(10, 10, 0, 10));
-            setStyle("-fx-background-color: " + Colors.colorToHex(backgroundColor));
+            Styles.setBackgroundColor(this, backgroundColor);
             Events.highlightOnMouseOver(this);
         }
 
         void expand() {
             if (expanded)
                 return;
-            getChildren().add(2, new HBox(new Text(post.getIdentifier().getAuthorName()) {{setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(12)));}}, new Layouts.Filler(),
-                    new Text(UtilAndConstants.parseTimestamp(new Timestamp(post.getIdentifier().getTime1()))) {{setFill(Colors.textFill(backgroundColor)); setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(12)));}}));
-            getChildren().add(3, new Region() {{setPrefHeight(Size.height(5));}});
-            getChildren().add(4, new TextFlow(new Text(post.collapseText(230)) {{setFont(Font.font(Size.fontSize(10)));}}));
-            getChildren().add(5, new Region() {{setPrefHeight(Size.height(5));}});
+            Text author = new Text(post.getIdentifier().getAuthorName());
+            author.setFill(Colors.textFill(backgroundColor));
+            author.setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(12)));
+            Text time = new Text(UtilAndConstants.parseTimestamp(new Timestamp(post.getIdentifier().getTime1())));
+            time.setFill(Colors.textFill(backgroundColor));
+            time.setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(12)));
+            getChildren().add(2, new HBox(author, new Layouts.Filler(), time));
+            Region gap = new Region();
+            gap.setPrefHeight(Size.height(5));
+            getChildren().add(3, gap);
+            Text postCondensed = new Text(post.collapseText(230));
+            postCondensed.setFont(Font.font(Size.fontSize(10)));
+            getChildren().add(4, new TextFlow(postCondensed));
+            Region gap2 = new Region();
+            gap2.setPrefHeight(Size.height(5));
+            getChildren().add(5, gap2);
             expanded = true;
         }
 

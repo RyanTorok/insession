@@ -1,6 +1,6 @@
 package classes;
 
-import gui.RichText;
+import gui.HTMLText;
 import main.User;
 import main.UtilAndConstants;
 import searchengine.Identifier;
@@ -8,10 +8,8 @@ import searchengine.Indexable;
 import searchengine.RankedString;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 public class Post implements Indexable, Serializable, Comparable<Post> {
@@ -28,7 +26,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private long likes;
     private long views;
     private String title;
-    private RichText formattedText;
+    private HTMLText formattedText;
     private long lastIndexed;
     private long created;
     private long modified;
@@ -47,7 +45,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     public Post(User postedBy, Type type, String title, String source, boolean posterNameVisible) {
         this.setType(type);
         this.setTitle(title);
-        formattedText = new RichText(source);
+        formattedText = new HTMLText(source);
         this.posterId = Long.parseLong(postedBy.getID());
         this.posterFirst = postedBy.getFirst();
         this.posterLast = postedBy.getLast();
@@ -77,7 +75,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         this.views = views;
         this.currentUserViewedThis = currentUserViewedThis;
         this.title = title;
-        this.formattedText = new RichText(source);
+        this.formattedText = new HTMLText(source);
         this.lastIndexed = lastIndexed;
         this.created = created;
         this.modified = modified;
@@ -318,11 +316,11 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         return formattedText.getSource(); //TODO support encoding of symbols
     }
 
-    public RichText getFormattedText() {
+    public HTMLText getFormattedText() {
         return formattedText;
     }
 
-    public void setFormattedText(RichText formattedText) {
+    public void setFormattedText(HTMLText formattedText) {
         this.formattedText = formattedText;
     }
 

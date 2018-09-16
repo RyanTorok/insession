@@ -21,6 +21,8 @@ public class PostArea extends VBox {
 
     private final boolean editable;
     private final PostWindow wrapper;
+    private final TextFlow text;
+    private final TextFlow controlsTextFlow;
     private Post post;
     private final ControlIcon like;
     private final Text numLikes;
@@ -28,6 +30,7 @@ public class PostArea extends VBox {
 
     public PostArea(PostWindow wrapper, Post post, TextFlow text, boolean editable) {
         super(text);
+        this.text = text;
         this.wrapper = wrapper;
         this.post = post;
         Styles.setBackgroundColor(this, Color.WHITE);
@@ -52,7 +55,8 @@ public class PostArea extends VBox {
         numLikes.setFill(Color.DARKGRAY);
         ControlIcon answer = new ControlIcon('a', "Answer");
         answer.setFont(CustomFonts.comfortaa(30));
-        controls.getChildren().add(new TextFlow(numViews, views));
+        controlsTextFlow = new TextFlow(numViews, views);
+        controls.getChildren().add(controlsTextFlow);
         if (post.getType().equals(Post.Type.Question))
             controls.getChildren().add(answer);
         ControlIcon comment = new ControlIcon((char) 0x27a5, "Comment");
@@ -106,11 +110,13 @@ public class PostArea extends VBox {
     }
 
     private void edit() {
-
+        if (post.getSource() == null)
+            InlineTextEditor.edit(this, text);
+        else InlineTextEditor.edit(this, text);
     }
 
-    private void delete() {
-
+    private boolean delete() {
+        return ((ClassView) Root.getPortal().getTaskViews().current()).getPostEngine().deletePost(post);
     }
 
     private void like() {
