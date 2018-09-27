@@ -1344,7 +1344,7 @@ public class Main extends Application {
         return newKeyMap;
     }
 
-    private KeyMap getKeyMap() {
+    public KeyMap getKeyMap() {
         return keyMap;
     }
 }

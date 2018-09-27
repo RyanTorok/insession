@@ -37,7 +37,7 @@ public class ClassView extends TaskView {
     private StackPane postFiltersAndList;
     private GradesBody gradesBody;
     private VBox filters;
-    private Color backgroundColor = Color.LIGHTGRAY;
+    private Color backgroundColor = Color.web("#e6e8f2");
     private DateFilter dateFilter;
 
     public ClassView(ClassPd classPd) {
@@ -66,7 +66,7 @@ public class ClassView extends TaskView {
         bodyPanes = makeBodyPanes();
         sideBarAndBody = new HBox(makeSideBarsWrapper(), bodyPanes[0]);
         sideBarAndBody.setHgrow(bodyPanes[0], Priority.ALWAYS);
-        Styles.setBackgroundColor(sideBarAndBody, Color.LIGHTGRAY);
+        Styles.setBackgroundColor(sideBarAndBody, backgroundColor);
         VBox toReturn = new VBox(titleBar, sideBarAndBody);
         toReturn.setVgrow(sideBarAndBody, Priority.ALWAYS);
         return toReturn;
@@ -82,7 +82,7 @@ public class ClassView extends TaskView {
         HBox tabs = new HBox(posts, files, grades);
         tabs.setSpacing(Size.width(20));
         VBox toReturn = new VBox(titleAndControls, tabs);
-        Styles.setBackgroundColor(toReturn, Color.LIGHTGRAY);
+        Styles.setBackgroundColor(toReturn, backgroundColor);
         return toReturn;
     }
 
@@ -111,7 +111,7 @@ public class ClassView extends TaskView {
             setFill(Colors.textFill(backgroundColor));
             Events.underlineOnMouseOver(this);
             setFont(Font.font(Size.fontSize(14)));
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newPost());
+            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newThread());
         }};
         Text expandAllToggle = new Text("Expand All") {
 
@@ -291,7 +291,7 @@ public class ClassView extends TaskView {
     }
 
     private PostsBody makePostsPane() {
-        return new PostsBody(postEngine);
+        return new PostsBody(this, postEngine);
     }
 
     private GridPane makeFilesPane() {
@@ -384,7 +384,7 @@ public class ClassView extends TaskView {
         children.set(1, bodyPanes[index]);
     }
 
-    private class PostSBItem extends VBox {
+    class PostSBItem extends VBox {
 
         private Post post;
         private boolean expanded;

@@ -23,8 +23,10 @@ class PostWindow extends VBox {
 
     HBox titleBar;
     TextFlow text;
+    private PostsBody wrapper;
 
-    PostWindow(Post post) {
+    PostWindow(PostsBody wrapper, Post post) {
+        this.wrapper = wrapper;
         titleBar = new HBox();
         Text title = new Text(post.getTitle());
         title.setFont(Font.font(Size.fontSize(24)));
@@ -65,5 +67,13 @@ class PostWindow extends VBox {
         getChildren().addAll(titleBar, new PostArea(this, post, text, post.getStatusLabels().contains(PostStatus.MINE) || post.getType() == Post.Type.Student_Answer));
         setPadding(Size.insets(30));
         setSpacing(Size.height(20));
+    }
+
+    public PostsBody getWrapper() {
+        return wrapper;
+    }
+
+    public void setWrapper(PostsBody wrapper) {
+        this.wrapper = wrapper;
     }
 }

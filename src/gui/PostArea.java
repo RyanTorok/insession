@@ -115,8 +115,9 @@ public class PostArea extends VBox {
         else InlineTextEditor.edit(this, text);
     }
 
-    private boolean delete() {
-        return ((ClassView) Root.getPortal().getTaskViews().current()).getPostEngine().deletePost(post);
+    private void delete() {
+        wrapper.getWrapper().deletePost(post);
+
     }
 
     private void like() {
@@ -139,6 +140,10 @@ public class PostArea extends VBox {
 
     private void report() {
 
+    }
+
+    public PostWindow getWrapper() {
+        return wrapper;
     }
 
     class ControlIcon extends Text {

@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import main.Events;
@@ -262,8 +263,8 @@ public class TaskViewWrapper extends StackPane {
                 new KeyValue(me.maxHeightProperty(), newHeight),
                 new KeyValue(me.prefHeightProperty(), newHeight),
                 new KeyValue(me.minHeightProperty(), newHeight),
-                new KeyValue(((ImageView) ((HBox) me.getContent()).getChildren().get(0)).fitHeightProperty(), newHeight),
-                new KeyValue(((ImageView) ((HBox) me.getContent()).getChildren().get(0)).fitWidthProperty(), newWidth)));
+                new KeyValue(((ImageView) ((Pane) me.getContent()).getChildren().get(0)).fitHeightProperty(), newHeight),
+                new KeyValue(((ImageView) ((Pane) me.getContent()).getChildren().get(0)).fitWidthProperty(), newWidth)));
         if (!initial && modifiableAfter) {
             change.setOnFinished(event -> me.expand());
         }

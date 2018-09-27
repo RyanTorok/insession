@@ -2,7 +2,10 @@ package gui;
 
 import classes.Post;
 import classes.PostStatus;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -17,13 +20,22 @@ import java.util.stream.Collectors;
 
 public class PostsBody extends VBox {
 
+    private final ClassView wrapper;
+    private final PostEngine postEngine;
     private int weight_views = 1;
     private int weight_likes = 2;
     private int weight_date = 3;
 
     private static final int NUM_DISPLAY_ON_ROOT = 3;
 
-    public PostsBody(PostEngine postEngine) {
+    public PostsBody(ClassView wrapper, PostEngine postEngine) {
+        this.wrapper = wrapper;
+        this.postEngine = postEngine;
+        initialize();
+    }
+
+    public void initialize() {
+        getChildren().clear();
         getChildren().add(new HBox(new Layouts.Filler(), makePopularPosts(postEngine), new Layouts.Filler()) {{
             setPadding(Size.insets(20, 40, 0, 40));
         }});
@@ -93,7 +105,7 @@ public class PostsBody extends VBox {
         for (int i = postsDescending.size() - 1; i >= 0 && i > postsDescending.size() - 1 - NUM_DISPLAY_ON_ROOT; i--) {
             Post p = postsDescending.get(i);
             VBox headerAndPost = new VBox();
-            Styles.setBackgroundColor(headerAndPost, Color.LIGHTGRAY);
+            Styles.setBackgroundColor(headerAndPost, wrapper.getBackgroundColor());
             Text title = new Text(p.getTitle());
             title.setFont(Font.font("Sans Serif", Size.fontSize(18)));
             Text author = new Text(p.getIdentifier().getAuthorName());
@@ -113,13 +125,39 @@ public class PostsBody extends VBox {
         return postDisplay;
     }
 
-    void newPost() {
-
+    void newThread() {
+        getChildren().clear();
+        TextField titleField = new TextField();
+        titleField.setFont(Font.font("Sans Serif", Size.fontSize(27)));
+        titleField.setPrefColumnCount(40);
+        titleField.setPromptText("Enter a title for your thread here.");
+        titleField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) Root.getPortal().getKeyMap().lock();
+            else {
+                KeyMap keyMap = Root.getPortal().getKeyMap();
+                keyMap.unlock();
+            }
+        });
+        getChildren().add(titleField);
     }
 
     public void fire(Post post) {
         getChildren().clear();
-        getChildren().add(new PostWindow(post));
+        getChildren().add(new PostWindow(this, post));
     }
 
+    public PostEngine getPostEngine() {
+        return postEngine;
+    }
+
+    public void deletePost(Post post) {
+        postEngine.deletePost(post);
+        initialize();
+        wrapper.getPostsList().getChildren().removeIf(node -> {
+            if (node instanceof ClassView.PostSBItem) {
+                return post.equals(((ClassView.PostSBItem) node).getPost());
+            }
+            return false;
+        });
+    }
 }

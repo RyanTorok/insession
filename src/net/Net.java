@@ -1,5 +1,6 @@
 package net;
 
+import javafx.concurrent.Task;
 import main.PasswordManager;
 import main.User;
 
@@ -11,6 +12,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Net {
@@ -138,39 +140,6 @@ public class Net {
         }
     }
 
-    public static BufferedReader call(String address, boolean authenticate, PostRequest... posts) {
-        try {
-            //post data
-            StringBuilder data = new StringBuilder(authenticate ? "id=" + User.active().getUniqueID() + " &username=" + User.active().getUsername() + "&password=" + urlEncode(User.active().getPassword()) : "");
-            boolean b = false;
-            for (PostRequest request :  posts) {
-                if (b)
-                    data.append('&');
-                data.append(request.toString());
-                b = true;
-            }
-            byte[] postData = data.toString().getBytes(StandardCharsets.UTF_8);
-            int postDataLength = postData.length;
-            //start connection
-            URL url = new URL(root(), address);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-            conn.setUseCaches(false);
-            conn.setDoOutput(true);
-            try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-                wr.write(postData);
-            }
-            return new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public static class CreateAccountStatus {
         int status;
@@ -207,41 +176,13 @@ public class Net {
                 byte[] serFileBytes = User.active().getSerFileBytes();
                 if (serFileBytes == null)
                     return false;
-                String data = "id=" + checkAccount.getUniqueID() +"&serfile=" + urlEncode(serFileBytes);
-                byte[] postData = data.getBytes(StandardCharsets.UTF_8);
-                int postDataLength = postData.length;
-
-                //start connection
-                URL url = new URL(root(), "acct/updateSerFile.php");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true);
-                conn.setInstanceFollowRedirects(false);
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty("charset", "utf-8");
-                conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-                conn.setUseCaches(false);
-                conn.setDoOutput(true);
-                try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-                    wr.write(postData);
-                }
-                BufferedReader readDone = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                String in = readDone.readLine();
-                if (in.contains("done"))
-                    return true;
-                else {
-                    while(in != null) {
-                        System.out.println(in);
-                        in = readDone.readLine();
-                    }
-                    return false;
-                }
-            } else
-                return false;
+                new ThreadedCall<Boolean>("acct/updateSerFile.php", true, new PostRequest("serfile", urlEncode(serFileBytes))).threadedCall((list) -> list.contains("done"), (b) -> {});
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+        return true;
     }
 
     public static User syncSerFileDown() {

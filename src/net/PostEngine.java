@@ -2,16 +2,11 @@ package net;
 
 import classes.ClassPd;
 import classes.Post;
-import main.User;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
-import static net.Net.root;
-import static net.Net.urlEncode;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PostEngine implements Serializable {
 
@@ -19,50 +14,22 @@ public class PostEngine implements Serializable {
 
     private long lastUpdate;
     private ClassPd belongsTo;
-    private ArrayList<Post> posts;
-    private ArrayList<Post> displayedPosts;
+    private List<Post> posts;
+    private List<Post> displayedPosts;
 
     public PostEngine(ClassPd belongsTo) {
         this.belongsTo = belongsTo;
     }
 
     public void update() {
-        try {
-            //post data
-            String data = "id=" + User.active().getID() + "&username="+ User.active().getUsername() + "&password=" + urlEncode(User.active().getPassword()) + "&classId=" + belongsTo.getUniqueId();
-            byte[] postData = data.getBytes(StandardCharsets.UTF_8);
-            int postDataLength = postData.length;
-            //start connection
-            URL url = new URL(root(), "post/getPosts.php");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-            conn.setUseCaches(false);
-            conn.setDoOutput(true);
-            try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-                wr.write(postData);
-            }
-            BufferedReader readDone = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
-            String encoding = readDone.readLine();
-            ArrayList<Post> newList = new ArrayList<>();
-            while (encoding != null) {
-                newList.add(Post.fromEncoding(encoding));
-                encoding = readDone.readLine();
-            }
-            posts = newList;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new ThreadedCall<List<Post>>("post/getPosts.php", true,
+                new PostRequest("classId", belongsTo.getUniqueId())).threadedCall((strings) -> strings.stream().map(Post::fromEncoding).collect(Collectors.toList()), (posts) -> PostEngine.this.posts = posts);
     }
 
     public void index() {
     }
 
-    public ArrayList<Post> getPosts() {
+    public List<Post> getPosts() {
         if (posts == null) {
             posts = new ArrayList<>();
         }
@@ -73,7 +40,7 @@ public class PostEngine implements Serializable {
         return belongsTo;
     }
 
-    public ArrayList<Post> getDisplayedPosts() {
+    public List<Post> getDisplayedPosts() {
         return displayedPosts;
     }
 
@@ -81,22 +48,15 @@ public class PostEngine implements Serializable {
         this.displayedPosts = displayedPosts;
     }
 
-    public boolean deletePost(Post post) {
+    public void deletePost(Post post) {
         getPosts().remove(post);
         //remove from server
-        BufferedReader outputReader = Net.call("post/deletePost.php", true,
+        new ThreadedCall<Boolean>("post/deletePost.php", true,
                 new PostRequest("classId", post.getClassId()),
                 new PostRequest("postId", post.getIdentifier().getId()),
-                new PostRequest("classItemId", post.getClassItemId()));
-        if (outputReader == null)
-            return false;
-        try {
-            if (outputReader.readLine().equals("done"))
-                return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
+                new PostRequest("classItemId", post.getClassItemId())).threadedCall((list) ->
+                list.contains("done"), (b) -> {}
+        );
+
     }
 }
