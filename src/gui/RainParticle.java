@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.scene.CacheHint;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -26,6 +27,6 @@ public class RainParticle extends PrecipParticle {
         l.setStartY(0);
         l.setEndX(7.5 * size);
         l.setEndY(15 * size);
-        return l;
+       return l;
     }
 }

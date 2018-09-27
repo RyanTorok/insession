@@ -404,7 +404,8 @@ public class TaskViewWrapper extends StackPane {
         int oldIndex = activeViews.indexOf(view);
         int newIndex = which >= oldIndex && which > 0 ? which - 1 : which;
         activeViews.remove(view);
-        scroll(newIndex);
+        if (activeViews.size() == 0) Root.getPortal().hideTaskViews();
+        else scroll(newIndex);
     }
 
     public void close(TaskView view) {

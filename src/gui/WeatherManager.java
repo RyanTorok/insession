@@ -12,7 +12,7 @@ import org.json.*;
  * Created by 11ryt on 7/24/2017.
  */
 
-public class WeatherManager {
+public class WeatherManager{
     private int zipCode;
     private WeatherState current;
     private String description;

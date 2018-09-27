@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.animation.TranslateTransition;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -90,41 +91,52 @@ public class Terminal extends AnchorPane {
             previous_commands.add(field.getText());
             pc_index = previous_commands.size();
             pc_last_confirmed = true;
-            TerminalRet terminalRet = eval.command(field.getText(), 140) ;
-            String out = terminalRet.getText();
-            // print output to the screen
-            if (out.length() > 0) {
-                Text outputTXT = new Text(out);
-                outputTXT.setFill(Color.WHITE);
-                GridPane.setConstraints(outputTXT, 0, yindex++, 2, 1);
-                pane.getChildren().add(outputTXT);
-            }
+            Task<TerminalRet> executeCommand = new Task<TerminalRet>() {
+                @Override
+                protected TerminalRet call() throws Exception {
+                    return eval.command(field.getText(), 140) ;
+                }
+            };
+            executeCommand.setOnSucceeded(event2 -> {
+                TerminalRet terminalRet = executeCommand.getValue();
+                String out = terminalRet.getText();
+                // print output to the screen
+                if (out.length() > 0) {
+                    Text outputTXT = new Text(out);
+                    outputTXT.setFill(Color.WHITE);
+                    GridPane.setConstraints(outputTXT, 0, yindex++, 2, 1);
+                    pane.getChildren().add(outputTXT);
+                }
 
-            if (!terminalRet.getEvents().getEvents().contains(TerminalDrivenEvent.CLEAR)) {
-                field.setEditable(false);
-                Text prompt_new = new Text(eval.getPrompt());
-                prompt_new.setFill(Color.WHITE);
-                TextField field_new = new TextField();
-                current = field_new;
-                field_new.setEditable(true);
-                field_new.setPrefColumnCount(columns);
-                field_new.setStyle("-fx-background-color: #202020; -fx-text-fill: #ffffff");
-                GridPane.setConstraints(prompt_new, 0, yindex, 1, 1);
-                pane.getChildren().add(prompt_new);
-                GridPane.setConstraints(field_new, 1, yindex++, 1, 1);
-                pane.getChildren().add(field_new);
-                field_new.requestFocus();
-                field_new.addEventHandler(KeyEvent.KEY_PRESSED, event1 -> {
-                    if (Root.getPortal().getState() != Main.TERMINAL_STATE)
-                        event.consume();
-                    else
-                        advance(field_new, event1);
-                });
-                wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
-            }
+                if (!terminalRet.getEvents().getEvents().contains(TerminalDrivenEvent.CLEAR)) {
+                    field.setEditable(false);
+                    Text prompt_new = new Text(eval.getPrompt());
+                    prompt_new.setFill(Color.WHITE);
+                    TextField field_new = new TextField();
+                    current = field_new;
+                    field_new.setEditable(true);
+                    field_new.setPrefColumnCount(columns);
+                    field_new.setStyle("-fx-background-color: #202020; -fx-text-fill: #ffffff");
+                    GridPane.setConstraints(prompt_new, 0, yindex, 1, 1);
+                    pane.getChildren().add(prompt_new);
+                    GridPane.setConstraints(field_new, 1, yindex++, 1, 1);
+                    pane.getChildren().add(field_new);
+                    field_new.requestFocus();
+                    field_new.addEventHandler(KeyEvent.KEY_PRESSED, event1 -> {
+                        if (Root.getPortal().getState() != Main.TERMINAL_STATE)
+                            event1.consume();
+                        else
+                            advance(field_new, event1);
+                    });
+                    wrapper.setVvalue(wrapper.vmaxProperty().doubleValue());
+                }
 
-            //execute event(s) tied to command
-            terminalRet.getEvents().run();
+                //execute event(s) tied to command
+                terminalRet.getEvents().run();
+            });
+            Thread executionThread = new Thread(executeCommand);
+            executionThread.setDaemon(true);
+            executionThread.start();
         }
         if (event.getCode().equals(KeyCode.UP)) {
             if (pc_index > 0) {

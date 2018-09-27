@@ -5,6 +5,7 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -71,6 +72,7 @@ public class Main extends Application {
     private Text date;
     private Text name;
     private Shape picture;
+    private HBox popupWrapper;
     private int topbarPictureIndex = -1;
     private Terminal terminal;
     private StackPane mainArea;
@@ -172,10 +174,9 @@ public class Main extends Application {
         getMenus()[2] = new BarMenu("Organizations", 2);
         getMenus()[3] = new BarMenu("Browse Lessons", 3);
         getMenus()[4] = new BarMenu("Community", 4);
-        BarMenu name = new BarMenu(User.active() == null || User.active().getUsername() == null ? "Not signed in" : User.active().getFirst() + " " + User.active().getLast(), -1);
+        name = new BarMenu(User.active() == null || User.active().getUsername() == null ? "Not signed in" : User.active().getFirst() + " " + User.active().getLast(), -1);
         this.setName(name);
-        for (BarMenu m : getMenus()
-                ) {
+        for (BarMenu m : getMenus()) {
             m.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (getState() == SIDEBAR_STATE)
                     Events.fireMouse(name, MouseEvent.MOUSE_CLICKED);
@@ -207,11 +208,12 @@ public class Main extends Application {
         menusWrapper.setAlignment(Pos.CENTER_LEFT);
         menusWrapper.setSpacing(Size.width(30));
         allMenusAndSearchBar = new StackPane(menusWrapper);
-        HBox topbar = new HBox(titles, allMenusAndSearchBar, new Layouts.Filler(), new AnchorPane(name), new AnchorPane(picture));
+        popupWrapper = new HBox();
+        HBox topbar = new HBox(titles, allMenusAndSearchBar, new Layouts.Filler(), new AnchorPane(name), new AnchorPane(picture), popupWrapper);
         AnchorPane.setTopAnchor(name, Size.height(40));
         AnchorPane.setLeftAnchor(picture, Size.width(5));
         AnchorPane.setTopAnchor(picture, Size.height(22.5));
-        topbarPictureIndex = topbar.getChildren().size() - 1; //picture is last item in top bar.
+        topbarPictureIndex = topbar.getChildren().size() - 2; //picture is last item in top bar, besides the popup handler
         top_bar = topbar;
         topbar.setSpacing(Size.width(35));
         topbar.setAlignment(Pos.TOP_LEFT);
@@ -495,7 +497,6 @@ public class Main extends Application {
             }
         });
 
-
         state = BASE_STATE;
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
@@ -518,8 +519,17 @@ public class Main extends Application {
     }
 
     void updateWeather() {
-        getManager().update();
-        updateWeatherDisplay();
+        Task<Void> updateTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                manager.update();
+                return null;
+            }
+        };
+        Thread thread = new Thread(updateTask);
+        thread.setDaemon(true);
+        thread.start();
+        updateTask.setOnSucceeded(event -> updateWeatherDisplay());
     }
 
     void updateWeatherDisplay() {
@@ -530,7 +540,7 @@ public class Main extends Application {
 
     private void setTemperatureDisplay() {
         if (getManager().getTempCelsius() == null) {
-            getTemperature().setText("----" + (char) 0x00B0 + (User.active().usesFahrenheit() ? "F" : "C"));
+            getTemperature().setText(Character.toString((char) 0x2012) + Character.toString((char) 0x2012) + (char) 0x00B0 + (User.active().usesFahrenheit() ? "F" : "C"));
         } else {
             if (User.active().usesFahrenheit()) {
                 getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
@@ -882,6 +892,14 @@ public class Main extends Application {
 
     public VBox getTitles() {
         return titles;
+    }
+
+    public void showNotification(PopupNotification notification) {
+        popupWrapper.getChildren().add(notification);
+    }
+
+    public void removeNotification(PopupNotification notification) {
+        popupWrapper.getChildren().remove(notification);
     }
 
 

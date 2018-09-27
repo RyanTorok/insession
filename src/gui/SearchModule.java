@@ -1,6 +1,7 @@
 package gui;
 
 import classes.ClassPd;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -147,13 +148,24 @@ public class SearchModule extends VBox {
             });
             textFillers.getChildren().add(box);
         }
-        TreeSet<Identifier> result = getEngine().incompleteQuery(beginning, orig.substring(partition), textFillerStrings, new FilterSet((SearchFilterBox) filters.getContent()));
-        for (Identifier id : result) {
-            searchResultsDisplay.getChildren().add(new ResultBlock(id));
-        }
+        Task<TreeSet<Identifier>> searchAction = new Task<>() {
+            @Override
+            protected TreeSet<Identifier> call() {
+                return getEngine().incompleteQuery(beginning, orig.substring(partition), textFillerStrings, new FilterSet((SearchFilterBox) filters.getContent()));
+            }
+        };
+        Thread searchThread = new Thread(searchAction);
+        searchThread.setDaemon(true);
+        searchThread.start();
+        searchAction.setOnSucceeded(event -> {
+            TreeSet<Identifier> result = searchAction.getValue();
+            for (Identifier id : result) {
+                searchResultsDisplay.getChildren().add(new ResultBlock(id));
+            }
+            setSubHeaderText();
+        });
         if (!getChildren().contains(textFillers))
             getChildren().add(1, textFillers);
-        setSubHeaderText();
         fillersIndex = -1;
         lastSearchType = false;
     }
@@ -169,16 +181,26 @@ public class SearchModule extends VBox {
     void search() {
         if (!expanded)
             expand();
-//        fillersIndex = -1;
         getChildren().remove(textFillers);
         searchResultsDisplay.getChildren().clear();
-        List<Identifier> result = getEngine().query(searchBox.getText(), new FilterSet((SearchFilterBox) filters.getContent()));
-        for (Identifier id : result) {
-            searchResultsDisplay.getChildren().add(new ResultBlock(id));
-        }
-        if (result.size() == 0 && !getFilterBox().isDefault())
-            collapse();
-        setSubHeaderText();
+        Task<List<Identifier>> searchAction = new Task<>() {
+            @Override
+            protected List<Identifier> call() {
+                return getEngine().query(searchBox.getText(), new FilterSet((SearchFilterBox) filters.getContent()));
+            }
+        };
+        Thread searchThread = new Thread(searchAction);
+        searchThread.setDaemon(true);
+        searchThread.start();
+        searchAction.setOnSucceeded(event -> {
+            List<Identifier> result = searchAction.getValue();
+            for (Identifier id : result) {
+                searchResultsDisplay.getChildren().add(new ResultBlock(id));
+            }
+            if (result.size() == 0 && !getFilterBox().isDefault())
+                collapse();
+            setSubHeaderText();
+        });
         lastSearchType = true;
     }
 
