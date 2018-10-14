@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>Identifier.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Identifier.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>searchengine;
+
+<span class="s0">import </span>classes.ClassPd;
+
+<span class="s0">public class </span>Identifier <span class="s0">implements </span>Comparable {
+    <span class="s0">private </span>String name;
+    <span class="s0">private </span>String description;
+    <span class="s0">private </span>Type type;
+    <span class="s0">private </span>ClassPd belongsTo;
+    <span class="s0">private long </span>id;
+    <span class="s0">private </span>String authorName; <span class="s2">//first and last</span>
+    <span class="s0">private long </span>time1; <span class="s2">//date of posting</span>
+    <span class="s0">private long </span>time2; <span class="s2">//due date for class assignments</span>
+    <span class="s0">private long </span>views; <span class="s2">//used only for modules and posts</span>
+    <span class="s0">private long </span>likes; <span class="s2">//used only for modules and posts</span>
+
+    <span class="s0">public </span>Identifier(String name, Type type, <span class="s0">long </span>id) {
+        <span class="s0">this</span>.setName(name);
+        <span class="s0">this</span>.setType(type);
+        <span class="s0">this</span>.setId(id);
+    }
+
+    <span class="s0">public </span>Indexable find(Index index) {
+        <span class="s0">return </span>index.getObject(<span class="s0">this</span>);
+    }
+
+    <span class="s0">public </span>Type getType() {
+        <span class="s0">return </span>type;
+    }
+
+    <span class="s0">public void </span>setType(Type type) {
+        <span class="s0">this</span>.type = type;
+    }
+
+    <span class="s0">public </span>String getName() {
+        <span class="s0">return </span>name;
+    }
+
+    <span class="s0">public void </span>setName(String name) {
+        <span class="s0">this</span>.name = name;
+    }
+
+    <span class="s0">public long </span>getId() {
+        <span class="s0">return </span>id;
+    }
+
+    <span class="s0">public void </span>setId(<span class="s0">long </span>id) {
+        <span class="s0">this</span>.id = id;
+    }
+
+    <span class="s0">public </span>ClassPd getBelongsTo() {
+        <span class="s0">return </span>belongsTo;
+    }
+
+    <span class="s0">public void </span>setBelongsTo(ClassPd belongsTo) {
+        <span class="s0">this</span>.belongsTo = belongsTo;
+    }
+
+    <span class="s0">public </span>String getAuthorName() {
+        <span class="s0">return </span>authorName;
+    }
+
+    <span class="s0">public void </span>setAuthorName(String authorName) {
+        <span class="s0">this</span>.authorName = authorName;
+    }
+
+    <span class="s0">public long </span>getTime1() {
+        <span class="s0">return </span>time1;
+    }
+
+    <span class="s0">public void </span>setTime1(<span class="s0">long </span>time1) {
+        <span class="s0">this</span>.time1 = time1;
+    }
+
+    <span class="s0">public long </span>getTime2() {
+        <span class="s0">return </span>time2;
+    }
+
+    <span class="s0">public void </span>setTime2(<span class="s0">long </span>time2) {
+        <span class="s0">this</span>.time2 = time2;
+    }
+
+    <span class="s0">public long </span>getViews() {
+        <span class="s0">return </span>views;
+    }
+
+    <span class="s0">public void </span>setViews(<span class="s0">long </span>views) {
+        <span class="s0">this</span>.views = views;
+    }
+
+    <span class="s0">public long </span>getLikes() {
+        <span class="s0">return </span>likes;
+    }
+
+    <span class="s0">public void </span>setLikes(<span class="s0">long </span>likes) {
+        <span class="s0">this</span>.likes = likes;
+    }
+
+    <span class="s0">public </span>String getDescription() {
+        <span class="s0">return </span>description;
+    }
+
+    <span class="s0">public void </span>setDescription(String description) {
+        <span class="s0">this</span>.description = description;
+    }
+
+    <span class="s0">public enum </span>Type {
+        Module, Class, Organization, People, Class_Item, Post, Utility, Setting
+    }
+
+    @Override
+    <span class="s0">public int </span>compareTo(Object o) {
+        <span class="s0">if </span>(!(o <span class="s0">instanceof </span>Identifier))
+            <span class="s0">return </span><span class="s3">0</span>;
+        <span class="s0">return </span>getName().compareTo(((Identifier) o).getName());
+    }
+
+    @Override
+    <span class="s0">public boolean </span>equals(Object obj) {
+        <span class="s0">if </span>(!(obj <span class="s0">instanceof </span>Identifier))
+            <span class="s0">return false</span>;
+        <span class="s0">return </span>getId() == ((Identifier) obj).getId() &amp;&amp; getType() == ((Identifier) obj).getType();
+    }
+}
+</pre>
+</body>
+</html>

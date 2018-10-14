@@ -1,9 +1,12 @@
 package searchengine;
 
+import net.PostRequest;
+import net.ThreadedCall;
 import terminal.Address;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Index implements Serializable {
 
@@ -82,4 +85,5 @@ public class Index implements Serializable {
     public Indexable getObject(Identifier identifier) {
         return objects.get(identifier);
     }
+
 }

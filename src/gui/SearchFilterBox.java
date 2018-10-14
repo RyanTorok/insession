@@ -38,6 +38,7 @@ public class SearchFilterBox extends VBox {
         types.add("Files and Assignments");
         types.add("Modules");
         types.add("Posts");
+        types.add("People");
         types.add("Classes");
         types.add("Organizations");
         types.add("Utilities");
@@ -94,14 +95,16 @@ public class SearchFilterBox extends VBox {
                 return filterSets.get(0).getFields().get(1).checkBox.isSelected();
             case Post:
                 return filterSets.get(0).getFields().get(2).checkBox.isSelected();
-            case Class:
+            case People:
                 return filterSets.get(0).getFields().get(3).checkBox.isSelected();
-            case Organization:
+            case Class:
                 return filterSets.get(0).getFields().get(4).checkBox.isSelected();
-            case Utility:
+            case Organization:
                 return filterSets.get(0).getFields().get(5).checkBox.isSelected();
-            case Setting:
+            case Utility:
                 return filterSets.get(0).getFields().get(6).checkBox.isSelected();
+            case Setting:
+                return filterSets.get(0).getFields().get(7).checkBox.isSelected();
         }
         return false;
     }

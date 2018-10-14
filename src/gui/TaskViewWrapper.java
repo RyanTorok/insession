@@ -363,11 +363,13 @@ public class TaskViewWrapper extends StackPane {
                 double dy = view.getDy();
                 double endPos = Size.height(dy < Size.height(-400) ? -1500 : dy > Size.height(400) ? 1500 : 0);
                 Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(view.translateYProperty(), endPos)));
-                timeline.play();
                 if (endPos != 0) {
-                    removeView(view);
-                    timeline.setOnFinished(event1 -> getChildren().remove(view));
+                    timeline.setOnFinished(event1 -> {
+                        getChildren().remove(view);
+                        removeView(view);
+                    });
                 }
+                timeline.play();
             }
         });
         lastClosed = lastViewed = current();

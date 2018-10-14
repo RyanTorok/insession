@@ -2,15 +2,19 @@ package gui;
 
 import classes.Post;
 import classes.PostStatus;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.*;
-import main.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import main.Events;
+import main.Layouts;
+import main.Root;
+import main.Size;
 import net.PostEngine;
 
 import java.util.ArrayList;
@@ -138,12 +142,19 @@ public class PostsBody extends VBox {
                 keyMap.unlock();
             }
         });
-        getChildren().add(titleField);
+        Post newPost = Post.newPost();
+        PostWindow window = fire(newPost);
+        window.getChildren().set(0, titleField);
+        InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), onFinished-> {
+
+        });
     }
 
-    public void fire(Post post) {
+    public PostWindow fire(Post post) {
         getChildren().clear();
-        getChildren().add(new PostWindow(this, post));
+        PostWindow e = new PostWindow(this, post);
+        getChildren().add(e);
+        return e;
     }
 
     public PostEngine getPostEngine() {

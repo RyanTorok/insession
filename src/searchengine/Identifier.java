@@ -4,14 +4,15 @@ import classes.ClassPd;
 
 public class Identifier implements Comparable {
     private String name;
+    private String description;
     private Type type;
     private ClassPd belongsTo;
     private long id;
     private String authorName; //first and last
     private long time1; //date of posting
     private long time2; //due date for class assignments
-    private long views; //used only for modules
-    private long likes; //used only for modules
+    private long views; //used only for modules and posts
+    private long likes; //used only for modules and posts
 
     public Identifier(String name, Type type, long id) {
         this.setName(name);
@@ -95,8 +96,16 @@ public class Identifier implements Comparable {
         this.likes = likes;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public enum Type {
-        Module, Class, Organization, Class_Item, Post, Utility, Setting
+        Module, Class, Organization, People, Class_Item, Post, Utility, Setting
     }
 
     @Override

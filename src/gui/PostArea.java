@@ -142,6 +142,10 @@ public class PostArea extends VBox {
 
     }
 
+    public TextFlow getText() {
+        return text;
+    }
+
     public PostWindow getWrapper() {
         return wrapper;
     }

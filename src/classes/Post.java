@@ -87,6 +87,10 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         comments = new ArrayList<>();
     }
 
+    public static Post newPost() {
+        return new Post(User.active(), Type.Question, "", "", true);
+    }
+
     public static Post fromEncoding(String encoding) {
         String[] split = UtilAndConstants.parsePHPDataOutBase64(encoding, 19);
         Long postId = Long.parseLong(split[0]);

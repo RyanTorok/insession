@@ -1,6 +1,8 @@
 package searchengine;
 
 import main.User;
+import net.PostRequest;
+import net.ThreadedCall;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,7 +14,7 @@ public class QueryEngine {
     private Index index;
     private static final String[] ignoredWords = {"where", "what", "how", "a", "an", "of", "i", "the"};
     //"encrypted" for code censorship (i.e. characters adjusted by one letter)
-    private static String[] safeSearchFilterWords = {"tiju", "dsbq", "ejdl", "eidlifbe", "tijuifbe", "btt", "bttipmf", "ebno", "gvdl", "npuifsgvdlfs", "tijuifbe", "ebnnju", "cjudi", "ifmm", "hpeebno", "hpeebnoju"};
+    private static String[] safeSearchFilterWords = {"tiju", "dsbq", "ejdl", "eidlifbe", "tijuifbe", "btt", "bttipmf", "ebno", "gvdl", "npuifsgvdlfs", "tijuifbe", "ebnnju", "ebnoju", "cjudi", "ifmm", "hpeebno", "hpeebnoju", "hpeebnnju"};
     private boolean safeSearchOn = false;
     private Set<ItemNode> filterItems;
     private long lastQueryTimeNanos;
@@ -187,6 +189,7 @@ public class QueryEngine {
             default: throw new IllegalStateException("Non-query element escaped parse tree");
         }
     }
+
 
     private boolean matchesFilter(ItemNode itemNode) {
         Identifier id = itemNode.identifier;
@@ -408,4 +411,24 @@ public class QueryEngine {
             this.results = results;
         }
     }
+
+    public static void main(String args[]) {
+        User u = User.fromId(Long.parseLong(args[0]));
+        String query = args[1];
+        boolean partial = Boolean.getBoolean(args[2]);
+        Integer filters = Integer.parseInt(args[3]);
+        FilterSet.DateConstraint constraint = FilterSet.DateConstraint.valueOf(args[4]);
+        Date restriction = new Date(Long.parseLong(args[5]));
+        List<Long> classIds = Arrays.asList(args).subList(6, args.length).stream().map(Long::parseLong).collect(Collectors.toList());
+
+        Index i = Index.loadLocal();
+        if (partial) {
+            int lastSpace = query.lastIndexOf(" ");
+            //TODO add stems
+            new QueryEngine(i).incompleteQuery(query.substring(0, lastSpace), query.substring(lastSpace), new ArrayList<>(), new FilterSet(filters, constraint, restriction, classIds.toArray(new Long[]{})));
+        } else {
+            new QueryEngine(i).query(query, new FilterSet(filters, constraint, restriction, classIds.toArray(new Long[]{})));
+        }
+    }
+
 }

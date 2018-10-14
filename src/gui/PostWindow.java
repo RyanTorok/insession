@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 
 class PostWindow extends VBox {
 
+    private final PostArea postArea;
     HBox titleBar;
     TextFlow text;
     private PostsBody wrapper;
@@ -64,7 +65,8 @@ class PostWindow extends VBox {
         titleBar.setAlignment(Pos.CENTER_LEFT);
         text = post.getFormattedText().asTextFlow();
         post.getStatusLabels().add(PostStatus.MINE);
-        getChildren().addAll(titleBar, new PostArea(this, post, text, post.getStatusLabels().contains(PostStatus.MINE) || post.getType() == Post.Type.Student_Answer));
+        postArea = new PostArea(this, post, text, post.getStatusLabels().contains(PostStatus.MINE) || post.getType() == Post.Type.Student_Answer);
+        getChildren().addAll(titleBar, postArea);
         setPadding(Size.insets(30));
         setSpacing(Size.height(20));
     }
@@ -75,5 +77,9 @@ class PostWindow extends VBox {
 
     public void setWrapper(PostsBody wrapper) {
         this.wrapper = wrapper;
+    }
+
+    public PostArea getPostArea() {
+        return postArea;
     }
 }

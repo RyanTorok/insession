@@ -100,6 +100,7 @@ public class Main extends Application {
     private Text mainlogo;
     private String upper;
     private String lower;
+    private boolean keyMapLockedOnSleep;
 
     public static void main(String[] args) {
         launch(args);
@@ -739,6 +740,8 @@ public class Main extends Application {
 
     private void wakeup() {
         state = BASE_STATE;
+        if (keyMapLockedOnSleep)
+            keyMap.lock();
         topbarWrapper.setVisible(true);
         FadeTransition fadein = new FadeTransition(Duration.millis(200), topbarWrapper);
         fadein.setFromValue(0);
@@ -754,6 +757,8 @@ public class Main extends Application {
 
     private void sleep() {
         state = SLEEP_STATE;
+        keyMapLockedOnSleep = keyMap.isLocked();
+        keyMap.unlock();
         topbarWrapper.setVisible(false);
         mainBodyAndTaskViews.setVisible(false);
         FadeTransition ft = new FadeTransition(Duration.millis(200), getSleepBody());

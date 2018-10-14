@@ -194,6 +194,10 @@ public class KeyMap implements Serializable {
         locked = false;
     }
 
+    public boolean isLocked() {
+        return locked;
+    }
+
     enum FunctionKey {
         CONTROL, ALT, SHIFT
     }

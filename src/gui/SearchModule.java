@@ -18,12 +18,15 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.*;
+import net.PostRequest;
+import net.ThreadedCall;
 import searchengine.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class SearchModule extends VBox {
 
@@ -176,6 +179,14 @@ public class SearchModule extends VBox {
             description = "No results were returned.";
         else description = "Returned " + size + (size == 1 ? " result" : " results") + " in " + UtilAndConstants.parseTimeNanos(getEngine().getLastQueryTimeNanos());
         topBarSubtitle.setText(description);
+    }
+
+    private void netRequest(String token) {
+        ThreadedCall<List<ItemNode>> call = new ThreadedCall<>("search/query.php", true, new PostRequest("token", token));
+        //TODO implment relevance algorithm for server results
+        call.threadedCall((list) -> list.stream().map(ItemNode::fromRemoteRegex).collect(Collectors.toList()), (results) -> {
+            //TODO
+        });
     }
 
     void search() {
