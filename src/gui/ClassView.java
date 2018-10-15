@@ -164,12 +164,6 @@ public class ClassView extends TaskView {
         HBox controls = new HBox(newThread, new Layouts.Filler(), divider, new Layouts.Filler(), expandAllToggle, new Layouts.Filler(), anotherDivider, new Layouts.Filler(), filterToggle);
         controls.setPadding(Size.insets(20, 35, 10, 20));
         postEngine = classPd.getPostEngine();
-        postEngine.getPosts().add(new Post(User.active(), Post.Type.Question, "Test post name", "<p>This is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a testThis is a test<p>",true) {{
-            getStatusLabels().add(PostStatus.UNREAD);
-            getStatusLabels().add(PostStatus.UNANSWERED);
-            getStatusLabels().add(PostStatus.PRIVATE);
-            getIdentifier().setTime1(System.currentTimeMillis());
-        }});
         filters = makeFilters();
         postsList = makePostsList();
         postFiltersAndList = new StackPane(filters, postsList);

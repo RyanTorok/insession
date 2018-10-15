@@ -1,6 +1,10 @@
 package classes;
 
+import gui.CompressedRichText;
 import gui.HTMLText;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.util.Pair;
 import main.User;
 import main.UtilAndConstants;
 import searchengine.Identifier;
@@ -10,6 +14,7 @@ import searchengine.RankedString;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Post implements Indexable, Serializable, Comparable<Post> {
@@ -41,6 +46,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private List<Post> studentAnswers;
     private List<Post> comments;
     private Post instructorAnswer;
+    private HashMap<Long, Pair<String, CompressedRichText>> history;
 
     public Post(User postedBy, Type type, String title, String source, boolean posterNameVisible) {
         this.setType(type);
@@ -59,6 +65,8 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         statusLabels = new ArrayList<>();
         studentAnswers = new ArrayList<>();
         comments = new ArrayList<>();
+        history = new HashMap<>();
+        history.put(System.currentTimeMillis(), new Pair<>(title, new CompressedRichText(new TextFlow(new Text(source)))));
     }
 
     public Post(long postId, long classId, long classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
@@ -378,6 +386,10 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     public void answer(Post child, boolean instructor) {
         if (instructor) instructorAnswer = child;
         else studentAnswers.add(child);
+    }
+
+    public void update(String newTitle, CompressedRichText newCRT) {
+        history.put(System.currentTimeMillis(), new Pair<>(newTitle, newCRT));
     }
 }
 

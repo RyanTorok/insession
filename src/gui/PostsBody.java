@@ -110,10 +110,9 @@ public class PostsBody extends VBox {
             Post p = postsDescending.get(i);
             VBox headerAndPost = new VBox();
             Styles.setBackgroundColor(headerAndPost, wrapper.getBackgroundColor());
-            Text title = new Text(p.getTitle());
-            title.setFont(Font.font("Sans Serif", Size.fontSize(18)));
             Text author = new Text(p.getIdentifier().getAuthorName());
             author.setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(18)));
+            Text title = makeTitle(p.getTitle());
             HBox head = new HBox(title, new Layouts.Filler(), author);
             head.setPadding(Size.insets(5));
             headerAndPost.getChildren().add(head);
@@ -129,7 +128,14 @@ public class PostsBody extends VBox {
         return postDisplay;
     }
 
+    Text makeTitle(String title) {
+        Text t = new Text(title);
+        t.setFont(Font.font("Sans Serif", Size.fontSize(18)));
+        return t;
+    }
+
     void newThread() {
+
         getChildren().clear();
         TextField titleField = new TextField();
         titleField.setFont(Font.font("Sans Serif", Size.fontSize(27)));
@@ -145,8 +151,14 @@ public class PostsBody extends VBox {
         Post newPost = Post.newPost();
         PostWindow window = fire(newPost);
         window.getChildren().set(0, titleField);
-        InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), onFinished-> {
-
+        InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), (compressedRichText)-> {
+            newPost.setTitle(titleField.getText());
+            wrapper.getPostsList().getChildren().add(wrapper.new PostSBItem(newPost));
+            newPost.setText(compressedRichText.getUnformattedText());
+            newPost.getIdentifier().setTime1(System.currentTimeMillis());
+            Text title = new Text(newPost.getTitle());
+            title.setFont(Font.font(Size.fontSize(24)));
+            getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
         });
     }
 

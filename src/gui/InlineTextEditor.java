@@ -30,7 +30,7 @@ public class InlineTextEditor extends VBox {
     private final TextFlow source;
     private final Parent parent;
     private final int index;
-    private Consumer<Boolean> onFinished;
+    private Consumer<CompressedRichText> onFinished;
     private StackPane controls;
     private InlineCssTextArea editor;
 
@@ -38,7 +38,7 @@ public class InlineTextEditor extends VBox {
         edit(target, source, onFinished->{});
     }
 
-    public static void edit(Node target, TextFlow source, Consumer<Boolean> onFinished, BooleanSupplier... submitConditions) {
+    public static void edit(Node target, TextFlow source, Consumer<CompressedRichText> onFinished, BooleanSupplier... submitConditions) {
         Parent parent = target.getParent();
         if (!(parent instanceof Pane))
             throw new IllegalCallerException("Parent of target node to edit inline does not extend Pane");
@@ -50,7 +50,7 @@ public class InlineTextEditor extends VBox {
     }
 
 
-    public InlineTextEditor(Node target, TextFlow source, Parent parent, int index, Consumer<Boolean> onFinished, BooleanSupplier... submitConditions) {
+    public InlineTextEditor(Node target, TextFlow source, Parent parent, int index, Consumer<CompressedRichText> onFinished, BooleanSupplier... submitConditions) {
         super();
         this.target = target;
         this.source = source;
@@ -92,13 +92,13 @@ public class InlineTextEditor extends VBox {
             }
         });
         fontSizeSelector.increment(12);
-        fontSizeSelector.setEditable(true);
         fontSizeSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null)
                 newValue = 12.0;
             newValue = Math.round(2 * newValue) / 2.0; //round to X.0 or X.5
             styleSelected("-fx-font-size : " + newValue + "pt");
         });
+        fontSizeSelector.setPrefSize(Size.width(80), Size.height(35));
 
         //bold button
         OperatorButton bold = new OperatorButton("B", Font.font("DejaVu Sans Mono", FontWeight.BOLD, fontSize), (on)-> styleSelected("-fx-font-weight", on, "bold", "normal"));
@@ -124,7 +124,7 @@ public class InlineTextEditor extends VBox {
 
         });
 
-        var ref = new Object() {
+        var alignments = new Object() {
             OperatorButton leftAlign = null;
             OperatorButton centerAlign = null;
             OperatorButton rightAlign = null;
@@ -132,71 +132,70 @@ public class InlineTextEditor extends VBox {
         };
 
         //left align button
-        ref.leftAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
+        alignments.leftAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
             if(on) {
-                if (!ref.centerAlign.on && !ref.rightAlign.on && !ref.justifyAlign.on)
-                    Events.fireMouse(ref.rightAlign, MouseEvent.MOUSE_CLICKED);
+                if (!alignments.centerAlign.on && !alignments.rightAlign.on && !alignments.justifyAlign.on)
+                    Events.fireMouse(alignments.rightAlign, MouseEvent.MOUSE_CLICKED);
                 styleSelectedParagraph("-fx-text-alignment: left");
-                if (ref.centerAlign.on)
-                    Events.fireMouse(ref.centerAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.rightAlign.on)
-                    Events.fireMouse(ref.rightAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.justifyAlign.on)
-                    Events.fireMouse(ref.justifyAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.centerAlign.on)
+                    Events.fireMouse(alignments.centerAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.rightAlign.on)
+                    Events.fireMouse(alignments.rightAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.justifyAlign.on)
+                    Events.fireMouse(alignments.justifyAlign, MouseEvent.MOUSE_CLICKED);
             }
         });
-        ref.leftAlign.on = true;
-        ref.leftAlign.setBorderColor(Color.BLACK);
-        ref.leftAlign.getChildren().add(new AlignmentLines(0));
+        alignments.leftAlign.softEnable();
+        alignments.leftAlign.getChildren().add(new AlignmentLines(0));
 
         //center align button
-        ref.centerAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
+        alignments.centerAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
             if(on) {
-                if (!ref.leftAlign.on && !ref.rightAlign.on && !ref.justifyAlign.on)
-                    Events.fireMouse(ref.centerAlign, MouseEvent.MOUSE_CLICKED);
+                if (!alignments.leftAlign.on && !alignments.rightAlign.on && !alignments.justifyAlign.on)
+                    Events.fireMouse(alignments.centerAlign, MouseEvent.MOUSE_CLICKED);
                 styleSelectedParagraph("-fx-text-alignment: center");
-                if (ref.leftAlign.on)
-                    Events.fireMouse(ref.leftAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.rightAlign.on)
-                    Events.fireMouse(ref.rightAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.justifyAlign.on)
-                    Events.fireMouse(ref.justifyAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.leftAlign.on)
+                    Events.fireMouse(alignments.leftAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.rightAlign.on)
+                    Events.fireMouse(alignments.rightAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.justifyAlign.on)
+                    Events.fireMouse(alignments.justifyAlign, MouseEvent.MOUSE_CLICKED);
             }
 
         });
-        ref.centerAlign.getChildren().add(new AlignmentLines(1));
+        alignments.centerAlign.getChildren().add(new AlignmentLines(1));
 
         //right align button
-        ref.rightAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
+        alignments.rightAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
             if(on) {
-                if (!ref.leftAlign.on && !ref.centerAlign.on && !ref.justifyAlign.on)
-                    Events.fireMouse(ref.rightAlign, MouseEvent.MOUSE_CLICKED);
+                if (!alignments.leftAlign.on && !alignments.centerAlign.on && !alignments.justifyAlign.on)
+                    Events.fireMouse(alignments.rightAlign, MouseEvent.MOUSE_CLICKED);
                 styleSelectedParagraph("-fx-text-alignment: right");
-                if (ref.leftAlign.on)
-                    Events.fireMouse(ref.leftAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.centerAlign.on)
-                    Events.fireMouse(ref.centerAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.justifyAlign.on)
-                    Events.fireMouse(ref.justifyAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.leftAlign.on)
+                    Events.fireMouse(alignments.leftAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.centerAlign.on)
+                    Events.fireMouse(alignments.centerAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.justifyAlign.on)
+                    Events.fireMouse(alignments.justifyAlign, MouseEvent.MOUSE_CLICKED);
             }
         });
-        ref.rightAlign.getChildren().add(new AlignmentLines(2));
+        alignments.rightAlign.getChildren().add(new AlignmentLines(2));
 
         //justify align button
-        ref.justifyAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
+        alignments.justifyAlign = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
             if (on) {
                 styleSelectedParagraph("-fx-text-alignment: justify");
-                if (!ref.leftAlign.on && !ref.centerAlign.on && !ref.rightAlign.on)
-                    Events.fireMouse(ref.justifyAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.leftAlign.on)
-                    Events.fireMouse(ref.leftAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.centerAlign.on)
-                    Events.fireMouse(ref.centerAlign, MouseEvent.MOUSE_CLICKED);
-                if (ref.rightAlign.on)
-                    Events.fireMouse(ref.rightAlign, MouseEvent.MOUSE_CLICKED);
+                if (!alignments.leftAlign.on && !alignments.centerAlign.on && !alignments.rightAlign.on)
+                    Events.fireMouse(alignments.justifyAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.leftAlign.on)
+                    Events.fireMouse(alignments.leftAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.centerAlign.on)
+                    Events.fireMouse(alignments.centerAlign, MouseEvent.MOUSE_CLICKED);
+                if (alignments.rightAlign.on)
+                    Events.fireMouse(alignments.rightAlign, MouseEvent.MOUSE_CLICKED);
             }
         });
-        ref.justifyAlign.getChildren().add(new AlignmentLines(4));
+        alignments.justifyAlign.getChildren().add(new AlignmentLines(4));
 
         //double space button
         OperatorButton doubleSpace = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
@@ -218,7 +217,7 @@ public class InlineTextEditor extends VBox {
         //submit button
         OperatorButton submit = new OperatorButton("Submit", Font.font(fontSize), (on)-> submit());
 
-        HBox mainControls = new HBox(fontSelector, fontSizeSelector, bold, italic, underline, strikethrough, symbol, math, ref.leftAlign, ref.centerAlign, ref.rightAlign, ref.justifyAlign, doubleSpace, textColor, highlightColor, submit);
+        HBox mainControls = new HBox(fontSelector, fontSizeSelector, bold, italic, underline, strikethrough, symbol, math, alignments.leftAlign, alignments.centerAlign, alignments.rightAlign, alignments.justifyAlign, doubleSpace, textColor, highlightColor, submit);
         mainControls.setSpacing(Size.width(5));
         controls = new StackPane(mainControls);
         Styles.setBackgroundColor(controls, Color.LIGHTGRAY);
@@ -247,7 +246,75 @@ public class InlineTextEditor extends VBox {
             else User.active().getKeyMap().unlock();
         });
         editor.caretPositionProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("here");
+            int indexToCheck = editor.getSelection().getLength() > 0 ? selectedStart() : Math.max(0, newValue);
+            Text dummyNode = new Text();
+            dummyNode.setStyle(editor.getStyleOfChar(indexToCheck));
+
+            if (Styles.getProperty(dummyNode, "-fx-font-weight").contains("bold"))
+                bold.softEnable();
+            else bold.softDisable();
+
+            if (Styles.getProperty(dummyNode, "-fx-font-style").equals("italic"))
+                italic.softEnable();
+            else italic.softDisable();
+
+            if (Styles.getProperty(dummyNode, "-fx-underline").equals("true"))
+                underline.softEnable();
+            else underline.softDisable();
+
+            if (Styles.getProperty(dummyNode, "-fx-strikethrough").equals("true"))
+                strikethrough.softEnable();
+            else strikethrough.softDisable();
+
+            alignments.leftAlign.softDisable();
+            alignments.centerAlign.softDisable();
+            alignments.rightAlign.softDisable();
+            alignments.justifyAlign.softDisable();
+
+            String alignment = Styles.getProperty(dummyNode, "-fx-text-alignment");
+            if (alignment != null) {
+                switch (alignment) {
+                    case "left":
+                        alignments.leftAlign.softEnable();
+                        break;
+                    case "center":
+                        alignments.centerAlign.softEnable();
+                        break;
+                    case "right":
+                        alignments.rightAlign.softEnable();
+                        break;
+                    case "justify":
+                        alignments.justifyAlign.softEnable();
+                        break;
+                    default: break;
+                }
+            }
+
+            boolean allSameFont = true;
+            boolean allSameSize = true;
+            String fontFamily = Styles.getProperty(dummyNode, "-fx-font-family");
+            String fontSz = Styles.getProperty(dummyNode, "-fx-font-size");
+            if (fontSz == "")
+                fontSz = "12.0";
+            if (fontSz.endsWith("pt") || fontSz.endsWith("px") || fontSz.endsWith("em"))
+                fontSz = fontSz.substring(0, fontSz.length() - 2);
+
+            for (int i = selectedStart(); i < selectedEnd(); i++) {
+                Text dummy1 = new Text();
+                dummy1.setStyle(editor.getStyleOfChar(i));
+                if (!(fontFamily.equals(Styles.getProperty(dummy1, "-fx-font-family")))) allSameFont = false;
+                if (!(fontSz.equals(Styles.getProperty(dummy1, "-fx-font-size")))) allSameSize = false;
+            }
+
+            if (allSameFont) {
+                fontSelector.setValue(fontFamily);
+            }
+            if (allSameSize) {
+                double diff = Double.parseDouble(fontSz) - fontSizeSelector.valueProperty().get();
+                if (diff < 0) fontSizeSelector.decrement((int) Math.abs(Math.floor(diff)));
+                else fontSizeSelector.increment((int) Math.ceil(diff));
+            }
+
         });
         getChildren().addAll(controls, editor);
     }
@@ -261,7 +328,13 @@ public class InlineTextEditor extends VBox {
     }
 
     private void styleCharacter(int index, String style) {
-        editor.setStyle(index, index + 1, editor.getStyleOfChar(index) + " ; " + style);
+        if (style.length() == 0)
+            return;
+        Text dummy = new Text();
+        dummy.setStyle(editor.getStyleOfChar(index));
+        String[] split = style.split(":");
+        Styles.setProperty(dummy, split[0].trim(), split[1].trim());
+        editor.setStyle(index, index + 1, dummy.getStyle());
     }
 
     private void styleSelected(String s) {
@@ -308,7 +381,7 @@ public class InlineTextEditor extends VBox {
             source.getChildren().add(current);
         }
         User.active().getKeyMap().unlock();
-        onFinished.accept(true);
+        onFinished.accept(new CompressedRichText(source));
     }
 
     public StackPane getControls() {
@@ -355,6 +428,16 @@ public class InlineTextEditor extends VBox {
 
         private void setBorderColor(Color c) {
             setBorder(new Border(new BorderStroke(c, BorderStrokeStyle.SOLID, new CornerRadii(Size.lessWidthHeight(10)), BorderStroke.DEFAULT_WIDTHS)));
+        }
+
+        void softEnable() {
+            on = true;
+            setBorderColor(Color.BLACK);
+        }
+
+        void softDisable() {
+            on = false;
+            setBorderColor(Color.TRANSPARENT);
         }
     }
 

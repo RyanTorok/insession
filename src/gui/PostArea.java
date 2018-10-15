@@ -110,9 +110,7 @@ public class PostArea extends VBox {
     }
 
     private void edit() {
-        if (post.getSource() == null)
-            InlineTextEditor.edit(this, text);
-        else InlineTextEditor.edit(this, text);
+        InlineTextEditor.edit(this, text, (compressedRichText)-> post.update(post.getTitle(), compressedRichText));
     }
 
     private void delete() {

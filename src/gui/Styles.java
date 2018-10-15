@@ -9,7 +9,7 @@ public class Styles {
     public static String getProperty(Node n, String property) {
         int[] propertyBounds = getPropertyBounds(n, property);
         if (propertyBounds == null)
-            return null;
+            return "";
         return n.getStyle().substring(propertyBounds[1], propertyBounds[2] - 2); //subtract 2 for semicolon
     }
 
