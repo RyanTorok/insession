@@ -113,7 +113,7 @@ public class UtilAndConstants {
     }
 
     private static String pluralizeTimeUnits(String singular, int count) {
-        if (count > 1)
+        if (count != 1)
             return singular + "s";
         else return singular;
     }

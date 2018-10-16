@@ -110,12 +110,14 @@ public class PostArea extends VBox {
     }
 
     private void edit() {
-        InlineTextEditor.edit(this, text, (compressedRichText)-> post.update(post.getTitle(), compressedRichText));
+        InlineTextEditor.edit(this, text, (compressedRichText)-> {
+            if (compressedRichText != null)
+                post.update(post.getTitle(), compressedRichText);
+        });
     }
 
     private void delete() {
         wrapper.getWrapper().deletePost(post);
-
     }
 
     private void like() {

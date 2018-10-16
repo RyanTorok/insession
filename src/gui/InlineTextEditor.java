@@ -10,10 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.*;
-import main.Colors;
-import main.Events;
-import main.Size;
-import main.User;
+import main.*;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 import java.util.Arrays;
@@ -33,6 +30,7 @@ public class InlineTextEditor extends VBox {
     private Consumer<CompressedRichText> onFinished;
     private StackPane controls;
     private InlineCssTextArea editor;
+    private boolean styleEdited;
 
     public static void edit(Node target, TextFlow source) {
         edit(target, source, onFinished->{});
@@ -58,6 +56,7 @@ public class InlineTextEditor extends VBox {
         this.index = index;
         this.onFinished = onFinished;
         this.submitConditions = submitConditions;
+        styleEdited = false;
 
         Styles.setBackgroundColor(this, Color.LIGHTGRAY);
         setPadding(Size.insets(20));
@@ -72,7 +71,9 @@ public class InlineTextEditor extends VBox {
         ChoiceBox<String> fontSelector = new ChoiceBox<>(FXCollections.observableArrayList(Font.getFamilies()));
         fontSelector.setValue(Font.getDefault().getFamily());
         fontSelector.setMaxHeight(Size.height(500));
-        fontSelector.valueProperty().addListener((observable, oldValue, newValue) -> styleSelected("-fx-font-family : " + newValue));
+        fontSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
+            styleSelected("-fx-font-family : " + newValue);
+        });
 
         Spinner<Double> fontSizeSelector = new Spinner<>(new SpinnerValueFactory<Double>() {
             @Override
@@ -101,17 +102,25 @@ public class InlineTextEditor extends VBox {
         fontSizeSelector.setPrefSize(Size.width(80), Size.height(35));
 
         //bold button
-        OperatorButton bold = new OperatorButton("B", Font.font("DejaVu Sans Mono", FontWeight.BOLD, fontSize), (on)-> styleSelected("-fx-font-weight", on, "bold", "normal"));
+        OperatorButton bold = new OperatorButton("B", Font.font("DejaVu Sans Mono", FontWeight.BOLD, fontSize), (on)-> {
+            styleSelected("-fx-font-weight", on, "bold", "normal");
+        });
 
         //italic button
-        OperatorButton italic = new OperatorButton("I", Font.font("DejaVu Sans Mono", FontPosture.ITALIC, fontSize),(on)-> styleSelected("-fx-font-style", on, "italic", "normal"));
+        OperatorButton italic = new OperatorButton("I", Font.font("DejaVu Sans Mono", FontPosture.ITALIC, fontSize),(on)-> {
+            styleSelected("-fx-font-style", on, "italic", "normal");
+        });
 
         //underline button
-        OperatorButton underline = new OperatorButton("U", Font.font("DejaVu Sans Mono", fontSize),(on)-> styleSelected("-fx-underline", on, "true", "false"));
+        OperatorButton underline = new OperatorButton("U", Font.font("DejaVu Sans Mono", fontSize),(on)-> {
+            styleSelected("-fx-underline", on, "true", "false");
+        });
         underline.text.setUnderline(true);
 
         //strikethrough button
-        OperatorButton strikethrough = new OperatorButton("S", Font.font("DejaVu Sans Mono", fontSize), (on)-> styleSelected("-fx-strikethrough", on, "true", "false"));
+        OperatorButton strikethrough = new OperatorButton("S", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
+            styleSelected("-fx-strikethrough", on, "true", "false");
+        });
         strikethrough.text.setStrikethrough(true);
 
         //symbol button
@@ -161,7 +170,6 @@ public class InlineTextEditor extends VBox {
                 if (alignments.justifyAlign.on)
                     Events.fireMouse(alignments.justifyAlign, MouseEvent.MOUSE_CLICKED);
             }
-
         });
         alignments.centerAlign.getChildren().add(new AlignmentLines(1));
 
@@ -199,46 +207,41 @@ public class InlineTextEditor extends VBox {
 
         //double space button
         OperatorButton doubleSpace = new OperatorButton("", Font.font("DejaVu Sans Mono", fontSize), (on)-> {
-
         });
 
         //text color chooser
         ColorPicker textColor = new ColorPicker();
-        textColor.valueProperty().addListener((observable, oldValue, newValue) -> styleSelected("-fx-text-inner-color: " + Colors.colorToHex(newValue).toLowerCase()));
+        textColor.valueProperty().addListener((observable, oldValue, newValue) -> {
+            styleSelected("-fx-text-inner-color: " + Colors.colorToHex(newValue).toLowerCase());
+        });
 
         //highlight color chooser
         ColorPicker highlightColor = new ColorPicker();
         highlightColor.valueProperty().addListener((observable, oldValue, newValue) -> {
             styleSelected("-fx-highlight-fill : " + Colors.colorToHex(newValue).toLowerCase());
-            System.out.println(editor.getStyleAtPosition(selectedStart()));
+            if (editor.getSelection().getLength() != 0)
+                styleEdited = true;
         });
+
+        OperatorButton reset = new OperatorButton(Character.toString((char) 0x21ba), Font.font(fontSize), (on)-> {
+            editor.clear();
+            initEditorBody();
+            styleEdited = false;
+        }, false, true, "Reset? Click again to confirm.");
+
+        //cancel button
+        OperatorButton cancel = new OperatorButton(Character.toString((char) 0xd7), Font.font(fontSize), (on)->cancel(), false, true, "Cancel? Click again to confirm.");
 
 
         //submit button
-        OperatorButton submit = new OperatorButton("Submit", Font.font(fontSize), (on)-> submit());
+        OperatorButton submit = new OperatorButton(Character.toString((char) 0x2714), Font.font(fontSize), (on)-> submit(), false, false, null);
 
-        HBox mainControls = new HBox(fontSelector, fontSizeSelector, bold, italic, underline, strikethrough, symbol, math, alignments.leftAlign, alignments.centerAlign, alignments.rightAlign, alignments.justifyAlign, doubleSpace, textColor, highlightColor, submit);
+        HBox mainControls = new HBox(fontSelector, fontSizeSelector, bold, italic, underline, strikethrough, symbol, math, alignments.leftAlign, alignments.centerAlign, alignments.rightAlign, alignments.justifyAlign, doubleSpace, textColor, highlightColor, new Layouts.Filler(), reset, cancel, submit);
         mainControls.setSpacing(Size.width(5));
         controls = new StackPane(mainControls);
         Styles.setBackgroundColor(controls, Color.LIGHTGRAY);
 
-        editor = new InlineCssTextArea(source.getChildren().stream().map(text -> {
-            if (text instanceof Text)
-                return ((Text) text).getText();
-            else return "";
-        }).collect(Collectors.joining()));
-
-        AtomicInteger counter = new AtomicInteger(0);
-        source.getChildren().forEach(node -> {
-            if (node instanceof Text) {
-               Text text = (Text) node;
-                int length = text.getText().length();
-                for (int i = 0; i < length; i++) {
-                    styleCharacter(counter.get() + i, text.getStyle());
-                }
-                counter.getAndAdd(length);
-            }
-        });
+        initEditorBody();
 
         editor.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue)
@@ -294,7 +297,7 @@ public class InlineTextEditor extends VBox {
             boolean allSameSize = true;
             String fontFamily = Styles.getProperty(dummyNode, "-fx-font-family");
             String fontSz = Styles.getProperty(dummyNode, "-fx-font-size");
-            if (fontSz == "")
+            if (fontSz.length() == 0)
                 fontSz = "12.0";
             if (fontSz.endsWith("pt") || fontSz.endsWith("px") || fontSz.endsWith("em"))
                 fontSz = fontSz.substring(0, fontSz.length() - 2);
@@ -319,7 +322,39 @@ public class InlineTextEditor extends VBox {
         getChildren().addAll(controls, editor);
     }
 
+    private void initEditorBody() {
+        int index = getChildren().indexOf(editor);
+
+        editor = new InlineCssTextArea(source.getChildren().stream().map(text -> {
+            if (text instanceof Text)
+                return ((Text) text).getText();
+            else return "";
+        }).collect(Collectors.joining()));
+
+        AtomicInteger counter = new AtomicInteger(0);
+        source.getChildren().forEach(node -> {
+            if (node instanceof Text) {
+                Text text = (Text) node;
+                int length = text.getText().length();
+                for (int i = 0; i < length; i++) {
+                    styleCharacter(counter.get() + i, text.getStyle());
+                }
+                counter.getAndAdd(length);
+            }
+        });
+
+        if (index != -1) {
+            getChildren().set(index, editor);
+        }
+    }
+
+    private void cancel() {
+        ((Pane) parent).getChildren().set(index, target);
+        onFinished.accept(null);
+    }
+
     private void styleSelectedParagraph(String s) {
+        styleEdited = true;
         for (int i = 0; i < editor.getParagraphs().size(); i++) {
             IndexRange selectedRange = editor.getParagraphSelection(i);
             if (selectedRange.getLength() > 0)
@@ -338,6 +373,7 @@ public class InlineTextEditor extends VBox {
     }
 
     private void styleSelected(String s) {
+        styleEdited = true;
         int start = selectedStart(), end = selectedEnd();
         for (int i = start; i < end; i++) {
             styleCharacter(i, s);
@@ -345,6 +381,7 @@ public class InlineTextEditor extends VBox {
     }
 
     private void styleSelected(String s, boolean on, String ifOn, String ifOff) {
+        styleEdited = true;
         int start = selectedStart(), end = selectedEnd();
         for (int i = start; i < end; i++) {
             styleCharacter(i, s + ": " + (on ? ifOn : ifOff));
@@ -400,30 +437,54 @@ public class InlineTextEditor extends VBox {
         this.editor = editor;
     }
 
-    private static class OperatorButton extends HBox {
+    private class OperatorButton extends HBox {
 
         private boolean on;
         private final Text text;
+        private boolean confirm;
+        private boolean clicks;
 
-        OperatorButton (String displayText, Font font, Consumer<Boolean> execute) {
+        OperatorButton(String displayText, Font font, Consumer<Boolean> execute) {
+            this(displayText, font, execute, true, false, null);
+        }
+
+        OperatorButton (String displayText, Font font, Consumer<Boolean> execute, boolean resetOnClick, boolean confirm, String confirmText) {
             setBorderColor(Color.TRANSPARENT);
             setPadding(Size.insets(8, 3));
             text = new Text(displayText);
             getChildren().add(text);
             text.setFont(font);
+            this.confirm = confirm;
+            clicks = false;
             addEventHandler(MouseEvent.MOUSE_ENTERED, event -> setBorderColor(Color.DARKGRAY));
             addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+                clicks = false;
+                if (getChildren().size() > 1)
+                    getChildren().remove(0);
                 if (on)
                     setBorderColor(Color.BLACK);
                 else setBorderColor(Color.TRANSPARENT);
             });
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                on = !on;
-                if (on)
-                    setBorderColor(Color.BLACK);
-                else setBorderColor(Color.LIGHTGRAY);
+                if (confirm && !clicks && (styleEdited || !exactText())) {
+                    clicks = true;
+                    Text text = new Text(confirmText);
+                    text.setFont(Font.font(Size.fontSize(13)));
+                    this.getChildren().add(0, text);
+                    return;
+                }
+                if (getChildren().size() > 1)
+                    getChildren().remove(0);
+                if (resetOnClick) {
+                    on = !on;
+                    if (on)
+                        setBorderColor(Color.BLACK);
+                    else setBorderColor(Color.LIGHTGRAY);
+                }
                 execute.accept(on);
             });
+            setSpacing(Size.width(5));
+            setAlignment(Pos.CENTER);
         }
 
         private void setBorderColor(Color c) {
@@ -439,6 +500,17 @@ public class InlineTextEditor extends VBox {
             on = false;
             setBorderColor(Color.TRANSPARENT);
         }
+
+    }
+
+    private boolean exactText() {
+        String text = source.getChildren().stream().map(node -> {
+            if (node instanceof Text) {
+                return ((Text) node).getText();
+            }
+            return "";
+        }).collect(Collectors.joining());
+        return text.equals(editor.getText());
     }
 
     private static class AlignmentLines extends VBox {

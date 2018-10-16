@@ -142,8 +142,10 @@ public class PostsBody extends VBox {
         titleField.setPrefColumnCount(40);
         titleField.setPromptText("Enter a title for your thread here.");
         titleField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) Root.getPortal().getKeyMap().lock();
-            else {
+            if (newValue) {
+                Styles.setProperty(titleField, "-fx-border-width", "0px");
+                Root.getPortal().getKeyMap().lock();
+            } else {
                 KeyMap keyMap = Root.getPortal().getKeyMap();
                 keyMap.unlock();
             }
@@ -152,13 +154,29 @@ public class PostsBody extends VBox {
         PostWindow window = fire(newPost);
         window.getChildren().set(0, titleField);
         InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), (compressedRichText)-> {
+            if (compressedRichText == null) {
+                initialize();
+                return;
+            }
             newPost.setTitle(titleField.getText());
-            wrapper.getPostsList().getChildren().add(wrapper.new PostSBItem(newPost));
             newPost.setText(compressedRichText.getUnformattedText());
             newPost.getIdentifier().setTime1(System.currentTimeMillis());
+            newPost.getStatusLabels().add(PostStatus.MINE);
+            newPost.getStatusLabels().add(PostStatus.PUBLIC);
+            newPost.getStatusLabels().add(PostStatus.UNANSWERED);
+            newPost.setType(Post.Type.Question);
+            wrapper.getPostsList().getChildren().add(wrapper.new PostSBItem(newPost));
             Text title = new Text(newPost.getTitle());
             title.setFont(Font.font(Size.fontSize(24)));
             getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
+        }, ()->{
+            if (titleField.getText().length() == 0) {
+                int width = (int) Size.lessWidthHeight(2);
+                Styles.setProperty(titleField, "-fx-border-color", "#ff0000");
+                Styles.setProperty(titleField, "-fx-border-width", width + "px");
+                return false;
+            }
+            return true;
         });
     }
 

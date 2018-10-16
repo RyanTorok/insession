@@ -2,32 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/gui/CompressedRichText.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post$Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem$1$ColorText.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem$1$ColorText.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$AlignmentLines.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$AlignmentLines.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$OperatorButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$OperatorButton.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostArea$ControlIcon.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostArea$ControlIcon.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostArea.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostArea.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Styles.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/Styles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/ClassView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ClassView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/InlineTextEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InlineTextEditor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/PostArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PostArea.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/PostsBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PostsBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Styles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Styles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/UtilAndConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/UtilAndConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usr/rtorok.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/rtorok.ser" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,10 +53,10 @@
     <session id="-851402937">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="72" />
+          <entry key="project.closed" value="73" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.15" value="10" />
-          <entry key="project.open.time.16" value="13" />
+          <entry key="project.open.time.16" value="14" />
           <entry key="project.open.time.17" value="12" />
           <entry key="project.open.time.18" value="11" />
           <entry key="project.open.time.19" value="6" />
@@ -80,12 +69,13 @@
           <entry key="project.open.time.27" value="2" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.31" value="1" />
+          <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.39" value="1" />
           <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.58" value="1" />
           <entry key="project.open.time.60" value="1" />
-          <entry key="project.opened" value="94" />
+          <entry key="project.opened" value="96" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -93,14 +83,14 @@
           <entry key="MF" value="1" />
           <entry key="dummy" value="42" />
           <entry key="gitignore" value="62" />
-          <entry key="java" value="72522" />
+          <entry key="java" value="74421" />
           <entry key="js" value="97" />
           <entry key="txt" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="72522" />
+          <entry key="JAVA" value="74421" />
           <entry key="JavaScript" value="97" />
           <entry key="Manifest" value="1" />
           <entry key="PLAIN_TEXT" value="111" />
@@ -111,14 +101,14 @@
           <entry key="MF" value="1" />
           <entry key="class" value="2" />
           <entry key="gitignore" value="1" />
-          <entry key="java" value="337" />
+          <entry key="java" value="341" />
           <entry key="js" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="2" />
-          <entry key="JAVA" value="337" />
+          <entry key="JAVA" value="341" />
           <entry key="JavaScript" value="1" />
           <entry key="Manifest" value="1" />
           <entry key="PLAIN_TEXT" value="1" />
@@ -131,28 +121,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/InlineTextEditor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="43" column="106" lean-forward="true" selection-start-line="43" selection-start-column="106" selection-end-line="43" selection-end-column="106" />
+            <state relative-caret-position="219">
+              <caret line="235" column="32" selection-start-line="235" selection-start-column="32" selection-end-line="235" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1080#1081#0" expanded="true" />
-                <element signature="e#1132#1133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/CompressedRichText.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1862#1863#0" expanded="true" />
-                <element signature="e#1889#1890#0" expanded="true" />
-                <element signature="e#2024#2025#0" expanded="true" />
-                <element signature="e#2061#2062#0" expanded="true" />
+                <element signature="e#16616#16617#0" expanded="true" />
+                <element signature="e#16671#16672#0" expanded="true" />
+                <element signature="e#16704#16705#0" expanded="true" />
+                <element signature="e#16757#16758#0" expanded="true" />
+                <element signature="e#17866#17867#0" expanded="true" />
+                <element signature="e#17897#17898#0" expanded="true" />
+                <element signature="e#17948#17949#0" expanded="true" />
+                <element signature="e#17988#17989#0" expanded="true" />
+                <element signature="e#18032#18033#0" expanded="true" />
+                <element signature="e#18061#18062#0" expanded="true" />
+                <element signature="e#18116#18117#0" expanded="true" />
+                <element signature="e#18152#18153#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -161,8 +145,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="153" column="108" lean-forward="true" selection-start-line="153" selection-start-column="108" selection-end-line="153" selection-end-column="108" />
+            <state relative-caret-position="314">
+              <caret line="173" column="56" selection-start-line="173" selection-start-column="56" selection-end-line="173" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -171,10 +155,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/classes/PostStatus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/PostWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="33" column="41" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
+            <state relative-caret-position="391">
+              <caret line="45" column="102" selection-start-line="45" selection-start-column="102" selection-end-line="45" selection-end-column="102" />
               <folding>
                 <element signature="e#3479#3480#0" expanded="true" />
                 <element signature="e#3510#3511#0" expanded="true" />
@@ -184,9 +177,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1395">
+              <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/classes/Post.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="4170">
               <caret line="391" column="75" selection-start-line="391" selection-start-column="75" selection-end-line="391" selection-end-column="75" />
             </state>
           </provider>
@@ -195,17 +197,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-682">
+            <state relative-caret-position="2175">
               <caret line="166" selection-start-line="166" selection-end-line="166" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11250">
-              <caret line="812" selection-start-line="812" selection-end-line="812" />
             </state>
           </provider>
         </entry>
@@ -224,27 +217,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/lib/richtextfx-0.9.1-sources.jar!/org/fxmisc/richtext/InlineCssTextArea.java">
+        <entry file="file://$PROJECT_DIR$/src/gui/PostArea.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="44" column="35" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
+            <state relative-caret-position="-377">
+              <caret line="60" column="12" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="12" />
               <folding>
-                <element signature="e#618#619#0" expanded="true" />
-                <element signature="e#682#683#0" expanded="true" />
+                <element signature="e#5865#5866#0" expanded="true" />
+                <element signature="e#5918#5919#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/PostArea.java">
+        <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-              <folding>
-                <element signature="e#6495#6496#0" expanded="true" />
-                <element signature="e#6522#6523#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="615">
+              <caret line="439" selection-start-line="439" selection-end-line="439" />
             </state>
           </provider>
         </entry>
@@ -265,13 +254,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>html</find>
-      <find>hownot</find>
-      <find>name</find>
-      <find>this.name</find>
-      <find>name =</find>
-      <find>showno</find>
-      <find>weather</find>
       <find>----</find>
       <find>manager</find>
       <find>thread</find>
@@ -295,6 +277,13 @@
       <find>test post name</find>
       <find>Inline</find>
       <find>edit</find>
+      <find>timer</find>
+      <find>time</find>
+      <find>edit(</find>
+      <find>newthr</find>
+      <find>px</find>
+      <find>edited = true</find>
+      <find>reset</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -308,7 +297,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/Events.java" />
-        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/classes/ClassItem.java" />
         <option value="$PROJECT_DIR$/src/classes/ClassPd.java" />
         <option value="$PROJECT_DIR$/src/classes/PostStatus.java" />
@@ -354,9 +342,10 @@
         <option value="$PROJECT_DIR$/src/gui/Styles.java" />
         <option value="$PROJECT_DIR$/src/gui/CompressedRichText.java" />
         <option value="$PROJECT_DIR$/src/gui/ClassView.java" />
-        <option value="$PROJECT_DIR$/src/gui/PostsBody.java" />
         <option value="$PROJECT_DIR$/src/classes/Post.java" />
+        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/gui/PostArea.java" />
+        <option value="$PROJECT_DIR$/src/gui/PostsBody.java" />
         <option value="$PROJECT_DIR$/src/gui/InlineTextEditor.java" />
       </list>
     </option>
@@ -438,7 +427,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="true" />
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="Repository.Attach.Sources" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="Post&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;Postw&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Mai&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;InlineTex&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/InlineTextEditor.java&#10;Inli&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/InlineTextEditor.java&#10;KeyM&#9;PSI&#9;JAVA://gui.KeyMap&#10;Main.&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;PostAre&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;PostW&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;PostB&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;mf&#9;FILE&#9;file:///home/rtorok/Paintbrush/META-INF/MANIFEST.MF&#10;FilterBl&#9;PSI&#9;JAVA://gui.FilterBlock&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;QueryEngine&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/QueryEngine.java&#10;Inde&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Index.java&#10;QueryE&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;SearchMod&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;Identif&#9;PSI&#9;JAVA://searchengine.Identifier&#10;PostE&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/PostEngine.java&#10;Class&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Lightgray&#9;PSI&#9;JAVA://javafx.scene.paint.Color#LIGHTGRAY&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Posten&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/PostEngine.java&#10;NewUserw&#9;PSI&#9;JAVA://gui.NewUserWindow&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Thread.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Threads.java&#10;Net&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/Net.java&#10;Termin&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Settings&#9;PSI&#9;JAVA://gui.AcctSettings&#10;SearchM&#9;PSI&#9;JAVA://gui.SearchModule&#10;Wea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/WeatherManager.java&#10;Snow&#9;PSI&#9;JAVA://gui.SnowParticle&#10;RainPar&#9;PSI&#9;JAVA://gui.RainParticle&#10;WeatherMana&#9;PSI&#9;JAVA://gui.WeatherManager&#10;TaskViewWra&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;bluetooth&#9;PSI&#9;JAVA://main.Bluetooth&#10;PostWind&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;Keymap&#9;ACTION&#9;ChangeKeymap&#10;Vim Emulator&#9;ACTION&#9;VimPluginToggle&#10;HT&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/HTMLText.java&#10;PostArea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;Keym&#9;PSI&#9;JAVA://gui.KeyMap&#10;TextFie&#9;PSI&#9;JAVA://javafx.scene.control.TextField&#10;Textfi&#9;PSI&#9;JAVA://java.awt.TextField&#10;Textinputcon&#9;PSI&#9;JAVA://javafx.scene.control.TextInputControl&#10;Main.java&#9;null&#9;null&#10;area&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;PostAr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java" />
+    <property name="SearchEverywhereHistoryKey" value="I&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/InlineTextEditor.java&#10;Postst&#9;PSI&#9;JAVA://classes.PostStatus&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;Post&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;Postw&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;ClassV&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Mai&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;InlineTex&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/InlineTextEditor.java&#10;Inli&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/InlineTextEditor.java&#10;KeyM&#9;PSI&#9;JAVA://gui.KeyMap&#10;Main.&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;PostAre&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;PostW&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;PostB&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;mf&#9;FILE&#9;file:///home/rtorok/Paintbrush/META-INF/MANIFEST.MF&#10;FilterBl&#9;PSI&#9;JAVA://gui.FilterBlock&#10;TaskViewWr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/TaskViewWrapper.java&#10;QueryEngine&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/QueryEngine.java&#10;Inde&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/searchengine/Index.java&#10;QueryE&#9;PSI&#9;JAVA://searchengine.QueryEngine&#10;SearchMod&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/SearchModule.java&#10;Identif&#9;PSI&#9;JAVA://searchengine.Identifier&#10;PostE&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/PostEngine.java&#10;Class&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/ClassView.java&#10;Lightgray&#9;PSI&#9;JAVA://javafx.scene.paint.Color#LIGHTGRAY&#10;Ter&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Terminal.java&#10;Posten&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/PostEngine.java&#10;NewUserw&#9;PSI&#9;JAVA://gui.NewUserWindow&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Thread.java&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Threads.java&#10;Net&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/Net.java&#10;Termin&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Settings&#9;PSI&#9;JAVA://gui.AcctSettings&#10;SearchM&#9;PSI&#9;JAVA://gui.SearchModule&#10;Wea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/WeatherManager.java&#10;Snow&#9;PSI&#9;JAVA://gui.SnowParticle&#10;RainPar&#9;PSI&#9;JAVA://gui.RainParticle&#10;WeatherMana&#9;PSI&#9;JAVA://gui.WeatherManager&#10;TaskViewWra&#9;PSI&#9;JAVA://gui.TaskViewWrapper&#10;bluetooth&#9;PSI&#9;JAVA://main.Bluetooth&#10;PostWind&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;Keymap&#9;ACTION&#9;ChangeKeymap&#10;Vim Emulator&#9;ACTION&#9;VimPluginToggle&#10;HT&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/HTMLText.java&#10;PostArea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;Keym&#9;PSI&#9;JAVA://gui.KeyMap&#10;TextFie&#9;PSI&#9;JAVA://javafx.scene.control.TextField&#10;Textfi&#9;PSI&#9;JAVA://java.awt.TextField&#10;Textinputcon&#9;PSI&#9;JAVA://javafx.scene.control.TextInputControl&#10;Main.java&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539549175657" />
@@ -850,7 +839,9 @@
       <workItem from="1539523311883" duration="6053000" />
       <workItem from="1539535457822" duration="9714000" />
       <workItem from="1539551613407" duration="5560000" />
-      <workItem from="1539563143168" duration="9599000" />
+      <workItem from="1539563143168" duration="11274000" />
+      <workItem from="1539576396554" duration="626000" />
+      <workItem from="1539614275572" duration="12655000" />
     </task>
     <servers />
   </component>
@@ -887,7 +878,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1328397000" />
+    <option name="totallyTimeSpent" value="1343353000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="25" width="1859" height="1055" extended-state="6" />
@@ -903,7 +894,7 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32864866" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4980695" visible="true" weight="0.49405405" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4980695" visible="true" weight="0.34270272" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.23135135" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -983,20 +974,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/SnowParticle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/ConfirmableTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/PrecipParticle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
@@ -1242,9 +1219,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="93" column="16" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1252,10 +1226,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
           <caret line="1130" column="18" selection-start-line="1130" selection-start-column="18" selection-end-line="1130" selection-end-column="18" />
-          <folding>
-            <element signature="e#55514#55515#0" expanded="true" />
-            <element signature="e#55563#55564#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1276,10 +1246,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/CompressedRichText.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11250">
-          <caret line="812" selection-start-line="812" selection-end-line="812" />
+        <state relative-caret-position="720">
+          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2024#2025#0" expanded="true" />
+            <element signature="e#2062#2063#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1395">
+          <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Post.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4170">
+          <caret line="391" column="75" selection-start-line="391" selection-start-column="75" selection-end-line="391" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2175">
+          <caret line="166" selection-start-line="166" selection-end-line="166" />
         </state>
       </provider>
     </entry>
@@ -1305,49 +1301,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/ClassView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-682">
-          <caret line="166" selection-start-line="166" selection-end-line="166" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/CompressedRichText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1862#1863#0" expanded="true" />
-            <element signature="e#1889#1890#0" expanded="true" />
-            <element signature="e#2024#2025#0" expanded="true" />
-            <element signature="e#2061#2062#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Post.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="391" column="75" selection-start-line="391" selection-start-column="75" selection-end-line="391" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/PostArea.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-          <folding>
-            <element signature="e#6495#6496#0" expanded="true" />
-            <element signature="e#6522#6523#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/PostWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="33" column="41" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
+        <state relative-caret-position="391">
+          <caret line="45" column="102" selection-start-line="45" selection-start-column="102" selection-end-line="45" selection-end-column="102" />
           <folding>
             <element signature="e#3479#3480#0" expanded="true" />
             <element signature="e#3510#3511#0" expanded="true" />
@@ -1355,10 +1312,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="439" selection-start-line="439" selection-end-line="439" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/PostArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-377">
+          <caret line="60" column="12" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="12" />
+          <folding>
+            <element signature="e#5865#5866#0" expanded="true" />
+            <element signature="e#5918#5919#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/PostStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="153" column="108" lean-forward="true" selection-start-line="153" selection-start-column="108" selection-end-line="153" selection-end-column="108" />
+        <state relative-caret-position="314">
+          <caret line="173" column="56" selection-start-line="173" selection-start-column="56" selection-end-line="173" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1367,12 +1349,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/InlineTextEditor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="43" column="106" lean-forward="true" selection-start-line="43" selection-start-column="106" selection-end-line="43" selection-end-column="106" />
+        <state relative-caret-position="219">
+          <caret line="235" column="32" selection-start-line="235" selection-start-column="32" selection-end-line="235" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1080#1081#0" expanded="true" />
-            <element signature="e#1132#1133#0" expanded="true" />
+            <element signature="e#16616#16617#0" expanded="true" />
+            <element signature="e#16671#16672#0" expanded="true" />
+            <element signature="e#16704#16705#0" expanded="true" />
+            <element signature="e#16757#16758#0" expanded="true" />
+            <element signature="e#17866#17867#0" expanded="true" />
+            <element signature="e#17897#17898#0" expanded="true" />
+            <element signature="e#17948#17949#0" expanded="true" />
+            <element signature="e#17988#17989#0" expanded="true" />
+            <element signature="e#18032#18033#0" expanded="true" />
+            <element signature="e#18061#18062#0" expanded="true" />
+            <element signature="e#18116#18117#0" expanded="true" />
+            <element signature="e#18152#18153#0" expanded="true" />
           </folding>
         </state>
       </provider>
