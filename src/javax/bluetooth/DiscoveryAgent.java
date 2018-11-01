@@ -160,7 +160,7 @@ throw new RuntimeException("Not Implemented! Used to compile Code");
    /**
     * Places the device into inquiry mode.  The length of the inquiry is
     * implementation dependent. This method will search for devices with the
-    * specified inquiry access code. Devices that responded to the inquiry
+    * specified inquiry access code. Device that responded to the inquiry
     * are returned to the application via the method
     * <code>deviceDiscovered()</code> of the interface
     * <code>DiscoveryListener</code>. The <code>cancelInquiry()</code>

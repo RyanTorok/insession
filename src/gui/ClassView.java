@@ -60,7 +60,7 @@ public class ClassView extends TaskView {
     }
 
     @Override
-    protected Pane initDisplay() {
+    public Pane initDisplay() {
         VBox titleBar = makeTitleBar();
         sideBars = makeSideBars();
         bodyPanes = makeBodyPanes();
@@ -209,7 +209,7 @@ public class ClassView extends TaskView {
         ));
         dateFilter = new DateFilter(event -> filters.get(0).changeEvent(this), Color.BLACK);
         List<ClassItem> items = classPd.getAssignmentsWithPostsDesc(8);
-        List<Filter> assignments = items.stream().map(item -> new Filter(item.getName(), 0, item.getId())).collect(Collectors.toList());
+        List<Filter> assignments = items.stream().map(item -> new Filter(item.getName(), new UUID(0, 0), item.getId())).collect(Collectors.toList());
         filters.add(new FilterBlock(this, "By Assignment", true, assignments));
         VBox toReturn = new VBox();
         toReturn.getChildren().addAll(filters);
@@ -488,5 +488,10 @@ public class ClassView extends TaskView {
         public Post getPost() {
             return post;
         }
+    }
+
+    @Override
+    protected boolean isDuplicate(TaskView view) {
+        return super.isDuplicate(view) && ((ClassView) view).classPd.equals(classPd);
     }
 }

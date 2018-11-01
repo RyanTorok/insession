@@ -18,6 +18,7 @@ import main.Size;
 import net.PostEngine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -150,7 +151,8 @@ public class PostsBody extends VBox {
                 keyMap.unlock();
             }
         });
-        Post newPost = Post.newPost();
+        Post newPost = Post.newPost(wrapper.getClassPd());
+        postEngine.addPost(newPost);
         PostWindow window = fire(newPost);
         window.getChildren().set(0, titleField);
         InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), (compressedRichText)-> {
@@ -159,15 +161,18 @@ public class PostsBody extends VBox {
                 return;
             }
             newPost.setTitle(titleField.getText());
-            newPost.setText(compressedRichText.getUnformattedText());
+            newPost.setFormattedText(compressedRichText);
             newPost.getIdentifier().setTime1(System.currentTimeMillis());
             newPost.getStatusLabels().add(PostStatus.MINE);
             newPost.getStatusLabels().add(PostStatus.PUBLIC);
             newPost.getStatusLabels().add(PostStatus.UNANSWERED);
             newPost.setType(Post.Type.Question);
+            newPost.getIdentifier().setBelongsTo(wrapper.getClassPd());
+            newPost.getIdentifier().setName(newPost.getTitle());
             wrapper.getPostsList().getChildren().add(wrapper.new PostSBItem(newPost));
             Text title = new Text(newPost.getTitle());
             title.setFont(Font.font(Size.fontSize(24)));
+            Root.getPortal().getSearchBox().getEngine().getIndex().index(Collections.singletonList(newPost));
             getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
         }, ()->{
             if (titleField.getText().length() == 0) {

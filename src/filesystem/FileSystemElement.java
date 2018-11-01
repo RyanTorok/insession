@@ -1,6 +1,7 @@
 package filesystem;
 
 import classes.ClassItem;
+import org.json.JSONObject;
 import searchengine.Identifier;
 import searchengine.Indexable;
 
@@ -86,6 +87,11 @@ public abstract class FileSystemElement extends ClassItem implements Indexed, In
     @Override
     public Timestamp lastIndexed() {
         return lastIndexed;
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return null;
     }
 
     public void setLastIndexed(Timestamp lastIndexed) {

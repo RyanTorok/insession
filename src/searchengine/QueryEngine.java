@@ -63,7 +63,7 @@ public class QueryEngine {
         TreeSet<Identifier> allResults = new TreeSet<>();
 
         //resolves removal of ending-negative-tied results, this query has highest priority.
-        allResults.addAll(query(base + " " + actualStem, filters));
+        allResults.addAll(query(base.toLowerCase() + " " + actualStem.toLowerCase(), filters));
         queryTime += lastQueryTimeNanos;
 
         for (String predictedQuery : textFillerStrings) {
@@ -330,18 +330,16 @@ public class QueryEngine {
                 }
                 if (!tree.isPlus()) {
                     for (String s : getIgnoredWords()) {
-                        if (s.equals(tree.getWord().toString())) {
+                        if (s.equals(tree.getWord())) {
                             //common word. ignore element
                             return 0;
                         }
                     }
                 }
-
                 return getIndex().find(tree.getWord(), item.identifier);
             default:
                 throw new IllegalStateException("Illegal token in tree");
         }
-
     }
 
     public Index getIndex() {
@@ -419,15 +417,15 @@ public class QueryEngine {
         Integer filters = Integer.parseInt(args[3]);
         FilterSet.DateConstraint constraint = FilterSet.DateConstraint.valueOf(args[4]);
         Date restriction = new Date(Long.parseLong(args[5]));
-        List<Long> classIds = Arrays.asList(args).subList(6, args.length).stream().map(Long::parseLong).collect(Collectors.toList());
+        List<UUID> classIds = Arrays.asList(args).subList(6, args.length).stream().map(UUID::fromString).collect(Collectors.toList());
 
         Index i = Index.loadLocal();
         if (partial) {
             int lastSpace = query.lastIndexOf(" ");
             //TODO add stems
-            new QueryEngine(i).incompleteQuery(query.substring(0, lastSpace), query.substring(lastSpace), new ArrayList<>(), new FilterSet(filters, constraint, restriction, classIds.toArray(new Long[]{})));
+            new QueryEngine(i).incompleteQuery(query.substring(0, lastSpace), query.substring(lastSpace), new ArrayList<>(), new FilterSet(filters, constraint, restriction, classIds.toArray(new UUID[]{})));
         } else {
-            new QueryEngine(i).query(query, new FilterSet(filters, constraint, restriction, classIds.toArray(new Long[]{})));
+            new QueryEngine(i).query(query, new FilterSet(filters, constraint, restriction, classIds.toArray(new UUID[]{})));
         }
     }
 

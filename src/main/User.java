@@ -3,27 +3,23 @@ package main;
 import classes.ClassPd;
 import classes.Record;
 import classes.setbuilder.Classifiable;
-import gui.Images;
-import gui.KeyMap;
-import gui.ZipMap;
+import gui.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import module.Module;
 import net.Net;
-import searchengine.SearchRecord;
-import searchengine.WatchRecord;
+import org.json.JSONObject;
+import searchengine.*;
 import terminal.Address;
 
 import java.io.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by 11ryt on 4/21/2017.
  */
-public abstract class User implements Classifiable, Serializable {
+public abstract class User implements Classifiable, Serializable, Indexable {
 
     static final long serialVersionUID = 42L;
 
@@ -56,6 +52,7 @@ public abstract class User implements Classifiable, Serializable {
     private String savedFileSeparator = null;
     private transient KeyMap keyMap;
     private double sleepTime;
+    private Identifier uniqueId;
 
     public User(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -74,6 +71,7 @@ public abstract class User implements Classifiable, Serializable {
         this.classesStudent = new HashSet<>();
         pictureVisibility = 0;
         sleepTime = 300; //in seconds
+        uniqueId = new Identifier(username, Identifier.Type.People, IDAllocator.getLong());
     }
 
     protected User() {
@@ -519,7 +517,32 @@ public abstract class User implements Classifiable, Serializable {
     }
 
     public long getUniqueID() {
-        return 0;
+        return uniqueId.getIdLSB();
+    }
+
+    @Override
+    public Timestamp lastIndexed() {
+        return null;
+    }
+
+    @Override
+    public List<RankedString> getIndexTextSets() {
+        return Collections.singletonList(new RankedString(first + " " + last + " " + username + " " + email, TITLE_RELEVANCE));
+    }
+
+    @Override
+    public Identifier getUniqueIdentifier() {
+        return uniqueId;
+    }
+
+    @Override
+    public void launch() {
+        Root.getPortal().launchTaskView(new UserProfile(this));
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return null;
     }
 }
 

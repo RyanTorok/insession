@@ -3,10 +3,7 @@ package searchengine;
 import classes.ClassPd;
 import gui.SearchFilterBox;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FilterSet {
@@ -37,7 +34,7 @@ public class FilterSet {
         dateConstraint = box.getDateConstraint();
     }
 
-    public FilterSet(Integer typesParam, DateConstraint constraint, Date restriction, Long... classPds) {
+    public FilterSet(Integer typesParam, DateConstraint constraint, Date restriction, UUID... classPds) {
         types = new ArrayList<>();
         if (isNthBitNotSet(typesParam, 1)) types.add(Identifier.Type.Class_Item);
         if (isNthBitNotSet(typesParam, 2)) types.add(Identifier.Type.Module);

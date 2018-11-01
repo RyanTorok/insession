@@ -41,7 +41,7 @@ class PostWindow extends VBox {
         typeText.setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(14)));
         titleBar.getChildren().add(typeText);
         titleBar.getChildren().add(new Layouts.Filler());
-        boolean updated = post.getIdentifier().getTime1() < post.getIdentifier().getTime2();
+        boolean updated = post.getStatusLabels().contains(PostStatus.UPDATED);
 
         Text uploadedText = new Text((updated ? "Updated " : "Uploaded ") + UtilAndConstants.parseTimestamp(new Timestamp(updated ? post.getIdentifier().getTime2() : post.getIdentifier().getTime1())) + " by ");
         uploadedText.setFont(Font.font(Size.fontSize(14)));
@@ -63,7 +63,7 @@ class PostWindow extends VBox {
         titleBar.getChildren().add(userImage);
 
         titleBar.setAlignment(Pos.CENTER_LEFT);
-        text = post.getFormattedText().asTextFlow();
+        text = post.getFormattedText().extract();
         post.getStatusLabels().add(PostStatus.MINE);
         postArea = new PostArea(this, post, text, post.getStatusLabels().contains(PostStatus.MINE) || post.getType() == Post.Type.Student_Answer);
         getChildren().addAll(titleBar, postArea);

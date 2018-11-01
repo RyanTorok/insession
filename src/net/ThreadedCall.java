@@ -61,9 +61,14 @@ public class ThreadedCall<T> {
         }
     }
 
-    public void threadedCall(Function<ArrayList<String>, T> action, Consumer<T> workWithValue) {
+    public void procedureCall(Function<ArrayList<String>, T> action, Consumer<T> workWithValue) {
         Task<T> t = getOutput(action);
         t.setOnSucceeded(event -> workWithValue.accept(t.getValue()));
+    }
+
+    public T returnValUeCall(Function<ArrayList<String>, T> action) {
+        Task<T> t = getOutput(action);
+        return t.getValue();
     }
 
     private Task<T> getOutput(Function<ArrayList<String>, T> action) {

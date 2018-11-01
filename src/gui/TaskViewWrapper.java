@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -18,6 +17,7 @@ import main.Root;
 import main.Size;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class TaskViewWrapper extends StackPane {
 
@@ -342,7 +342,7 @@ public class TaskViewWrapper extends StackPane {
         this.changeLock = changeLock;
     }
 
-    public void launch(TaskView view) {
+    public <T extends TaskView> void launch(T view, Consumer<T> onStartup) {
         int millis = 200;
         view.setWrapper(this);
         view.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -392,6 +392,7 @@ public class TaskViewWrapper extends StackPane {
                         view.initialize();
                         which = activeViews.size() - 1;
                         stackTileSlideOut(millis / 2);
+                        onStartup.accept(view);
                     });
                     delay2.play();
                 });
@@ -467,5 +468,9 @@ public class TaskViewWrapper extends StackPane {
         view.setDy(-401);
         view.setDragged(true);
         Events.fireMouse(view, MouseEvent.MOUSE_RELEASED);
+    }
+
+    public void launch(TaskView view) {
+        launch(view, (view1)->{});
     }
 }

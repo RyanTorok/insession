@@ -1,5 +1,6 @@
 package filesystem;
 
+import org.json.JSONObject;
 import searchengine.Identifier;
 
 import java.util.Collections;
@@ -20,5 +21,10 @@ public abstract class File extends FileSystemElement {
 
     public String getExtension() {
         return extension;
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return null;
     }
 }

@@ -1,12 +1,14 @@
 package classes;
 
+import gui.IDAllocator;
 import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
-import main.Colors;
-import main.Student;
-import main.Teacher;
-import main.User;
+import main.*;
 import net.PostEngine;
+import org.json.JSONObject;
+import searchengine.Identifier;
+import searchengine.Indexable;
+import searchengine.RankedString;
 
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
@@ -14,13 +16,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
  * Created by S507098 on 4/13/2017.
  */
 
-public class ClassPd extends MSClass implements Serializable {
+public class ClassPd extends MSClass implements Serializable, Indexable {
 
     static final long serialVersionUID = 100L;
 
@@ -31,12 +34,12 @@ public class ClassPd extends MSClass implements Serializable {
     private transient Color color;
     private String teacherFirst;
     private String teacherLast;
-    private long uniqueId;
     private Gradebook gradebook;
     private PostEngine postEngine;
     private Teacher teacher;
+    private Identifier identifier;
 
-    public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, Teacher teacher, long uniqueId) {
+    public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, Teacher teacher, UUID uniqueId) {
         this.castOf = castOf;
         this.studentList = studentList;
         this.periodNo = periodNo;
@@ -44,14 +47,14 @@ public class ClassPd extends MSClass implements Serializable {
         this.color = color;
         this.teacherFirst = teacherFirst;
         this.teacherLast = teacherLast;
-        this.uniqueId = uniqueId;
         initSidebarHotLinks();
         gradebook = new Gradebook();
         postEngine = new PostEngine(this);
         this.teacher = teacher;
+        identifier = new Identifier(toString(), Identifier.Type.Class, uniqueId);
     }
 
-    public static ClassPd fromId(long classId) {
+    public static ClassPd fromId(UUID classId) {
         return null;
     }
 
@@ -73,6 +76,7 @@ public class ClassPd extends MSClass implements Serializable {
         initSidebarHotLinks();
         gradebook = new Gradebook();
         postEngine = new PostEngine(this);
+        identifier = new Identifier(toString(), Identifier.Type.Class, IDAllocator.get());
     }
 
     public int getCapacity() {
@@ -154,12 +158,12 @@ public class ClassPd extends MSClass implements Serializable {
         fireUpdate(Record.Type.Session_Start, getTodaysInstance().getEndTime(), null);
     }
 
-    public long getUniqueId() {
-        return uniqueId;
+    public UUID getUniqueId() {
+        return identifier.getId();
     }
 
-    public void setUniqueId(long uniqueId) {
-        this.uniqueId = uniqueId;
+    public void setUniqueId(UUID uniqueId) {
+        identifier.setId(uniqueId);
     }
 
     @Override
@@ -196,5 +200,35 @@ public class ClassPd extends MSClass implements Serializable {
 
     public Teacher getTeacher() {
         return teacher;
+    }
+
+    @Override
+    public Timestamp lastIndexed() {
+        return null;
+    }
+
+    @Override
+    public List<RankedString> getIndexTextSets() {
+        ArrayList<RankedString> toIndex = new ArrayList<>();
+        toIndex.add(new RankedString(castOf.getName(), TITLE_RELEVANCE));
+        toIndex.add(new RankedString(identifier.getId().toString(), HEADER_RELEVANCE));
+        toIndex.add(new RankedString(teacherFirst, HEADER_RELEVANCE));
+        toIndex.add(new RankedString(teacherLast, HEADER_RELEVANCE));
+        return toIndex;
+    }
+
+    @Override
+    public Identifier getUniqueIdentifier() {
+        return identifier;
+    }
+
+    @Override
+    public void launch() {
+        Root.getPortal().launchClass(this);
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package net;
 
 import classes.ClassPd;
 import classes.Post;
+import main.Root;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class PostEngine implements Serializable {
 
     public void update() {
         new ThreadedCall<List<Post>>("post/getPosts.php", true,
-                new PostRequest("classId", belongsTo.getUniqueId())).threadedCall((strings) -> strings.stream().map(Post::fromEncoding).collect(Collectors.toList()), (posts) -> PostEngine.this.posts = posts);
+                new PostRequest("classId", belongsTo.getUniqueId())).procedureCall((strings) -> strings.stream().map(Post::fromEncoding).collect(Collectors.toList()), (posts) -> PostEngine.this.posts = posts);
     }
 
     public void index() {
@@ -50,13 +51,19 @@ public class PostEngine implements Serializable {
 
     public void deletePost(Post post) {
         getPosts().remove(post);
+        Root.getPortal().getSearchBox().getEngine().getIndex().remove(post);
         //remove from server
         new ThreadedCall<Boolean>("post/deletePost.php", true,
                 new PostRequest("classId", post.getClassId()),
                 new PostRequest("postId", post.getIdentifier().getId()),
-                new PostRequest("classItemId", post.getClassItemId())).threadedCall((list) ->
+                new PostRequest("classItemId", post.getClassItemId())).procedureCall((list) ->
                 list.contains("done"), (b) -> {}
         );
 
+    }
+
+    public void addPost(Post newPost) {
+        posts.add(newPost);
+//        new net.ThreadedCall<Boolean>("post/newPost.php", true, new PostRequest("classId", newPost.getClassId()), new PostRequest("postId", newPost.getIdentifier().getId().toString()), new PostRequest("classItemId", newPost.getClassItemId().toString()));
     }
 }

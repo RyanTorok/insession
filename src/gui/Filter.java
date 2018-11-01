@@ -6,6 +6,7 @@ import classes.TimeStatus;
 import searchengine.Identifier;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Filter {
 
@@ -14,10 +15,10 @@ public class Filter {
     private PostStatus postStatus;
     private Post.Type postType;
     String name;
-    long userId;
-    long classItemId;
+    private UUID userId;
+    private UUID classItemId;
 
-    Filter(String name, long userId, long classItemId) {
+    Filter(String name, UUID userId, UUID classItemId) {
         this.name = name;
         this.userId = userId;
         this.classItemId = classItemId;
@@ -47,7 +48,7 @@ public class Filter {
         if (postStatus != null && !post.getStatusLabels().contains(postStatus)) return false;
         if (postType != null && post.getType() != postType) return false;
         if (timeStatus != null && !timeMatches(post)) return false;
-        return classItemId == -1 || post.getClassItemId() == classItemId;
+        return classItemId == null || classItemId.equals(new UUID(0, -1)) || post.getClassItemId().equals(classItemId);
     }
 
     private boolean timeMatches(Post post) {

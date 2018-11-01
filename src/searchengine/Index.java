@@ -1,25 +1,22 @@
 package searchengine;
 
-import net.PostRequest;
-import net.ThreadedCall;
 import terminal.Address;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Index implements Serializable {
 
 
     static final long serialVersionUID = 1000L;
-    private HashMap<Identifier, Indexable> objects;
+    private IndexableCache objects;
+    private HashMap<String, HashMap<Identifier, Integer>> map;
 
     public Index() {
         map = new HashMap<>();
-        objects = new HashMap<>();
+        objects = new IndexableCache();
     }
 
-    private HashMap<String, HashMap<Identifier, Integer>> map;
 
     public static Index loadLocal() {
         try {
@@ -40,10 +37,29 @@ public class Index implements Serializable {
     }
 
     public void associate(String word, Identifier id, int relevance) {
-        HashMap<Identifier, Integer> wordSet = map.computeIfAbsent(word, k -> new HashMap<>());
+        HashMap<Identifier, Integer> wordSet = map.computeIfAbsent(word.toLowerCase(), k -> new HashMap<>());
         Integer existing = wordSet.get(id);
         if (existing == null) existing = 0;
         wordSet.put(id, existing + relevance);
+    }
+
+    // relevance == 0 means complete dissociation, > 0 means subtract that value from existing relevance
+    public void dissociate(String word, Identifier id, int relevance) {
+        HashMap<Identifier, Integer> wordSet = map.get(word.toLowerCase());
+        if (wordSet == null)
+            return;
+        Integer existing = wordSet.get(id);
+        if (existing == null)
+            return;
+        if (relevance == 0 || existing - relevance <= 0)
+            wordSet.remove(id);
+        else
+            wordSet.put(id, existing - relevance) ;
+    }
+
+    public void remove(Indexable item) {
+        item.getIndexTextSets().forEach(rankedString -> dissociate(rankedString.getString(), item.getUniqueIdentifier(), rankedString.getRelevance()));
+        objects.hardRemove(item.getUniqueIdentifier());
     }
 
     HashSet<ItemNode> getItems(String key) {
@@ -69,21 +85,19 @@ public class Index implements Serializable {
         for (Indexable i : list) {
             for (RankedString s : i.getIndexTextSets()) {
                 String[] splitOnSpace = s.getString().split("\\s+");
-                for (String s1 :
-                        splitOnSpace) {
+                for (String s1 : splitOnSpace) {
                     associate(s1, i.getUniqueIdentifier(), s.getRelevance());
-
                 }
             }
+            objects.put(i.getUniqueIdentifier(), i);
         }
-    }
-
-    public HashMap<Identifier, Indexable> getObjects() {
-        return objects;
     }
 
     public Indexable getObject(Identifier identifier) {
         return objects.get(identifier);
     }
 
+    public void index(Indexable i) {
+        index(Collections.singletonList(i));
+    }
 }

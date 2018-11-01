@@ -3,6 +3,8 @@ package searchengine;
 import classes.ClassPd;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.UUID;
 
 public class ItemNode {
 
@@ -23,7 +25,7 @@ public class ItemNode {
         if (fields.size() != 11) {
             System.err.println("Warning: incorrect ItemNode regex size: " + fields.size());
         }
-        Identifier id = new Identifier(fields.get(0), Identifier.Type.valueOf(fields.get(2)), Long.parseLong(fields.get(4)));
+        Identifier id = new Identifier(fields.get(0), Identifier.Type.valueOf(fields.get(2)), UUID.fromString(fields.get(4)));
         id.setDescription(fields.get(1));
         id.setId(Long.parseLong(fields.get(3)));
         id.setBelongsTo(ClassPd.fromId(id.getId()));
@@ -78,5 +80,17 @@ public class ItemNode {
 
     public void merge(ItemNode other) {
         relevance += other.relevance;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ItemNode)
+            return identifier.equals(((ItemNode) obj).identifier);
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return identifier.hashCode();
     }
 }

@@ -1,28 +1,30 @@
 package classes;
 
-import gui.CompressedRichText;
-import gui.HTMLText;
+import gui.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
+import main.Root;
 import main.User;
 import main.UtilAndConstants;
+import org.json.JSONObject;
 import searchengine.Identifier;
+import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.RankedString;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Post implements Indexable, Serializable, Comparable<Post> {
 
     static final long serialVersionUID = 99L;
-    private long postId;
-    private long classId;
-    private long classItemId;
+    private final ClassPd classPd;
+    private CompressedRichText formattedText;
+    private UUID postId;
+    private UUID classId;
+    private UUID classItemId;
     private long posterId;
     private String posterFirst;
     private String posterLast;
@@ -31,7 +33,6 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private long likes;
     private long views;
     private String title;
-    private HTMLText formattedText;
     private long lastIndexed;
     private long created;
     private long modified;
@@ -41,18 +42,19 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private long parentId;
     private boolean currentUserLikedThis;
     private boolean currentUserViewedThis;
-    private List<PostStatus> statusLabels;
+    private HashSet<PostStatus> statusLabels;
     private boolean pinned;
     private List<Post> studentAnswers;
     private List<Post> comments;
     private Post instructorAnswer;
     private HashMap<Long, Pair<String, CompressedRichText>> history;
 
-    public Post(User postedBy, Type type, String title, String source, boolean posterNameVisible) {
+    public Post(User postedBy, Type type, String title, String source, boolean posterNameVisible, ClassPd classPd) {
+        this.classPd = classPd;
+        classId = classPd.getUniqueId();
         this.setType(type);
         this.setTitle(title);
-        formattedText = new HTMLText(source);
-        this.posterId = Long.parseLong(postedBy.getID());
+        this.posterId = postedBy.getUniqueID();
         this.posterFirst = postedBy.getFirst();
         this.posterLast = postedBy.getLast();
         this.posterUsername = postedBy.getUsername();
@@ -60,18 +62,22 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         setLikes(0);
         setViews(0);
         setLastIndexed(1);
-        setIdentifier(new Identifier(title, Identifier.Type.Post, -1));
+        setIdentifier(new Identifier(title, Identifier.Type.Post, IDAllocator.get()));
         identifier.setAuthorName(posterNameVisible ? posterFirst + " " + posterLast : "Anonymous");
-        statusLabels = new ArrayList<>();
+        statusLabels = new HashSet<>();
         studentAnswers = new ArrayList<>();
         comments = new ArrayList<>();
         history = new HashMap<>();
         history.put(System.currentTimeMillis(), new Pair<>(title, new CompressedRichText(new TextFlow(new Text(source)))));
+        formattedText = new CompressedRichText(new TextFlow(new Text(source)));
+
+        classItemId = new UUID(0, 0);
     }
 
-    public Post(long postId, long classId, long classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
+    public Post(UUID postId, ClassPd classPd, UUID classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
         this.postId = postId;
-        this.classId = classId;
+        this.classPd = classPd;
+        this.classId = classPd.getUniqueId();
         this.classItemId = classItemId;
         this.posterId = posterId;
         this.posterFirst = posterFirst;
@@ -83,27 +89,28 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         this.views = views;
         this.currentUserViewedThis = currentUserViewedThis;
         this.title = title;
-        this.formattedText = new HTMLText(source);
+        this.formattedText = new CompressedRichText(new TextFlow(new Text(source)));
         this.lastIndexed = lastIndexed;
         this.created = created;
         this.modified = modified;
         this.posterNameVisible = posterNameVisible;
         this.visibleTo = visibleTo;
         this.parentId = parentId;
-        statusLabels = new ArrayList<>();
+        statusLabels = new HashSet<>();
         studentAnswers = new ArrayList<>();
         comments = new ArrayList<>();
     }
 
-    public static Post newPost() {
-        return new Post(User.active(), Type.Question, "", "", true);
+    public static Post newPost(ClassPd classPd) {
+        Post post = new Post(User.active(), Type.Question, "", "", true, classPd);
+        return post;
     }
 
     public static Post fromEncoding(String encoding) {
         String[] split = UtilAndConstants.parsePHPDataOutBase64(encoding, 19);
-        Long postId = Long.parseLong(split[0]);
-        Long classId = Long.parseLong(split[1]);
-        Long classItemId = Long.parseLong(split[2]);
+        UUID postId = UUID.fromString(split[0]);
+        UUID classId = UUID.fromString(split[1]);
+        UUID classItemId = UUID.fromString(split[2]);
         Long userId = Long.parseLong(split[3]);
         String title = split[4];
         String text = split[5];
@@ -120,7 +127,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         String posterFirst = split[16];
         String posterLast = split[17];
         String posterUsername = split[18];
-        return new Post(postId, classId, classItemId, userId, posterFirst, posterLast, posterUsername, type, likes,
+        return new Post(postId, ClassPd.fromId(classId), classItemId, userId, posterFirst, posterLast, posterUsername, type, likes,
                 liked, views, viewed, title, text, 1, created, modified, nameVisibility, visibility, parent);
     }
 
@@ -132,7 +139,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     @Override
     public List<RankedString> getIndexTextSets() {
         ArrayList<RankedString> strings = new ArrayList<>();
-        strings.add(new RankedString("#" + Long.toString(identifier.getId()), HEADER_RELEVANCE));
+        strings.add(new RankedString("#" + identifier.getId().toString(), HEADER_RELEVANCE));
         strings.add(new RankedString(getTitle(), TITLE_RELEVANCE));
         strings.add(new RankedString(posterFirst + " " + posterLast, HEADER_RELEVANCE));
         strings.add(new RankedString(getText(), TEXT_RELEVANCE));
@@ -146,7 +153,14 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
 
     @Override
     public void launch() {
-        //TODO launch post interface
+        ClassView active = Root.getPortal().launchClass(classPd, (classView) -> {
+            ((PostsBody) classView.getBodyPanes()[0]).fire(this);
+        });
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return null;
     }
 
     public Type getType() {
@@ -174,12 +188,9 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     }
 
     public String getText() {
-        return formattedText.getUnformatted();
+        return formattedText.getUnformattedText();
     }
 
-    public void setText(String text) {
-        formattedText.setUnformatted(text);
-    }
 
     public long getLastIndexed() {
         return lastIndexed;
@@ -229,31 +240,31 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         this.created = created;
     }
 
-    public List<PostStatus> getStatusLabels() {
+    public HashSet<PostStatus> getStatusLabels() {
         return statusLabels;
     }
 
-    public long getPostId() {
+    public UUID getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
+    public void setPostId(UUID postId) {
         this.postId = postId;
     }
 
-    public long getClassId() {
+    public UUID getClassId() {
         return classId;
     }
 
-    public void setClassId(long classId) {
+    public void setClassId(UUID classId) {
         this.classId = classId;
     }
 
-    public long getClassItemId() {
+    public UUID getClassItemId() {
         return classItemId;
     }
 
-    public void setClassItemId(long classItemId) {
+    public void setClassItemId(UUID classItemId) {
         this.classItemId = classItemId;
     }
 
@@ -297,7 +308,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         this.currentUserViewedThis = currentUserViewedThis;
     }
 
-    public void setStatusLabels(List<PostStatus> statusLabels) {
+    public void setStatusLabels(HashSet<PostStatus> statusLabels) {
         this.statusLabels = statusLabels;
     }
 
@@ -325,15 +336,11 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     }
 
     public String getSource() {
-        return formattedText.getSource(); //TODO support encoding of symbols
+        return formattedText.getUnformattedText();
     }
 
-    public HTMLText getFormattedText() {
+    public CompressedRichText getFormattedText() {
         return formattedText;
-    }
-
-    public void setFormattedText(HTMLText formattedText) {
-        this.formattedText = formattedText;
     }
 
     public String getPosterUsername() {
@@ -389,7 +396,19 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     }
 
     public void update(String newTitle, CompressedRichText newCRT) {
-        history.put(System.currentTimeMillis(), new Pair<>(newTitle, newCRT));
+        Index index = Root.getPortal().getSearchBox().getEngine().getIndex();
+        //TODO remove this line if we want history text to be searchable
+        index.remove(this);
+        statusLabels.add(PostStatus.UPDATED);
+        long timeMillis = System.currentTimeMillis();
+        history.put(timeMillis, new Pair<>(newTitle, newCRT));
+        setFormattedText(newCRT);
+        identifier.setTime2(timeMillis);
+        index.index(this);
+    }
+
+    public void setFormattedText(CompressedRichText formattedText) {
+        this.formattedText = formattedText;
     }
 }
 

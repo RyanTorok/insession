@@ -1,6 +1,5 @@
 package gui;
 
-import classes.ClassPd;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -96,8 +95,6 @@ public class SearchModule extends VBox {
         getChildren().add(searchBox);
         setStyle("-fx-background-color: black");
         setPrefSize(Size.width(1920), Size.height(100));
-        //TODO delete this!
-        getEngine().getIndex().associate("search", new Identifier("Test ID", Identifier.Type.Post, 1) {{setTime1(System.currentTimeMillis()); setBelongsTo(new ClassPd()); setTime1(System.currentTimeMillis());}}, 1);
         filterBox = new SearchFilterBox(this);
         filters = new ScrollPane(filterBox) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
     }
@@ -184,7 +181,7 @@ public class SearchModule extends VBox {
     private void netRequest(String token) {
         ThreadedCall<List<ItemNode>> call = new ThreadedCall<>("search/query.php", true, new PostRequest("token", token));
         //TODO implment relevance algorithm for server results
-        call.threadedCall((list) -> list.stream().map(ItemNode::fromRemoteRegex).collect(Collectors.toList()), (results) -> {
+        call.procedureCall((list) -> list.stream().map(ItemNode::fromRemoteRegex).collect(Collectors.toList()), (results) -> {
             //TODO
         });
     }
@@ -324,6 +321,7 @@ public class SearchModule extends VBox {
                     SearchModule.this.collapse();
                     if (obj == null)
                         throw new IllegalStateException("Identifier pointing to null Indexable object - id: " + id.getId());
+                    wrapper.closeSearchBar();
                     obj.launch();
                 }
             });
@@ -370,5 +368,7 @@ public class SearchModule extends VBox {
     public TextField getSearchBox() {
         return searchBox;
     }
+
+
 
 }

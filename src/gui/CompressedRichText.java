@@ -24,6 +24,8 @@ public class CompressedRichText {
                 String[] myStyles = t.getStyle().split(";");
                 int textLength = t.getText().length();
                 for (String component : myStyles) {
+                    if (component.trim().length() == 0)
+                        continue;
                     List<Pair<Integer, Integer>> mappings = styles.computeIfAbsent(component, k -> new ArrayList<>());
                     mappings.add(new Pair<>(characterIndex, characterIndex + textLength));
                 }
@@ -39,6 +41,7 @@ public class CompressedRichText {
             flow.getChildren().add(new Text(Character.toString(unformattedText.charAt(i))));
         }
         for (String styleComponent : styles.keySet()) {
+            System.out.println("style component: " + styleComponent);
             List<Pair<Integer, Integer>> indexList = styles.get(styleComponent);
             for (Pair<Integer, Integer> range :
                     indexList) {

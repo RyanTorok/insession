@@ -1,6 +1,5 @@
 package net;
 
-import javafx.concurrent.Task;
 import main.PasswordManager;
 import main.User;
 
@@ -9,10 +8,8 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Net {
@@ -176,7 +173,7 @@ public class Net {
                 byte[] serFileBytes = User.active().getSerFileBytes();
                 if (serFileBytes == null)
                     return false;
-                new ThreadedCall<Boolean>("acct/updateSerFile.php", true, new PostRequest("serfile", urlEncode(serFileBytes))).threadedCall((list) -> list.contains("done"), (b) -> {});
+                new ThreadedCall<Boolean>("acct/updateSerFile.php", true, new PostRequest("serfile", urlEncode(serFileBytes))).procedureCall((list) -> list.contains("done"), (b) -> {});
             }
         } catch (IOException e) {
             e.printStackTrace();

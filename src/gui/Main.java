@@ -28,6 +28,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.*;
+import org.json.JSONObject;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.QueryEngine;
@@ -38,6 +39,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Main extends Application {
@@ -202,7 +204,7 @@ public class Main extends Application {
         });
 
         Image image = User.active().getAcctImage();
-        Images.addUserImage(User.active().getUniqueID(), image);
+        Images.addUserImage((long) User.active().getUniqueID(), image);
         Shape picture = new ShapeImage(new Circle(Size.lessWidthHeight(30)), image).apply();
         this.picture = picture;
         HBox menusWrapper = new HBox(menus[0], menus[1], menus[2], menus[3], menus[4]);
@@ -501,7 +503,13 @@ public class Main extends Application {
         state = BASE_STATE;
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
-        launchClass(new ClassPd() {{setCastOf(new Course() {{setName("Test Class");}}); setPeriodNo(4);}});
+        launchClass(new ClassPd() {
+            @Override
+            public JSONObject toJSONObject() {
+                return null;
+            }
+
+            {setCastOf(new Course() {{setName("Test Class");}}); setPeriodNo(4);}});
 
         for (Collection<Indexable> list :
                 QueryEngine.getPrimaryIndexSets()) {
@@ -509,7 +517,7 @@ public class Main extends Application {
         }
     }
 
-    private void closeSearchBar() {
+    void closeSearchBar() {
         if (state != SEARCH_STATE)
             return;
         allMenusAndSearchBar.getChildren().get(0).setVisible(true);  //show menus
@@ -855,14 +863,39 @@ public class Main extends Application {
         return subtitles;
     }
 
-    void launchClass(ClassPd classPd) {
+    public ClassView launchClass(ClassPd classPd) {
         assert state == BASE_STATE;
-        launchTaskView(new ClassView(classPd));
+        ClassView view = new ClassView(classPd);
+        launchTaskView(view);
+        return view;
     }
 
-    public void launchClass(ClassPd pd, ClassItem item) {
+    public ClassView launchClass(ClassPd classPd, Consumer<ClassView> onStartup) {
         assert state == BASE_STATE;
-        launchTaskView(new ClassView(pd, item));
+        ClassView view = new ClassView(classPd);
+        launchTaskView(view, onStartup);
+        return view;
+    }
+
+    private void launchTaskView(ClassView view, Consumer<ClassView> onStartup) {
+        assert mainBodyAndTaskViews.getChildren().size() == 2;
+        showTaskViews(view);
+        taskViews.launch(view, onStartup);
+        homeScreen = false;
+    }
+
+    public void launchTaskView(TaskView view) {
+        assert mainBodyAndTaskViews.getChildren().size() == 2;
+        showTaskViews(view);
+        taskViews.launch(view);
+        homeScreen = false;
+    }
+
+    public ClassView launchClass(ClassPd pd, ClassItem item) {
+        assert state == BASE_STATE;
+        ClassView view = new ClassView(pd, item);
+        launchTaskView(view);
+        return view;
     }
 
     public void setPicture(Shape newShape) {
@@ -1191,12 +1224,6 @@ public class Main extends Application {
         }
     }
 
-    public void launchTaskView(TaskView view) {
-        assert mainBodyAndTaskViews.getChildren().size() == 2;
-        showTaskViews(view);
-        taskViews.launch(view);
-        homeScreen = false;
-    }
 
     void showTaskViews() {
         showTaskViews(false);
@@ -1352,4 +1379,5 @@ public class Main extends Application {
     public KeyMap getKeyMap() {
         return keyMap;
     }
+
 }

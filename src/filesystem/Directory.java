@@ -1,5 +1,6 @@
 package filesystem;
 
+import org.json.JSONObject;
 import searchengine.Identifier;
 import searchengine.Indexable;
 import searchengine.RankedString;
@@ -43,5 +44,10 @@ public class Directory extends FileSystemElement {
     @Override
     public void launch() {
 
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        return null;
     }
 }

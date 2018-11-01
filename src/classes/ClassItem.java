@@ -2,15 +2,17 @@ package classes;
 
 import main.User;
 
+import java.util.UUID;
+
 public class ClassItem {
     private String name;
-    private long id;
+    private UUID id;
 
-    public static ClassItem fromId(long classItemId) {
+    public static ClassItem fromId(UUID classItemId) {
         return null; //TODO
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 

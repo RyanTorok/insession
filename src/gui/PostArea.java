@@ -111,8 +111,11 @@ public class PostArea extends VBox {
 
     private void edit() {
         InlineTextEditor.edit(this, text, (compressedRichText)-> {
-            if (compressedRichText != null)
+            if (compressedRichText != null) {
                 post.update(post.getTitle(), compressedRichText);
+                Root.getPortal().getSearchBox().getEngine().getIndex().index(post);
+                wrapper.getWrapper().fire(post);
+            }
         });
     }
 

@@ -22,6 +22,7 @@ public abstract class TaskView extends ScrollPane {
     private double dy;
     private double lastClickY;
     private long fileId = -1;
+    private boolean initializeFlag = true;
 
     public TaskView(String title) {
         super();
@@ -93,7 +94,7 @@ public abstract class TaskView extends ScrollPane {
 
     //resets the display to the actual contents.
     void expand() {
-        if (fullDisplay == null) initialize();
+       // if (fullDisplay == null) initialize();
         setContent(fullDisplay);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         Root.getPortal().getSubtitle().setText(title);
@@ -151,11 +152,27 @@ public abstract class TaskView extends ScrollPane {
 
     protected abstract Pane initDisplay();
 
+    protected boolean isDuplicate(TaskView view) {
+        return view.getClass().equals(this.getClass());
+    }
+
     public Pane getFullDisplay() {
         return fullDisplay;
     }
 
     public void setFullDisplay(Pane fullDisplay) {
         this.fullDisplay = fullDisplay;
+    }
+
+    public void setInitializeFlag(boolean initializeFlag) {
+        this.initializeFlag = initializeFlag;
+    }
+
+    public boolean isInitializeFlag() {
+        return initializeFlag;
+    }
+
+    public boolean getInitializeFlag() {
+        return initializeFlag;
     }
 }
