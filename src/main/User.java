@@ -10,6 +10,7 @@ import module.Module;
 import net.Net;
 import org.json.JSONObject;
 import searchengine.*;
+import server.IDAllocator;
 import terminal.Address;
 
 import java.io.*;

@@ -1,11 +1,15 @@
 package gui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import gui.Moon;
+import gui.WeatherState;
 import main.UnknownZipCodeException;
 import main.User;
+import net.ServerSession;
 import org.json.*;
 
 /**
@@ -13,6 +17,7 @@ import org.json.*;
  */
 
 public class WeatherManager{
+
     private int zipCode;
     private WeatherState current;
     private String description;
@@ -25,129 +30,12 @@ public class WeatherManager{
     }
 
     public void update() {
-        JSONObject properties = null;
-        try {
-            boolean success = false;
-            int stationIndex = 0;
-            while (!success) {
-                double[] latlon = User.active().getLatlon();
-                if (latlon == null || latlon[0] == 0 && latlon[1] == 0) {
-                    try {
-                        User.active().setLocation(getZipCode());
-                    } catch (UnknownZipCodeException e) {
-                        User.active().setLocation(77379);
-                    }
-                    latlon = User.active().getLatlon();
-                }
-
-                URL api = new URL("https://api.weather.gov/");
-                URL stations = new URL(api, "points/" + latlon[0] + "," + latlon[1] + "/stations/");
-                BufferedReader stationsIn = new BufferedReader(new InputStreamReader(stations.openStream()));
-                String stationFile = "", line = "";
-                while ((line = stationsIn.readLine()) != null) {
-                    stationFile += line + "\n";
-                }
-                stationsIn.close();
-                JSONObject stationsObj = new JSONObject(stationFile);
-                JSONArray features = stationsObj.getJSONArray("features");
-                int numStations = features.length();
-                if (stationIndex >= numStations)
-                    return;
-                JSONObject closest = features.getJSONObject(stationIndex);
-
-                //get station current observation
-                URL current_station_url = new URL(closest.getString("id") + "/observations/current/");
-                BufferedReader observationIn = new BufferedReader(new InputStreamReader(current_station_url.openStream()));
-                String observation = "";
-                while ((line = observationIn.readLine()) != null) {
-                    observation += line + "\n";
-                }
-                observationIn.close();
-                JSONObject observationObj = new JSONObject(observation);
-                properties = observationObj.getJSONObject("properties");
-                setDescription(properties.getString("textDescription"));
-                Object tempObj = properties.getJSONObject("temperature").get("value");
-                if (tempObj instanceof Integer)
-                    setTempCelsius((double) (int) tempObj);
-                else
-                    setTempCelsius(tempObj.equals(null) ? null : (double) tempObj);
-                setTempFahrenheit(getTempCelsius() == null ? null : getTempCelsius() * 1.8 + 32);
-                success = !tempObj.equals(null);
-                stationIndex++;
-            }
-            setCurrentState(properties);
-        } catch (Exception e) {
+        try (ServerSession session = new ServerSession()) {
+            session.open();
+            session.callAndResponse("weather", Integer.toString(zipCode));
+        } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
-    }
-
-    private void setCurrentState(JSONObject properties) {
-        //set current state
-        String descLC = description.toLowerCase();
-        Double lastHr = null;
-        Object lastHrObj = properties.getJSONObject("precipitationLastHour").get("value");
-        if (lastHrObj.equals(null))
-            lastHr = 0.0;
-        else {
-            if (lastHrObj instanceof Integer) {
-                lastHr = (double) (int) lastHrObj;
-            } else {
-                lastHr = (Double) lastHrObj;
-            }
-        }
-        if (lastHr == null)
-            lastHr = 0.0;
-        boolean fog = false;
-        boolean isHeavy = lastHr > HEAVY_THRESHOLD || descLC.contains("heavy") || descLC.contains("blizzard");
-        if (descLC.contains("fog")) {
-            fog = true;
-            setCurrent(WeatherState.Fog);
-        }
-        if (descLC.contains("snow") || descLC.contains("ice") || descLC.contains("icy") || descLC.contains("mix")
-                || descLC.contains("sleet") || descLC.contains("freez") || descLC.contains("blizzard")) {
-            if (fog) {
-                if (isHeavy)
-                    setCurrent(WeatherState.Fog_And_Blizzard);
-                else
-                    setCurrent(WeatherState.Fog_And_Snow);
-            } else {
-                if (isHeavy)
-                    setCurrent(WeatherState.Blizzard);
-                else
-                    setCurrent(WeatherState.Snow);
-            }
-            return;
-        }
-        if (descLC.contains("storm") || descLC.contains("thunder")) {
-            if (fog)
-                setCurrent(WeatherState.Fog_And_Thunderstorm);
-            else
-                setCurrent(WeatherState.Thunderstorm);
-            return;
-        }
-        if (descLC.contains("rain") || descLC.contains("shower") || descLC.contains("drizzle")) {
-            if (fog) {
-                if (isHeavy)
-                    setCurrent(WeatherState.Fog_And_Heavy_Rain);
-                else
-                    setCurrent(WeatherState.Fog_And_Light_Rain);
-            } else {
-                if (isHeavy)
-                    setCurrent(WeatherState.Heavy_Rain);
-                else
-                    setCurrent(WeatherState.Light_Rain);
-            }
-            return;
-        }
-        if (descLC.contains("cloud") || descLC.contains("overcast")) {
-            if (descLC.contains("partly") || descLC.contains("few") || descLC.contains("mostly")) {
-                setCurrent(WeatherState.Partly_Cloudy);
-            } else setCurrent(WeatherState.Cloudy);
-            return;
-        }
-        if (!fog)
-            setCurrent(WeatherState.Sunny);
     }
 
     public void update(int zipCode){

@@ -23,8 +23,7 @@ public class PostEngine implements Serializable {
     }
 
     public void update() {
-        new ThreadedCall<List<Post>>("post/getPosts.php", true,
-                new PostRequest("classId", belongsTo.getUniqueId())).procedureCall((strings) -> strings.stream().map(Post::fromEncoding).collect(Collectors.toList()), (posts) -> PostEngine.this.posts = posts);
+
     }
 
     public void index() {

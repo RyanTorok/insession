@@ -4,6 +4,7 @@ import db.SQLMaster;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -50,17 +51,19 @@ public class PasswordManager {
 
     public static byte[] createSalt() throws NoSuchAlgorithmException {
         SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
-
         byte[] salt = new byte[32];
         rand.nextBytes(salt);
-
         return salt;
     }
 
-    public static PasswordCombo newGen(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] salt = createSalt();
-        byte[] encrypted = encrypt(password, salt);
-        return new PasswordCombo(encrypted, salt);
+    public static PasswordCombo newGen(String password) {
+        try {
+            byte[] salt = createSalt();
+            byte[] encrypted = encrypt(password, salt);
+            return new PasswordCombo(encrypted, salt);
+        } catch (GeneralSecurityException e) {
+            return null;
+        }
     }
 
     public static class PasswordCombo {

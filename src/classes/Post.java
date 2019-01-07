@@ -6,12 +6,12 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 import main.Root;
 import main.User;
-import main.UtilAndConstants;
 import org.json.JSONObject;
 import searchengine.Identifier;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.RankedString;
+import server.IDAllocator;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -22,7 +22,6 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     static final long serialVersionUID = 99L;
     private final ClassPd classPd;
     private CompressedRichText formattedText;
-    private UUID postId;
     private UUID classId;
     private UUID classItemId;
     private long posterId;
@@ -70,12 +69,37 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         history = new HashMap<>();
         history.put(System.currentTimeMillis(), new Pair<>(title, new CompressedRichText(new TextFlow(new Text(source)))));
         formattedText = new CompressedRichText(new TextFlow(new Text(source)));
-
         classItemId = new UUID(0, 0);
     }
 
+    @Override
+    public JSONObject toJSONObject() {
+        JSONObject object = new JSONObject();
+        object.append("type", "post");
+        object.append("id", identifier.getId());
+        object.append("classId", classId);
+        object.append("classItemId", classItemId);
+        object.append("posterFirst", posterFirst);
+        object.append("posterLast", posterLast);
+        object.append("posterUsername", posterUsername);
+        object.append("type", type);
+        object.append("likes", likes);
+        object.append("views", views);
+        object.append("title", title);
+        object.append("text", formattedText.toJSONObject());
+        object.append("created", created);
+        object.append("modified", modified);
+        object.append("posterNameVisible", posterNameVisible);
+        object.append("visibleTo", visibleTo);
+        object.append("parentId", parentId);
+        object.append("currentUserLikedThis", currentUserLikedThis);
+        object.append("currentUserViewedThis", currentUserViewedThis);
+        object.append("pinned", pinned);
+        object.append("history", history.toString());
+        return object;
+    }
+
     public Post(UUID postId, ClassPd classPd, UUID classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
-        this.postId = postId;
         this.classPd = classPd;
         this.classId = classPd.getUniqueId();
         this.classItemId = classItemId;
@@ -99,6 +123,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         statusLabels = new HashSet<>();
         studentAnswers = new ArrayList<>();
         comments = new ArrayList<>();
+        this.identifier = new Identifier(title, Identifier.Type.Post, postId);
     }
 
     public static Post newPost(ClassPd classPd) {
@@ -106,7 +131,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         return post;
     }
 
-    public static Post fromEncoding(String encoding) {
+    /*public static Post fromEncoding(String encoding) {
         String[] split = UtilAndConstants.parsePHPDataOutBase64(encoding, 19);
         UUID postId = UUID.fromString(split[0]);
         UUID classId = UUID.fromString(split[1]);
@@ -129,7 +154,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         String posterUsername = split[18];
         return new Post(postId, ClassPd.fromId(classId), classItemId, userId, posterFirst, posterLast, posterUsername, type, likes,
                 liked, views, viewed, title, text, 1, created, modified, nameVisibility, visibility, parent);
-    }
+    }*/
 
     @Override
     public Timestamp lastIndexed() {
@@ -158,10 +183,6 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         });
     }
 
-    @Override
-    public JSONObject toJSONObject() {
-        return null;
-    }
 
     public Type getType() {
         return type;
@@ -242,14 +263,6 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
 
     public HashSet<PostStatus> getStatusLabels() {
         return statusLabels;
-    }
-
-    public UUID getPostId() {
-        return postId;
-    }
-
-    public void setPostId(UUID postId) {
-        this.postId = postId;
     }
 
     public UUID getClassId() {

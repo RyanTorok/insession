@@ -53,7 +53,7 @@ public class Net {
                 System.out.println(in);
                 return false;
             }
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException | IOException e) {
+        } catch (IOException e) {
             return false;
         }
     }
@@ -103,7 +103,7 @@ public class Net {
             if (fullText.contains("administrator")) {
                 return new CreateAccountStatus(3, passwordHash);
             }
-        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (IOException e) {
             return new CreateAccountStatus(-2, null);
         }
         return new CreateAccountStatus(-2, null);

@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,5 +62,12 @@ public class CompressedRichText {
     @Override
     public String toString() {
         return unformattedText;
+    }
+
+    public JSONObject toJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.append("text", unformattedText);
+        jsonObject.append("format", styles.toString());
+        return jsonObject;
     }
 }

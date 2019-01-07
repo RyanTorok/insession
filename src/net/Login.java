@@ -29,51 +29,12 @@ public class Login extends Task {
     }
 
     public static Net.UserMaybe login(String username, String password, boolean needSerFile) {
-        try {
-            //post data
-            String data = "username=" + username;
-            byte[] postData = data.getBytes(StandardCharsets.UTF_8);
-            int postDataLength = postData.length;
-
-            //start connection
-            URL url = new URL(root(), "acct/getLocalSalt.php");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-            conn.setUseCaches(false);
-            conn.setDoOutput(true);
-            try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-                wr.write(postData);
-            }
-            ArrayList<String> salts = new ArrayList<>();
-            BufferedReader readSalts = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            String in = readSalts.readLine();
-            if (in != null)
-                in = in.trim();
-            while (in != null) {
-                if (in.length() > 0)
-                    salts.add(in);
-                in = readSalts.readLine();
-                if (in != null)
-                    in = in.trim();
-            }
-            readSalts.close();
-            for (String salt: salts) {
-                byte[] saltBytes = Base64.getDecoder().decode(salt);
-                Net.UserMaybe user = loginSingle(username, Net.urlEncode(PasswordManager.encrypt(password, saltBytes)), needSerFile);
-                if (user.getExistsCode() == 2) {
-                    assert user.getUser() != null;
-                }
-                return user;
-            }
-            return new Net.UserMaybe(0, null, -1);
-        } catch (IOException | ClassCastException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
-            return new Net.UserMaybe(-1, null, -1);
+        try (AnonymousServerSession getLocalSalt = new AnonymousServerSession()) {
+            getLocalSalt.open();
+            String localsalt = getLocalSalt.callAndResponse("localsalt", username);
+            return null;
+        } catch (IOException e) {
+            return null;
         }
     }
 

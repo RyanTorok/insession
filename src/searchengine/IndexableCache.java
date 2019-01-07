@@ -9,7 +9,6 @@ import net.PostRequest;
 import net.ThreadedCall;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.UUID;
@@ -46,7 +45,7 @@ public class IndexableCache {
     }
 
     private Indexable cacheMiss(Identifier id) {
-        return new ThreadedCall<Indexable>("objects/getObject.php", true, new PostRequest("id=", id.getId().toString())).returnValUeCall((list) -> {
+        return new ThreadedCall<Indexable>("objects/getObject.php", true, new PostRequest("id=", id.getId().toString())).returnValueCall((list) -> {
             JSONObject result = new JSONObject(list.get(0));
             String type = result.getString("type");
             try {
@@ -104,7 +103,7 @@ public class IndexableCache {
     }
 
     private void pageOut(Indexable i) {
-        new ThreadedCall<>("objects/pageOut.php", true, new PostRequest("json", i.toJSONObject().toString().getBytes(StandardCharsets.UTF_8))).procedureCall((outputList) -> null, (o) -> {});
+        new ThreadedCall<>("objects/pageOut.php", true, new PostRequest("json", i.toJSONObject().toString())).procedureCall((outputList) -> null, (o) -> {});
     }
 
 }

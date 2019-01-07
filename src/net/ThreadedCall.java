@@ -66,7 +66,7 @@ public class ThreadedCall<T> {
         t.setOnSucceeded(event -> workWithValue.accept(t.getValue()));
     }
 
-    public T returnValUeCall(Function<ArrayList<String>, T> action) {
+    public T returnValueCall(Function<ArrayList<String>, T> action) {
         Task<T> t = getOutput(action);
         return t.getValue();
     }
