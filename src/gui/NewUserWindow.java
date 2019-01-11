@@ -15,18 +15,27 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.*;
 import main.*;
+import net.AnonymousServerSession;
 import net.Login;
 import net.Net;
+import net.ServerSession;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 
 public class NewUserWindow extends Pane {
 
     private ArrayList<Entry> entries = new ArrayList<>();
     private static User user = null;
-    private byte which = 0; //select account = 0, login = 1, create account = 2
+    private byte selectedTab = 0; //select account = 0, login = 1, create account = 2
     private Pane pane;
     private boolean loginConnErr = false;
 
@@ -53,7 +62,8 @@ public class NewUserWindow extends Pane {
         pane.getChildren().add(subpane);
         b.setOnAction(event -> {
             invalidMessage.setText("");
-            if (which == 1) {
+            if (selectedTab == 1) {
+                /*
                 Login login = new Login(entries.get(0).getField(), entries.get(1).getField(), true);
                 login.setOnSucceeded(event1 -> {
                     Net.UserMaybe userMaybe = (Net.UserMaybe) login.getValue();
@@ -78,8 +88,33 @@ public class NewUserWindow extends Pane {
                 });
                 Thread th = new Thread(login);
                 th.setDaemon(true);
-                th.start();
+                th.start();*/
+                String  username   = entries .get(0).getField(),
+                        password   = entries .get(1).getField();
+                try (ServerSession session = new ServerSession()) {
+                    boolean success = session.open(username, password);
+                    if (!success) {
+                        invalidMessage.setText("We do not recognize that login combination.");
+                    } else {
+                        String[] result = session.callAndResponse("serfile");
+                        if (ServerSession.isError(result)) {
+                            invalidMessage.setText("An error occurred when fetching your user data.");
+                        } else {
+                            byte[] serfile = Base64.getDecoder().decode(result[0].replaceAll("#", "+"));
+                            User fromSrc = (User) new ObjectInputStream(new ByteArrayInputStream(serfile)).readObject();
+                            fromSrc.setPassword(password.getBytes(StandardCharsets.UTF_8));
+                            User.setActive(fromSrc);
+                            Root.getPortal().switchToMain();
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    invalidMessage.setText("A connection error occurred. Please try again.");
+                } catch (ClassNotFoundException e) {
+                    invalidMessage.setText("The user data file arrived corrupted.\nIf this issue persists, please visit our website.");
+                }
             } else {
+
                 String  username   = entries .get(0).getField(),
                         password   = entries .get(1).getField(),
                         passwordC  = entries1.get(0).getField(),
@@ -101,8 +136,28 @@ public class NewUserWindow extends Pane {
                     return;
                 }
                 int type = 0;
-                net.Net.CreateAccountStatus status = net.Net.createAccount(username, password, first, last, email, schoolCode);
-                type = status.getStatus();
+                PasswordManager.PasswordCombo encryptedPassword = null;
+                try {
+                    AnonymousServerSession session = new AnonymousServerSession();
+                    session.open();
+                    encryptedPassword = PasswordManager.newGenLocal(password, username);
+                    byte[] pwd = encryptedPassword.getEncryptedPassword();
+                    String encodedPwd = Base64.getEncoder().encodeToString(pwd);
+                    System.out.println("initial encoded:" + encodedPwd);
+                    String[] result = session.callAndResponse("createaccount", username, encodedPwd, first, last, email, schoolCode);
+                    if (ServerSession.isError(result)) {
+                        System.out.println(Arrays.toString(result));
+                       type = -2;
+                    } else {
+                        long uid = Long.parseLong(result[0]);
+                        if (uid == 0)
+                            type = -3;
+
+                    }
+                } catch (IOException | InvalidKeySpecException | NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                    type = -2;
+                }
                 User newUser = null;
                 switch (type) {
                     case -3: invalidMessage.setText("The school code you entered was not recognized.");
@@ -119,8 +174,8 @@ public class NewUserWindow extends Pane {
                     break;
                 }
                 user = newUser;
-                newUser.setPassword(status.getPasswordCombo().getEncryptedPassword());
-                newUser.setPasswordSalt(status.getPasswordCombo().getSalt());
+                newUser.setPassword(password.getBytes(StandardCharsets.UTF_8));
+                newUser.setPasswordSalt(encryptedPassword.getSalt());
                 User.setActive(newUser);
                 main.switchToMain();
             }
@@ -195,7 +250,7 @@ public class NewUserWindow extends Pane {
             sacct.setStyle("-fx-background-color: #4d4d4d");
         });
         sacct.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-            if (which != 0) {
+            if (selectedTab != 0) {
                 sacct.setStyle("-fx-background-color: #000000");
             }
         });
@@ -204,19 +259,19 @@ public class NewUserWindow extends Pane {
             sacct.setStyle("-fx-background-color: #4d4d4d");
             login.setStyle("-fx-background-color: #000000");
             create.setStyle("-fx-background-color: #000000");
-            if (which != 0) {
+            if (selectedTab != 0) {
                 subpane.getChildren().add(existingAccts);
                 subpane.getChildren().removeAll(entries);
                 subpane.getChildren().removeAll(entries1);
                 pane.getChildren().remove(b);
             }
-            which = 0;
+            selectedTab = 0;
         });
         login.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             login.setStyle("-fx-background-color: #4d4d4d");
         });
         login.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-            if (which != 1) {
+            if (selectedTab != 1) {
                 login.setStyle("-fx-background-color: #000000");
             }
         });
@@ -225,20 +280,20 @@ public class NewUserWindow extends Pane {
             login.setStyle("-fx-background-color: #4d4d4d");
             sacct.setStyle("-fx-background-color: #000000");
             create.setStyle("-fx-background-color: #000000");
-            if (which == 0) {
+            if (selectedTab == 0) {
                 subpane.getChildren().remove(existingAccts);
                 subpane.getChildren().addAll(entries);
                 pane.getChildren().add(b);
             }
-            if (which == 2)
+            if (selectedTab == 2)
                 subpane.getChildren().removeAll(entries1);
-            which = 1;
+            selectedTab = 1;
         });
         create.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             create.setStyle("-fx-background-color: #4d4d4d");
         });
         create.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-            if (which != 2) {
+            if (selectedTab != 2) {
                 create.setStyle("-fx-background-color: #000000");
             }
         });
@@ -247,15 +302,15 @@ public class NewUserWindow extends Pane {
             create.setStyle("-fx-background-color: #4d4d4d");
             sacct.setStyle("-fx-background-color: #000000");
             login.setStyle("-fx-background-color: #000000");
-            if (which == 0) {
+            if (selectedTab == 0) {
                 subpane.getChildren().remove(existingAccts);
                 subpane.getChildren().addAll(entries);
                 subpane.getChildren().addAll(entries1);
                 pane.getChildren().add(b);
             }
-            if (which == 1)
+            if (selectedTab == 1)
                 subpane.getChildren().addAll(entries1);
-            which = 2;
+            selectedTab = 2;
 
         });
         sacct.setPadding(new Insets(20));

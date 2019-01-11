@@ -15,7 +15,6 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="mysql-connector-java-5.1" level="project" />
     <orderEntry type="library" name="JSON-java-master" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit5.0">
@@ -62,5 +61,6 @@
     <orderEntry type="library" name="org.fxmisc.richtext:richtextfx:0.9.1" level="project" />
     <orderEntry type="library" name="net.sf.bluecove:bluecove:2.1.0" level="project" />
     <orderEntry type="library" name="com.googlecode.efficient-java-matrix-library:ejml:0.25" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:8.0.13" level="project" />
   </component>
 </module>

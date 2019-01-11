@@ -14,26 +14,46 @@ import java.sql.SQLException;
 public abstract class Command {
 
 
+    private Long executorId;
     private String[] arguments;
     private String opcode;
 
 
     public Command(String[] arguments) {
+        this.executorId = executorId;
         this.arguments = arguments;
         this.opcode = arguments[0];
     }
 
-    public static Command getAsType(String name, String[] arguments) {
+    public static Command getAsType(String name, String[] arguments, Long executorId) {
+        Command c = getAsType(name, arguments);
+        c.executorId = executorId;
+        return c;
+    }
+
+    private static Command getAsType(String name, String[] arguments) {
         switch (name) {
+            case "changepost": return new ChangePost(arguments);
+            case "createaccount": return new CreateAccount(arguments);
+            case "deletepost": return new DeletePost(arguments);
+            case "likepost": return new LikePost(arguments);
+            case "mergeclass": return new MergeClass(arguments);
+            case "printschedule": return new PrintSchedule(arguments);
+            case "serfile" : return new SerFile(arguments);
+            case "viewpost": return new ViewPost(arguments);
             case "weather": return new Weather(arguments);
             default: return null;
         }
     }
 
+    protected Long getExecutorId() {
+        return executorId;
+    }
+
     protected String getArgumentAsString(int index) {
         index += 3;
         if (index < 0 || index >= arguments.length)
-            return null;
+            return "";
         return arguments[index];
     }
 
@@ -65,7 +85,7 @@ public abstract class Command {
     }
 
 
-    abstract String execute() throws WrongArgumentTypeException;
+    abstract String execute() throws WrongArgumentTypeException, SQLException;
 
     static String makeReturn(Object... values) {
         StringBuilder combined = new StringBuilder();

@@ -10,6 +10,7 @@ public class AnonymousServerSession extends ServerSession {
 
     @Override
     public boolean open() {
+        System.out.println("here");
         getWriter().println("anonymous");
         try {
             String oneTimeKey = getReader().readLine();
@@ -21,8 +22,16 @@ public class AnonymousServerSession extends ServerSession {
             setOpen(true);
             return true;
         } catch (IOException e) {
+            System.out.println("connection error!");
             setErrorMsg("error : connection error");
             return false;
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+
+        setOneTimeKey("");
+        closeSocket();
     }
 }

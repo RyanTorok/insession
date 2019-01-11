@@ -20,7 +20,7 @@ import java.util.*;
 /**
  * Created by 11ryt on 4/21/2017.
  */
-public abstract class User implements Classifiable, Serializable, Indexable {
+public class User implements Classifiable, Serializable, Indexable {
 
     static final long serialVersionUID = 42L;
 
@@ -28,7 +28,7 @@ public abstract class User implements Classifiable, Serializable, Indexable {
 
     private String mac;
     private String username;
-    private byte[] password;
+    private transient byte[] password;
     private String first;
     private String middle;
     private String last;
@@ -73,6 +73,26 @@ public abstract class User implements Classifiable, Serializable, Indexable {
         pictureVisibility = 0;
         sleepTime = 300; //in seconds
         uniqueId = new Identifier(username, Identifier.Type.People, IDAllocator.getLong());
+    }
+
+    //server constructor
+    public User(long id, String username, String first, String middle, String last, String email, Timestamp timestamp) {
+        this.username = username;
+        this.password = password;
+        this.first = first;
+        this.middle = middle;
+        this.last = last;
+        this.email = email;
+        this.timestamp = timestamp;
+        this.searchHistory = new HashSet<>();
+        this.watchHistory = new HashSet<>();
+        this.accentColor = new double[]{0, 0, 0};
+        this.updates = new ArrayList<>();
+        this.classesTeacher = new HashSet<>();
+        this.classesStudent = new HashSet<>();
+        pictureVisibility = 0;
+        sleepTime = 300; //in seconds
+        uniqueId = new Identifier(username, Identifier.Type.People, id);
     }
 
     protected User() {
@@ -131,7 +151,9 @@ public abstract class User implements Classifiable, Serializable, Indexable {
         return timestamp;
     }
 
-    public abstract String getID();
+    public String getID() {
+        return String.valueOf(getUniqueID());
+    }
 
     public void setAccentColor(Color c) {
         accentColor[0] = c.getRed();

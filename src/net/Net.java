@@ -4,10 +4,11 @@ import main.PasswordManager;
 import main.User;
 
 import java.io.*;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.stream.Collectors;
@@ -194,7 +195,7 @@ public class Net {
     }
 
     static String urlEncode(byte[] bytes) throws UnsupportedEncodingException {
-       return URLEncoder.encode(new String(Base64.getEncoder().encode(bytes)), "UTF-8");
+       return URLEncoder.encode(new String(Base64.getEncoder().encode(bytes)), StandardCharsets.UTF_8);
     }
 
     public static class UserMaybe {

@@ -29,7 +29,9 @@ public class Gradebook {
     public StudentGrades get(Integer markingPeriod, User activeUser) {
         if (!(activeUser instanceof Student))
             return null;
-        HashMap<Student, StudentGrades> periodMap = gradebook.get(markingPeriod);
+        HashMap<Student, StudentGrades> periodMap = null;
+        if (gradebook.size() > markingPeriod)
+        periodMap = gradebook.get(markingPeriod);
         if (periodMap != null)
             return periodMap.get(activeUser);
         return null;

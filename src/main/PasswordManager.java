@@ -1,9 +1,8 @@
 package main;
 
-import db.SQLMaster;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -36,6 +35,10 @@ public class PasswordManager {
         return diff == 0;
     }
 
+    public static byte[] encryptWithLocalSalt(String password, String username) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        return encrypt(password, (username).getBytes());
+    }
+
     public static byte[] encrypt(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String algorithm = "PBKDF2WithHmacSHA1";
         int derivedKeyLength = 160;
@@ -64,6 +67,11 @@ public class PasswordManager {
         } catch (GeneralSecurityException e) {
             return null;
         }
+    }
+
+    public static PasswordCombo newGenLocal(String password, String username) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        byte[] salt = username.getBytes(StandardCharsets.UTF_8);
+        return new PasswordCombo(encrypt(password, salt), salt);
     }
 
     public static class PasswordCombo {

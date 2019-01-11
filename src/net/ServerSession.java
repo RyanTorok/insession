@@ -1,5 +1,6 @@
 package net;
 
+import main.PasswordManager;
 import main.User;
 
 import java.io.BufferedReader;
@@ -7,8 +8,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
+import java.util.Base64;
 
 public class ServerSession extends Socket {
 
@@ -16,12 +22,13 @@ public class ServerSession extends Socket {
 
     private BufferedReader reader;
     private PrintWriter writer;
-    private String oneTimeKey;
+    private String oneTimeKey = "";
     private String errorMsg;
     private boolean open = false;
+    private long tempId = 0;
 
     public ServerSession() throws IOException {
-        super(Net.ROOT_URL, PORT);
+        super("localhost", PORT);
         try {
             reader = new BufferedReader(new InputStreamReader(this.getInputStream()));
             writer = new PrintWriter(this.getOutputStream(), true);
@@ -31,7 +38,18 @@ public class ServerSession extends Socket {
     }
 
     public boolean open() {
-        if (!command(this, "authenticate")) {
+        return open(User.active().getUsername(), new String(User.active().getPassword()));
+    }
+
+    public boolean open(String username, String password) {
+        try {
+            byte[] src = PasswordManager.encryptWithLocalSalt(password, username);
+            String encoded = Base64.getEncoder().encodeToString(src);
+            if (!command(this, "authenticate", username, encoded)) {
+                return false;
+            }
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            setErrorMsg("error : security exception occurred");
             return false;
         }
         String nonce = null;
@@ -42,50 +60,64 @@ public class ServerSession extends Socket {
                 return false;
             }
         } catch (IOException e) {
-            errorMsg = "Unable to access the server";
+            errorMsg = "error : unable to access the server";
             return false;
         }
         if (nonce.length() == 0) {
-            errorMsg = "Authentication failed";
+            errorMsg = "error : authentication failed";
             return false;
         }
         oneTimeKey = nonce;
+        try {
+            tempId = Long.parseLong(reader.readLine().trim());
+            System.out.println(tempId);
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+            tempId = 0;
+        }
         open = true;
         return true;
     }
 
-    public void close() throws IOException {
+    protected void closeSocket() throws IOException {
         super.close();
+    }
+
+    public void close() throws IOException {
         open = false;
-        command(this, "close");
+        command(this,"close");
         oneTimeKey = "";
+        closeSocket();
     }
 
     private synchronized boolean command(ServerSession serverSession, String name, String... arguments) {
-        if (!open && !name.equals("authenticate") && !name.equals("close"))
+        if (!open && !name.equals("authenticate"))
             return false;
         name = escape(name);
         for (int i = 0; i < arguments.length; i++) {
             arguments[i] = escape(arguments[i]);
         }
-        StringBuilder cmd = new StringBuilder(name + " " + oneTimeKey + " " + escape(User.active().getUsername()));
+        long id = serverSession instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
+        if (id == 0)
+            id = tempId;
+        StringBuilder cmd = new StringBuilder(name + " " + oneTimeKey + " " + id);
         for (String s : arguments) {
             cmd.append(" ").append(s);
         }
-        writer.println(cmd);
-        if (name.equals("authenticate"))
-            return true;
+        writer.println(escape(cmd.toString()));
         try {
+            if (name.equals("authenticate"))
+                return true;
             oneTimeKey = reader.readLine().trim();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
             try {
                 close();
-            } catch (IOException e1) {
-                return false;
+            } catch (IOException ignored) {
             }
+            return false;
         }
-        return true;
     }
 
     public boolean sendOnly(String name, String... arguments) {
@@ -96,14 +128,28 @@ public class ServerSession extends Socket {
         }
     }
 
-    public String callAndResponse(String name, String... arguments) {
+    public String[] callAndResponse(String name, String... arguments) {
+        return callAndResponseInner(name, arguments).split(" ");
+    }
+
+    private String callAndResponseInner(String name, String... arguments) {
         if(!command(this, name, arguments)) {
-            return "error : call exception occurred";
+            String s = "error : call exception occurred";
+            setErrorMsg(s);
+            return s;
         }
         try {
-            return reader.readLine();
+            String result = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8);
+            System.out.println("here888");
+            if (isError(result)) {
+                setErrorMsg(result);
+            }
+            System.out.println(result);
+            return result;
         } catch (IOException e) {
-            return "error : response exception occurred";
+            String s = "error : response exception occurred";
+            setErrorMsg(s);
+            return s;
         }
     }
 
@@ -135,8 +181,13 @@ public class ServerSession extends Socket {
         return writer;
     }
 
+    public static boolean isError(String[] results) {
+        return isError(results[0]);
+    }
+
     protected static boolean isError(String s) {
-        return s.substring(0, s.indexOf(" ")).equals("error");
+        int space = s.indexOf(" ");
+        return s.substring(0, space < 0 ? s.length() : space).equals("error");
     }
 
     protected final void setOpen(boolean open) {

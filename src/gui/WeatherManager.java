@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Arrays;
 
 import gui.Moon;
 import gui.WeatherState;
@@ -24,6 +25,7 @@ public class WeatherManager{
     private Double tempCelsius;
     private Double tempFahrenheit;
     private static final Double HEAVY_THRESHOLD = .00635;
+    private long lastUpdate = 0;
 
     public WeatherManager(int zipCode) {
         this.setZipCode(zipCode);
@@ -32,7 +34,12 @@ public class WeatherManager{
     public void update() {
         try (ServerSession session = new ServerSession()) {
             session.open();
-            session.callAndResponse("weather", Integer.toString(zipCode));
+            String[] result = session.callAndResponse("weather", Integer.toString(zipCode));
+            System.out.println("result: " + Arrays.toString(result));
+            setLastUpdate(Long.parseLong(result[1]));
+            setTempCelsius(Double.parseDouble(result[2]));
+            setCurrent(WeatherState.valueOf(result[3]));
+            setDescription(result[4]);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,6 +48,14 @@ public class WeatherManager{
     public void update(int zipCode){
         this.setZipCode(zipCode);
         update();
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
     }
 
     public WeatherState getCurrent(){

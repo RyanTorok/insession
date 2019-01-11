@@ -23,7 +23,7 @@ public class WeatherManager {
     private String description;
     private Double tempCelsius;
     private Double tempFahrenheit;
-    private Long lastUpdate;
+    private Long lastUpdate = 0L;
     private static final Double HEAVY_THRESHOLD = .00635;
 
     public WeatherManager(int zipCode) {

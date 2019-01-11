@@ -30,8 +30,6 @@ public class Login extends Task {
 
     public static Net.UserMaybe login(String username, String password, boolean needSerFile) {
         try (AnonymousServerSession getLocalSalt = new AnonymousServerSession()) {
-            getLocalSalt.open();
-            String localsalt = getLocalSalt.callAndResponse("localsalt", username);
             return null;
         } catch (IOException e) {
             return null;

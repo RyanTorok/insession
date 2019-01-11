@@ -2,10 +2,14 @@ package searchengine;
 
 import classes.ClassPd;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Identifier implements Comparable {
+public class Identifier implements Comparable, Serializable {
+
+    static final long serialVersionUID = 2049;
+
     private String name;
     private String description;
     private Type type;
