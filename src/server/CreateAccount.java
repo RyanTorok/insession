@@ -23,7 +23,6 @@ public class CreateAccount extends AnonymousCommand {
 
     @Override
     String execute() throws SQLException {
-        System.out.println("made it!");
         String username = getArgumentAsString(0),
                 password = getArgumentAsString(1),
                 first = getArgumentAsString(2),
@@ -32,14 +31,8 @@ public class CreateAccount extends AnonymousCommand {
                 activationKey = getArgumentAsString(5);
 
         password = URLDecoder.decode(password, StandardCharsets.UTF_8);
-
-        System.out.println("server encoded:" + password);
-
         //decode base64
         password = new String(Base64.getDecoder().decode(password), StandardCharsets.UTF_8);
-
-        System.out.println("server decoded:" + password);
-
         PasswordManager.PasswordCombo combo = PasswordManager.newGen(password);
         if (combo == null)
             return "error : security exception thrown";

@@ -1,4 +1,4 @@
-package gui;
+package server;
 
 import terminal.Address;
 

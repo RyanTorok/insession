@@ -56,7 +56,6 @@ public class ServerCall {
             String key = ServerMain.keyGen();
             HashSet<SessionToken> tokens = oneTimeKeys.computeIfAbsent(0L, k -> new HashSet<>());
             tokens.add(new SessionToken(key, true));
-            System.out.println(key.length());
             return key;
         }
 
@@ -116,7 +115,6 @@ public class ServerCall {
         if (keys == null)
             return null;
         boolean exists = keys.removeIf(sessionToken -> oneTimeKey.equals(sessionToken.oneTimeKey));
-        System.out.println(exists);
         if (exists) {
             String newKey = ServerMain.keyGen();
             SessionToken token = new SessionToken(newKey, userID == 0);

@@ -1,8 +1,13 @@
 package main;
 
 import gui.Main;
+import net.ServerSession;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.*;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,11 +91,45 @@ public class Root {
     public static void saveAll() {
         if (User.active() != null && User.active().getUsername() != null) {
             User.active().write();
-            net.Net.syncSerFileUp();
+            syncSerFileUp();
         }
         DefaultUser def = new DefaultUser();
         def.read();
         def.write();
+    }
+
+    private static void syncSerFileUp() {
+        //don't send the server our password or location
+        byte[] temp = User.active().getPassword();
+        int zipcode = User.active().getZipcode();
+        if (temp == null)
+            return;
+        User.active().setPassword(null);
+        User.active().setZipcode(0);
+
+        //encode the object file
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] bytes = null;
+        try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+            oos.writeObject(User.active());
+            oos.flush();
+            bytes = bos.toByteArray();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String encoding = Base64.getEncoder().encodeToString(bytes);
+
+        try {
+            ServerSession session = new ServerSession();
+            session.open(User.active().getUsername(), new String(temp));
+            session.sendOnly("setserfile", encoding);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        User.active().setPassword(temp);
+        User.active().setZipcode(zipcode);
     }
 
     public static void setPortal(Main main) {

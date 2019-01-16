@@ -10,6 +10,7 @@ import gui.Moon;
 import gui.WeatherState;
 import main.UnknownZipCodeException;
 import main.User;
+import net.AnonymousServerSession;
 import net.ServerSession;
 import org.json.*;
 
@@ -27,19 +28,23 @@ public class WeatherManager{
     private static final Double HEAVY_THRESHOLD = .00635;
     private long lastUpdate = 0;
 
+
     public WeatherManager(int zipCode) {
         this.setZipCode(zipCode);
     }
 
     public void update() {
-        try (ServerSession session = new ServerSession()) {
-            session.open();
+        try (AnonymousServerSession session = new AnonymousServerSession()) {
+            boolean open = session.open();
             String[] result = session.callAndResponse("weather", Integer.toString(zipCode));
-            System.out.println("result: " + Arrays.toString(result));
+            if (ServerSession.isError(result)) {
+                return;
+            }
             setLastUpdate(Long.parseLong(result[1]));
             setTempCelsius(Double.parseDouble(result[2]));
+            setTempFahrenheit(getTempCelsius() * 1.8 + 32);
             setCurrent(WeatherState.valueOf(result[3]));
-            setDescription(result[4]);
+            setDescription(result[4].replaceAll("_", " "));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,10 +103,14 @@ public class WeatherManager{
         this.tempFahrenheit = tempFahrenheit;
     }
 
-    static final double CYCLE_LENGTH_MILLIS = 2551442801.5584;
-    static final long zero_point = 1530161580000L; // 6/28/18 at 4:53 AM UTC - Full Moon
+    public boolean isNight() {
+        return false;
+    }
 
-    public Moon getMoonState() {
+    private static final double CYCLE_LENGTH_MILLIS = 2551442801.5584;
+    private static final long zero_point = 1530161580000L; // 6/28/18 at 4:53 AM UTC - Full Moon
+
+    Moon getMoonState() {
         double segment_length = CYCLE_LENGTH_MILLIS / 8.0;
         long diff = System.currentTimeMillis() - zero_point;
         double offset = (diff) % CYCLE_LENGTH_MILLIS;

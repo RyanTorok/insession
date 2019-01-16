@@ -15,6 +15,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.*;
+import net.ServerSession;
+
+import java.io.IOException;
 
 
 public class PostArea extends VBox {
@@ -142,7 +145,36 @@ public class PostArea extends VBox {
 
 
     private void report() {
+        try (ServerSession session = new ServerSession()) {
+            session.open();
+            session.sendOnly("reportpost", post.getIdentifier().getId().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void unreport() {
+        try (ServerSession session = new ServerSession()) {
+            session.open();
+            session.sendOnly("unreportpost", post.getIdentifier().getId().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Post previousVersion() {
+        try (ServerSession session = new ServerSession()) {
+            session.open();
+            String[] result = session.callAndResponse("previouspost", post.getIdentifier().getId().toString());
+            Post prev = new Post(User.fromId(post.getPosterId()), Post.Type.valueOf(result[0]), result[1], result[2], Long.parseLong(result[4]), ClassPd.fromId(post.getClassId()));
+            prev.getFormattedText().setStyleFromRegex(result[3]);
+            prev.setLikes(Long.parseLong(result[5]));
+            prev.setViews(Long.parseLong(result[6]));
+            return prev;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public TextFlow getText() {

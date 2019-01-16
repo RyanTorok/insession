@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public abstract class Command {
 
@@ -33,13 +34,15 @@ public abstract class Command {
 
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
-            case "changepost": return new ChangePost(arguments);
             case "createaccount": return new CreateAccount(arguments);
             case "deletepost": return new DeletePost(arguments);
             case "likepost": return new LikePost(arguments);
             case "mergeclass": return new MergeClass(arguments);
+            case "newpost": return new NewPost(arguments);
+            case "previouspost": return new PreviousPost(arguments);
             case "printschedule": return new PrintSchedule(arguments);
-            case "serfile" : return new SerFile(arguments);
+            case "serfile": return new SerFile(arguments);
+            case "setserfile": return new SetSerFile(arguments);
             case "viewpost": return new ViewPost(arguments);
             case "weather": return new Weather(arguments);
             default: return null;
@@ -84,6 +87,32 @@ public abstract class Command {
         }
     }
 
+    protected Boolean getArgumentAsBoolean(int index) throws WrongArgumentTypeException {
+        String arg = getArgumentAsString(index);
+        try {
+            return Boolean.getBoolean(arg.toLowerCase());
+        } catch (Exception e) {
+            throw new WrongArgumentTypeException("expected boolean at index " + index + ", got " + arg);
+        }
+    }
+
+    protected UUID getArgumentAsUUID(int index) throws WrongArgumentTypeException {
+        String arg = getArgumentAsString(index);
+        try {
+            return UUID.fromString(arg);
+        } catch (IllegalArgumentException e) {
+            throw new WrongArgumentTypeException("expected uuid at index " + index + ", got " + arg);
+        }
+    }
+
+    protected UUID optionalArgumentAsUUID(int index) {
+        //TODO don't use exceptions as control flow
+        try {
+            return getArgumentAsUUID(index);
+        } catch (WrongArgumentTypeException e) {
+            return null;
+        }
+    }
 
     abstract String execute() throws WrongArgumentTypeException, SQLException;
 

@@ -57,7 +57,7 @@ class PostWindow extends VBox {
         gap.setPrefWidth(Size.width(10));
         titleBar.getChildren().add(gap);
 
-        Shape userImage = new ShapeImage(new Circle(Size.lessWidthHeight(20)), post.isPosterNameVisible() || post.getPosterId() == User.active().getUniqueID() ? Images.getUserPicture(post.getPosterId()) : Images.defaultUserImage()).apply();
+        Shape userImage = new ShapeImage(new Circle(Size.lessWidthHeight(20)), post.getPosterNameVisible() == 0 || post.getPosterId() == User.active().getUniqueID() ? Images.getUserPicture(post.getPosterId()) : Images.defaultUserImage()).apply();
         userImage.setCursor(Cursor.CLOSED_HAND);
         userImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Root.getPortal().launchTaskView(new UserProfile(User.fromId(post.getPosterId()))));
         titleBar.getChildren().add(userImage);

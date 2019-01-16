@@ -2,7 +2,7 @@ package server;
 
 import java.util.HashMap;
 
-public class Weather extends Command {
+public class Weather extends AnonymousCommand {
 
     private static HashMap<Integer, WeatherManager> zipcodeMap = new HashMap<>();
 
@@ -13,8 +13,12 @@ public class Weather extends Command {
     @Override
     String execute() throws WrongArgumentTypeException {
         Integer zipcode = getArgumentAsInteger(0);
+        if (zipcode == 0)
+            return "error : invalid zip code";
         WeatherManager manager = zipcodeMap.computeIfAbsent(zipcode, m -> new WeatherManager(zipcode));
         manager.updateIfExpired();
-        return makeReturn(zipcode, manager.getLastUpdate(), manager.getTempCelsius(), manager.getCurrent(), manager.getDescription());
+        if (manager.getDescription() == null)
+            return "error : weather server down or connection error";
+        return makeReturn(zipcode, manager.getLastUpdate(), manager.getTempCelsius(), manager.getCurrent(), manager.getDescription().replaceAll(" ", "_"));
     }
 }

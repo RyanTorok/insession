@@ -1,6 +1,6 @@
-package server;
+package main;
 
-import main.Root;
+import server.ServerMain;
 
 public class RunAll {
     public static void main(String[] args) {

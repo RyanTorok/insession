@@ -11,16 +11,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import main.Events;
-import main.Layouts;
-import main.Root;
-import main.Size;
+import main.*;
 import net.PostEngine;
+import net.ServerSession;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PostsBody extends VBox {
@@ -169,11 +165,23 @@ public class PostsBody extends VBox {
             newPost.setType(Post.Type.Question);
             newPost.getIdentifier().setBelongsTo(wrapper.getClassPd());
             newPost.getIdentifier().setName(newPost.getTitle());
+            newPost.setParentId(new UUID(0, 0));
             wrapper.getPostsList().getChildren().add(wrapper.new PostSBItem(newPost));
             Text title = new Text(newPost.getTitle());
             title.setFont(Font.font(Size.fontSize(24)));
             Root.getPortal().getSearchBox().getEngine().getIndex().index(Collections.singletonList(newPost));
             getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
+            try (ServerSession session = new ServerSession()) {
+                session.open();
+                //TODO add support for class item ids
+                String[] result = session.callAndResponse("newpost", "0", newPost.getTitle(),
+                        newPost.getFormattedText().getUnformattedText(), newPost.getFormattedText().getStyleRegex(),
+                        Long.toString(newPost.getVisibleTo()), Long.toString(newPost.getPosterNameVisible()),
+                        newPost.getParentId().toString(), newPost.getType().toString(), Boolean.toString(newPost.isPinned()));
+                newPost.getIdentifier().setId(UUID.fromString(result[0]));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }, ()->{
             if (titleField.getText().length() == 0) {
                 int width = (int) Size.lessWidthHeight(2);

@@ -70,7 +70,6 @@ public class ServerSession extends Socket {
         oneTimeKey = nonce;
         try {
             tempId = Long.parseLong(reader.readLine().trim());
-            System.out.println(tempId);
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
             tempId = 0;
@@ -140,7 +139,6 @@ public class ServerSession extends Socket {
         }
         try {
             String result = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8);
-            System.out.println("here888");
             if (isError(result)) {
                 setErrorMsg(result);
             }

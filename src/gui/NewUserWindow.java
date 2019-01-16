@@ -137,6 +137,7 @@ public class NewUserWindow extends Pane {
                 }
                 int type = 0;
                 PasswordManager.PasswordCombo encryptedPassword = null;
+                long uid = -1;
                 try {
                     AnonymousServerSession session = new AnonymousServerSession();
                     session.open();
@@ -149,7 +150,7 @@ public class NewUserWindow extends Pane {
                         System.out.println(Arrays.toString(result));
                        type = -2;
                     } else {
-                        long uid = Long.parseLong(result[0]);
+                        uid = Long.parseLong(result[0]);
                         if (uid == 0)
                             type = -3;
 
@@ -166,12 +167,15 @@ public class NewUserWindow extends Pane {
                     return;
                     case -1: invalidMessage.setText("Your username is already in use. Please choose another username."); //deprecated: duplicate usernames are allowed.
                     return;
+                    /*
                     case 0: newUser = new Student(Root.getMACAddress(), username, password.getBytes(StandardCharsets.UTF_8), first, null, last, email, new Timestamp(System.currentTimeMillis()), null, -1);
                     break;
                     case 1: newUser = new Teacher(Root.getMACAddress(), username, password.getBytes(StandardCharsets.UTF_8), first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
                     break;
                     case 2: newUser = new Administrator(Root.getMACAddress(), username, password.getBytes(StandardCharsets.UTF_8), first, null, last, email, null, new Timestamp(System.currentTimeMillis()));
                     break;
+                    */
+                    case 0: newUser = new User(uid, username, first, null, last, email, new Timestamp(System.currentTimeMillis()));
                 }
                 user = newUser;
                 newUser.setPassword(password.getBytes(StandardCharsets.UTF_8));

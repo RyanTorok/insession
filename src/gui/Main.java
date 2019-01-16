@@ -81,7 +81,7 @@ public class Main extends Application {
     private SideBar sideBar;
     private Text temperature;
     private Text weatherDesc;
-    private static final DecimalFormat tempFormat = new DecimalFormat("#00.0");
+    private static final DecimalFormat tempFormat = new DecimalFormat("##0.0");
     private WeatherManager manager;
     private Integer state = 0;
     private Stage primaryStage;
@@ -551,10 +551,14 @@ public class Main extends Application {
         if (getManager().getTempCelsius() == null) {
             getTemperature().setText(Character.toString((char) 0x2012) + Character.toString((char) 0x2012) + (char) 0x00B0 + (User.active().usesFahrenheit() ? "F" : "C"));
         } else {
-            if (User.active().usesFahrenheit()) {
-                getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
-            } else {
-                getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
+            try {
+                if (User.active().usesFahrenheit()) {
+                    getTemperature().setText(getTempFormat().format(getManager().getTempFahrenheit()) + (char) 0x00B0 + "F");
+                } else {
+                    getTemperature().setText(getTempFormat().format(getManager().getTempCelsius()) + (char) 0x00B0 + "C");
+                }
+            } catch (Exception e) {
+                getTemperature().setText(Character.toString((char) 0x2012) + Character.toString((char) 0x2012) + (char) 0x00B0 + (User.active().usesFahrenheit() ? "F" : "C"));
             }
         }
     }

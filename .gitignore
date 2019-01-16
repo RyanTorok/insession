@@ -4,3 +4,5 @@ usr/rtorok.ser
 .idea
 manifest.mf
 PaintbrushEducation.iml
+lib/ejml/*
+lib/ejml

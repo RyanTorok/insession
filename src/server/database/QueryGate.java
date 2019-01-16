@@ -5,25 +5,27 @@ import java.sql.*;
 import java.util.UUID;
 
 public class QueryGate implements AutoCloseable {
-    private Connection conn;
+    private static Connection conn;
     private ResultSet lastResults;
     private boolean open;
 
-    public QueryGate() {
+    static {
         connect();
     }
 
+    public QueryGate() {
+        open = true;
+    }
+
     public static int numColumns(String table_name) {
-        QueryGate gate = new QueryGate();
-        gate.connect();
         try {
-            return gate.query("SELECT COUNT(*) AS  FROM information_schema.columns WHERE table_name = ?;", table_name).getInt("n");
+            return new QueryGate().query("SELECT COUNT(*) AS  FROM information_schema.columns WHERE table_name = ?;", table_name).getInt("n");
         } catch (SQLException e) {
             return -1;
         }
     }
 
-    private void connect() {
+    private static void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/paintbrush_server";
@@ -33,29 +35,16 @@ public class QueryGate implements AutoCloseable {
             useDatabase();
         }
         catch (Exception e) {
-            if (e instanceof ClassNotFoundException){
-                e.printStackTrace();
-                return;
-            }
-            //database does not exist.
-            String url = "jdbc:mysql://localhost:3306/paintbrush_server";
-            String username = "paintbrush";
-            String password = "paintbrush";
-            try {
-                conn = DriverManager.getConnection(url, username, password);
-                useDatabase();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            e.printStackTrace();
         }
     }
 
-    private boolean useDatabase() throws SQLException {
+    private static void useDatabase() throws SQLException {
         PreparedStatement statement = conn.prepareStatement("USE paintbrush_server;");
-        return statement.execute();
+        statement.execute();
     }
 
-    private void disconnect() {
+    private static void disconnect() {
         try {
             conn.close();
             conn = null;
@@ -64,17 +53,28 @@ public class QueryGate implements AutoCloseable {
         }
     }
 
-    @Override
-    public void close() {
-        disconnect();
-    }
-
     public ResultSet query(String sql, String types, boolean update, Object... arguments) throws SQLException {
         PreparedStatement statement = conn.prepareStatement(sql);
         if (types.length() != arguments.length) {
             throw new SQLException("unmatching length of arguments and types");
         }
         for (int i = 0; i < arguments.length; i++) {
+            if (arguments[i] == null) {
+                int type;
+                switch (types.charAt(i)) {
+                    case 'i': type = Types.INTEGER; break;
+                    case 'u': type = Types.BINARY; break;
+                    case 'h': type = Types.SMALLINT; break;
+                    case 'l': type = Types.BIGINT; break;
+                    case 'f': type = Types.FLOAT; break;
+                    case 'd': type = Types.DOUBLE; break;
+                    case 't': type = Types.TIMESTAMP; break;
+                    case 's':
+                    default: type = Types.VARCHAR;
+                }
+                statement.setNull(i + 1, type);
+                continue;
+            }
             switch (types.charAt(i)) {
                 case 'i': statement.setInt(i + 1, Integer.parseInt(arguments[i].toString())); break;
                 case 'u': {
@@ -117,5 +117,10 @@ public class QueryGate implements AutoCloseable {
 
     public ResultSet query(String sql, String types, Object... arguments) throws SQLException {
         return query(sql, types, false, arguments);
+    }
+
+    @Override
+    public void close() throws Exception {
+        open = false;
     }
 }

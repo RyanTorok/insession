@@ -27,7 +27,6 @@ public class ServerMain {
             Socket client = null;
             try {
                 client = incoming.accept();
-                System.out.println("Hello, client.");
             } catch (IOException e) {
                 System.out.println("Error encountered when receiving client socket:");
                 e.printStackTrace();

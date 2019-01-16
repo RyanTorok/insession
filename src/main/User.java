@@ -8,9 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import module.Module;
 import net.Net;
+import net.ServerSession;
 import org.json.JSONObject;
 import searchengine.*;
 import server.IDAllocator;
+import server.ZipMap;
 import terminal.Address;
 
 import java.io.*;
@@ -28,7 +30,7 @@ public class User implements Classifiable, Serializable, Indexable {
 
     private String mac;
     private String username;
-    private transient byte[] password;
+    private byte[] password;
     private String first;
     private String middle;
     private String last;
@@ -45,8 +47,7 @@ public class User implements Classifiable, Serializable, Indexable {
     private int pictureVisibility;
     private boolean clock24Hour = false;
     private int zipcode;
-    private double[] latlon = new double[]{0,0};
-    private boolean tempUnits; //false for Metric, true for English
+    private boolean tempUnits; //true for Metric, false for English
     private HashSet<ClassPd> classesStudent;
     private HashSet<ClassPd> classesTeacher;
     private Timestamp serFileTimestamp = null;
@@ -78,7 +79,6 @@ public class User implements Classifiable, Serializable, Indexable {
     //server constructor
     public User(long id, String username, String first, String middle, String last, String email, Timestamp timestamp) {
         this.username = username;
-        this.password = password;
         this.first = first;
         this.middle = middle;
         this.last = last;
@@ -414,28 +414,8 @@ public class User implements Classifiable, Serializable, Indexable {
         this.clock24Hour = clock24Hour;
     }
 
-    public double[] getLatlon() {
-        return latlon;
-    }
-
-    public void setLatlon(double[] latlon) {
-        this.latlon = latlon;
-    }
-
-    public void setLocation(int zip) throws UnknownZipCodeException {
-        this.zipcode = zip;
-        ZipMap.LatLon latLon = new ZipMap().get(zip);
-        latlon = new double[2];
-        try {
-            this.latlon[0] = latLon.getLat();
-            this.latlon[1] = latLon.getLon();
-        } catch (NullPointerException e) {
-            throw new UnknownZipCodeException("Zip Code not found: " + zip);
-        }
-    }
-
     public boolean usesFahrenheit() {
-        return tempUnits;
+        return !tempUnits;
     }
 
     public void setTempUnits(boolean tempUnits) {
@@ -484,7 +464,6 @@ public class User implements Classifiable, Serializable, Indexable {
         this.schoolCode = iAmFirst ? external.schoolCode : schoolCode;
         this.zipcode = iAmFirst ? external.zipcode : zipcode;
         this.clock24Hour = iAmFirst ? external.clock24Hour : clock24Hour;
-        this.latlon = iAmFirst ? external.getLatlon() : latlon;
         this.tempUnits = iAmFirst ? external.tempUnits : tempUnits;
         this.classesStudent = iAmFirst ? external.getClassesStudent() : getClassesStudent();
         this.classesTeacher = iAmFirst ? external.getClassesTeacher() : getClassesTeacher();
@@ -566,6 +545,15 @@ public class User implements Classifiable, Serializable, Indexable {
     @Override
     public JSONObject toJSONObject() {
         return null;
+    }
+
+    public void setLocation(int zipcode) {
+        Root.getPortal().getManager().setZipCode(zipcode);
+        setZipcode(zipcode);
+    }
+
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
     }
 }
 

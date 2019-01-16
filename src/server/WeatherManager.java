@@ -18,16 +18,17 @@ public class WeatherManager {
 
     private static final long TIME_THRESHOLD = 5 * 60 * 1000;
 
-    private int zipCode;
+    private int zipcode;
     private WeatherState current;
     private String description;
     private Double tempCelsius;
     private Double tempFahrenheit;
     private Long lastUpdate = 0L;
     private static final Double HEAVY_THRESHOLD = .00635;
+    private double[] latlon = new double[]{0,0};
 
     public WeatherManager(int zipCode) {
-        this.setZipCode(zipCode);
+        this.setZipcode(zipCode);
     }
 
     public void update() {
@@ -36,14 +37,12 @@ public class WeatherManager {
             boolean success = false;
             int stationIndex = 0;
             while (!success) {
-                double[] latlon = User.active().getLatlon();
                 if (latlon == null || latlon[0] == 0 && latlon[1] == 0) {
                     try {
-                        User.active().setLocation(getZipCode());
+                        setLocation(getZipcode());
                     } catch (UnknownZipCodeException e) {
-                        User.active().setLocation(77379);
+                        setLocation(77379);
                     }
-                    latlon = User.active().getLatlon();
                 }
 
                 URL api = new URL("https://api.weather.gov/");
@@ -63,6 +62,7 @@ public class WeatherManager {
 
                 //get station current observation
                 URL current_station_url = new URL(closest.getString("id") + "/observations/current/");
+                System.out.println(current_station_url.toString());
                 BufferedReader observationIn = new BufferedReader(new InputStreamReader(current_station_url.openStream()));
                 String observation = "";
                 while ((line = observationIn.readLine()) != null) {
@@ -85,7 +85,6 @@ public class WeatherManager {
             lastUpdate = System.currentTimeMillis();
         } catch (Exception e) {
             e.printStackTrace();
-            return;
         }
     }
 
@@ -158,7 +157,7 @@ public class WeatherManager {
     }
 
     public void update(int zipCode) {
-        this.setZipCode(zipCode);
+        this.setZipcode(zipCode);
         update();
     }
 
@@ -176,12 +175,12 @@ public class WeatherManager {
         return current;
     }
 
-    public int getZipCode() {
-        return zipCode;
+    public int getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
     }
 
     public void setCurrent(WeatherState current) {
@@ -214,5 +213,17 @@ public class WeatherManager {
 
     public Long getLastUpdate() {
         return lastUpdate;
+    }
+
+    public void setLocation(int zip) throws UnknownZipCodeException {
+        this.zipcode = zip;
+        ZipMap.LatLon latLon = new ZipMap().get(zip);
+        latlon = new double[2];
+        try {
+            this.latlon[0] = latLon.getLat();
+            this.latlon[1] = latLon.getLon();
+        } catch (NullPointerException e) {
+            throw new UnknownZipCodeException("Zip Code not found: " + zip);
+        }
     }
 }

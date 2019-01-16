@@ -6,6 +6,7 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 import main.Root;
 import main.User;
+import net.ServerSession;
 import org.json.JSONObject;
 import searchengine.Identifier;
 import searchengine.Index;
@@ -13,6 +14,7 @@ import searchengine.Indexable;
 import searchengine.RankedString;
 import server.IDAllocator;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
@@ -36,9 +38,9 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private long created;
     private long modified;
     private Identifier identifier;
-    private boolean posterNameVisible;
+    private long posterNameVisible;
     private long visibleTo = -1; //-1: private to instructor, 0: entire class, >= 1: group with this id only
-    private long parentId;
+    private UUID parentId;
     private boolean currentUserLikedThis;
     private boolean currentUserViewedThis;
     private HashSet<PostStatus> statusLabels;
@@ -48,7 +50,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private Post instructorAnswer;
     private HashMap<Long, Pair<String, CompressedRichText>> history;
 
-    public Post(User postedBy, Type type, String title, String source, boolean posterNameVisible, ClassPd classPd) {
+    public Post(User postedBy, Type type, String title, String source, long posterNameVisible, ClassPd classPd) {
         this.classPd = classPd;
         classId = classPd.getUniqueId();
         this.setType(type);
@@ -61,8 +63,8 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         setLikes(0);
         setViews(0);
         setLastIndexed(1);
-        setIdentifier(new Identifier(title, Identifier.Type.Post, IDAllocator.get()));
-        identifier.setAuthorName(posterNameVisible ? posterFirst + " " + posterLast : "Anonymous");
+        setIdentifier(new Identifier(title, Identifier.Type.Post, new UUID(0, 0)));
+        identifier.setAuthorName(posterNameVisible == 0 ? posterFirst + " " + posterLast : "Anonymous");
         statusLabels = new HashSet<>();
         studentAnswers = new ArrayList<>();
         comments = new ArrayList<>();
@@ -86,7 +88,8 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         object.append("likes", likes);
         object.append("views", views);
         object.append("title", title);
-        object.append("text", formattedText.toJSONObject());
+        object.append("unformattedText", formattedText.getUnformattedText());
+        object.append("styles", formattedText.getStyleRegex());
         object.append("created", created);
         object.append("modified", modified);
         object.append("posterNameVisible", posterNameVisible);
@@ -99,7 +102,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         return object;
     }
 
-    public Post(UUID postId, ClassPd classPd, UUID classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, boolean posterNameVisible, long visibleTo, long parentId) {
+    public Post(UUID postId, ClassPd classPd, UUID classItemId, long posterId, String posterFirst, String posterLast, String posterUsername, Type type, long likes, boolean currentUserLikedThis, long views, boolean currentUserViewedThis, String title, String source, long lastIndexed, long created, long modified, long posterNameVisible, long visibleTo, UUID parentId) {
         this.classPd = classPd;
         this.classId = classPd.getUniqueId();
         this.classItemId = classItemId;
@@ -127,8 +130,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     }
 
     public static Post newPost(ClassPd classPd) {
-        Post post = new Post(User.active(), Type.Question, "", "", true, classPd);
-        return post;
+        return new Post(User.active(), Type.Question, "", "", 0, classPd);
     }
 
     /*public static Post fromEncoding(String encoding) {
@@ -180,6 +182,12 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     public void launch() {
         ClassView active = Root.getPortal().launchClass(classPd, (classView) -> {
             ((PostsBody) classView.getBodyPanes()[0]).fire(this);
+            try (ServerSession session = new ServerSession()) {
+                session.open();
+                session.sendOnly("viewpost", getIdentifier().getId().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -229,11 +237,11 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         this.identifier = identifier;
     }
 
-    public boolean isPosterNameVisible() {
+    public long isPosterNameVisible() {
         return posterNameVisible;
     }
 
-    public void setPosterNameVisible(boolean posterNameVisible) {
+    public void setPosterNameVisible(long posterNameVisible) {
         this.posterNameVisible = posterNameVisible;
     }
 
@@ -297,11 +305,11 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         this.visibleTo = visibleTo;
     }
 
-    public long getParentId() {
+    public UUID getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(UUID parentId) {
         this.parentId = parentId;
     }
 
@@ -375,6 +383,12 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         setLikes(getLikes() + 1);
         if (ClassPd.fromId(classId) != null && (ClassPd.fromId(classId).getTeacher() != null && ClassPd.fromId(classId).getTeacher().equals(User.active())))
             getStatusLabels().add(PostStatus.ENDORSED);
+        try {
+            ServerSession session = new ServerSession();
+            session.sendOnly("likepost", identifier.getId().toString());
+        } catch (IOException ignored) {
+        }
+
     }
 
     public void unlike() {
@@ -412,16 +426,34 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         Index index = Root.getPortal().getSearchBox().getEngine().getIndex();
         //TODO remove this line if we want history text to be searchable
         index.remove(this);
+        setTitle(newTitle);
         statusLabels.add(PostStatus.UPDATED);
         long timeMillis = System.currentTimeMillis();
         history.put(timeMillis, new Pair<>(newTitle, newCRT));
         setFormattedText(newCRT);
         identifier.setTime2(timeMillis);
         index.index(this);
+        serverSync();
     }
+
+    private void serverSync() {
+        //update on server
+        try (ServerSession session = new ServerSession()) {
+            session.open();
+            String[] result = session.callAndResponse("newpost", classItemId.toString(), title, formattedText.getUnformattedText(), formattedText.getStyleRegex(), Long.toString(visibleTo), Long.toString(posterNameVisible), parentId.toString(), type.name().toLowerCase(), Boolean.toString(pinned), this.identifier.getId().toString());
+            identifier.setId(UUID.fromString(result[0]));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void setFormattedText(CompressedRichText formattedText) {
         this.formattedText = formattedText;
+    }
+
+    public long getPosterNameVisible() {
+        return posterNameVisible;
     }
 }
 

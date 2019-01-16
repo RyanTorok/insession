@@ -22,7 +22,6 @@ public class SerFile extends Command {
         String serfile = results.getString("serfile");
         //remove + signs for pass over URL
         serfile = serfile.replaceAll("\\+", "#");
-        System.out.println(serfile);
         if (serfile == null)
             return "error : no file exists";
         return serfile;

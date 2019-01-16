@@ -162,12 +162,8 @@ public class AcctSettings extends Stage {
         zcSave.setOnAction(event -> {
             zcInvalidMsg.setText("");
             if (zcField.getText().length() == 5) {
-                try {
-                    User.active().setLocation(Integer.parseInt(zcField.getText()));
-                    Root.getPortal().updateWeather();
-                } catch (UnknownZipCodeException e) {
-                   zcInvalidMsg.setText("Invalid Zip Code");
-                }
+                User.active().setLocation(Integer.parseInt(zcField.getText()));
+                Root.getPortal().updateWeather();
             } else {
                 zcInvalidMsg.setText("Invalid Zip Code");
             }
@@ -185,14 +181,14 @@ public class AcctSettings extends Stage {
         fahrenheit.setToggleGroup(tuGroup);
         celsius.setToggleGroup(tuGroup);
         tuGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            User.active().setTempUnits(newValue == fahrenheit);
+            User.active().setTempUnits(newValue == celsius);
             Root.getPortal().updateWeatherDisplay();
         });
 
         tuGroup.selectToggle(fahrenheit);
         if (User.active().usesFahrenheit())
-            fahrenheit.setSelected(true);
-        else celsius.setSelected(true);
+            celsius.setSelected(true);
+        else fahrenheit.setSelected(true);
         Text courtesy = new Text("Weather provided by NOAA");
         courtesy.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 10));
         VBox temperatureUnits = new VBox(tuPrompt, fahrenheit, celsius, courtesy);
