@@ -10,10 +10,11 @@ public class Index implements Serializable {
 
     static final long serialVersionUID = 1000L;
     private IndexableCache objects;
-    private HashMap<String, HashMap<Identifier, Integer>> map;
+    private HashMap<String, HashMap<Identifier, Integer>> directTextMap;
+
 
     public Index() {
-        map = new HashMap<>();
+        directTextMap = new HashMap<>();
         objects = new IndexableCache();
     }
 
@@ -37,7 +38,7 @@ public class Index implements Serializable {
     }
 
     public void associate(String word, Identifier id, int relevance) {
-        HashMap<Identifier, Integer> wordSet = map.computeIfAbsent(word.toLowerCase(), k -> new HashMap<>());
+        HashMap<Identifier, Integer> wordSet = directTextMap.computeIfAbsent(word.toLowerCase(), k -> new HashMap<>());
         Integer existing = wordSet.get(id);
         if (existing == null) existing = 0;
         wordSet.put(id, existing + relevance);
@@ -45,7 +46,7 @@ public class Index implements Serializable {
 
     // relevance == 0 means complete dissociation, > 0 means subtract that value from existing relevance
     public void dissociate(String word, Identifier id, int relevance) {
-        HashMap<Identifier, Integer> wordSet = map.get(word.toLowerCase());
+        HashMap<Identifier, Integer> wordSet = directTextMap.get(word.toLowerCase());
         if (wordSet == null)
             return;
         Integer existing = wordSet.get(id);
@@ -63,7 +64,7 @@ public class Index implements Serializable {
     }
 
     HashSet<ItemNode> getItems(String key) {
-        HashMap<Identifier, Integer> wordSet = map.get(key);
+        HashMap<Identifier, Integer> wordSet = directTextMap.get(key);
         if (wordSet == null)
             return new HashSet<>();
         HashSet<ItemNode> nodes = new HashSet<>();
@@ -72,7 +73,7 @@ public class Index implements Serializable {
     }
 
     public int find(String key, Identifier identifier) {
-        HashMap<Identifier, Integer> wordSet = map.get(key);
+        HashMap<Identifier, Integer> wordSet = directTextMap.get(key);
         if (wordSet == null)
             return 0;
         Integer existing = wordSet.get(identifier);

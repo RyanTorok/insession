@@ -7,11 +7,42 @@ import java.util.ArrayList;
  */
 public class Test extends HousedAssignment {
 
+    private QuestionGroup allQuestions;
+    private DisplayFormat displayFormat;
+    private boolean availableMobile;
+
     public Test(String name, ArrayList<TestElement> elements) {
         super(name);
-        overall = new QuestionGroup(elements);
+        allQuestions = new QuestionGroup(elements);
+        displayFormat = DisplayFormat.LIST_ALL;
+        availableMobile = true;
     }
-    private QuestionGroup overall;
 
+    public boolean isAvailableMobile() {
+        return availableMobile;
+    }
 
+    public void setAvailableMobile(boolean availableMobile) {
+        this.availableMobile = availableMobile;
+    }
+
+    public DisplayFormat getDisplayFormat() {
+        return displayFormat;
+    }
+
+    public void setDisplayFormat(DisplayFormat displayFormat) {
+        this.displayFormat = displayFormat;
+    }
+
+    public QuestionGroup getQuestions() {
+        return allQuestions;
+    }
+
+    enum DisplayFormat {
+        LIST_ALL, LIST_GROUP, INDIVIDUAL
+    }
+
+    public void addQuestion() {
+        allQuestions
+    }
 }

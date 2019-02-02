@@ -1,28 +1,29 @@
 package server;
 
 import main.PasswordManager;
-import net.Login;
-import net.Net;
 import server.database.QueryGate;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class ServerCall {
 
     private static final HashMap<Long, HashSet<SessionToken>> oneTimeKeys = new HashMap<>();
 
     String[] arguments;
+    private boolean requestedClose;
 
     ServerCall(String command) {
         arguments = command.split(" ");
+        requestedClose = false;
     }
 
     public String execute() {
@@ -75,6 +76,9 @@ public class ServerCall {
 
         try {
             Command command = Command.getAsType(arguments[0], arguments, userID);
+            if (command instanceof Close) {
+                requestedClose = true;
+            }
             if (command != null) {
                 if (!(command instanceof AnonymousCommand) && newToken.anonymous)
                     return newKey + "\nerror : insufficient permissions for command '" + arguments[0] + "'";
@@ -122,6 +126,11 @@ public class ServerCall {
             return token;
         }
         return null;
+    }
+
+    //TODO: not thread safe
+    boolean requestedClose() {
+        return requestedClose;
     }
 
     private static class SessionToken {

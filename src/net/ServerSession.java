@@ -13,7 +13,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 import java.util.Base64;
 
 public class ServerSession extends Socket {
@@ -45,7 +44,7 @@ public class ServerSession extends Socket {
         try {
             byte[] src = PasswordManager.encryptWithLocalSalt(password, username);
             String encoded = Base64.getEncoder().encodeToString(src);
-            if (!command(this, "authenticate", username, encoded)) {
+            if (!command("authenticate", username, encoded)) {
                 return false;
             }
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
@@ -84,19 +83,19 @@ public class ServerSession extends Socket {
 
     public void close() throws IOException {
         open = false;
-        command(this,"close");
+        command("close");
         oneTimeKey = "";
         closeSocket();
     }
 
-    private synchronized boolean command(ServerSession serverSession, String name, String... arguments) {
+    private synchronized boolean command(String name, String... arguments) {
         if (!open && !name.equals("authenticate"))
             return false;
         name = escape(name);
         for (int i = 0; i < arguments.length; i++) {
             arguments[i] = escape(arguments[i]);
         }
-        long id = serverSession instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
+        long id = this instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
         if (id == 0)
             id = tempId;
         StringBuilder cmd = new StringBuilder(name + " " + oneTimeKey + " " + id);
@@ -121,7 +120,14 @@ public class ServerSession extends Socket {
 
     public boolean sendOnly(String name, String... arguments) {
         try {
-            return command(this, name, arguments) && reader.readLine().trim().equals("done");
+
+            boolean success = command(name, arguments);
+            if (!success)
+                return false;
+            String result = reader.readLine().trim();
+            if (isError(result))
+                setErrorMsg(result);
+            return result.equals("done");
         } catch (IOException e) {
             return false;
         }
@@ -132,17 +138,15 @@ public class ServerSession extends Socket {
     }
 
     private String callAndResponseInner(String name, String... arguments) {
-        if(!command(this, name, arguments)) {
+        if(!command(name, arguments)) {
             String s = "error : call exception occurred";
             setErrorMsg(s);
             return s;
         }
         try {
             String result = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8);
-            if (isError(result)) {
+            if (isError(result))
                 setErrorMsg(result);
-            }
-            System.out.println(result);
             return result;
         } catch (IOException e) {
             String s = "error : response exception occurred";
@@ -180,8 +184,11 @@ public class ServerSession extends Socket {
     }
 
     public static boolean isError(String[] results) {
+        if (results.length == 0)
+            return false;
         return isError(results[0]);
     }
+
 
     protected static boolean isError(String s) {
         int space = s.indexOf(" ");
