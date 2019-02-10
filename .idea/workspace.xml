@@ -2,450 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/classes/PrerequisiteGraph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/AnonymousCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/Close.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/Command.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/ServerCall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/ServerMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/WrongArgumentTypeException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/database/Column.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/database/DatabaseUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/database/NonexistentTableException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/database/QueryGate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/database/Row.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/localserver/database/Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Paintbrush.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Paintbrush.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/bluetooth/Attendance.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/DailyMenuListing.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/FoodItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/LineMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/cafeteria/NutritionLabel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Assignment$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Assignment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/AssignmentWeight.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Attempt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/AttendanceCode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPdInstance.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Course.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/CourseIndex.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/CourseSchedule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Curve.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/DayRegex.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Downloadable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Email.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Expression.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Form$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Form.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/FormElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Grade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/GradeCategory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Gradebook.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/HousedAssignment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/HousedTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/IncompleteScheduleException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MCQuestion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MSClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MarkingPeriod.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/MasterSchedule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/PhoneNumber.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/PostStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Question.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/QuestionGroup.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/QuestionObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$Sorting.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Record.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/RecordEntry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Runner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/SQL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/SSPBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/School$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/School.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/StudentGrades.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/StudentSchedule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Test.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/TestElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/TestTimingRule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/TimeStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler$StudentSchedulePackage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/UtilScheduler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/canDisplay.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/lessonmodule/LessonModule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/mvFunction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Classifiable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Condition.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/Set.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/setbuilder/SetBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/LoginException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLInstitution.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLLocal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/db/SQLMaster.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/AttendanceException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/DatabaseException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/ExpressionSyntaxException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/InconsistentSystemTimeException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/OfflineException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/SoftlockException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/exceptions/Warning.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/Directory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/File.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemParseException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/FileSystemParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/filesystem/Indexed.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings$Filler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/AcctSettings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Attendance.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Calendar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassLauncher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem$1$ColorText.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$PostSBItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView$Tab.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ClassView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Clock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/CompressedRichText.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ConfirmableTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/CustomFonts.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/DateFilter$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/DateFilter$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/DateFilter$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/DateFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Filter$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Filter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/FilterBlock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Grades.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesBody.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$2$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/GradesSBCategory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/HTMLText.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Help.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/History.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ID.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/IllegalKeyComboException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Images.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$AlignmentLines.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor$OperatorButton.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/InlineTextEditor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/KeyMap$FunctionKey.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/KeyMap$KeyCombo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/KeyMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/LatestPane.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$BarMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar$Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main$SideBar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/MessageBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Moon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/MyGradesPortal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow$Entry.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/NewUserWindow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PhoneField$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PhoneField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PopupNotification$TaskedHBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PopupNotification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Portal_Controls.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostArea$ControlIcon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostArea.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostWindow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PrecipParticle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PrivacyPolicy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/RainParticle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterMenu$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterMenu$FilterField$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterMenu$FilterField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchFilterMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$6.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule$ResultBlock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SearchModule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/ShapeImage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SidebarHotLink.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/SnowParticle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/StartSettingsWindow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Styles.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/TaskViewWrapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Terminal$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/Terminal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/UpdateWrapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/UserProfile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/WeatherState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/BluetoothConnectionException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/BluetoothStateException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/DataElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/DeviceClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/DiscoveryAgent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/DiscoveryListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/L2CAPConnection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/L2CAPConnectionNotifier.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/LocalDevice.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/RemoteDevice.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/ServiceRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/ServiceRegistrationException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/bluetooth/UUID.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/Authenticator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/ClientSession.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/HeaderSet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/Operation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/PasswordAuthentication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/ResponseCodes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/ServerRequestHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/javax/obex/SessionNotifier.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Administrator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Bluetooth.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Colors.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/DefaultUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Device.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Events.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Internet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Layouts$Filler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Layouts.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/PasswordManager$PasswordCombo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/PasswordManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Root.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/RunAll.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Size.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Student.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Teacher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Threads.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/Time.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UnknownZipCodeException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UnsupportedOSException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/main/UtilAndConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/module/Module.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/AnonymousServerSession.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Login.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Net$CreateAccountStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Net$UserMaybe.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Net.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/PostEngine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/PostRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/ServerSession.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/Sockets.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/TestSaltPost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/ThreadedCall$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/ThreadedCall.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/CDL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/Cookie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/CookieList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/HTTP.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/HTTPTokener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONArray.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONML.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONObject$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONObject$Null.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONPointer$Builder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONPointer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONPointerException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONPropertyIgnore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONPropertyName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONString.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONStringer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONTokener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/JSONWriter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/Property.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/XML$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/XML$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/XML.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/org/json/XMLTokener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/parking/IllegalRegexException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/parking/ParkingSpot.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/parking/ParkingSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Cache.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/FilterSet$DateConstraint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/FilterSet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Identifier$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Identifier.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Index.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Indexable$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Indexable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/IndexableCache$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/IndexableCache.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/ItemNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/ParseTree$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/ParseTree.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/ParseTreeTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/ParseTreeTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/QueryEngine$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/QueryEngine$Result.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/QueryEngine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/RankedString.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/SearchRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/StemIndex.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Tag.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Token$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Token.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Tokenizer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Topic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Trie$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Trie$Node.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/Trie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/WatchRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/WeightedPredictor$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/WeightedPredictor$Node.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/WeightedPredictor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/WordDimension.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/searchengine/WordVectorDimension.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/AnonymousCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ChangePost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/Command.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/CreateAccount.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/DeletePost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/GetPost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/IDAllocator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/LikePost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/MergeClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/NewPost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/PreviousPost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/PrintSchedule.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/SerFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerCall$SessionToken.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerCall.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerMain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/SetSerFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ViewPost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/Weather.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/WeatherManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/WrongArgumentTypeException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ZipMap$LatLon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ZipMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/database/Column.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/database/DatabaseUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/database/NonexistentTableException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/database/QueryGate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/database/Row.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/database/Table.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Address.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CAT.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/CLEAR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Clear.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Command$CommandType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Command.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/EDIT.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/HIDE.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/LS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/MKDIR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/OPEN.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/PWD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/QUIT.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/RM.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/SEARCH.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/SETTINGS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/SWITCH.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TOUCH.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tag$Label.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tag.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalDrivenEvent$ActionTrigger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalDrivenEvent$KeyTrigger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalDrivenEvent$MouseTrigger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalDrivenEvent$Trigger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalDrivenEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalEventHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalRet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/TerminalUI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Token$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Token.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tokenizer$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/terminal/Tokenizer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paintbrush.sh" beforeDir="false" afterPath="$PROJECT_DIR$/paintbrush.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/ClassPd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/ClassPd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/MultipleChoicePullDownPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/MultipleChoicePullDownPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/MultipleChoiceQuestion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/MultipleChoiceQuestion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Root.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/RunAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/RunAll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/AnonymousCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/AnonymousCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ChangePost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ChangePost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Close.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Close.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/CreateAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/CreateAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/DeletePost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/DeletePost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/GetPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/GetPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/IDAllocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/IDAllocator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/LikePost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/LikePost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/MergeClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/MergeClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/NewPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/NewPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/PreviousPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/PreviousPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/PrintSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/PrintSchedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/SerFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/SerFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerCall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/SetSerFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/SetSerFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ViewPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ViewPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/Weather.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/WeatherManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/WeatherManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/WrongArgumentTypeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/WrongArgumentTypeException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ZipMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ZipMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/database/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/Column.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/database/DatabaseUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/DatabaseUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/database/NonexistentTableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/NonexistentTableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/database/QueryGate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/QueryGate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/database/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/Row.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/database/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -502,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/server/ServerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="30" lean-forward="true" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+            <state relative-caret-position="255">
+              <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -756,12 +313,6 @@
             </path>
             <path>
               <item name="paintbrush_lms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintbrush_lms" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintbrush_lms" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
@@ -781,7 +332,7 @@
     <property name="SearchEverywhereHistoryKey" value="NewU&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/NewUserWindow.java&#10;Createa&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Serverse&#9;PSI&#9;JAVA://net.ServerSession&#10;Comm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Command.java&#10;PostB&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;Post.jav&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;Serverses&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/ServerSession.java&#10;Servercall&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java&#10;Postb&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;postwi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;postare&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;Run&#9;ACTION&#9;ActivateRunToolWindow&#10;PasswordManager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;newpost&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/NewPost.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Command.java&#10;Settings&#9;ACTION&#9;Database.Settings&#10;Weather&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Post&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;newPost&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/NewPost.java&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Sess&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/ServerSession.java&#10;Weat&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Serverma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerMain.java&#10;Serfile&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SerFile.java&#10;Serf&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SetSerFile.java&#10;Create&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Weath&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Root&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;User&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Weatherma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/WeatherManager.java&#10;Wea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;settings&#9;PSI&#9;JAVA://gui.AcctSettings&#10;Cr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;SQLM&#9;PSI&#9;JAVA://db.SQLMaster&#10;Rua&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/RunAll.java&#10;Weatherm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/WeatherManager.java&#10;User.j&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Serfi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SerFile.java&#10;CreateA&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Identifi&#9;PSI&#9;JAVA://searchengine.Identifier&#10;SErverma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerMain.java&#10;Servercal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java&#10;Anony&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/AnonymousServerSession.java&#10;Crea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Get&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/GetLocalSalt.java&#10;Userma&#9;PSI&#9;JAVA://net.Net.UserMaybe&#10;Pass&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;Userm&#9;PSI&#9;JAVA://net.Net.UserMaybe&#10;ServerC&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549818134253" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549818458663" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -1255,7 +806,7 @@
       <workItem from="1549744021485" duration="2306000" />
       <workItem from="1549751055494" duration="2466000" />
       <workItem from="1549754539048" duration="1209000" />
-      <workItem from="1549814180857" duration="3050000" />
+      <workItem from="1549814180857" duration="3400000" />
     </task>
     <servers />
   </component>
@@ -1292,7 +843,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1636843000" />
+    <option name="totallyTimeSpent" value="1637193000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
@@ -1750,8 +1301,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/ServerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="30" lean-forward="true" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+        <state relative-caret-position="255">
+          <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

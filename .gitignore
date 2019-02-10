@@ -1,8 +1,9 @@
 mysql-connector-java-5.1.44
 nbproject
 usr/rtorok.ser
-.idea
+.idea/*
 manifest.mf
 PaintbrushEducation.iml
 lib/ejml/*
 lib/ejml
+javafx-sdk-11.0.2/*
