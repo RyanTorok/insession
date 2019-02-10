@@ -1,5 +1,6 @@
 package server;
 
+
 import java.sql.SQLException;
 
 public abstract class AnonymousCommand extends Command {

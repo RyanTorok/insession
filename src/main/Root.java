@@ -1,6 +1,7 @@
 package main;
 
 import gui.Main;
+import javafx.application.Application;
 import net.ServerSession;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +34,8 @@ public class Root {
         }
 
         utilAndConstants = new UtilAndConstants();
+
+
 
         Main.main(new String[]{startupError});
     }
@@ -136,4 +139,7 @@ public class Root {
         portal = main;
     }
 
+    public static void setUtilAndConstants(UtilAndConstants utilAndConstants) {
+        Root.utilAndConstants = utilAndConstants;
+    }
 }

@@ -42,7 +42,7 @@ public class Test extends HousedAssignment {
         LIST_ALL, LIST_GROUP, INDIVIDUAL
     }
 
-    public void addQuestion() {
-        allQuestions
+    public void addQuestion(QuestionUnit e) {
+        allQuestions.addSubElement(e);
     }
 }

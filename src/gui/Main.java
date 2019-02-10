@@ -94,6 +94,9 @@ public class Main extends Application {
 
     //Task Views
     private TaskViewWrapper taskViews;
+
+
+
     private boolean homeScreen;
 
     //Search Interface

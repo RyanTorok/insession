@@ -1,9 +1,10 @@
 package server;
 
+import localserver.*;
+import localserver.database.DatabaseUtils;
+import localserver.database.QueryGate;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import server.database.DatabaseUtils;
-import server.database.QueryGate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -34,17 +35,6 @@ public abstract class Command {
 
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
-            case "createaccount": return new CreateAccount(arguments);
-            case "deletepost": return new DeletePost(arguments);
-            case "likepost": return new LikePost(arguments);
-            case "mergeclass": return new MergeClass(arguments);
-            case "newpost": return new NewPost(arguments);
-            case "previouspost": return new PreviousPost(arguments);
-            case "printschedule": return new PrintSchedule(arguments);
-            case "serfile": return new SerFile(arguments);
-            case "setserfile": return new SetSerFile(arguments);
-            case "viewpost": return new ViewPost(arguments);
-            case "weather": return new Weather(arguments);
             default: return null;
         }
     }

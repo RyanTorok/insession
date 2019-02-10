@@ -1,6 +1,6 @@
 package main;
 
-import server.ServerMain;
+import localserver.ServerMain;
 
 public class RunAll {
     public static void main(String[] args) {

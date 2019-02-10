@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 
 public class ServerMain {
 
-    public static final int PORT = 6520;
+    public static final int PORT = 6521;
     private static final int OPERATION_TIMEOUT_MILLIS = 10000;
     private static final int SESSION_TIMEOUT_MILLIS = 60000;
 

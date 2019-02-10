@@ -9,7 +9,7 @@ public class MultipleChoicePullDownPane extends ComboBox<String> implements Mult
     private char separator = '.';
     private TreeMap<String, Integer> keys;
 
-    MultipleChoicePullDownPane(boolean scatterChoices, boolean allowMultipleSelections, MultipleChoiceQuestion.ChoiceDisplayType displayType, String[] strings) {
+    MultipleChoicePullDownPane(MultipleChoiceQuestion.ChoiceDisplayType displayType, String[] strings) {
         keys = new TreeMap<>();
         for (int i = 0, stringsLength = strings.length; i < stringsLength; i++) {
             String ans = strings[i];

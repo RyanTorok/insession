@@ -1,6 +1,6 @@
 package classes;
 
-import server.IDAllocator;
+import localserver.IDAllocator;
 import gui.SidebarHotLink;
 import javafx.scene.paint.Color;
 import main.*;

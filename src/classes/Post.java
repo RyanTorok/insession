@@ -12,7 +12,6 @@ import searchengine.Identifier;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.RankedString;
-import server.IDAllocator;
 
 import java.io.IOException;
 import java.io.Serializable;

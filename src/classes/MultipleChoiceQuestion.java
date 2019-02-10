@@ -34,7 +34,7 @@ public class MultipleChoiceQuestion extends QuestionElement {
 
     @Override
     protected Node getAnswerSpaceDisplay() {
-        if (pullDown) return new MultipleChoicePullDownPane(scatterChoices, allowMultipleSelections, displayType, answerChoices.toArray(new String[0]));
+        if (pullDown) return new MultipleChoicePullDownPane(displayType, answerChoices.toArray(new String[0]));
         else return new MultipleChoiceRadioPane(scatterChoices, allowMultipleSelections, displayType, answerChoices.toArray(new String[0]));
     }
 

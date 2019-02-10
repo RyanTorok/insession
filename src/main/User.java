@@ -8,11 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import module.Module;
 import net.Net;
-import net.ServerSession;
 import org.json.JSONObject;
 import searchengine.*;
-import server.IDAllocator;
-import server.ZipMap;
+import localserver.IDAllocator;
 import terminal.Address;
 
 import java.io.*;

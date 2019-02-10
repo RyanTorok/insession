@@ -2,9 +2,11 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration manifestGenerationMode="Manually" manifestLocation="lib/META-INF/MANIFEST.MF" jarfileLocation="Paintbrush.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
+      <configuration manifestGenerationMode="Manually" manifestLocation="lib/META-INF/MANIFEST.MF" jarfileLocation="Paintbrush.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="true" doNotSynchronizeWithMaven="false">
         <additionalProperties />
-        <additionalJARContents />
+        <additionalJARContents>
+          <entry source="$MODULE_DIR$/javafx-sdk-11.0.2/lib" dest="javafx-sdk-11.0.2/lib" />
+        </additionalJARContents>
       </configuration>
     </facet>
   </component>
@@ -13,21 +15,9 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
+    <orderEntry type="library" exported="" name="javafx" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="inheritedJdk" />
     <orderEntry type="library" name="JSON-java-master" level="project" />
-    <orderEntry type="module-library" scope="TEST">
-      <library name="JUnit5.0">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.0.0/junit-jupiter-api-5.0.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/opentest4j/opentest4j/1.0.0/opentest4j-1.0.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.0.0/junit-platform-commons-1.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -58,9 +48,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="org.fxmisc.richtext:richtextfx:0.9.1" level="project" />
-    <orderEntry type="library" name="net.sf.bluecove:bluecove:2.1.0" level="project" />
-    <orderEntry type="library" name="com.googlecode.efficient-java-matrix-library:ejml:0.25" level="project" />
-    <orderEntry type="library" name="mysql:mysql-connector-java:8.0.13" level="project" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" name="org.osgi.core-6.0.0" level="project" />
+    <orderEntry type="library" name="jgrapht:jgrapht:0.7.3" level="project" />
   </component>
 </module>
