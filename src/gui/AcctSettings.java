@@ -149,7 +149,8 @@ public class AcctSettings extends Stage {
 
         //Zip Code for Weather
         Text zcPrompt = new Text("Zip Code for Weather");
-        TextField zcField = new TextField(String.format("%05d", User.active().getZipcode()));
+        int existingZC = User.active().getZipcode();
+        TextField zcField = new TextField(existingZC == 0 ? "" : String.format("%05d", existingZC));
         zcField.setPrefColumnCount(5);
         zcField.setEditable(true);
         zcField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -185,10 +186,9 @@ public class AcctSettings extends Stage {
             Root.getPortal().updateWeatherDisplay();
         });
 
-        tuGroup.selectToggle(fahrenheit);
         if (User.active().usesFahrenheit())
-            celsius.setSelected(true);
-        else fahrenheit.setSelected(true);
+            tuGroup.selectToggle(fahrenheit);
+        else tuGroup.selectToggle(celsius);
         Text courtesy = new Text("Weather provided by NOAA");
         courtesy.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 10));
         VBox temperatureUnits = new VBox(tuPrompt, fahrenheit, celsius, courtesy);
@@ -221,13 +221,13 @@ public class AcctSettings extends Stage {
                 Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new_image).apply().getFill());
                 //copied becuase we cannot use the same node twice. -- this comment is from the old, more cumbersome implementation. This code may be able to be simplified further.
                 profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), new_image).apply());
-                User.active().setImageFN("file:" + selected.getPath());
+                User.active().setImageFN(selected.getPath());
             }
         });
         Button resetToDefault = new Button("Reset to Default");
         resetToDefault.setOnAction(event -> {
             pictureInvalidMessage.setText("");
-            User.active().setImageFN("file:" + new java.io.File(Address.fromRootAddr("resources", "default_user.png")).getPath());
+            User.active().setImageFN(new java.io.File(Address.fromRootAddr("resources", "default_user.png")).getPath());
             Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new Image(User.active().getImageFN())).apply().getFill());
         });
         profilePicture.getChildren().addAll(ppPrompt, picture, browse, resetToDefault, pictureInvalidMessage);

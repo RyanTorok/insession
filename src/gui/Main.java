@@ -95,8 +95,6 @@ public class Main extends Application {
     //Task Views
     private TaskViewWrapper taskViews;
 
-
-
     private boolean homeScreen;
 
     //Search Interface
@@ -207,6 +205,7 @@ public class Main extends Application {
         });
 
         Image image = User.active().getAcctImage();
+
         Images.addUserImage((long) User.active().getUniqueID(), image);
         Shape picture = new ShapeImage(new Circle(Size.lessWidthHeight(30)), image).apply();
         this.picture = picture;
@@ -1113,7 +1112,7 @@ public class Main extends Application {
                 name.setFont(Font.font(name.getFont().getFamily(), FontWeight.NORMAL, name.getFont().getSize()));
                 closeSideBar();
                 if (User.active() != null && User.active().getUsername() != null) {
-                    Events.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED);
+                    //Events.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED); -- commented because leaving it in kept the sidebar open
                     new AcctSettings().show();
                 }
             });
@@ -1197,7 +1196,7 @@ public class Main extends Application {
                 Text prompt = new Text(text);
                 Color textFill = Colors.textFill(color, 2);
                 prompt.setFill(textFill);
-                prompt.setFont(CustomFonts.comfortaa_bold(20));
+                prompt.setFont(Font.font("Arial", Size.fontSize(18)));
                 this.getChildren().add(prompt);
                 this.text = prompt;
                 setAlignment(Pos.CENTER);

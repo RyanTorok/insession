@@ -27,9 +27,9 @@ public class QueryGate implements AutoCloseable {
 
     private static void connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/paintbrush_server";
-            String username = "paintbrush";
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/central_server";
+            String username = "central_server_java";
             String password = "paintbrush";
             conn = DriverManager.getConnection(url, username, password);
             useDatabase();
@@ -40,7 +40,7 @@ public class QueryGate implements AutoCloseable {
     }
 
     private static void useDatabase() throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("USE paintbrush_server;");
+        PreparedStatement statement = conn.prepareStatement("USE central_server;");
         statement.execute();
     }
 

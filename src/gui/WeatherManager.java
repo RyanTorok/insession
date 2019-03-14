@@ -37,6 +37,7 @@ public class WeatherManager{
         try (AnonymousServerSession session = new AnonymousServerSession()) {
             boolean open = session.open();
             String[] result = session.callAndResponse("weather", Integer.toString(zipCode));
+            session.close();
             if (ServerSession.isError(result)) {
                 return;
             }

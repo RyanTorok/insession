@@ -60,6 +60,10 @@ public class ServerCall {
             return key;
         }
 
+        if (opcode.equals("connectiontest")) {
+            return "success";
+        }
+
         if (arguments.length < 3)
             return "error : too few arguments";
          String oneTimeKey = arguments[1],

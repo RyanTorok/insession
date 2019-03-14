@@ -172,13 +172,21 @@ public class PostsBody extends VBox {
             Root.getPortal().getSearchBox().getEngine().getIndex().index(Collections.singletonList(newPost));
             getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
             try (ServerSession session = new ServerSession()) {
-                session.open();
-                //TODO add support for class item ids
-                String[] result = session.callAndResponse("newpost", "0", newPost.getTitle(),
-                        newPost.getFormattedText().getUnformattedText(), newPost.getFormattedText().getStyleRegex(),
-                        Long.toString(newPost.getVisibleTo()), Long.toString(newPost.getPosterNameVisible()),
-                        newPost.getParentId().toString(), newPost.getType().toString(), Boolean.toString(newPost.isPinned()));
-                newPost.getIdentifier().setId(UUID.fromString(result[0]));
+                if (session.open()) {
+                    System.out.println("session is open!");
+                    //TODO add support for class item ids
+                    String[] result = session.callAndResponse("newpost", "0", newPost.getTitle(),
+                            newPost.getFormattedText().getUnformattedText(), newPost.getFormattedText().getStyleRegex(),
+                            Long.toString(newPost.getVisibleTo()), Long.toString(newPost.getPosterNameVisible()),
+                            newPost.getParentId().toString(), newPost.getType().toString(), Boolean.toString(newPost.isPinned()));
+                    if (ServerSession.isError(result)) {
+                        System.out.println(session.getErrorMsg());
+                        return; //TODO notify user an error occured.
+                    }
+                    newPost.getIdentifier().setId(UUID.fromString(result[0]));
+                } else
+                    System.out.println(session.getErrorMsg());
+                //check for server error
             } catch (IOException e) {
                 e.printStackTrace();
             }

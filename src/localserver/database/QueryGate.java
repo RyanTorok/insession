@@ -4,8 +4,10 @@ import java.nio.ByteBuffer;
 import java.sql.*;
 import java.util.UUID;
 
+
 public class QueryGate implements AutoCloseable {
     private static Connection conn;
+    private static boolean initialized = false;
     private ResultSet lastResults;
     private boolean open;
 
@@ -27,12 +29,13 @@ public class QueryGate implements AutoCloseable {
 
     private static void connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/paintbrush_server";
             String username = "paintbrush";
             String password = "paintbrush";
             conn = DriverManager.getConnection(url, username, password);
             useDatabase();
+            initialized = true;
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -46,6 +49,7 @@ public class QueryGate implements AutoCloseable {
 
     private static void disconnect() {
         try {
+            initialized = false;
             conn.close();
             conn = null;
         } catch (SQLException e) {
@@ -54,6 +58,8 @@ public class QueryGate implements AutoCloseable {
     }
 
     public ResultSet query(String sql, String types, boolean update, Object... arguments) throws SQLException {
+        if (!initialized)
+            connect();
         PreparedStatement statement = conn.prepareStatement(sql);
         if (types.length() != arguments.length) {
             throw new SQLException("unmatching length of arguments and types");

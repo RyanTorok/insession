@@ -15,10 +15,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.*;
 import main.*;
-import net.AnonymousServerSession;
-import net.Login;
-import net.Net;
-import net.ServerSession;
+import net.*;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -47,15 +45,16 @@ public class NewUserWindow extends Pane {
         VBox pane = new VBox();
         VBox subpane = new VBox();
 
-        ArrayList<Entry> entries1 = new ArrayList<>();
-        entries1.add(new Entry("Confirm Password ", 2, true));
-        entries1.add(new Entry("First Name             ", 3, false));
-        entries1.add(new Entry("Last Name             ", 4, false));
-        entries1.add(new Entry("Email                      ", 5, false));
-        entries1.add(new Entry("School Code          ", 6, false));
+        ArrayList<Entry> createAcctOnlyEntries = new ArrayList<>();
+        createAcctOnlyEntries.add(new Entry("Confirm Password", 2, true));
+        createAcctOnlyEntries.add(new Entry("First Name", 3, false));
+        createAcctOnlyEntries.add(new Entry("Last Name", 4, false));
+        createAcctOnlyEntries.add(new Entry("Email", 5, false));
+        createAcctOnlyEntries.add(new Entry("Domain", 6, false));
+        createAcctOnlyEntries.add(new Entry("Course Token", 7, false));
 
         Text invalidMessage = new Text("");
-        invalidMessage.setFont(Font.font("Comfortaa", 20));
+        invalidMessage.setFont(Font.font("Arial", 20));
         invalidMessage.setFill(Color.WHITE);
         Button b = new Button("Submit");
         b.setAlignment(Pos.CENTER);
@@ -63,32 +62,6 @@ public class NewUserWindow extends Pane {
         b.setOnAction(event -> {
             invalidMessage.setText("");
             if (selectedTab == 1) {
-                /*
-                Login login = new Login(entries.get(0).getField(), entries.get(1).getField(), true);
-                login.setOnSucceeded(event1 -> {
-                    Net.UserMaybe userMaybe = (Net.UserMaybe) login.getValue();
-                    switch (userMaybe.getExistsCode()) {
-                        case -2: {
-                            //expected user and got correct input, but missing ser file
-                            invalidMessage.setText("We cannot locate your user data. Try creating a new account.");
-                        } break;
-                        case -1: invalidMessage.setText("A connection error occurred. Please try again."); break;
-                        case 0:
-                            invalidMessage.setText("We do not recognize that username and password combination.");
-                            loginConnErr = false;
-                            break;
-                        case 1: invalidMessage.setText("You shouldn't be able to see this. If you do, it's a bug.");
-                            break;
-                        case 2: {
-                            //valid user login
-                            User.setActive(userMaybe.getUser());
-                            Root.getPortal().switchToMain();
-                        }
-                    }
-                });
-                Thread th = new Thread(login);
-                th.setDaemon(true);
-                th.start();*/
                 String  username   = entries .get(0).getField(),
                         password   = entries .get(1).getField();
                 try (ServerSession session = new ServerSession()) {
@@ -117,11 +90,12 @@ public class NewUserWindow extends Pane {
 
                 String  username   = entries .get(0).getField(),
                         password   = entries .get(1).getField(),
-                        passwordC  = entries1.get(0).getField(),
-                        first      = entries1.get(1).getField(),
-                        last       = entries1.get(2).getField(),
-                        email      = entries1.get(3).getField(),
-                        schoolCode = entries1.get(4).getField();
+                        passwordC  = createAcctOnlyEntries.get(0).getField(),
+                        first      = createAcctOnlyEntries.get(1).getField(),
+                        last       = createAcctOnlyEntries.get(2).getField(),
+                        email      = createAcctOnlyEntries.get(3).getField(),
+                        domain =     createAcctOnlyEntries.get(4).getField(),
+                        schoolCode = createAcctOnlyEntries.get(5).getField();
                 boolean valid;
                 valid = checkEmptyField(username, "Username", invalidMessage);
                 valid = valid && checkEmptyField(password, "Password", invalidMessage);
@@ -129,6 +103,7 @@ public class NewUserWindow extends Pane {
                 valid = valid && checkEmptyField(first, "First Name", invalidMessage);
                 valid = valid && checkEmptyField(last, "Last Name", invalidMessage);
                 valid = valid && checkEmptyField(email, "Email", invalidMessage);
+                valid = valid && checkEmptyField(domain, "Domain", invalidMessage);
                 if (!valid)
                     return;
                 if (!(password.equals(passwordC))) {
@@ -138,13 +113,40 @@ public class NewUserWindow extends Pane {
                 int type = 0;
                 PasswordManager.PasswordCombo encryptedPassword = null;
                 long uid = -1;
+
+                //get domain from nickname - ask the main server for its info
+                AnonymousCentralServerSession centralServerSession = null;
                 try {
-                    AnonymousServerSession session = new AnonymousServerSession();
+                    centralServerSession = new AnonymousCentralServerSession();
+                } catch (IOException e) {
+                    invalidMessage.setText("A connection error occurred. Please try again.");
+                    return;
+                }
+                centralServerSession.open();
+                JSONObject jsonDomain = centralServerSession.requestLocalServer(domain);
+
+                Domain d = Domain.fromJSONObject(jsonDomain);
+                if (d == null) {
+                    invalidMessage.setText("We don't recognize domain " + domain + ". Please try again.");
+                    try {
+                        centralServerSession.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+                try {
+                    centralServerSession.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    AnonymousServerSession session = new AnonymousServerSession(d.getIpv4(), AnonymousServerSession.PORT);
                     session.open();
                     encryptedPassword = PasswordManager.newGenLocal(password, username);
                     byte[] pwd = encryptedPassword.getEncryptedPassword();
                     String encodedPwd = Base64.getEncoder().encodeToString(pwd);
-                    System.out.println("initial encoded:" + encodedPwd);
+                    //System.out.println("initial encoded:" + encodedPwd);
                     String[] result = session.callAndResponse("createaccount", username, encodedPwd, first, last, email, schoolCode);
                     if (ServerSession.isError(result)) {
                         System.out.println(Arrays.toString(result));
@@ -161,7 +163,7 @@ public class NewUserWindow extends Pane {
                 }
                 User newUser = null;
                 switch (type) {
-                    case -3: invalidMessage.setText("The school code you entered was not recognized.");
+                    case -3: invalidMessage.setText("The course token you entered was not recognized.");
                     return;
                     case -2: invalidMessage.setText("A connection error occurred. Please try again.");
                     return;
@@ -236,17 +238,17 @@ public class NewUserWindow extends Pane {
         pane.setSpacing(20);
         subpane.getChildren().add(mainlogo);
         Text sa = new Text("Select Account");
-        sa.setFont(Font.font("Comfortaa", FontWeight.NORMAL, 20));
+        sa.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
         sa.setFill(Color.WHITE);
         FlowPane sacct = new FlowPane(sa);
         sacct.setStyle("-fx-background-color: #4d4d4d");
         Text li = new Text("Log In");
-        li.setFont(Font.font("Comfortaa", FontWeight.NORMAL, 20));
+        li.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
         li.setFill(Color.WHITE);
         FlowPane login = new FlowPane(li);
         sacct.setStyle("-fx-background-color: #4d4d4d");
         Text cr = new Text("Create Account");
-        cr.setFont(Font.font("Comfortaa", FontWeight.NORMAL, 20));
+        cr.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
         cr.setFill(Color.WHITE);
         FlowPane create = new FlowPane(cr);
         create.setStyle("-fx-background-color: #000000");
@@ -266,7 +268,7 @@ public class NewUserWindow extends Pane {
             if (selectedTab != 0) {
                 subpane.getChildren().add(existingAccts);
                 subpane.getChildren().removeAll(entries);
-                subpane.getChildren().removeAll(entries1);
+                subpane.getChildren().removeAll(createAcctOnlyEntries);
                 pane.getChildren().remove(b);
             }
             selectedTab = 0;
@@ -290,7 +292,7 @@ public class NewUserWindow extends Pane {
                 pane.getChildren().add(b);
             }
             if (selectedTab == 2)
-                subpane.getChildren().removeAll(entries1);
+                subpane.getChildren().removeAll(createAcctOnlyEntries);
             selectedTab = 1;
         });
         create.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
@@ -309,11 +311,11 @@ public class NewUserWindow extends Pane {
             if (selectedTab == 0) {
                 subpane.getChildren().remove(existingAccts);
                 subpane.getChildren().addAll(entries);
-                subpane.getChildren().addAll(entries1);
+                subpane.getChildren().addAll(createAcctOnlyEntries);
                 pane.getChildren().add(b);
             }
             if (selectedTab == 1)
-                subpane.getChildren().addAll(entries1);
+                subpane.getChildren().addAll(createAcctOnlyEntries);
             selectedTab = 2;
 
         });
@@ -333,8 +335,8 @@ public class NewUserWindow extends Pane {
         select.setAlignment(Pos.CENTER);
         subpane.getChildren().add(select);
         subpane.getChildren().add(existingAccts);
-        entries.add(new Entry("Username              ", 0, false));
-        entries.add(new Entry("Password               ", 1, true));
+        entries.add(new Entry("Username", 0, false));
+        entries.add(new Entry("Password", 1, true));
 
         //pad entries
 
@@ -382,11 +384,10 @@ public class NewUserWindow extends Pane {
             this.box = entryBox;
             Text prompt = new Text(item);
             prompt.setFill(Color.WHITE);
-            prompt.setFont(Font.font("Comfortaa", FontWeight.NORMAL, 20));
+            prompt.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
             entryBox.setPrefColumnCount(20);
-            getChildren().addAll(prompt, entryBox);
-            setSpacing(30);
-            setPadding(new Insets(0, 0, 0, 80));
+            getChildren().addAll(prompt, new Layouts.Filler(), entryBox);
+            setPadding(new Insets(0, 80, 0, 80));
         }
         int getIndex() {
             return index;
@@ -397,6 +398,6 @@ public class NewUserWindow extends Pane {
         }
     }
     public static Scene get(Main main) {
-        return new Scene(new NewUserWindow(main).pane, 650, 700);
+        return new Scene(new NewUserWindow(main).pane, 650, 750);
     }
 }

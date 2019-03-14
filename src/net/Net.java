@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class Net {
 
-    public static final String ROOT_URL = "http://paintbrush.org/";
+    public static final String ROOT_URL = "http://edulogic.org/";
 
     public static URL root() throws MalformedURLException {
         return new URL(ROOT_URL);

@@ -27,7 +27,11 @@ public class ServerSession extends Socket {
     private long tempId = 0;
 
     public ServerSession() throws IOException {
-        super("localhost", PORT);
+        this("localhost", PORT);
+    }
+
+    protected ServerSession(String host, int port) throws IOException {
+        super(host, port);
         try {
             reader = new BufferedReader(new InputStreamReader(this.getInputStream()));
             writer = new PrintWriter(this.getOutputStream(), true);
@@ -54,7 +58,7 @@ public class ServerSession extends Socket {
         String nonce = null;
         try {
             nonce = reader.readLine();
-            if (isError(nonce)) {
+            if (nonce == null || isError(nonce)) {
                 setErrorMsg(nonce);
                 return false;
             }
@@ -82,15 +86,17 @@ public class ServerSession extends Socket {
     }
 
     public void close() throws IOException {
-        open = false;
         command("close");
         oneTimeKey = "";
         closeSocket();
     }
 
-    private synchronized boolean command(String name, String... arguments) {
+    synchronized boolean command(String name, String... arguments) {
         if (!open && !name.equals("authenticate"))
             return false;
+        if (name.equals("close")) {
+            open = false;
+        }
         name = escape(name);
         for (int i = 0; i < arguments.length; i++) {
             arguments[i] = escape(arguments[i]);
@@ -102,11 +108,19 @@ public class ServerSession extends Socket {
         for (String s : arguments) {
             cmd.append(" ").append(s);
         }
-        writer.println(escape(cmd.toString()));
+        writeText(cmd.toString());
         try {
             if (name.equals("authenticate"))
                 return true;
-            oneTimeKey = reader.readLine().trim();
+            String s = reader.readLine();
+            if (s == null) {
+                /*
+                    If this was a close command, this is completely normal, since the read fails if the socket dies.
+                    Otherwise, something went horribly wrong on the server.
+                */
+                return false;
+            }
+            oneTimeKey = s.trim();
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,12 +132,16 @@ public class ServerSession extends Socket {
         }
     }
 
+    protected void writeText(String cmd) {
+        writer.println(escape(cmd));
+    }
+
     public boolean sendOnly(String name, String... arguments) {
         try {
 
             boolean success = command(name, arguments);
             if (!success)
-                return false;
+                return name.equals("close");
             String result = reader.readLine().trim();
             if (isError(result))
                 setErrorMsg(result);
@@ -134,7 +152,10 @@ public class ServerSession extends Socket {
     }
 
     public String[] callAndResponse(String name, String... arguments) {
-        return callAndResponseInner(name, arguments).split(" ");
+        String s = callAndResponseInner(name, arguments);
+        if (s == null)
+            return null;
+        return s.split(" ");
     }
 
     private String callAndResponseInner(String name, String... arguments) {
@@ -145,8 +166,10 @@ public class ServerSession extends Socket {
         }
         try {
             String result = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8);
-            if (isError(result))
+            if (isError(result)) {
                 setErrorMsg(result);
+                return null;
+            }
             return result;
         } catch (IOException e) {
             String s = "error : response exception occurred";
@@ -155,7 +178,7 @@ public class ServerSession extends Socket {
         }
     }
 
-    private String escape(String s) {
+    protected String escape(String s) {
         return URLEncoder.encode(s, StandardCharsets.UTF_8);
     }
 
@@ -184,6 +207,8 @@ public class ServerSession extends Socket {
     }
 
     public static boolean isError(String[] results) {
+        if (results == null)
+            return true;
         if (results.length == 0)
             return false;
         return isError(results[0]);
@@ -198,4 +223,15 @@ public class ServerSession extends Socket {
     protected final void setOpen(boolean open) {
         this.open = open;
     }
+
+    public boolean connectionTest() {
+        try {
+            writeText("connectiontest");
+            String result = getReader().readLine().trim();
+            return result.equals("success");
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
 }

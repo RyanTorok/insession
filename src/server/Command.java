@@ -35,6 +35,8 @@ public abstract class Command {
 
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
+            case "connectiontest":
+                return new ConnectionTest(arguments);
             default: return null;
         }
     }

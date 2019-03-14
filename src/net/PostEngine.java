@@ -63,6 +63,5 @@ public class PostEngine implements Serializable {
 
     public void addPost(Post newPost) {
         posts.add(newPost);
-//        new net.ThreadedCall<Boolean>("post/newPost.php", true, new PostRequest("classId", newPost.getClassId()), new PostRequest("postId", newPost.getIdentifier().getId().toString()), new PostRequest("classItemId", newPost.getClassItemId().toString()));
     }
 }

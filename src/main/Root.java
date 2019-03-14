@@ -36,7 +36,6 @@ public class Root {
         utilAndConstants = new UtilAndConstants();
 
 
-
         Main.main(new String[]{startupError});
     }
 
@@ -122,11 +121,9 @@ public class Root {
             e.printStackTrace();
         }
         String encoding = Base64.getEncoder().encodeToString(bytes);
-
-        try {
-            ServerSession session = new ServerSession();
-            session.open(User.active().getUsername(), new String(temp));
-            session.sendOnly("setserfile", encoding);
+        try (ServerSession session = new ServerSession()) {
+                session.open(User.active().getUsername(), new String(temp));
+                session.sendOnly("setserfile", encoding);
         } catch (IOException e) {
             e.printStackTrace();
         }

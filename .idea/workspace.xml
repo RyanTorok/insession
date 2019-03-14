@@ -2,7 +2,96 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2438eae-8ecd-4a89-88ba-320ea63addf2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/scripts/card.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/scripts/controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/templates/card.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/localserver/CentralServerSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/localserver/ConnectionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/localserver/ExternalCall.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/localserver/ExternalListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/localserver/PollingSocket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Servers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/net/AnonymousCentralServerSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/net/Domain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/ConnectionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Conversation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/DHKeyAgreement2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/DHReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/DHTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/DHgen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Extern.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/LocalServers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Poll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Paintbrush.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Paintbrush.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/.idea/paintbrush.org.iml" beforeDir="false" afterPath="$PROJECT_DIR$/html/.idea/paintbrush.org.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/html/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/html/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Allura-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Comfortaa-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Damion-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Day_Cloudy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Day_Sunny.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Night_Clear.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Night_Cloudy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/background.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/el_highlighted.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/el_logo.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/el_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/el_purple.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/lib/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/zip.ser" beforeDir="false" afterPath="$PROJECT_DIR$/resources/zip.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AcctSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AcctSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/NewUserWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/NewUserWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/PostsBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PostsBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/WeatherManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WeatherManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/BluetoothConnectionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/BluetoothStateException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/DataElement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/DeviceClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/DiscoveryAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/DiscoveryListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/L2CAPConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/L2CAPConnectionNotifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/LocalDevice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/RemoteDevice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/ServiceRecord.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/ServiceRegistrationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/bluetooth/UUID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/Authenticator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/ClientSession.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/HeaderSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/Operation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/PasswordAuthentication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/ResponseCodes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/ServerRequestHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/javax/obex/SessionNotifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/localserver/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/localserver/CreateAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/CreateAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/localserver/ServerCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ServerCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/localserver/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/localserver/WeatherManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/WeatherManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/localserver/database/QueryGate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/database/QueryGate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Root.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/RunAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/RunAll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/AnonymousServerSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/AnonymousServerSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/Net.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/Net.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/NotificationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/NotificationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/PostEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/PostEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/ServerSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/ServerSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ServerCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/database/QueryGate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/database/QueryGate.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,12 +115,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="paintbrush@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="ExportToHTMLSettings">
@@ -45,10 +129,91 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/ServerMain.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1170">
+              <caret line="89" column="59" selection-start-line="89" selection-start-column="59" selection-end-line="89" selection-end-column="59" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/LocalServers.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1815">
+              <caret line="148" column="22" selection-start-line="148" selection-start-column="22" selection-end-line="148" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/localserver/CreateAccount.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="825">
+              <caret line="70" column="10" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/searchengine/QueryEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/localserver/database/QueryGate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/database/QueryGate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="42" column="72" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/ServerCall.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="98" column="41" lean-forward="true" selection-start-line="98" selection-start-column="41" selection-end-line="98" selection-end-column="41" />
+            <state relative-caret-position="600">
+              <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="1214" column="52" selection-start-line="1214" selection-start-column="52" selection-end-line="1214" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,59 +222,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/server/ServerMain.java">
+        <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="157">
+              <caret line="155" column="80" lean-forward="true" selection-start-line="155" selection-start-column="80" selection-end-line="155" selection-end-column="80" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/database/Table.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/database/NonexistentTableException.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/database/QueryGate.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/database/Column.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/database/DatabaseUtils.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/database/Row.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/Close.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/WrongArgumentTypeException.java">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -129,36 +247,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>77379</find>
-      <find>tempformat</find>
-      <find>update</find>
-      <find>like</find>
-      <find>like()</find>
-      <find>format</find>
-      <find>celsius</find>
-      <find>usesfa</find>
-      <find>getuniqueid</find>
-      <find>latlon</find>
-      <find>change password</find>
-      <find>WeatherManager</find>
+      <find>grow</find>
       <find>system.</find>
-      <find>(ex</find>
-      <find>888</find>
-      <find>newPost</find>
-      <find>regex</find>
-      <find>postare</find>
-      <find>view</find>
-      <find>edit</find>
-      <find>newthread</find>
-      <find>serversession</find>
-      <find>Id</find>
-      <find>idall</find>
-      <find>Sys</find>
-      <find>sys</find>
-      <find>syste</find>
-      <find>new</find>
+      <find>close</find>
+      <find>update</find>
+      <find>postwi</find>
+      <find>thread</find>
+      <find>setserf</find>
+      <find>authenticate</find>
+      <find>Command</find>
+      <find>requested</find>
+      <find>sendon</find>
       <find>system</find>
-      <find>main(str</find>
+      <find>system.out.pr</find>
+      <find>read</find>
+      <find>Createa</find>
+      <find>setpad</find>
+      <find>Entry</find>
+      <find>login</find>
+      <find>domain</find>
+      <find>connectio</find>
+      <find>authen</find>
+      <find>server!</find>
+      <find>keygen</find>
+      <find>serverd</find>
+      <find>system.ou</find>
+      <find>system.out</find>
+      <find>initial</find>
+      <find>arrays.</find>
+      <find>comfortaa</find>
+      <find>zipcode</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -172,57 +290,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/net/Login.java" />
-        <option value="$PROJECT_DIR$/src/net/AnonymousServerSession.java" />
-        <option value="$PROJECT_DIR$/src/classes/Gradebook.java" />
-        <option value="$PROJECT_DIR$/src/main/PasswordManager.java" />
-        <option value="$PROJECT_DIR$/src/server/RunAll.java" />
-        <option value="$PROJECT_DIR$/src/main/RunAll.java" />
-        <option value="$PROJECT_DIR$/src/server/ZipMap.java" />
-        <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
-        <option value="$PROJECT_DIR$/src/server/SetLocation.java" />
-        <option value="$PROJECT_DIR$/src/main/User.java" />
-        <option value="$PROJECT_DIR$/src/server/SetSerFile.java" />
-        <option value="$PROJECT_DIR$/src/server/SerFile.java" />
-        <option value="$PROJECT_DIR$/src/server/WeatherManager.java" />
-        <option value="$PROJECT_DIR$/src/gui/WeatherManager.java" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/f816feb3-449f-451e-97d2-64b587626564/console_3.sql" />
-        <option value="$PROJECT_DIR$/src/searchengine/IndexableCache.java" />
-        <option value="$PROJECT_DIR$/src/gui/PostWindow.java" />
-        <option value="$PROJECT_DIR$/src/server/Weather.java" />
-        <option value="$PROJECT_DIR$/src/searchengine/Identifier.java" />
-        <option value="$PROJECT_DIR$/src/gui/CompressedRichText.java" />
-        <option value="$PROJECT_DIR$/src/classes/Post.java" />
-        <option value="$PROJECT_DIR$/src/gui/PostArea.java" />
-        <option value="$PROJECT_DIR$/src/server/PreviousPost.java" />
-        <option value="$PROJECT_DIR$/src/server/UpdatePost.java" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/f816feb3-449f-451e-97d2-64b587626564/console_4.sql" />
-        <option value="$PROJECT_DIR$/src/server/DeletePost.java" />
-        <option value="$PROJECT_DIR$/src/server/database/QueryGate.java" />
-        <option value="$PROJECT_DIR$/src/server/CreateAccount.java" />
-        <option value="$PROJECT_DIR$/src/gui/NewUserWindow.java" />
-        <option value="$PROJECT_DIR$/src/server/GetPost.java" />
-        <option value="$PROJECT_DIR$/src/server/NewPost.java" />
-        <option value="$PROJECT_DIR$/src/gui/PostsBody.java" />
-        <option value="$PROJECT_DIR$/src/classes/Test.java" />
-        <option value="$PROJECT_DIR$/src/gui/testproj.java" />
-        <option value="$PROJECT_DIR$/src/main/Root.java" />
-        <option value="$PROJECT_DIR$/src/gui/Main.java" />
-        <option value="$PROJECT_DIR$/src/classes/MultipleChoicePullDownPane.java" />
-        <option value="$PROJECT_DIR$/src/data/DAG.java" />
-        <option value="$PROJECT_DIR$/src/data/Graph.java" />
-        <option value="$PROJECT_DIR$/src/classes/PrerequisiteGraph.java" />
-        <option value="$PROJECT_DIR$/src/localserver/ExternalRequest.java" />
-        <option value="$PROJECT_DIR$/src/net/ServerSession.java" />
-        <option value="$PROJECT_DIR$/src/localserver/database/QueryGate.java" />
         <option value="$PROJECT_DIR$/src/server/Main.java" />
-        <option value="$PROJECT_DIR$/src/server/Command.java" />
         <option value="$PROJECT_DIR$/src/server/AnonymousCommand.java" />
         <option value="$PROJECT_DIR$/src/server/WrongArgumentTypeException.java" />
         <option value="$PROJECT_DIR$/src/server/Close.java" />
         <option value="$PROJECT_DIR$/src/server/database/Row.java" />
-        <option value="$PROJECT_DIR$/src/server/ServerCall.java" />
+        <option value="$PROJECT_DIR$/src/server/Extern.java" />
+        <option value="$PROJECT_DIR$/src/server/DH.java" />
+        <option value="$PROJECT_DIR$/src/server/DHKeyAgreement2.java" />
+        <option value="$PROJECT_DIR$/src/server/Dhgen.java" />
+        <option value="$PROJECT_DIR$/src/server/DHTable.java" />
+        <option value="$PROJECT_DIR$/src/server/DHgen.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ExternalPoll.java" />
+        <option value="$PROJECT_DIR$/src/server/Poll.java" />
+        <option value="$PROJECT_DIR$/src/server/DHReq.java" />
+        <option value="$PROJECT_DIR$/src/net/Net.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ExternalCall.java" />
+        <option value="$PROJECT_DIR$/src/gui/InlineTextEditor.java" />
+        <option value="$PROJECT_DIR$/src/server/Conversation.java" />
+        <option value="$PROJECT_DIR$/src/localserver/database/QueryGate.java" />
+        <option value="$PROJECT_DIR$/src/main/RunAll.java" />
+        <option value="$PROJECT_DIR$/src/server/Test.java" />
+        <option value="$PROJECT_DIR$/src/server/Command.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ConnectionTest.java" />
+        <option value="$PROJECT_DIR$/src/server/ConnectionTest.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ServerCall.java" />
+        <option value="$PROJECT_DIR$/src/main/Servers.java" />
+        <option value="$PROJECT_DIR$/src/localserver/CentralServerSession.java" />
+        <option value="$PROJECT_DIR$/src/gui/WeatherManager.java" />
+        <option value="$PROJECT_DIR$/src/localserver/PollingSocket.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ExternalListener.java" />
+        <option value="$PROJECT_DIR$/src/localserver/Command.java" />
+        <option value="$PROJECT_DIR$/src/localserver/WeatherManager.java" />
+        <option value="$PROJECT_DIR$/src/net/PostEngine.java" />
+        <option value="$PROJECT_DIR$/src/gui/PostsBody.java" />
+        <option value="$PROJECT_DIR$/src/localserver/SetSerFile.java" />
+        <option value="$PROJECT_DIR$/src/main/User.java" />
+        <option value="$PROJECT_DIR$/src/main/Root.java" />
+        <option value="$PROJECT_DIR$/src/net/AnonymousServerSession.java" />
+        <option value="$PROJECT_DIR$/src/gui/Domain.java" />
+        <option value="$PROJECT_DIR$/src/net/ServerSession.java" />
+        <option value="$PROJECT_DIR$/src/net/Domain.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ServerMain.java" />
+        <option value="$PROJECT_DIR$/src/net/AnonymousCentralServerSession.java" />
         <option value="$PROJECT_DIR$/src/server/ServerMain.java" />
+        <option value="$PROJECT_DIR$/src/server/database/QueryGate.java" />
+        <option value="$PROJECT_DIR$/src/server/LocalServers.java" />
+        <option value="$PROJECT_DIR$/src/localserver/CreateAccount.java" />
+        <option value="$PROJECT_DIR$/src/gui/NewUserWindow.java" />
+        <option value="$PROJECT_DIR$/src/server/ServerCall.java" />
+        <option value="$PROJECT_DIR$/src/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/gui/AcctSettings.java" />
       </list>
     </option>
   </component>
@@ -238,10 +356,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="61" />
-    <option name="y" value="27" />
-    <option name="width" value="910" />
-    <option name="height" value="789" />
+    <option name="x" value="67" />
+    <option name="y" value="25" />
+    <option name="width" value="1853" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -298,30 +416,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="paintbrush_lms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintbrush_lms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintbrush_lms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="paintbrush_lms" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="paintbrush_lms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
@@ -332,7 +427,7 @@
     <property name="SearchEverywhereHistoryKey" value="NewU&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/NewUserWindow.java&#10;Createa&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Serverse&#9;PSI&#9;JAVA://net.ServerSession&#10;Comm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Command.java&#10;PostB&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;Post.jav&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;Serverses&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/ServerSession.java&#10;Servercall&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java&#10;Postb&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;postwi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;postare&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;Run&#9;ACTION&#9;ActivateRunToolWindow&#10;PasswordManager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;newpost&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/NewPost.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Command.java&#10;Settings&#9;ACTION&#9;Database.Settings&#10;Weather&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Post&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;newPost&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/NewPost.java&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Sess&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/ServerSession.java&#10;Weat&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Serverma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerMain.java&#10;Serfile&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SerFile.java&#10;Serf&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SetSerFile.java&#10;Create&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Weath&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Root&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;User&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Weatherma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/WeatherManager.java&#10;Wea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;settings&#9;PSI&#9;JAVA://gui.AcctSettings&#10;Cr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;SQLM&#9;PSI&#9;JAVA://db.SQLMaster&#10;Rua&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/RunAll.java&#10;Weatherm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/WeatherManager.java&#10;User.j&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Serfi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SerFile.java&#10;CreateA&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Identifi&#9;PSI&#9;JAVA://searchengine.Identifier&#10;SErverma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerMain.java&#10;Servercal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java&#10;Anony&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/AnonymousServerSession.java&#10;Crea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Get&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/GetLocalSalt.java&#10;Userma&#9;PSI&#9;JAVA://net.Net.UserMaybe&#10;Pass&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;Userm&#9;PSI&#9;JAVA://net.Net.UserMaybe&#10;ServerC&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549818458663" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552509725990" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -342,23 +437,18 @@
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last.edited.regexp" value="\\" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$APPLICATION_CONFIG_DIR$/jdbc-drivers/MySQL Connector/J/5.1.46/mysql-connector-java-5.1.46.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="data" />
-      <recent name="server" />
-      <recent name="net" />
-      <recent name="server.database" />
-      <recent name="main" />
-    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -379,12 +469,6 @@
       <recent name="server" />
       <recent name="main" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="server" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/server" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/server" />
       <recent name="$PROJECT_DIR$/src/server/" />
@@ -392,6 +476,27 @@
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="main" />
+      <recent name="server" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/server" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="net" />
+      <recent name="localserver" />
+      <recent name="server" />
+      <recent name="data" />
+      <recent name="server.database" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="ls" />
+      <command value="pwd" />
+      <command value="sudo -s" />
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -405,26 +510,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.Main" />
-      <module name="Paintbrush" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="gui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.RunAll">
     <configuration name="Root" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Root" />
       <module name="Paintbrush" />
-      <option name="VM_PARAMETERS" value="-Xmx2048m" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="-Xmx2048m --module-path /Users/&lt;user&gt;/Downloads/javafx-sdk-11/lib --add-modules=javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="main.*" />
@@ -438,7 +528,7 @@
     <configuration name="RunAll" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.RunAll" />
       <module name="Paintbrush" />
-      <option name="VM_PARAMETERS" value="--module-path ~/paintbrush_lms/javafx-sdk-11/lib --add-modules=javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path ./out/javafx-sdk-11/lib --add-modules=javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="main.*" />
@@ -451,6 +541,20 @@
     </configuration>
     <configuration name="ServerMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="localserver.ServerMain" />
+      <module name="Paintbrush" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="localserver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Servers" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Servers" />
       <module name="Paintbrush" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -491,6 +595,7 @@
       </method>
     </configuration>
     <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
@@ -500,18 +605,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.Root" />
-      <item itemvalue="Application.ServerMain" />
       <item itemvalue="Application.RunAll" />
       <item itemvalue="Application.ZipMap" />
-      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Servers" />
+      <item itemvalue="Application.ServerMain" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Root" />
         <item itemvalue="Application.RunAll" />
-        <item itemvalue="Application.ZipMap" />
+        <item itemvalue="Application.Root" />
+        <item itemvalue="Application.Servers" />
         <item itemvalue="Application.ServerMain" />
+        <item itemvalue="Application.ZipMap" />
       </list>
     </recent_temporary>
   </component>
@@ -806,7 +911,33 @@
       <workItem from="1549744021485" duration="2306000" />
       <workItem from="1549751055494" duration="2466000" />
       <workItem from="1549754539048" duration="1209000" />
-      <workItem from="1549814180857" duration="3400000" />
+      <workItem from="1549814180857" duration="4184000" />
+      <workItem from="1549827264483" duration="12291000" />
+      <workItem from="1549856693406" duration="3212000" />
+      <workItem from="1549901893711" duration="2846000" />
+      <workItem from="1549909408748" duration="3179000" />
+      <workItem from="1549928105406" duration="8402000" />
+      <workItem from="1550705694504" duration="598000" />
+      <workItem from="1550905269346" duration="856000" />
+      <workItem from="1550960659957" duration="663000" />
+      <workItem from="1551150460740" duration="3393000" />
+      <workItem from="1552154895000" duration="69000" />
+      <workItem from="1552155029076" duration="385000" />
+      <workItem from="1552155455964" duration="2342000" />
+      <workItem from="1552157908834" duration="869000" />
+      <workItem from="1552171446865" duration="4250000" />
+      <workItem from="1552181558638" duration="5740000" />
+      <workItem from="1552250472022" duration="1566000" />
+      <workItem from="1552319303267" duration="6563000" />
+      <workItem from="1552328058857" duration="9255000" />
+      <workItem from="1552413061001" duration="3085000" />
+      <workItem from="1552421926103" duration="2699000" />
+      <workItem from="1552429038384" duration="1922000" />
+      <workItem from="1552434471648" duration="1333000" />
+      <workItem from="1552441830825" duration="4117000" />
+      <workItem from="1552494911514" duration="2203000" />
+      <workItem from="1552499116652" duration="4061000" />
+      <workItem from="1552525109795" duration="963000" />
     </task>
     <servers />
   </component>
@@ -843,31 +974,31 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1637193000" />
+    <option name="totallyTimeSpent" value="1724839000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="top" id="Ant Build" order="0" weight="0.24944568" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1776425" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Learn" order="6" weight="0.3294766" />
-      <window_info id="Image Layers" order="7" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892008" weight="0.18871057" />
+      <window_info id="Ant Build" order="1" sideWeight="0.5010799" side_tool="true" weight="0.17985612" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="UI Designer" order="6" />
+      <window_info id="Learn" order="7" weight="0.3294766" />
+      <window_info id="Image Layers" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.03322259" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5350248" weight="0.44789356" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5714286" weight="0.2949002" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.032397408" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5350248" visible="true" weight="0.44708425" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5714286" weight="0.44168466" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3292683" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4980695" weight="0.7427938" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.4997242" weight="0.30011073" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4980695" weight="0.7419006" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.4997242" weight="0.29913607" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32705098" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.46497518" side_tool="true" weight="0.44739756" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32948583" />
@@ -875,6 +1006,7 @@
       <window_info anchor="bottom" id="Thumbnails" order="14" weight="0.32972974" />
       <window_info active="true" anchor="bottom" id="Database Console" order="15" visible="true" weight="0.3292683" />
       <window_info anchor="bottom" id="Docker" order="16" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Duplicate detector" order="17" weight="0.32937366" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
       <window_info anchor="right" id="Palette" order="2" />
@@ -882,31 +1014,31 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Coverage" order="6" side_tool="true" weight="0.3294766" />
-      <window_info anchor="right" id="Database" order="7" weight="0.11748483" />
-      <window_info anchor="right" id="Cargo" order="8" weight="0.32928848" />
-      <window_info anchor="right" id="Maven Projects" order="9" weight="0.32928848" />
-      <window_info anchor="right" id="Maven" order="10" />
+      <window_info anchor="right" id="Cargo" order="7" weight="0.32928848" />
+      <window_info anchor="right" id="Maven Projects" order="8" weight="0.32928848" />
+      <window_info anchor="right" id="Maven" order="9" />
+      <window_info anchor="right" id="Database" order="10" weight="0.11732153" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="top" id="Ant Build" order="0" weight="0.24944568" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1776425" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Learn" order="6" weight="0.3294766" />
-      <window_info id="Image Layers" order="7" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892008" weight="0.18871057" />
+      <window_info id="Ant Build" order="1" sideWeight="0.5010799" side_tool="true" weight="0.17985612" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="UI Designer" order="6" />
+      <window_info id="Learn" order="7" weight="0.3294766" />
+      <window_info id="Image Layers" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.03322259" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5350248" weight="0.44789356" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5714286" weight="0.2949002" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.032397408" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5350248" visible="true" weight="0.44708425" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5714286" weight="0.44168466" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3292683" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4980695" weight="0.7427938" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.4997242" weight="0.30011073" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4980695" weight="0.7419006" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.4997242" weight="0.29913607" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32705098" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.46497518" side_tool="true" weight="0.44739756" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32948583" />
@@ -914,6 +1046,7 @@
       <window_info anchor="bottom" id="Thumbnails" order="14" weight="0.32972974" />
       <window_info active="true" anchor="bottom" id="Database Console" order="15" visible="true" weight="0.3292683" />
       <window_info anchor="bottom" id="Docker" order="16" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Duplicate detector" order="17" weight="0.32937366" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
       <window_info anchor="right" id="Palette" order="2" />
@@ -921,10 +1054,10 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Coverage" order="6" side_tool="true" weight="0.3294766" />
-      <window_info anchor="right" id="Database" order="7" weight="0.11748483" />
-      <window_info anchor="right" id="Cargo" order="8" weight="0.32928848" />
-      <window_info anchor="right" id="Maven Projects" order="9" weight="0.32928848" />
-      <window_info anchor="right" id="Maven" order="10" />
+      <window_info anchor="right" id="Cargo" order="7" weight="0.32928848" />
+      <window_info anchor="right" id="Maven Projects" order="8" weight="0.32928848" />
+      <window_info anchor="right" id="Maven" order="9" />
+      <window_info anchor="right" id="Database" order="10" weight="0.11732153" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -934,10 +1067,10 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/localserver/SetSerFile.java</url>
-          <line>14</line>
+          <url>file://$PROJECT_DIR$/src/gui/PostWindow.java</url>
+          <line>59</line>
           <properties />
-          <option name="timeStamp" value="49" />
+          <option name="timeStamp" value="80" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -956,356 +1089,378 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/java.base/java/security/Key.java" />
-    <entry file="jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/java.base/java/lang/ref/Reference.java" />
-    <entry file="jar:///usr/lib/jvm/java-10-openjdk-amd64/lib/src.zip!/java.base/java/lang/Class.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/PasswordManager.java">
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/paint/Paint.java" />
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/shape/Shape.java" />
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/scene/shape/ShapeHelper.java" />
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/scene/shape/CircleHelper.java" />
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/scene/NodeHelper.java" />
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/prism/paint/ImagePattern.java" />
+    <entry file="file://$PROJECT_DIR$/src/gui/ShapeImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="51" column="50" selection-start-line="51" selection-start-column="50" selection-end-line="51" selection-end-column="50" />
+        <state relative-caret-position="120">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/Weather.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/ConnectionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="108" column="25" lean-forward="true" selection-start-line="108" selection-start-column="25" selection-end-line="108" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/AnonymousCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/ConnectionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+          <folding>
+            <element signature="e#188#189#0" expanded="true" />
+            <element signature="e#220#221#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Servers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/TaskView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/TaskViewWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="244" column="32" selection-start-line="244" selection-start-column="32" selection-end-line="244" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/CentralServerSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="20" lean-forward="true" selection-start-column="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/java.base/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="843" selection-start-line="843" selection-end-line="843" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/PollingSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="22" column="22" lean-forward="true" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#829#830#0" expanded="true" />
+            <element signature="e#858#859#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/ExternalListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+          <folding>
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3991#3992#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/Close.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+          <folding>
+            <element signature="e#106#107#0" expanded="true" />
+            <element signature="e#138#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/WeatherManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="118" column="25" selection-start-line="118" selection-start-column="25" selection-end-line="118" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/RunAll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/WeatherManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="28" column="38" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Post.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4755">
+          <caret line="423" column="19" selection-start-line="423" selection-start-column="19" selection-end-line="423" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/PostArea.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2280">
-          <caret line="171" column="53" selection-start-line="171" selection-start-column="53" selection-end-line="171" selection-end-column="53" />
+        <state relative-caret-position="120">
+          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/PostWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+        <state relative-caret-position="135">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/InlineTextEditor.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="38" column="23" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
+        <state relative-caret-position="2115">
+          <caret line="158" column="38" selection-start-line="158" selection-start-column="38" selection-end-line="158" selection-end-column="38" />
+          <folding>
+            <element signature="e#9926#9927#0" expanded="true" />
+            <element signature="e#9959#9960#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/PreviousPost.java" />
-    <entry file="file://$PROJECT_DIR$/src/localserver/CreateAccount.java" />
-    <entry file="file://$PROJECT_DIR$/src/classes/Post.java">
+    <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="424" column="33" selection-start-line="424" selection-start-column="30" selection-end-line="424" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/GetPost.java" />
-    <entry file="file://$PROJECT_DIR$/src/localserver/NewPost.java" />
-    <entry file="file://$PROJECT_DIR$/src/gui/testproj.java" />
-    <entry file="file://$PROJECT_DIR$/bell.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/LineItemAnswer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PaintbrushEducation.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3150">
-          <caret line="239" column="32" selection-start-line="239" selection-start-column="32" selection-end-line="239" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Student.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="34" column="10" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+        <state relative-caret-position="255">
+          <caret line="29" column="14" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/MultipleChoicePullDownPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="17" column="39" lean-forward="true" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+        <state relative-caret-position="465">
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
           <folding>
-            <element signature="e#3351#3352#0" expanded="true" />
-            <element signature="e#3384#3385#0" expanded="true" />
-            <element signature="e#27968#27969#0" expanded="true" />
-            <element signature="e#28049#28050#0" expanded="true" />
-            <element signature="e#31939#31940#0" expanded="true" />
-            <element signature="e#31987#31988#0" expanded="true" />
-            <element signature="e#32152#32153#0" expanded="true" />
-            <element signature="e#32180#32181#0" expanded="true" />
-            <element signature="e#32215#32216#0" expanded="true" />
-            <element signature="e#32249#32250#0" expanded="true" />
-            <element signature="e#32282#32283#0" expanded="true" />
-            <element signature="e#32313#32314#0" expanded="true" />
-            <element signature="e#32344#32345#0" expanded="true" />
-            <element signature="e#32371#32372#0" expanded="true" />
-            <element signature="e#32403#32404#0" expanded="true" />
-            <element signature="e#32433#32434#0" expanded="true" />
-            <element signature="e#32467#32468#0" expanded="true" />
-            <element signature="e#32499#32500#0" expanded="true" />
-            <element signature="e#32532#32533#0" expanded="true" />
-            <element signature="e#32563#32564#0" expanded="true" />
-            <element signature="e#32593#32594#0" expanded="true" />
-            <element signature="e#32621#32622#0" expanded="true" />
-            <element signature="e#32650#32651#0" expanded="true" />
-            <element signature="e#32677#32678#0" expanded="true" />
-            <element signature="e#32710#32711#0" expanded="true" />
-            <element signature="e#32740#32741#0" expanded="true" />
-            <element signature="e#32777#32778#0" expanded="true" />
-            <element signature="e#32808#32809#0" expanded="true" />
-            <element signature="e#32846#32847#0" expanded="true" />
-            <element signature="e#32877#32878#0" expanded="true" />
-            <element signature="e#32912#32913#0" expanded="true" />
-            <element signature="e#32942#32943#0" expanded="true" />
-            <element signature="e#32978#32979#0" expanded="true" />
-            <element signature="e#33012#33013#0" expanded="true" />
-            <element signature="e#33048#33049#0" expanded="true" />
-            <element signature="e#33082#33083#0" expanded="true" />
-            <element signature="e#33124#33125#0" expanded="true" />
-            <element signature="e#33154#33155#0" expanded="true" />
-            <element signature="e#33187#33188#0" expanded="true" />
-            <element signature="e#33215#33216#0" expanded="true" />
-            <element signature="e#33253#33254#0" expanded="true" />
-            <element signature="e#33288#33289#0" expanded="true" />
-            <element signature="e#33326#33327#0" expanded="true" />
-            <element signature="e#33358#33359#0" expanded="true" />
-            <element signature="e#34501#34502#0" expanded="true" />
-            <element signature="e#34540#34541#0" expanded="true" />
-            <element signature="e#34569#34570#0" expanded="true" />
-            <element signature="e#34596#34597#0" expanded="true" />
-            <element signature="e#34634#34635#0" expanded="true" />
-            <element signature="e#34666#34667#0" expanded="true" />
-            <element signature="e#34703#34704#0" expanded="true" />
-            <element signature="e#34736#34737#0" expanded="true" />
-            <element signature="e#34789#34790#0" expanded="true" />
-            <element signature="e#34833#34834#0" expanded="true" />
-            <element signature="e#35404#35405#0" expanded="true" />
-            <element signature="e#35433#35434#0" expanded="true" />
-            <element signature="e#35501#35502#0" expanded="true" />
-            <element signature="e#35561#35562#0" expanded="true" />
-            <element signature="e#35631#35632#0" expanded="true" />
-            <element signature="e#35694#35695#0" expanded="true" />
-            <element signature="e#46334#46335#0" expanded="true" />
-            <element signature="e#46370#46371#0" expanded="true" />
-            <element signature="e#47943#47944#0" expanded="true" />
-            <element signature="e#47975#47976#0" expanded="true" />
-            <element signature="e#48017#48018#0" expanded="true" />
-            <element signature="e#48049#48050#0" expanded="true" />
-            <element signature="e#52894#52895#0" expanded="true" />
-            <element signature="e#52923#52924#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3646#3647#0" expanded="true" />
+            <element signature="e#3675#3676#0" expanded="true" />
+            <element signature="e#11412#11413#0" expanded="true" />
+            <element signature="e#11489#11490#0" expanded="true" />
+            <element signature="e#16148#16149#0" expanded="true" />
+            <element signature="e#16186#16187#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/Root.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="728">
-          <caret line="142" column="12" selection-start-line="142" selection-start-column="12" selection-end-line="142" selection-end-column="12" />
+        <state relative-caret-position="1215">
+          <caret line="102" column="40" selection-start-line="102" selection-start-column="40" selection-end-line="102" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
+    <entry file="file://$PROJECT_DIR$/src/localserver/SetSerFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+        <state relative-caret-position="180">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/jdk-11.0.2/lib/src.zip!/java.base/java/util/Collection.java">
+    <entry file="file://$PROJECT_DIR$/src/net/PostEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="710" column="44" selection-start-line="710" selection-start-column="44" selection-end-line="710" selection-end-column="44" />
+        <state relative-caret-position="750">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
           <folding>
-            <element signature="e#34701#34702#0" expanded="true" />
-            <element signature="e#34766#34767#0" expanded="true" />
+            <element signature="e#1559#1560#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jgrapht-jdk1.5-0.7.3.jar!/org/jgrapht/graph/DefaultDirectedGraph.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-          <folding>
-            <element signature="e#435#436#0" expanded="true" />
-            <element signature="e#503#504#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/jgrapht-jdk1.5-0.7.3.jar!/org/jgrapht/graph/DefaultDirectedWeightedGraph.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/DAG.java" />
-    <entry file="file://$PROJECT_DIR$/src/data/Graph.java" />
-    <entry file="file://$PROJECT_DIR$/src/localserver/ExternalRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/database/QueryGate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="31" column="43" lean-forward="true" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/PrerequisiteGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/java.base/java/lang/System.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="42" column="59" selection-start-line="42" selection-start-column="59" selection-end-line="42" selection-end-column="59" />
-          <folding>
-            <element signature="e#1073#1074#0" expanded="true" />
-            <element signature="e#1170#1171#0" expanded="true" />
-          </folding>
+          <caret line="132" column="36" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/java.base/java/net/Socket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="1615" column="19" selection-start-line="1615" selection-start-column="19" selection-end-line="1615" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="390">
+          <caret line="79" column="36" selection-start-line="79" selection-start-column="36" selection-end-line="79" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/Main.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Course.java">
+    <entry file="file://$PROJECT_DIR$/src/org/json/JSONObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="160">
+          <caret line="101" column="13" selection-start-line="101" selection-start-column="13" selection-end-line="101" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        <state relative-caret-position="1575">
+          <caret line="117" column="20" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/Command.java">
+    <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        <state relative-caret-position="1215">
+          <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/AnonymousCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/net/Domain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="57" lean-forward="true" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/WrongArgumentTypeException.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/Close.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/database/Table.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/database/NonexistentTableException.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/database/QueryGate.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/database/Column.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/database/DatabaseUtils.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/database/Row.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/ServerCall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="98" column="41" lean-forward="true" selection-start-line="98" selection-start-column="41" selection-end-line="98" selection-end-column="41" />
+        <state relative-caret-position="300">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/AnonymousCentralServerSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="23" column="51" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/AnonymousServerSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/ServerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+        <state relative-caret-position="1170">
+          <caret line="89" column="59" selection-start-line="89" selection-start-column="59" selection-end-line="89" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/LocalServers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1815">
+          <caret line="148" column="22" selection-start-line="148" selection-start-column="22" selection-end-line="148" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/CreateAccount.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="70" column="10" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/searchengine/QueryEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/database/QueryGate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/database/QueryGate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="42" column="72" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/ServerCall.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="1214" column="52" selection-start-line="1214" selection-start-column="52" selection-end-line="1214" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/AcctSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="155" column="80" lean-forward="true" selection-start-line="155" selection-start-column="80" selection-end-line="155" selection-end-column="80" />
         </state>
       </provider>
     </entry>
@@ -1338,7 +1493,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>OSGi</last-edited>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1397,7 +1552,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>jgrapht:jgrapht:0.7.3</last-edited>
+          <last-edited>mysql-connector-java-5.1.46</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

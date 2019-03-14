@@ -68,7 +68,7 @@ public class CreateAccount extends AnonymousCommand {
 
         //add the user to the database
         String serfile = Base64.getEncoder().encodeToString(bytes);
-        System.out.println(serfile);
+        //System.out.println(serfile);
         gate.update("INSERT INTO users (id, username, `password`, first, last, email, salt, serfile) VALUES " + DatabaseUtils.questionMarks(8, true)+ ";", "lsssssss", newId, username, Base64.getEncoder().encodeToString(combo.getEncryptedPassword()), first, last, email, Base64.getEncoder().encodeToString(combo.getSalt()), serfile);
 
         //link activation key

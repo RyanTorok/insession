@@ -309,6 +309,8 @@ public class User implements Classifiable, Serializable, Indexable {
     public static User read() {
         File dir = new File(Address.fromRootAddr("usr"));
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
+        if (sers == null)
+            return null;
         if (sers.length == 0) {
             return null;
         } else {
@@ -339,6 +341,8 @@ public class User implements Classifiable, Serializable, Indexable {
     public static ArrayList<User> readAll() {
         File dir = new File(Address.fromRootAddr("usr"));
         File[] sers = dir.listFiles((dir1, name) -> name.endsWith(".ser"));
+        if (sers == null)
+            return new ArrayList<>();
         ArrayList<User> out = new ArrayList<>();
         if (sers.length == 0) {
             return new ArrayList<>();
@@ -389,7 +393,11 @@ public class User implements Classifiable, Serializable, Indexable {
 
     public Image getAcctImage() {
         try {
-            return new Image(getImageFN());
+            String imageFN = getImageFN();
+            File f = new File(imageFN);
+            if (f.exists())
+                return new Image("file:" + imageFN);
+            else return Images.defaultUserImage();
         } catch (Exception e) {
             return Images.defaultUserImage();
         }
@@ -517,6 +525,8 @@ public class User implements Classifiable, Serializable, Indexable {
     }
 
     public long getUniqueID() {
+        if (uniqueId == null)
+            return -1;
         return uniqueId.getIdLSB();
     }
 
@@ -554,4 +564,3 @@ public class User implements Classifiable, Serializable, Indexable {
         this.zipcode = zipcode;
     }
 }
-

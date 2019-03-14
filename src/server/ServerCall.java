@@ -1,6 +1,7 @@
 package server;
 
 import main.PasswordManager;
+import org.json.JSONObject;
 import server.database.QueryGate;
 
 import java.net.URLDecoder;
@@ -20,14 +21,16 @@ public class ServerCall {
 
     String[] arguments;
     private boolean requestedClose;
+    private boolean closableWithoutAuth;
 
-    ServerCall(String command) {
+    ServerCall(String command, boolean closableWithoutAuth) {
         arguments = command.split(" ");
+        this.closableWithoutAuth = closableWithoutAuth;
         requestedClose = false;
     }
 
     public String execute() {
-        System.out.println(Arrays.toString(arguments));
+        //System.out.println(Arrays.toString(arguments));
         if (arguments.length < 1)
             return "error : too few arguments";
 
@@ -48,6 +51,7 @@ public class ServerCall {
                 SessionToken o = new SessionToken(key, false);
                 HashSet<SessionToken> tokens = oneTimeKeys.computeIfAbsent(userID, k -> new HashSet<>());
                 tokens.add(o);
+                closableWithoutAuth = false;
                 return key + "\n" + userID;
             }
             return "error : authentication failure";
@@ -58,6 +62,21 @@ public class ServerCall {
             HashSet<SessionToken> tokens = oneTimeKeys.computeIfAbsent(0L, k -> new HashSet<>());
             tokens.add(new SessionToken(key, true));
             return key;
+        }
+
+        if (opcode.equals("connectiontest")) {
+            requestedClose = true;
+            return "success";
+        }
+
+        if (closableWithoutAuth && opcode.equals("close")) {
+            requestedClose = true;
+            return "done";
+        }
+
+        if (opcode.equals("serverdetails")) {
+            JSONObject result = LocalServers.lookup(arguments[3]);
+            return  "null\n" + (result != null ? result.toString() : "error : unrecognized or invalid domain name");
         }
 
         if (arguments.length < 3)
@@ -131,6 +150,10 @@ public class ServerCall {
     //TODO: not thread safe
     boolean requestedClose() {
         return requestedClose;
+    }
+
+    public boolean isClosableWithoutAuth() {
+        return closableWithoutAuth;
     }
 
     private static class SessionToken {

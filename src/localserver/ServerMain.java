@@ -20,6 +20,26 @@ public class ServerMain {
     private static final int SESSION_TIMEOUT_MILLIS = 60000;
 
     public static void main(String[] args) {
+        //initialize link with central server
+        ExternalListener listener = new ExternalListener();
+        try {
+            System.out.print("performing connection test: ");
+            CentralServerSession session = new CentralServerSession();
+            boolean test = session.connectionTest();
+            if (!test) {
+                System.out.println("failure\nError: unable to establish a connection with the central server. Please check your internet connection and try again.");
+                System.exit(1);
+            }
+            System.out.println("success");
+            session.close();
+        } catch (IOException e) {
+            System.out.println("failure\nError: unable to establish a connection with the central server. Please check your internet connection and try again.");
+            System.exit(1);
+        }
+        Thread thread = new Thread(listener);
+        thread.start();
+
+        //open server for client connections
         ServerSocket incoming = null;
         try {
             incoming = new ServerSocket(PORT);
@@ -57,6 +77,7 @@ public class ServerMain {
                         String strIn = in.readLine();
                         if (strIn != null)
                             call = new ServerCall(URLDecoder.decode(strIn, StandardCharsets.UTF_8));
+                        else return;
                     } catch (SocketTimeoutException e) {
                         return;
                     } catch (IOException e) {
@@ -81,7 +102,7 @@ public class ServerMain {
 
     static String keyGen() {
         SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[128];
+        byte[] bytes = new byte[32];
         random.nextBytes(bytes);
         byte[] encoded = Base64.getEncoder().encode(bytes);
         return new String(encoded, StandardCharsets.UTF_8);

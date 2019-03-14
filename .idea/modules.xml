@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Paintbrush.iml" filepath="$PROJECT_DIR$/.idea/Paintbrush.iml" />
-      <module fileurl="file://$PROJECT_DIR$/javafx-sdk-11.0.2/lib/lib.iml" filepath="$PROJECT_DIR$/javafx-sdk-11.0.2/lib/lib.iml" />
     </modules>
   </component>
 </project>

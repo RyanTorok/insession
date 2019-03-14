@@ -63,21 +63,21 @@ public class WeatherManager {
                 URL current_station_url = new URL(closest.getString("id") + "/observations/current/");
                 System.out.println(current_station_url.toString());
                 BufferedReader observationIn = new BufferedReader(new InputStreamReader(current_station_url.openStream()));
-                String observation = "";
+                StringBuilder observation = new StringBuilder();
                 while ((line = observationIn.readLine()) != null) {
-                    observation += line + "\n";
+                    observation.append(line).append("\n");
                 }
                 observationIn.close();
-                JSONObject observationObj = new JSONObject(observation);
+                JSONObject observationObj = new JSONObject(observation.toString());
                 properties = observationObj.getJSONObject("properties");
                 setDescription(properties.getString("textDescription"));
                 Object tempObj = properties.getJSONObject("temperature").get("value");
                 if (tempObj instanceof Integer)
                     setTempCelsius((double) (int) tempObj);
                 else
-                    setTempCelsius(tempObj.equals(null) ? null : (double) tempObj);
+                    setTempCelsius(tempObj == null || tempObj.equals(JSONObject.NULL) ? null : (double) tempObj);
                 setTempFahrenheit(getTempCelsius() == null ? null : getTempCelsius() * 1.8 + 32);
-                success = !tempObj.equals(null);
+                success = tempObj != null;
                 stationIndex++;
             }
             setCurrentState(properties);
@@ -92,7 +92,7 @@ public class WeatherManager {
         String descLC = description.toLowerCase();
         Double lastHr = null;
         Object lastHrObj = properties.getJSONObject("precipitationLastHour").get("value");
-        if (lastHrObj.equals(null))
+        if (lastHrObj.equals(JSONObject.NULL))
             lastHr = 0.0;
         else {
             if (lastHrObj instanceof Integer) {

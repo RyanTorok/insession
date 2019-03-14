@@ -8,9 +8,12 @@ public class AnonymousServerSession extends ServerSession {
         super();
     }
 
+    public AnonymousServerSession(String host, int port) throws IOException {
+        super(host, port);
+    }
+
     @Override
     public boolean open() {
-        System.out.println("here");
         getWriter().println("anonymous");
         try {
             String oneTimeKey = getReader().readLine();
@@ -30,7 +33,7 @@ public class AnonymousServerSession extends ServerSession {
 
     @Override
     public void close() throws IOException {
-
+        command("close");
         setOneTimeKey("");
         closeSocket();
     }

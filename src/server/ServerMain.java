@@ -33,7 +33,7 @@ public class ServerMain {
                 client = incoming.accept();
                 client.setSoTimeout(OPERATION_TIMEOUT_MILLIS);
             } catch (IOException e) {
-                System.out.println("Error encountered when receiving client socket:");
+                System.err.println("Error encountered when receiving client socket:");
                 e.printStackTrace();
                 continue;
             }
@@ -43,7 +43,7 @@ public class ServerMain {
                 out_ = new PrintWriter(client.getOutputStream(), true);
                 in_ = new BufferedReader(new InputStreamReader(client.getInputStream()));
             } catch (IOException e) {
-                System.out.println("Error encountered when receiving client socket:");
+                System.err.println("Error encountered when receiving client socket:");
                 e.printStackTrace();
                 continue;
             }
@@ -51,18 +51,21 @@ public class ServerMain {
             final BufferedReader in = in_;
             Runnable handleClient = ()-> {
                 boolean close = false;
+                boolean closableWithoutAuth = true;
                 while (!close) {
                     ServerCall call = null;
                     try {
                         String strIn = in.readLine();
                         if (strIn != null)
-                            call = new ServerCall(URLDecoder.decode(strIn, StandardCharsets.UTF_8));
+                            call = new ServerCall(URLDecoder.decode(strIn, StandardCharsets.UTF_8), closableWithoutAuth);
+                        else return;
                     } catch (SocketTimeoutException e) {
                         return;
                     } catch (IOException e) {
                         out.println("error : server got bad input on port " + PORT + "\n");
                     }
                     String result = call != null ? call.execute() : "";
+                    closableWithoutAuth = call == null ? closableWithoutAuth : call.isClosableWithoutAuth();
                     if (call != null && call.requestedClose()) {
                         close = true;
                     }
@@ -81,7 +84,7 @@ public class ServerMain {
 
     static String keyGen() {
         SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[128];
+        byte[] bytes = new byte[32];
         random.nextBytes(bytes);
         byte[] encoded = Base64.getEncoder().encode(bytes);
         return new String(encoded, StandardCharsets.UTF_8);
