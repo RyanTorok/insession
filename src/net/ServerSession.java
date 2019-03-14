@@ -186,6 +186,11 @@ public class ServerSession extends Socket {
         return errorMsg;
     }
 
+    public final String getTruncatedErrorMsg() {
+        String orig = getErrorMsg();
+        return orig.substring(orig.indexOf(":") + 1);
+    }
+
     protected final void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
     }

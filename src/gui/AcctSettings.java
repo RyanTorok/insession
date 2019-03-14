@@ -19,9 +19,14 @@ import javafx.stage.Stage;
 import main.*;
 import net.Login;
 import net.Net;
+import net.ServerSession;
 import terminal.Address;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 public class AcctSettings extends Stage {
@@ -75,29 +80,40 @@ public class AcctSettings extends Stage {
             invalidMsg.setText(error);
             if (error.length() == 0) {
                 //confirm old password
-                Login login = new Login(User.active().getUsername(), oldPassword.getText(), false);
-                login.setOnSucceeded(event1 -> {
-                    net.Net.UserMaybe testOldPwd = (Net.UserMaybe) login.getValue();
-                    boolean oldPasswordMatches = testOldPwd.getExistsCode() == 1;
-                    if (oldPasswordMatches) {
-                        //try to set new password
-                        boolean success = net.Net.changePassword(newPassword.getText(), testOldPwd.getUniqueID(), User.active().getUsername(), User.active().getPassword());
-                        if (!success) {
+//                Login login = new Login(User.active().getUsername(), oldPassword.getText(), false);
+                String username = User.active().getUsername();
+                try {
+                    ServerSession session = new ServerSession();
+                    String oldPasswordText = oldPassword.getText();
+                    boolean opened = session.open(username, oldPasswordText);
+                    if (!opened) {
+                        if (session.getTruncatedErrorMsg().equalsIgnoreCase("authentication failure"))
+                            invalidMsg.setText("Your old password is incorrect.");
+                        else
                             invalidMsg.setText("A connection error occurred. Please try again.");
-                        } else {
-                            invalidMsg.setText("Your password has been successfully changed.");
-                            oldPassword.setText("");
-                            newPassword.setText("");
-                            cfPassword.setText("");
-                        }
-                    } else {
-                        invalidMsg.setText("Your old password is incorrect.");
                     }
-
-                });
-                Thread th = new Thread(login);
-                th.setDaemon(true);
-                th.start();
+                    String password = newPassword.getText();
+                    PasswordManager.PasswordCombo encryptedPassword = PasswordManager.newGenLocal(password, username);
+                    byte[] pwd = encryptedPassword.getEncryptedPassword();
+                    String encodedPwd = Base64.getEncoder().encodeToString(pwd);
+                    System.out.println(encodedPwd);
+                    boolean success = session.sendOnly("changepassword", encodedPwd);
+                    session.close();
+                    if (success) {
+                        invalidMsg.setText("Your password has been successfully changed.");
+                        oldPassword.setText("");
+                        newPassword.setText("");
+                        cfPassword.setText("");
+                        User.active().setPassword(encryptedPassword.getEncryptedPassword());
+                        User.active().setPasswordSalt(encryptedPassword.getSalt());
+                    } else {
+                        invalidMsg.setText("A connection error occurred. Please try again.");
+                    }
+                } catch (IOException e) {
+                    invalidMsg.setText("A connection error occurred. Please try again.");
+                } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                    invalidMsg.setText("A security exception occurred. Please try again.");
+                }
             }
         });
 

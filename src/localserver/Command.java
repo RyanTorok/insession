@@ -35,6 +35,7 @@ public abstract class Command {
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
             case "close": return new Close(arguments);
+            case "changepassword": return new ChangePassword(arguments);
             case "createaccount": return new CreateAccount(arguments);
             case "deletepost": return new DeletePost(arguments);
             case "likepost": return new LikePost(arguments);
