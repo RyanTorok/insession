@@ -173,7 +173,7 @@ public class PostsBody extends VBox {
             getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
             try (ServerSession session = new ServerSession()) {
                 if (session.open()) {
-                    System.out.println("session is open!");
+                    session.setPromptOnAuthenticationFailure(true);
                     //TODO add support for class item ids
                     String[] result = session.callAndResponse("newpost", "0", newPost.getTitle(),
                             newPost.getFormattedText().getUnformattedText(), newPost.getFormattedText().getStyleRegex(),

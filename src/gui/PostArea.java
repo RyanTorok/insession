@@ -146,6 +146,7 @@ public class PostArea extends VBox {
 
     private void report() {
         try (ServerSession session = new ServerSession()) {
+            session.setPromptOnAuthenticationFailure(true);
             session.open();
             session.sendOnly("reportpost", post.getIdentifier().getId().toString());
         } catch (IOException e) {
@@ -155,6 +156,7 @@ public class PostArea extends VBox {
 
     private void unreport() {
         try (ServerSession session = new ServerSession()) {
+            session.setPromptOnAuthenticationFailure(true);
             session.open();
             session.sendOnly("unreportpost", post.getIdentifier().getId().toString());
         } catch (IOException e) {
@@ -164,6 +166,7 @@ public class PostArea extends VBox {
 
     private Post previousVersion() {
         try (ServerSession session = new ServerSession()) {
+            session.setPromptOnAuthenticationFailure(true);
             session.open();
             String[] result = session.callAndResponse("previouspost", post.getIdentifier().getId().toString());
             Post prev = new Post(User.fromId(post.getPosterId()), Post.Type.valueOf(result[0]), result[1], result[2], Long.parseLong(result[4]), ClassPd.fromId(post.getClassId()));

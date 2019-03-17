@@ -106,15 +106,17 @@ public class ServerSession extends Socket {
     public void close() throws IOException {
         if (!open)
             return;
+        open = false;
         command("close");
+        oneTimeKey = "";
+        closeSocket();
     }
 
     synchronized boolean command(String name, String... arguments) {
         boolean isAuthenticate = name.equals("authenticate");
         if (!open && !isAuthenticate)
             return false;
-        boolean close = name.equals("close");
-        if (close) {
+        if (name.equals("close")) {
             open = false;
         }
         name = escape(name);
@@ -130,11 +132,6 @@ public class ServerSession extends Socket {
         }
         writeText(cmd.toString());
         try {
-            if (close) {
-                closeSocket();
-                oneTimeKey = "";
-                return true;
-            }
             if (isAuthenticate)
                 return true;
             String s;

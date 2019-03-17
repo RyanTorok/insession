@@ -25,6 +25,7 @@ public class WeatherManager {
     private Long lastUpdate = 0L;
     private static final Double HEAVY_THRESHOLD = .00635;
     private double[] latlon = new double[]{0,0};
+    private long sunriseMillis, sunsetMillis;
 
     public WeatherManager(int zipCode) {
         this.setZipcode(zipCode);
@@ -80,6 +81,7 @@ public class WeatherManager {
                 success = tempObj != null;
                 stationIndex++;
             }
+            calculateSunriseSunset();
             setCurrentState(properties);
             lastUpdate = System.currentTimeMillis();
         } catch (Exception e) {
@@ -225,4 +227,89 @@ public class WeatherManager {
             throw new UnknownZipCodeException("Zip Code not found: " + zip);
         }
     }
+
+    //models the spreadsheet https://www.esrl.noaa.gov/gmd/grad/solcalc/NOAA_Solar_Calculations_day.xls
+    private void calculateSunriseSunset() {
+        int timezone = 0;
+        double minutesPastMidnight = 0.0; //irrelevant, but left in to maintain the integrity to the original
+        double B3 = latlon[0];
+        double B4 = latlon[1];
+        double B5 = timezone;
+        long excelDate = (System.currentTimeMillis() / 1000 / 86400) + 25567;
+
+        //All cell addresses could be any row as long as they're all the same, I just used row 2 because it was the first data row.
+        double D2 = excelDate;
+        double E2 = minutesPastMidnight;
+        double F2 = D2+2415018.5+E2-B5/24;
+        double G2 =(F2-2451545)/36525;
+        double I2 =MOD(280.46646+G2*(36000.76983+G2*0.0003032),360);
+        double J2 =357.52911+G2*(35999.05029-0.0001537*G2);
+        double K2 = 0.016708634-G2*(0.000042037+0.0000001267*G2);
+        double L2 = SIN(RADIANS(J2))*(1.914602-G2*(0.004817+0.000014*G2))+SIN(RADIANS(2*J2))*(0.019993-0.000101*G2)+SIN(RADIANS(3*J2))*0.000289;
+        double M2 = I2 + L2;
+        double N2 = J2 + L2;
+        double O2 = (1.000001018*(1-K2*K2))/(1+K2*COS(RADIANS(N2)));
+        double P2 = M2-0.00569-0.00478*SIN(RADIANS(125.04-1934.136*G2)) ;
+        double Q2 =23+(26+((21.448-G2*(46.815+G2*(0.00059-G2*0.001813))))/60)/60;
+        double R2 =Q2+0.00256*COS(RADIANS(125.04-1934.136*G2));
+        double S2 =DEGREES(ATAN2(COS(RADIANS(P2)),COS(RADIANS(R2))*SIN(RADIANS(P2))));
+        double T2 = DEGREES(ASIN(SIN(RADIANS(R2))*SIN(RADIANS(P2))));
+        double U2 =TAN(RADIANS(R2/2))*TAN(RADIANS(R2/2));
+        double V2 = 4*DEGREES(U2*SIN(2*RADIANS(I2))-2*K2*SIN(RADIANS(J2))+4*K2*U2*SIN(RADIANS(J2))*COS(2*RADIANS(I2))-0.5*U2*U2*SIN(4*RADIANS(I2))-1.25*K2*K2*SIN(2*RADIANS(J2)));
+        double W2 = DEGREES(ACOS(COS(RADIANS(90.833))/(COS(RADIANS(B3))*COS(RADIANS(T2)))-TAN(RADIANS(B3))*TAN(RADIANS(T2))));
+        double X2 = (720 - 4 * B4 - V2 + B5*60)/1440;
+
+        long today = System.currentTimeMillis() - (System.currentTimeMillis() % (1000 * 86400));
+
+        double sunriseDayFrac = X2 - W2*4/1440;
+        double sunsetDayFrac = X2 + W2*4/1440;
+
+        sunriseMillis = (long) ((today + (sunriseDayFrac * 86400 * 1000)) % (1000 * 86400));
+        sunsetMillis = (long) ((today + (sunsetDayFrac * 86400 * 1000)) % (1000 * 86400));
+    }
+
+    private double MOD(double dividend, double divisor) {
+        return dividend % divisor;
+    }
+
+    public long getSunriseMillis() {
+        return sunriseMillis;
+    }
+
+    public long getSunsetMillis() {
+        return sunsetMillis;
+    }
+
+    private double DEGREES(double r) {
+        return Math.toDegrees(r);
+    }
+
+    private double RADIANS(double d) {
+        return Math.toRadians(d);
+    }
+
+    private double SIN(double a) {
+        return Math.sin(a);
+    }
+
+    private double ASIN(double l) {
+        return Math.asin(l);
+    }
+
+    private double COS(double a) {
+        return Math.cos(a);
+    }
+
+    private double ACOS(double l) {
+        return Math.acos(l);
+    }
+
+    private double TAN(double a) {
+        return Math.tan(a);
+    }
+
+    private double ATAN2(double x, double y) {
+        return Math.atan2(y, x);
+    }
+
 }

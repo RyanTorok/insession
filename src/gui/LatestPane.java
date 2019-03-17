@@ -82,7 +82,7 @@ public class LatestPane extends VBox {
         Text placeholder = new Text(textIfEmpty) {
             {
                 setFill(Color.WHITE);
-                setFont(Font.font("Comfortaa", Size.fontSize(15)));
+                setFont(Font.font("Sans Serif", Size.fontSize(15)));
             }
         };
         ifEmpty = new HBox(placeholder) {

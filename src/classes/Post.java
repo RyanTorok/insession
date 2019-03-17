@@ -182,6 +182,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         ClassView active = Root.getPortal().launchClass(classPd, (classView) -> {
             ((PostsBody) classView.getBodyPanes()[0]).fire(this);
             try (ServerSession session = new ServerSession()) {
+                session.setPromptOnAuthenticationFailure(true);
                 session.open();
                 session.sendOnly("viewpost", getIdentifier().getId().toString());
             } catch (IOException e) {
@@ -384,6 +385,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
             getStatusLabels().add(PostStatus.ENDORSED);
         try {
             ServerSession session = new ServerSession();
+            session.setPromptOnAuthenticationFailure(true);
             session.sendOnly("likepost", identifier.getId().toString());
         } catch (IOException ignored) {
         }
@@ -438,6 +440,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
     private void serverSync() {
         //update on server
         try (ServerSession session = new ServerSession()) {
+            session.setPromptOnAuthenticationFailure(true);
             session.open();
             String[] result = session.callAndResponse("newpost", classItemId.toString(), title, formattedText.getUnformattedText(), formattedText.getStyleRegex(), Long.toString(visibleTo), Long.toString(posterNameVisible), parentId.toString(), type.name().toLowerCase(), Boolean.toString(pinned), this.identifier.getId().toString());
             identifier.setId(UUID.fromString(result[0]));

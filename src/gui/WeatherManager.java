@@ -1,18 +1,12 @@
 package gui;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
-import gui.Moon;
-import gui.WeatherState;
-import main.UnknownZipCodeException;
-import main.User;
 import net.AnonymousServerSession;
 import net.ServerSession;
-import org.json.*;
 
 /**
  * Created by 11ryt on 7/24/2017.
@@ -25,16 +19,24 @@ public class WeatherManager{
     private String description;
     private Double tempCelsius;
     private Double tempFahrenheit;
+    private long sunriseMillis, sunsetMillis;
     private static final Double HEAVY_THRESHOLD = .00635;
-    private long lastUpdate = 0;
+    private long lastUpdate;
 
 
     public WeatherManager(int zipCode) {
         this.setZipCode(zipCode);
+        current = null;
+        description = null;
+        tempCelsius = 0.0;
+        sunriseMillis = 0;
+        sunsetMillis = 0;
+        lastUpdate = 0;
     }
 
     public void update() {
-        try (AnonymousServerSession session = new AnonymousServerSession()) {
+        try {
+            AnonymousServerSession session = new AnonymousServerSession();
             boolean open = session.open();
             String[] result = session.callAndResponse("weather", Integer.toString(zipCode));
             session.close();
@@ -46,6 +48,26 @@ public class WeatherManager{
             setTempFahrenheit(getTempCelsius() * 1.8 + 32);
             setCurrent(WeatherState.valueOf(result[3]));
             setDescription(result[4].replaceAll("_", " "));
+            // today in current locale
+            java.util.Calendar date = new GregorianCalendar();
+            // reset hour, minutes, seconds and millis
+            date.set(java.util.Calendar.HOUR_OF_DAY, 0);
+            date.set(java.util.Calendar.MINUTE, 0);
+            date.set(java.util.Calendar.SECOND, 0);
+            date.set(java.util.Calendar.MILLISECOND, 0);
+            long todayUTC = System.currentTimeMillis() - (System.currentTimeMillis() % (1000 * 86400));
+            long todayLocale = date.getTimeInMillis();
+            long sunriseMillisUTC = todayUTC + Long.parseLong(result[5]);
+            long sunsetMillisUTC = todayUTC + Long.parseLong(result[6]);
+
+            //must divide as floating point to avoid truncation of fractional difference
+            int sunriseDayDiff = (int) Math.floor((sunriseMillisUTC - todayLocale) / (1000.0 * 86400.0));
+            int sunsetDayDiff = (int) Math.floor((sunsetMillisUTC - todayLocale) / (1000.0 * 86400.0));
+
+            //add or subtract a day if the UTC offset + UTC midnight calculated the time for the wrong day in the current locale.
+            sunriseMillis = sunriseMillisUTC - (sunriseDayDiff * 86400 * 1000);
+            sunsetMillis = sunsetMillisUTC - (sunsetDayDiff * 86400 * 1000);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,10 +126,6 @@ public class WeatherManager{
         this.tempFahrenheit = tempFahrenheit;
     }
 
-    public boolean isNight() {
-        return false;
-    }
-
     private static final double CYCLE_LENGTH_MILLIS = 2551442801.5584;
     private static final long zero_point = 1530161580000L; // 6/28/18 at 4:53 AM UTC - Full Moon
 
@@ -128,5 +146,14 @@ public class WeatherManager{
             case 8: return Moon.Full_Moon;
             default: return Moon.New_Moon;
         }
+    }
+
+
+    public long getSunriseMillis() {
+        return sunriseMillis;
+    }
+
+    public long getSunsetMillis() {
+        return sunsetMillis;
     }
 }

@@ -19,6 +19,6 @@ public class Weather extends AnonymousCommand {
         manager.updateIfExpired();
         if (manager.getDescription() == null)
             return "error : weather server down or connection error";
-        return makeReturn(zipcode, manager.getLastUpdate(), manager.getTempCelsius(), manager.getCurrent(), manager.getDescription().replaceAll(" ", "_"));
+        return makeReturn(zipcode, manager.getLastUpdate(), manager.getTempCelsius(), manager.getCurrent(), manager.getDescription().replaceAll(" ", "_"), manager.getSunriseMillis(), manager.getSunsetMillis());
     }
 }

@@ -1,12 +1,17 @@
 package gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -23,6 +28,7 @@ import net.ServerSession;
 import terminal.Address;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
@@ -104,7 +110,7 @@ public class AcctSettings extends Stage {
                         oldPassword.setText("");
                         newPassword.setText("");
                         cfPassword.setText("");
-                        User.active().setPassword(encryptedPassword.getEncryptedPassword());
+                        User.active().setPassword(password.getBytes(StandardCharsets.UTF_8));
                         User.active().setPasswordSalt(encryptedPassword.getSalt());
                     } else {
                         invalidMsg.setText("A connection error occurred. Please try again.");
@@ -168,6 +174,11 @@ public class AcctSettings extends Stage {
         int existingZC = User.active().getZipcode();
         TextField zcField = new TextField(existingZC == 0 ? "" : String.format("%05d", existingZC));
         zcField.setPrefColumnCount(5);
+        zcField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > 5) {
+                zcField.setText(zcField.getText().substring(0, 5));
+            }
+        });
         zcField.setEditable(true);
         zcField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -230,13 +241,16 @@ public class AcctSettings extends Stage {
             fileChooser.setTitle("Select Profile Picture");
             fileChooser.setInitialDirectory(new java.io.File(Address.fromRootAddr("resources")));
             java.io.File selected = fileChooser.showOpenDialog(Root.getPortal().getPrimaryStage());
+            if (selected == null) {
+                return;
+            }
             Image new_image = new Image("file:" + selected.getPath());
             if (new_image.isError()) {
                 pictureInvalidMessage.setText("Unable to parse " + selected.getName() + ".");
             } else {
-                Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new_image).apply().getFill());
-                //copied becuase we cannot use the same node twice. -- this comment is from the old, more cumbersome implementation. This code may be able to be simplified further.
-                profilePicture.getChildren().set(1, new ShapeImage(new Circle(30), new_image).apply());
+                Paint fill = new ShapeImage(new Circle(30), new_image).apply().getFill();
+                Root.getPortal().getPicture().setFill(fill);
+                picture.setFill(fill);
                 User.active().setImageFN(selected.getPath());
             }
         });
@@ -244,7 +258,10 @@ public class AcctSettings extends Stage {
         resetToDefault.setOnAction(event -> {
             pictureInvalidMessage.setText("");
             User.active().setImageFN(new java.io.File(Address.fromRootAddr("resources", "default_user.png")).getPath());
-            Root.getPortal().getPicture().setFill(new ShapeImage(new Circle(30), new Image(User.active().getImageFN())).apply().getFill());
+            Image i = new Image("file:" + User.active().getImageFN());
+            Paint fill = new ShapeImage(new Circle(30), i).apply().getFill();
+            Root.getPortal().getPicture().setFill(fill);
+            picture.setFill(fill);
         });
         profilePicture.getChildren().addAll(ppPrompt, picture, browse, resetToDefault, pictureInvalidMessage);
 

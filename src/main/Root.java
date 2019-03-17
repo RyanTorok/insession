@@ -122,7 +122,8 @@ public class Root {
         }
         String encoding = Base64.getEncoder().encodeToString(bytes);
         try (ServerSession session = new ServerSession()) {
-                session.open(User.active().getUsername(), new String(temp));
+            boolean open = session.open(User.active().getUsername(), new String(temp));
+            if (open)
                 session.sendOnly("setserfile", encoding);
         } catch (IOException e) {
             e.printStackTrace();

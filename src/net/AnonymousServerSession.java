@@ -25,16 +25,10 @@ public class AnonymousServerSession extends ServerSession {
             setOpen(true);
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("connection error!");
             setErrorMsg("error : connection error");
             return false;
         }
-    }
-
-    @Override
-    public void close() throws IOException {
-        command("close");
-        setOneTimeKey("");
-        closeSocket();
     }
 }

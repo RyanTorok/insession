@@ -78,6 +78,14 @@ public class SearchModule extends VBox {
         });
         searchBox.textProperty().addListener((observable, oldText, newText) -> {
             if (lastChangeFromUser) {
+                if (newText.length() > 0 && newText.trim().length() == 0) {
+                    searchBox.setText("");
+                    newText = "";
+                }
+                //TODO remove these two lines if we want to allow multiple consecutive spaces
+                newText = newText.replaceAll("\\s+", " ");
+                searchBox.setText(newText);
+                // --------------------------------------------------------------------------
                 lastActualTyped = newText;
                 setFillerSelected(-1);
                 if (newText.trim().length() == 0) {

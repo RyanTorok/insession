@@ -20,6 +20,7 @@ import java.util.*;
 /**
  * Created by 11ryt on 4/21/2017.
  */
+
 public class User implements Classifiable, Serializable, Indexable {
 
     static final long serialVersionUID = 42L;
@@ -97,8 +98,8 @@ public class User implements Classifiable, Serializable, Indexable {
 
     }
 
-    public static User read(String tokenLabel) {
-        File ser = new File(Address.fromRootAddr("usr", tokenLabel + ".ser"));
+    public static User read(String username) {
+        File ser = new File(Address.fromRootAddr("usr", username + ".ser"));
         if (!ser.exists())
             return null;
         try {
@@ -468,7 +469,7 @@ public class User implements Classifiable, Serializable, Indexable {
         this.accentColor = iAmFirst ? external.accentColor : accentColor;
         this.imageFN = iAmFirst ? external.imageFN : imageFN;
         this.schoolCode = iAmFirst ? external.schoolCode : schoolCode;
-        this.zipcode = iAmFirst ? external.zipcode : zipcode;
+//        this.zipcode = iAmFirst ? external.zipcode: zipcode; -- don't sync because the server one is zero
         this.clock24Hour = iAmFirst ? external.clock24Hour : clock24Hour;
         this.tempUnits = iAmFirst ? external.tempUnits : tempUnits;
         this.classesStudent = iAmFirst ? external.getClassesStudent() : getClassesStudent();

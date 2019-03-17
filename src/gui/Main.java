@@ -10,7 +10,9 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -572,8 +574,22 @@ public class Main extends Application {
         String night_clear = "Night_Clear.png";
         String night_cloudy = "Night_Cloudy.png";
 
-        Integer currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
-        Boolean isDaytime = currentHr > 6 && currentHr < 21;
+        long now = System.currentTimeMillis();
+        long sunrise = 0;
+        long sunset = 0;
+        WeatherManager manager = getManager();
+        if (manager != null) {
+            sunrise = manager.getSunriseMillis();
+            sunset = manager.getSunsetMillis();
+        }
+
+        Boolean isDaytime;
+        int currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
+        if (sunrise != 0 && sunset != 0) {
+            isDaytime = sunrise < now && now < sunset;
+        } else {
+            isDaytime = currentHr > 6 && currentHr < 21;
+        }
         day = isDaytime;
         String clear_now = isDaytime ? day_sunny : night_clear;
         String cloudy_now = isDaytime ? day_cloudy : night_cloudy;
@@ -590,9 +606,9 @@ public class Main extends Application {
         backgd.setEffect(null);
 
         boolean needMoon = false;
-        if (manager.getCurrent() == null)
-           manager.setCurrent(WeatherState.Sunny);
-        switch (getManager().getCurrent()) {
+        if (this.manager.getCurrent() == null)
+           this.manager.setCurrent(WeatherState.Sunny);
+        switch (manager.getCurrent()) {
             case Fog:
                 backgd.setImage(parseBackgroundImage(cloudy_now));
                 fog(backgd);
@@ -946,6 +962,12 @@ public class Main extends Application {
         popupWrapper.getChildren().remove(notification);
     }
 
+    public String promptLogin() {
+        TextInputDialog dialog = new TextInputDialog();
+        Optional<String> s = dialog.showAndWait();
+        return s.orElse(null);
+    }
+
 
     class BarMenu extends Text {
         int scrollPos;
@@ -1196,7 +1218,7 @@ public class Main extends Application {
                 Text prompt = new Text(text);
                 Color textFill = Colors.textFill(color, 2);
                 prompt.setFill(textFill);
-                prompt.setFont(Font.font("Arial", Size.fontSize(18)));
+                prompt.setFont(Font.font("Sans Serif", Size.fontSize(18)));
                 this.getChildren().add(prompt);
                 this.text = prompt;
                 setAlignment(Pos.CENTER);
@@ -1385,5 +1407,31 @@ public class Main extends Application {
     public KeyMap getKeyMap() {
         return keyMap;
     }
+    
+    private double lastProgressBar = -1;
 
+    public void progressBar(double num) {
+        if (topBarScrollBar == null)
+            return;
+        if (num > 1 || num < 0)
+            num = -1;
+        lastProgressBar = num;
+        if (num == -1) {
+            repositionTopBarScrollBar(getCurrentMenu(), 200);
+            return;
+        }
+        double width = Size.width((UtilAndConstants.DEFAULT_WIDTH - Size.width(10)) * num);
+        topBarScrollBar.setTranslateX(0);
+        topBarScrollBar.setStartX(0);
+        if (lastProgressBar == -1)
+            topBarScrollBar.setEndX(0);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(topBarScrollBar.endXProperty(), width)));
+        timeline.setOnFinished(event -> {
+            if (lastProgressBar == 1) {
+                repositionTopBarScrollBar(getCurrentMenu(), 150);
+                lastProgressBar = -1;
+            }
+        });
+        timeline.play();
+    }
 }

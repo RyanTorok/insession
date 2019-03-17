@@ -64,17 +64,27 @@ public class NewUserWindow extends Pane {
             if (selectedTab == 1) {
                 String  username   = entries .get(0).getField(),
                         password   = entries .get(1).getField();
-                try (ServerSession session = new ServerSession()) {
+                try {
+                    ServerSession session = new ServerSession();
                     boolean success = session.open(username, password);
                     if (!success) {
                         invalidMessage.setText("We do not recognize that login combination.");
                     } else {
                         String[] result = session.callAndResponse("serfile");
+                        session.close();
                         if (ServerSession.isError(result)) {
                             invalidMessage.setText("An error occurred when fetching your user data.");
                         } else {
                             byte[] serfile = Base64.getDecoder().decode(result[0].replaceAll("#", "+"));
                             User fromSrc = (User) new ObjectInputStream(new ByteArrayInputStream(serfile)).readObject();
+                            //check if user already exists on client machine
+                            User localRead = User.read(username);
+                            if (localRead != null) {
+                                localRead.syncExternal(fromSrc);
+                                Root.saveAll();
+                                //TODO we can improve this by testing if we actually have to sync the combined user file back.
+                            } else {
+                            }
                             fromSrc.setPassword(password.getBytes(StandardCharsets.UTF_8));
                             User.setActive(fromSrc);
                             Root.getPortal().switchToMain();
