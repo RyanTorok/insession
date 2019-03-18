@@ -117,16 +117,14 @@ public class ServerSession extends Socket {
         if (close) {
             open = false;
         }
-//        name = escape(name);
         for (int i = 0; i < arguments.length; i++) {
-//            arguments[i] = escape(arguments[i]);
         }
         long id = this instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
         if (id == 0)
             id = tempId;
         StringBuilder cmd = new StringBuilder(name + " " + oneTimeKey + " " + id);
         for (String s : arguments) {
-            cmd.append(" ").append(s);
+            cmd.append(" ").append(urlEncode(s));
         }
         writeText(cmd.toString());
         try {
@@ -210,6 +208,10 @@ public class ServerSession extends Socket {
 
     protected String escape(String s) {
         return Base64.getEncoder().encodeToString(s.getBytes(StandardCharsets.UTF_8));
+    }
+
+    protected String urlEncode(String s) {
+        return URLEncoder.encode(s, StandardCharsets.UTF_8);
     }
 
     public final String getErrorMsg() {

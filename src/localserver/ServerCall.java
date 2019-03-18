@@ -24,6 +24,10 @@ public class ServerCall {
     ServerCall(String command) {
         command = new String(Base64.getDecoder().decode(command), StandardCharsets.UTF_8);
         arguments = command.split(" ");
+        //de-escape all the command arguments, but not the command name or one time key
+        for (int i = 3; i < arguments.length; i++) {
+            arguments[i] = URLDecoder.decode(arguments[i], StandardCharsets.UTF_8);
+        }
         requestedClose = false;
     }
 

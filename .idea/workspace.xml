@@ -25,38 +25,12 @@
       <change beforePath="$PROJECT_DIR$/html/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/html/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/ClassPd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/classes/Post.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/gui/PostsBody.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ChangePassword.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ChangePassword.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/NewPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/NewPost.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ServerCall$SessionToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ServerCall$SessionToken.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ServerCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ServerCall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ServerMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/ServerMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/localserver/database/QueryGate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/localserver/database/QueryGate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/AnonymousServerSession.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/AnonymousServerSession.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/net/ServerSession.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/net/ServerSession.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerCall$SessionToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerCall$SessionToken.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerCall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush/server/ServerMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/ClassPd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/ClassPd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/PostsBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PostsBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ChangePassword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/NewPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/NewPost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/localserver/ServerCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ServerCall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ServerMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/database/QueryGate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/database/QueryGate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/net/AnonymousServerSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/AnonymousServerSession.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/ServerSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/ServerSession.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/ServerCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerCall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerMain.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,15 +67,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="121" column="49" selection-start-line="121" selection-start-column="49" selection-end-line="121" selection-end-column="49" />
+            <state relative-caret-position="128">
+              <caret line="208" column="27" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1497#1498#0" expanded="true" />
                 <element signature="e#1594#1595#0" expanded="true" />
+                <element signature="e#6711#6712#0" expanded="true" />
+                <element signature="e#6804#6805#0" expanded="true" />
+                <element signature="e#6852#6853#0" expanded="true" />
+                <element signature="e#6896#6897#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,7 +88,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
+            <state relative-caret-position="138">
               <caret line="95" selection-start-line="95" selection-end-line="95" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -120,10 +98,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="24" column="90" lean-forward="true" selection-start-line="24" selection-start-column="90" selection-end-line="24" selection-end-column="90" />
+            <state relative-caret-position="60">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
             </state>
           </provider>
         </entry>
@@ -152,11 +139,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="608" column="27" lean-forward="true" selection-start-line="608" selection-start-column="27" selection-end-line="608" selection-end-column="27" />
+            <state relative-caret-position="70">
+              <caret line="562" column="35" lean-forward="true" selection-start-line="562" selection-start-column="35" selection-end-line="562" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#28471#28472#0" expanded="true" />
@@ -169,10 +156,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="175" column="67" selection-start-line="175" selection-start-column="67" selection-end-line="175" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/ServerCall.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+            <state relative-caret-position="225">
+              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
               <folding>
                 <element signature="e#5967#5968#0" expanded="true" />
                 <element signature="e#6004#6005#0" expanded="true" />
@@ -212,7 +208,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
       <find>updateif</find>
       <find>getsun</find>
       <find>night</find>
@@ -223,7 +218,6 @@
       <find>callan</find>
       <find>here</find>
       <find>progres</find>
-      <find>command</find>
       <find>sunset</find>
       <find>system</find>
       <find>session</find>
@@ -238,10 +232,12 @@
       <find>URLEnc</find>
       <find>authenticate</find>
       <find>URLD</find>
-      <find>escape</find>
       <find>urlde</find>
       <find>updatewea</find>
       <find>updateweather</find>
+      <find>set weather</find>
+      <find>command</find>
+      <find>escape</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -298,14 +294,14 @@
         <option value="$PROJECT_DIR$/src/localserver/NewPost.java" />
         <option value="$PROJECT_DIR$/src/classes/Post.java" />
         <option value="$PROJECT_DIR$/src/localserver/ChangePassword.java" />
-        <option value="$PROJECT_DIR$/src/localserver/Command.java" />
         <option value="$PROJECT_DIR$/src/localserver/ServerMain.java" />
         <option value="$PROJECT_DIR$/src/server/ServerMain.java" />
-        <option value="$PROJECT_DIR$/src/net/ServerSession.java" />
-        <option value="$PROJECT_DIR$/src/localserver/ServerCall.java" />
         <option value="$PROJECT_DIR$/src/net/AnonymousServerSession.java" />
-        <option value="$PROJECT_DIR$/src/server/ServerCall.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/localserver/Command.java" />
+        <option value="$PROJECT_DIR$/src/localserver/ServerCall.java" />
+        <option value="$PROJECT_DIR$/src/server/ServerCall.java" />
+        <option value="$PROJECT_DIR$/src/net/ServerSession.java" />
       </list>
     </option>
   </component>
@@ -914,7 +910,7 @@
       <workItem from="1552783110964" duration="8482000" />
       <workItem from="1552797757759" duration="328000" />
       <workItem from="1552848847346" duration="11484000" />
-      <workItem from="1552870547947" duration="1398000" />
+      <workItem from="1552870547947" duration="3783000" />
     </task>
     <servers />
   </component>
@@ -951,11 +947,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1777910000" />
+    <option name="totallyTimeSpent" value="1780295000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892008" weight="0.18871057" />
       <window_info id="Ant Build" order="1" sideWeight="0.5010799" side_tool="true" weight="0.17985612" />
@@ -967,7 +962,7 @@
       <window_info id="Learn" order="7" weight="0.3294766" />
       <window_info id="Image Layers" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.032397408" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.032397408" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5350248" weight="0.49352053" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5714286" weight="0.44168466" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -975,7 +970,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3292683" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4980695" weight="0.7419006" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Messages" order="9" sideWeight="0.4997242" visible="true" weight="0.29913607" />
+      <window_info anchor="bottom" id="Messages" order="9" sideWeight="0.4997242" weight="0.29913607" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32705098" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.46497518" side_tool="true" weight="0.44739756" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32948583" />
@@ -1315,13 +1310,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="176" column="57" lean-forward="true" selection-start-line="176" selection-start-column="57" selection-end-line="176" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/ClassPd.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="99">
@@ -1360,27 +1348,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="54" column="34" lean-forward="true" selection-start-line="54" selection-start-column="34" selection-end-line="54" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/localserver/ChangePassword.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
           <caret line="18" column="50" lean-forward="true" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
-          <caret line="95" selection-start-line="95" selection-end-line="95" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1418,19 +1389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/ServerCall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-          <folding>
-            <element signature="e#5967#5968#0" expanded="true" />
-            <element signature="e#6004#6005#0" expanded="true" />
-            <element signature="e#6050#6051#0" expanded="true" />
-            <element signature="e#6092#6093#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/AnonymousServerSession.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1451,35 +1409,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="24" column="90" lean-forward="true" selection-start-line="24" selection-start-column="90" selection-end-line="24" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="121" column="49" selection-start-line="121" selection-start-column="49" selection-end-line="121" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1497#1498#0" expanded="true" />
-            <element signature="e#1594#1595#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="608" column="27" lean-forward="true" selection-start-line="608" selection-start-column="27" selection-end-line="608" selection-end-column="27" />
+        <state relative-caret-position="70">
+          <caret line="562" column="35" lean-forward="true" selection-start-line="562" selection-start-column="35" selection-end-line="562" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#28471#28472#0" expanded="true" />
             <element signature="e#28552#28553#0" expanded="true" />
             <element signature="e#29149#29584#0" expanded="true" />
             <element signature="e#29583#29584#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="175" column="67" selection-start-line="175" selection-start-column="67" selection-end-line="175" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/ServerCall.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding>
+            <element signature="e#5967#5968#0" expanded="true" />
+            <element signature="e#6004#6005#0" expanded="true" />
+            <element signature="e#6050#6051#0" expanded="true" />
+            <element signature="e#6092#6093#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="208" column="27" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1497#1498#0" expanded="true" />
+            <element signature="e#1594#1595#0" expanded="true" />
+            <element signature="e#6711#6712#0" expanded="true" />
+            <element signature="e#6804#6805#0" expanded="true" />
+            <element signature="e#6852#6853#0" expanded="true" />
+            <element signature="e#6896#6897#0" expanded="true" />
           </folding>
         </state>
       </provider>
