@@ -76,7 +76,7 @@ public class ClassPd extends MSClass implements Serializable, Indexable {
         initSidebarHotLinks();
         gradebook = new Gradebook();
         postEngine = new PostEngine(this);
-        identifier = new Identifier(toString(), Identifier.Type.Class, IDAllocator.get());
+        identifier = new Identifier(toString(), Identifier.Type.Class, 0);
     }
 
     public int getCapacity() {

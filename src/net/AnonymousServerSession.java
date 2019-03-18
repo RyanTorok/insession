@@ -1,6 +1,8 @@
 package net;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class AnonymousServerSession extends ServerSession {
 
@@ -14,7 +16,7 @@ public class AnonymousServerSession extends ServerSession {
 
     @Override
     public boolean open() {
-        getWriter().println("anonymous");
+        writeText("anonymous");
         try {
             String oneTimeKey = getReader().readLine();
             if (isError(oneTimeKey)) {

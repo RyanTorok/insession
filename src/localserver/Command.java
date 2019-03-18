@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import localserver.database.DatabaseUtils;
 import localserver.database.QueryGate;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;

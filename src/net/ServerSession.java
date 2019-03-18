@@ -117,9 +117,9 @@ public class ServerSession extends Socket {
         if (close) {
             open = false;
         }
-        name = escape(name);
+//        name = escape(name);
         for (int i = 0; i < arguments.length; i++) {
-            arguments[i] = escape(arguments[i]);
+//            arguments[i] = escape(arguments[i]);
         }
         long id = this instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
         if (id == 0)
@@ -209,7 +209,7 @@ public class ServerSession extends Socket {
     }
 
     protected String escape(String s) {
-        return URLEncoder.encode(s, StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(s.getBytes(StandardCharsets.UTF_8));
     }
 
     public final String getErrorMsg() {

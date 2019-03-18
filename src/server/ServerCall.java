@@ -24,6 +24,7 @@ public class ServerCall {
     private boolean closableWithoutAuth;
 
     ServerCall(String command, boolean closableWithoutAuth) {
+        command = new String(Base64.getDecoder().decode(command), StandardCharsets.UTF_8);
         arguments = command.split(" ");
         this.closableWithoutAuth = closableWithoutAuth;
         requestedClose = false;
@@ -42,7 +43,7 @@ public class ServerCall {
             String username = arguments[3];
             if (arguments[4].length() < 2)
                 return "error : authentication failure";
-            byte[] password = Base64.getDecoder().decode(URLDecoder.decode(arguments[4]));
+            byte[] password = Base64.getDecoder().decode(arguments[4]);
             String hashedClientPassword = new String(password, StandardCharsets.UTF_8);
             userID = authenticate(username, hashedClientPassword);
             if (userID >= 0) {

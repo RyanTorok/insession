@@ -17,16 +17,17 @@ public class NewPost extends Command {
     String execute() throws WrongArgumentTypeException, SQLException {
         UUID postID = IDAllocator.get();
         Long userID = getExecutorId();
-        UUID classItemID = optionalArgumentAsUUID(0);
-        String title = getArgumentAsString(1),
-                unformattedText = getArgumentAsString(2),
-                styles = getArgumentAsString(3);
-        Long visibility = getArgumentAsLong(4),
-                nameVisibility = getArgumentAsLong(5);
-        UUID parentPostID = optionalArgumentAsUUID(6);
-        String type = getArgumentAsString(7);
-        Boolean pinned = getArgumentAsBoolean(8);
-        UUID previousVersion = optionalArgumentAsUUID(9);
+        UUID classId = getArgumentAsUUID(0);
+        UUID classItemID = optionalArgumentAsUUID(1);
+        String title = getArgumentAsString(2);
+        String unformattedText = getArgumentAsString(3);
+        String styles = getArgumentAsString(4);
+        Long visibility = getArgumentAsLong(5);
+        Long nameVisibility = getArgumentAsLong(6);
+        UUID parentPostID = optionalArgumentAsUUID(7);
+        String type = getArgumentAsString(8);
+        Boolean pinned = getArgumentAsBoolean(9);
+        UUID previousVersion = optionalArgumentAsUUID(10);
 
         QueryGate gate = new QueryGate();
 
@@ -43,9 +44,12 @@ public class NewPost extends Command {
             if (countExistingChains.getInt("num") != 0) return "error : illegal chaining";
         }
 
-        gate.update("INSERT INTO posts (uuid, poster, class_item, title, unformatted_text, styles, visibility, name_visibility, parent, type, pinned, previous_version) VALUES " + DatabaseUtils.questionMarks(12, true) + ";",
-                "ulusssssusiu",
-                postID, userID, classItemID, title, unformattedText, styles, parseVisibility(visibility), parseNameVisibility(nameVisibility), parentPostID, type, pinned ? 1 : 0, previousVersion);
+        System.out.println(title);
+
+        UUID dbClassItemId = classItemID == null || classItemID.equals(new UUID(0, 0)) ? null : classItemID;
+        gate.update("INSERT INTO posts (uuid, poster, class, class_item, title, unformatted_text, styles, visibility, name_visibility, parent, type, pinned, previous_version) VALUES " + DatabaseUtils.questionMarks(13, true) + ";",
+                "uluusssssusiu",
+                postID, userID, classId, dbClassItemId, title, unformattedText, styles, parseVisibility(visibility), parseNameVisibility(nameVisibility), parentPostID, type, pinned ? 1 : 0, previousVersion);
 
         return postID.toString();
     }

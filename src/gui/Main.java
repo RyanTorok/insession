@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -567,13 +566,8 @@ public class Main extends Application {
         }
     }
 
-    private void setWeatherGraphics(ImageView backgd, AnchorPane weatherPane) {
-        String day_partly_cloudy = "background.jpeg";
-        String day_sunny = "Day_Sunny.png";
-        String day_cloudy = "Day_Cloudy.png";
-        String night_clear = "Night_Clear.png";
-        String night_cloudy = "Night_Cloudy.png";
-
+    //overloaded to avoid recalculation of hour
+    private void checkDaytime(int currentHr) {
         long now = System.currentTimeMillis();
         long sunrise = 0;
         long sunset = 0;
@@ -584,13 +578,30 @@ public class Main extends Application {
         }
 
         Boolean isDaytime;
-        int currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
         if (sunrise != 0 && sunset != 0) {
             isDaytime = sunrise < now && now < sunset;
         } else {
             isDaytime = currentHr > 6 && currentHr < 21;
         }
         day = isDaytime;
+    }
+
+    private void checkDaytime() {
+        int currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
+        checkDaytime(currentHr);
+    }
+
+    private void setWeatherGraphics(ImageView backgd, AnchorPane weatherPane) {
+        String day_partly_cloudy = "background.jpeg";
+        String day_sunny = "Day_Sunny.png";
+        String day_cloudy = "Day_Cloudy.png";
+        String night_clear = "Night_Clear.png";
+        String night_cloudy = "Night_Cloudy.png";
+
+        int currentHr = Integer.parseInt(new SimpleDateFormat("H").format(new Date(System.currentTimeMillis())));
+        checkDaytime(currentHr);
+
+        Boolean isDaytime = day;
         String clear_now = isDaytime ? day_sunny : night_clear;
         String cloudy_now = isDaytime ? day_cloudy : night_cloudy;
         String partly_cloudy_now = isDaytime ? day_partly_cloudy : night_cloudy;
@@ -762,8 +773,9 @@ public class Main extends Application {
         }
         int hour = Integer.parseInt(new SimpleDateFormat("H").format(date));
         int newHrChecksum = Integer.parseInt(new SimpleDateFormat("mmss").format(date));
-        boolean isDaytime = hour > 6 && hour < 21;
-        if (day && !isDaytime || !day && isDaytime || newHrChecksum == 0 && !day) {
+        boolean oldDay = day;
+        checkDaytime();
+        if (oldDay ^ day) {
             setWeatherGraphics(background, weatherPane);
         }
     }

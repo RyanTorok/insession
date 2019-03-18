@@ -175,7 +175,7 @@ public class PostsBody extends VBox {
                 if (session.open()) {
                     session.setPromptOnAuthenticationFailure(true);
                     //TODO add support for class item ids
-                    String[] result = session.callAndResponse("newpost", "0", newPost.getTitle(),
+                    String[] result = session.callAndResponse("newpost", wrapper.getClassPd().getUniqueId().toString(), "0", newPost.getTitle(),
                             newPost.getFormattedText().getUnformattedText(), newPost.getFormattedText().getStyleRegex(),
                             Long.toString(newPost.getVisibleTo()), Long.toString(newPost.getPosterNameVisible()),
                             newPost.getParentId().toString(), newPost.getType().toString(), Boolean.toString(newPost.isPinned()));

@@ -76,7 +76,7 @@ public class ServerMain {
                     try {
                         String strIn = in.readLine();
                         if (strIn != null)
-                            call = new ServerCall(URLDecoder.decode(strIn, StandardCharsets.UTF_8));
+                            call = new ServerCall(strIn);
                         else return;
                     } catch (SocketTimeoutException e) {
                         return;

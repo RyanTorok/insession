@@ -442,7 +442,7 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
         try (ServerSession session = new ServerSession()) {
             session.setPromptOnAuthenticationFailure(true);
             session.open();
-            String[] result = session.callAndResponse("newpost", classItemId.toString(), title, formattedText.getUnformattedText(), formattedText.getStyleRegex(), Long.toString(visibleTo), Long.toString(posterNameVisible), parentId.toString(), type.name().toLowerCase(), Boolean.toString(pinned), this.identifier.getId().toString());
+            String[] result = session.callAndResponse("newpost", classId.toString(), classItemId.toString(), title, formattedText.getUnformattedText(), formattedText.getStyleRegex(), Long.toString(visibleTo), Long.toString(posterNameVisible), parentId.toString(), type.name().toLowerCase(), Boolean.toString(pinned), this.identifier.getId().toString());
             identifier.setId(UUID.fromString(result[0]));
         } catch (IOException e) {
             e.printStackTrace();
