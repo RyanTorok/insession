@@ -24,11 +24,11 @@ public class Poll extends Command {
         return availablePolls.get(me).poll();
     }
 
-    public static void request(Long serverId, String name, Object... arguments) {
+    public static void request(Long serverId, Long token, String sourceNickname, String commandName, Object... arguments) {
         Queue<String> polls = availablePolls.get(serverId);
         if (polls == null)
             throw new IllegalArgumentException("unknown host error");
-        StringBuilder command = new StringBuilder(name);
+        StringBuilder command = new StringBuilder(token + " " + sourceNickname + " " + commandName);
         for (Object arg : arguments) {
             command.append(' ');
             command.append(arg.toString());

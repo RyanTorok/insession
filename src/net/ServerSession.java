@@ -30,6 +30,7 @@ public class ServerSession extends Socket {
     private boolean open;
     private long tempId;
     private boolean promptOnAuthenticationFailure;
+    private boolean enableProgressBar;
 
     public ServerSession() throws IOException {
         this("localhost", PORT);
@@ -49,6 +50,7 @@ public class ServerSession extends Socket {
         open = false;
         tempId = 0;
         promptOnAuthenticationFailure = false;
+        setEnableProgressBar(true);
     }
 
     public boolean open() {
@@ -173,10 +175,10 @@ public class ServerSession extends Socket {
 
     public String[] callAndResponse(String name, String... arguments) {
         Main portal = Root.getPortal();
-        if (portal != null)
+        if (portal != null && isEnableProgressBar())
             portal.progressBar(.5);
         String[] s = callAndResponseInner(name, arguments).split(" ");
-        if (portal != null)
+        if (portal != null && isEnableProgressBar())
             portal.progressBar(1);
         return s;
     }
@@ -271,11 +273,20 @@ public class ServerSession extends Socket {
         }
     }
 
+
     public boolean isPromptOnAuthenticationFailure() {
         return promptOnAuthenticationFailure;
     }
 
     public void setPromptOnAuthenticationFailure(boolean promptOnAuthenticationFailure) {
         this.promptOnAuthenticationFailure = promptOnAuthenticationFailure;
+    }
+
+    public boolean isEnableProgressBar() {
+        return enableProgressBar;
+    }
+
+    public void setEnableProgressBar(boolean enableProgressBar) {
+        this.enableProgressBar = enableProgressBar;
     }
 }

@@ -1,6 +1,9 @@
 package server;
 
+import localserver.database.QueryGate;
+
 import java.math.BigInteger;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DHReq extends Command {
@@ -10,17 +13,27 @@ public class DHReq extends Command {
 
     @Override
     String execute() throws WrongArgumentTypeException, SQLException {
-        Long token = getArgumentAsLong(0);
-        String targetServerName = getArgumentAsString(1);
-        BigInteger publicAN;
+        String targetNickname = getArgumentAsString(0);
+        Long token = getArgumentAsLong(1);
+        BigInteger publicAG;
         try {
-            publicAN = new BigInteger(getArgumentAsString(2));
+            publicAG = new BigInteger(getArgumentAsString(2));
         } catch (NumberFormatException e) {
-            return "error : illegal publicAN format";
+            return "error : illegal publicAG format";
         }
-        Long targetServerID = 0L; // get from name
+        long targetServerID = 0L;
+
+        //get targetServerID from nickname
+        ResultSet result = new QueryGate().query("SELECT `id` FROM registered_hosts WHERE nickname = ?;", "s", targetNickname);
+        while (!result.isAfterLast()) {
+            result.next();
+            targetServerID = result.getLong("id");
+        }
+        if (targetServerID == 0L) {
+            return "error : host does not exist";
+        }
         DHTable.Pair publicVars = DHTable.getPublicVars(token);
-        Poll.request(targetServerID, "dhreq", token, publicVars.n, publicVars.g, publicAN);
+        Poll.request(targetServerID, token, getExecutorNickname(), "dhreq", publicVars.n, publicVars.g, publicAG);
         return "done";
     }
 }

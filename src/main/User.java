@@ -7,6 +7,7 @@ import gui.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import module.Module;
+import net.ImportManager;
 import net.Net;
 import org.json.JSONObject;
 import searchengine.*;
@@ -54,6 +55,7 @@ public class User implements Classifiable, Serializable, Indexable {
     private transient KeyMap keyMap;
     private double sleepTime;
     private Identifier uniqueId;
+    private ImportManager imports;
 
     public User(String mac, String username, byte[] password, String first, String middle, String last, String email, Timestamp timestamp) {
         this.mac = mac;
@@ -73,6 +75,7 @@ public class User implements Classifiable, Serializable, Indexable {
         pictureVisibility = 0;
         sleepTime = 300; //in seconds
         uniqueId = new Identifier(username, Identifier.Type.People, IDAllocator.getLong());
+        imports = new ImportManager();
     }
 
     //server constructor
@@ -92,10 +95,12 @@ public class User implements Classifiable, Serializable, Indexable {
         pictureVisibility = 0;
         sleepTime = 300; //in seconds
         uniqueId = new Identifier(username, Identifier.Type.People, id);
+        imports = new ImportManager();
     }
 
     protected User() {
 
+        imports = new ImportManager();
     }
 
     public static User read(String username) {
@@ -563,5 +568,9 @@ public class User implements Classifiable, Serializable, Indexable {
 
     public void setZipcode(int zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public ImportManager getImports() {
+        return imports;
     }
 }

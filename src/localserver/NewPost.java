@@ -44,8 +44,6 @@ public class NewPost extends Command {
             if (countExistingChains.getInt("num") != 0) return "error : illegal chaining";
         }
 
-        System.out.println(title);
-
         UUID dbClassItemId = classItemID == null || classItemID.equals(new UUID(0, 0)) ? null : classItemID;
         gate.update("INSERT INTO posts (uuid, poster, class, class_item, title, unformatted_text, styles, visibility, name_visibility, parent, type, pinned, previous_version) VALUES " + DatabaseUtils.questionMarks(13, true) + ";",
                 "uluusssssusiu",

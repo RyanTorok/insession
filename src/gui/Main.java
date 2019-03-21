@@ -1,8 +1,13 @@
 package gui;
 
-import classes.*;
+import classes.ClassItem;
+import classes.ClassPd;
+import classes.Course;
+import classes.Record;
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -10,8 +15,9 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,17 +35,18 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.*;
-import org.json.JSONObject;
+import net.ServerSession;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.QueryEngine;
 import terminal.Address;
 
 import java.awt.*;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -300,7 +307,7 @@ public class Main extends Application {
         //weather display
         weatherPane = new AnchorPane();
         manager = new WeatherManager(User.active().getZipcode());
-        getManager().update();
+        //getManager().update();
         Timeline weatherUpdateTimer = new Timeline(new KeyFrame(Duration.millis(300000), event -> updateWeather()));
         weatherUpdateTimer.setCycleCount(Animation.INDEFINITE);
         weatherUpdateTimer.play();
@@ -329,7 +336,7 @@ public class Main extends Application {
         mainBody = body;
         ImageView backgd = new ImageView();
         this.background = backgd;
-        backgd.setFitWidth(Size.width(1900));
+        backgd.setFitWidth(Size.width(1920));
         backgd.setPreserveRatio(true);
         setWeatherGraphics(background, weatherPane);
         mainBodyAndTaskViews = new StackPane();
@@ -438,12 +445,12 @@ public class Main extends Application {
 
         if (allClasses.size() > 0) {
 
-            int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2));
+            int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2.0));
 
             int launchersPerRow = (allClasses.size() + numRows - 1) / numRows;
             int clWidth = (int) Size.width(1840.0 / launchersPerRow - 2 * classLauncherGrid.getHgap());
 
-            int remainder = (int) Size.height(1900 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
+            int remainder = (int) Size.width(1920 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
             classLauncherGrid.setPadding(Size.insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
 
             ClassPd test = new ClassPd();
@@ -472,7 +479,10 @@ public class Main extends Application {
 
         //browse lessons
 
-        GridPane browseLessonsGrid = new GridPane();
+        VBox browseLessonsGrid = new VBox();
+
+        System.out.println(User.active().getImports().get("test").testConnection());
+
         contentPanes[3] = browseLessonsGrid;
 
         //community
@@ -480,11 +490,11 @@ public class Main extends Application {
         GridPane communityGrid = new GridPane();
         contentPanes[4] = communityGrid;
 
-        double cpX = Size.width(1860), cpY = Size.height(1000);
+        double width = Size.width(1920), height = Size.height(1000);
 
         for (Pane p : contentPanes) {
-            p.setMaxSize(cpX, cpY);
-            p.setMinSize(cpX, cpY);
+            p.setMaxSize(width, height);
+            p.setMinSize(width, height);
         }
         contentPanesWrapper.getChildren().addAll(contentPanes);
         mainBody.getChildren().add(contentPanesWrapper);
@@ -506,18 +516,22 @@ public class Main extends Application {
         state = BASE_STATE;
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
-        launchClass(new ClassPd() {
+        System.out.println("w: " + getPrimaryStage().getWidth());
+        System.out.println("h: " + getPrimaryStage().getHeight());
+        Root.getUtilAndConstants().updateScreenSize();
+      /*  launchClass(new ClassPd() {
             @Override
             public JSONObject toJSONObject() {
                 return null;
             }
 
-            {setCastOf(new Course() {{setName("Test Class");}}); setPeriodNo(4);}});
+            {setCastOf(new Course() {{setName("Test Class");}}); setPeriodNo(4);}});*/
 
         for (Collection<Indexable> list :
                 QueryEngine.getPrimaryIndexSets()) {
             searchBox.getEngine().getIndex().index(list);
         }
+        updateWeather();
     }
 
     void closeSearchBar() {
@@ -1078,7 +1092,7 @@ public class Main extends Application {
             init = new TranslateTransition();
             init.setNode(this);
             init.setDuration(Duration.millis(1));
-            init.setByX(Size.width(1900));
+            init.setByX(Size.width(1920));
             init.setAutoReverse(false);
             init.play();
 
@@ -1086,14 +1100,14 @@ public class Main extends Application {
             in = new TranslateTransition();
             in.setNode(this);
             in.setDuration(Duration.millis(200));
-            in.setToX(Size.width(1600));
+            in.setToX(Size.width(1670));
             in.setAutoReverse(false);
 
             //exit screen animation
             out = new TranslateTransition();
             out.setNode(this);
             out.setDuration(Duration.millis(200));
-            out.setToX(Size.width(1900));
+            out.setToX(Size.width(1920));
             out.setAutoReverse(false);
 
             menus = new ArrayList<>();
@@ -1445,5 +1459,9 @@ public class Main extends Application {
             }
         });
         timeline.play();
+    }
+
+    public javafx.stage.Window getCurrentWindow() {
+        return Stage.getWindows().filtered(javafx.stage.Window::isShowing).get(0);
     }
 }

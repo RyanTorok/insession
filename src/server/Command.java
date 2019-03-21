@@ -1,10 +1,8 @@
 package server;
-
-import localserver.*;
-import localserver.database.DatabaseUtils;
-import localserver.database.QueryGate;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.database.DatabaseUtils;
+import server.database.QueryGate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -35,14 +33,35 @@ public abstract class Command {
 
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
-            case "connectiontest":
-                return new ConnectionTest(arguments);
+            case "connectiontest": return new ConnectionTest(arguments);
+            case "hostexists": return new HostExists(arguments);
+            case "registerhost": return new RegisterHost(arguments);
             default: return null;
         }
     }
 
     protected Long getExecutorId() {
         return executorId;
+    }
+
+    protected String getExecutorNickname() throws SQLException {
+        return getServerNicknameByID(getExecutorId());
+    }
+
+    protected String getServerNicknameByID(long id) throws SQLException {
+        ResultSet resultSet = new QueryGate().query("SELECT `nickname` FROM registered_hosts WHERE `id` = ?", "l", id);
+        if (resultSet.isAfterLast())
+            return null;
+        resultSet.next();
+        return resultSet.getString("nickname");
+    }
+
+    protected Long getServerID(String nickname) throws SQLException {
+        ResultSet resultSet = new QueryGate().query("SELECT `id` FROM registered_hosts WHERE `id` = ?", "s", nickname);
+        if (resultSet.isAfterLast())
+            return null;
+        resultSet.next();
+        return resultSet.getLong("id");
     }
 
     protected String getArgumentAsString(int index) {

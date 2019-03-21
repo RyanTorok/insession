@@ -61,7 +61,7 @@ public class TaskViewWrapper extends StackPane {
                             lastShift = 1;
                             shiftCount = 2;
                             if (lastViewed != null)
-                                select(lastViewed);
+                                    select(lastViewed);
                             else if (lastClosed != null) {
                                 select(lastClosed);
                             }
@@ -70,7 +70,8 @@ public class TaskViewWrapper extends StackPane {
                             Root.getPortal().showTaskViews();
                             stack();
                             //used to overcome freezing from previous mouse click
-                            scroll(which);
+                            if (which != -1)
+                                scroll(which);
                         }
                     }
                 } else {
@@ -123,7 +124,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     static final int centerLocX = 0;
-    static final double fullWidth = Size.width(1860);
+    static final double fullWidth = Size.width(1922);
     static final double fullHeight = Size.height(937);
     static final double smallWidth = fullWidth / 2;
     static final double smallHeight = fullHeight / 2;

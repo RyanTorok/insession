@@ -39,6 +39,8 @@ public abstract class Command {
             case "changepassword": return new ChangePassword(arguments);
             case "createaccount": return new CreateAccount(arguments);
             case "deletepost": return new DeletePost(arguments);
+            case "external": return new External(arguments);
+            case "import": return new Import(arguments);
             case "likepost": return new LikePost(arguments);
             case "mergeclass": return new MergeClass(arguments);
             case "newpost": return new NewPost(arguments);
@@ -47,6 +49,8 @@ public abstract class Command {
             case "serfile": return new SerFile(arguments);
             case "setserfile": return new SetSerFile(arguments);
             case "viewpost": return new ViewPost(arguments);
+            case "testexternal": return new TestExternal(arguments);
+            case "unimport": return new Unimport(arguments);
             case "weather": return new Weather(arguments);
             default: return null;
         }
@@ -110,9 +114,10 @@ public abstract class Command {
 
     protected UUID optionalArgumentAsUUID(int index) {
         //TODO don't use exceptions as control flow
+        String arg = getArgumentAsString(index);
         try {
-            return getArgumentAsUUID(index);
-        } catch (WrongArgumentTypeException e) {
+            return UUID.fromString(arg);
+        } catch (IllegalArgumentException e) {
             return null;
         }
     }

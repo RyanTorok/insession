@@ -7,10 +7,10 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class ServerMain {
@@ -18,8 +18,16 @@ public class ServerMain {
     public static final int PORT = 6520;
     private static final int OPERATION_TIMEOUT_MILLIS = 10000;
     private static final int SESSION_TIMEOUT_MILLIS = 60000;
+    private static ServerInfo environment;
 
     public static void main(String[] args) {
+        //who am I?
+        environment = ServerInfo.read();
+        Scanner readPassword = new Scanner(System.in);
+        System.out.println("Password: ");
+        String pwd = readPassword.nextLine();
+        System.out.println(pwd);
+        environment.setPassword(pwd);
         //initialize link with central server
         ExternalListener listener = new ExternalListener();
         try {
@@ -106,5 +114,9 @@ public class ServerMain {
         random.nextBytes(bytes);
         byte[] encoded = Base64.getEncoder().encode(bytes);
         return new String(encoded, StandardCharsets.UTF_8);
+    }
+
+    public static ServerInfo getEnvironment() {
+        return environment;
     }
 }

@@ -148,7 +148,6 @@ public class PostsBody extends VBox {
             }
         });
         Post newPost = Post.newPost(wrapper.getClassPd());
-        postEngine.addPost(newPost);
         PostWindow window = fire(newPost);
         window.getChildren().set(0, titleField);
         InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), (compressedRichText)-> {
@@ -184,10 +183,13 @@ public class PostsBody extends VBox {
                         return; //TODO notify user an error occured.
                     }
                     newPost.getIdentifier().setId(UUID.fromString(result[0]));
-                } else
+                    postEngine.addPost(newPost);
+                } else {
                     System.out.println(session.getErrorMsg());
+                }
                 //check for server error
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
         }, ()->{

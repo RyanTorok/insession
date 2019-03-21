@@ -101,8 +101,7 @@ public class AcctSettings extends Stage {
                     String password = newPassword.getText();
                     PasswordManager.PasswordCombo encryptedPassword = PasswordManager.newGenLocal(password, username);
                     byte[] pwd = encryptedPassword.getEncryptedPassword();
-                    String encodedPwd = Base64.getEncoder().encodeToString(pwd);
-                    System.out.println(encodedPwd);
+                    String encodedPwd = Base64.getEncoder().encodeToString(pwd).replaceAll("\\+", "!");
                     boolean success = session.sendOnly("changepassword", encodedPwd);
                     session.close();
                     if (success) {

@@ -10,6 +10,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -30,7 +32,8 @@ import java.util.Date;
  */
 public class UtilAndConstants {
 
-    public static final double DEFAULT_WIDTH = 1861, DEFAULT_HEIGHT = 1056;
+    public static final double DEFAULT_WIDTH = 1920, DEFAULT_HEIGHT = 1080;
+
     private double screenWidth = DEFAULT_WIDTH, screenHeight = DEFAULT_HEIGHT;
     private School school;
 
@@ -41,6 +44,14 @@ public class UtilAndConstants {
         if (operatingSystem == null)
             initOS();
         return operatingSystem;
+    }
+
+    public void updateScreenSize() {
+        Window w = Root.getPortal().getCurrentWindow();
+        System.out.println(screenWidth);
+        System.out.println(screenHeight);
+        screenWidth = w.getWidth();
+        screenHeight = w.getHeight();
     }
 
     /**

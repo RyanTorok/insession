@@ -16,8 +16,7 @@ public class ChangePassword extends Command {
     @Override
     String execute() throws SQLException {
         Long id = getExecutorId();
-        String base64Pwd = URLDecoder.decode(getArgumentAsString(0), StandardCharsets.UTF_8);
-        System.out.println(base64Pwd);
+        String base64Pwd = URLDecoder.decode(getArgumentAsString(0), StandardCharsets.UTF_8).replaceAll("!", "+");
         byte[] localEncryptedPwd = Base64.getDecoder().decode(base64Pwd);
         PasswordManager.PasswordCombo combo = PasswordManager.newGen(new String(localEncryptedPwd));
         if (combo == null) {

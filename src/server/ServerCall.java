@@ -84,6 +84,18 @@ public class ServerCall {
             return  "null\n" + (result != null ? result.toString() : "error : unrecognized or invalid domain name");
         }
 
+        if (opcode.equals("registerhost")) {
+            try {
+                return new RegisterHost(arguments).execute();
+            } catch (WrongArgumentTypeException e) {
+                e.printStackTrace();
+                return "error : argument error occured";
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "error : database error occured";
+            }
+        }
+
         if (arguments.length < 3)
             return "error : too few arguments";
          String oneTimeKey = arguments[1],
@@ -118,9 +130,9 @@ public class ServerCall {
         }
     }
 
-    private long authenticate(String username, String hashedClientPassword) {
+    private long authenticate(String hostname, String hashedClientPassword) {
         try {
-            ResultSet results = new QueryGate().query("SELECT id, `password`, salt FROM users WHERE username = ?", "s", username);
+            ResultSet results = new QueryGate().query("SELECT id, `password`, salt FROM registered_hosts WHERE nickname = ?", "s", hostname);
             boolean attempt = false;
             long id = -1;
             while (!attempt && !results.isAfterLast()) {

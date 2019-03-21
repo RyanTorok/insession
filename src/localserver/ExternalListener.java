@@ -1,7 +1,5 @@
 package localserver;
 
-import server.Extern;
-
 import javax.crypto.KeyAgreement;
 import javax.crypto.interfaces.DHPublicKey;
 import javax.crypto.spec.DHParameterSpec;
@@ -20,13 +18,16 @@ public class ExternalListener implements Runnable {
                 String[] cmd = socket.poll();
                 if (cmd == null)
                     continue;
-                switch (cmd[0]) {
+                Long token = Long.parseLong(cmd[0]);
+                String source = cmd[1];
+                String opcode = cmd[2];
+                switch (opcode) {
                     case "dhreq":
                         try {
-                            Long token = Long.parseLong(cmd[1]);
-                            BigInteger n = new BigInteger(cmd[2]);
-                            BigInteger g = new BigInteger(cmd[3]);
-                            BigInteger publicBG = new BigInteger(cmd[4]);
+                            BigInteger n = new BigInteger(cmd[3]);
+                            BigInteger g = new BigInteger(cmd[4]);
+                            BigInteger publicBG = new BigInteger(cmd[5]);
+
                             boolean sendBack = ExternalCall.isSendBack(token);
                             //Generate ag public key
                             PublicKey pub;
@@ -50,15 +51,17 @@ public class ExternalListener implements Runnable {
                             ka.doPhase(publicBGKey, true);
 
                             //store our secret key
-                            ExternalCall.setSecretKey(token, ka.generateSecret());
+                            ExternalCall.setSecretKey(token, ka.generateSecret("AES"));
 
                             //allow the code in ExternallCall.open() to advance
                             ExternalCall.satisfyOtherPartyPublicKey(token, publicBG);
 
-                            //send back our public key if we're Bob
+                            //send back our public key to Alice if we're Bob
                             if (sendBack) {
                                 CentralServerSession session = new CentralServerSession();
-                                session.sendOnly("dhreq", token.toString(), n.toString(), g.toString(), publicAG.toString());
+                                session.open();
+                                session.sendOnly("dhreq", source, token.toString(), publicAG.toString());
+                                session.close();
                             }
                         } catch (NumberFormatException e) {
                             break;
@@ -67,14 +70,23 @@ public class ExternalListener implements Runnable {
                             break;
                         }
                     case "decode":
-                        String token = cmd[1];
-                        String encodedMsg = cmd[2];
+                        String encodedMsg = cmd[3];
                         try {
-                            String[] decodedMsg = decode(token, ExternalCall.getSecretKey(Long.parseLong(token)));
-                            
+                            String decodedMsg = decode(token, encodedMsg);
+                            if (decodedMsg == null)
+                                throw new IllegalStateException("null command after decode");
+                            External.receiveEnqueue(token, decodedMsg);
+                            break;
                         } catch (NumberFormatException e) {
                             break;
                         }
+                    case "connectiontest":
+                        CentralServerSession session = new CentralServerSession();
+                        session.open();
+                        session.sendOnly("message", source, token.toString(), "connectiontestsuccess");
+                        break;
+                    case "connectiontestsuccess":
+                        External.receiveEnqueue(token, "success");
                     default:
                         break;
                 }
@@ -84,7 +96,10 @@ public class ExternalListener implements Runnable {
         }
     }
 
-    private String[] decode(String token, byte[] secretKey) {
-        return null;
+    private String decode(Long token, String encodedMsg) {
+        String decoded = ExternalCall.decode(token, encodedMsg);
+        if (decoded == null)
+            return null;
+        return decoded;
     }
 }
