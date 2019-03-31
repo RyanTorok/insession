@@ -40,23 +40,24 @@ public class ExternalCall {
         receiveQueue = new LinkedBlockingQueue<>(queueSize);
 
         Runnable sendIfAvailable = () -> {
-            CentralServerSession session = null;
-            try {
-                session = new CentralServerSession();
-                session.open();
-                session.sendOnly("message", target, "decode", sendQueue.poll());
-                session.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            while (true) {
+                CentralServerSession session = null;
+                try {
+                    String msg = sendQueue.take();
+                    session = new CentralServerSession();
+                    session.open();
+                    session.sendOnly("message", target, "decode", msg);
+                    session.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
         ExecutorService execution = Executors.newSingleThreadExecutor();
         Future<?> submit = execution.submit(sendIfAvailable);
-        try {
-            submit.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        //don't call get on the future because the thread's function never returns.
     }
 
     //local constructor for if we didn't initiate the conversation (we are Bob).
@@ -133,6 +134,7 @@ public class ExternalCall {
     void open() throws IOException {
         CentralServerSession serverSession = new CentralServerSession();
         boolean open = serverSession.open();
+        System.out.println("open: " + open);
         if (!open) throw new IOException("failed to open central server session");
         String[] env = serverSession.callAndResponse("dhgen");
         System.out.println(Arrays.toString(env));
@@ -188,7 +190,12 @@ public class ExternalCall {
 
 
     String receive() {
-        return receiveQueue.poll();
+        try {
+            return receiveQueue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     static boolean isSendBack(Long token) {

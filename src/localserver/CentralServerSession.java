@@ -13,14 +13,14 @@ public class CentralServerSession extends ServerSession {
         super("localhost", PORT);
     }
 
+    public CentralServerSession(String host, int port) throws IOException {
+        super(host, port);
+    }
+
     @Override
     public boolean open() {
         ServerInfo environment = ServerMain.getEnvironment();
-        environment.setPassword("");
-        open(environment.getNickname(), environment.getPassword());
-        super.open();
-
-        return false;
+        return super.open(environment.getNickname(), environment.getPassword());
     }
 
     //TODO maybe remove for security reasons, really only for testing
@@ -33,5 +33,10 @@ public class CentralServerSession extends ServerSession {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    protected long getEffectiveID() {
+        return super.getTempId();
     }
 }

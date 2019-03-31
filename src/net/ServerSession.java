@@ -16,12 +16,13 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class ServerSession extends Socket {
 
     public static final int PORT = 6520;
-    private static final int TIMEOUT_MILLIS = 10000;
+    private static final int TIMEOUT_MILLIS = 100000;
 
     private BufferedReader reader;
     private PrintWriter writer;
@@ -61,16 +62,17 @@ public class ServerSession extends Socket {
         try {
             byte[] src = PasswordManager.encryptWithLocalSalt(password, username);
             String encoded = Base64.getEncoder().encodeToString(src);
-            if (!command("authenticate", username, encoded)) {
+            if (!command("authenticate", username, encoded))
                 return false;
-            }
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             setErrorMsg("error : security exception occurred");
             return false;
         }
+        System.out.println("here!");
         String nonce;
         try {
             nonce = reader.readLine();
+            System.out.println(nonce);
             if (nonce == null || isError(nonce)) {
                 setErrorMsg(nonce);
                 if (promptOnAuthenticationFailure) {
@@ -121,7 +123,7 @@ public class ServerSession extends Socket {
         }
         for (int i = 0; i < arguments.length; i++) {
         }
-        long id = this instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
+        long id = getEffectiveID();
         if (id == 0)
             id = tempId;
         StringBuilder cmd = new StringBuilder(name + " " + oneTimeKey + " " + id);
@@ -139,6 +141,7 @@ public class ServerSession extends Socket {
                 return true;
             String s;
             try {
+                System.out.println(name);
                 s = reader.readLine();
             } catch (SocketTimeoutException e) {
                 e.printStackTrace();
@@ -162,6 +165,10 @@ public class ServerSession extends Socket {
             }
             return false;
         }
+    }
+
+    protected long getEffectiveID() {
+        return this instanceof AnonymousServerSession ? 0 : User.active() == null ? 0 : User.active().getUniqueID();
     }
 
     protected void writeText(String cmd) {
@@ -288,5 +295,9 @@ public class ServerSession extends Socket {
 
     public void setEnableProgressBar(boolean enableProgressBar) {
         this.enableProgressBar = enableProgressBar;
+    }
+
+    protected long getTempId() {
+        return tempId;
     }
 }

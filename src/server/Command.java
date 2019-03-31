@@ -34,9 +34,15 @@ public abstract class Command {
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
             case "connectiontest": return new ConnectionTest(arguments);
+            case "dhgen": return new DHGen(arguments);
+            case "dhreq": return new DHReq(arguments);
             case "hostexists": return new HostExists(arguments);
+            case "poll": return new Poll(arguments);
             case "registerhost": return new RegisterHost(arguments);
-            default: return null;
+            case "close": return new Close(arguments);
+            default:
+                System.out.println("Unexpected command : " + name);
+                return null;
         }
     }
 

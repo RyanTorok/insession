@@ -15,7 +15,7 @@ public class ServerInfo implements Serializable {
     public ServerInfo(long id, String nickname) {
         this.id = id;
         this.nickname = nickname;
-    }   
+    }
 
     public String getNickname() {
         return nickname;

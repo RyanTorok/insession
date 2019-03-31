@@ -97,6 +97,7 @@ public class QueryGate implements AutoCloseable {
         if (!open)
             connect();
         if (update) {
+            statement.executeLargeUpdate();
             statement.executeUpdate();
             return null;
         }

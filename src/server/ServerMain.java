@@ -16,6 +16,7 @@ import java.util.concurrent.*;
 public class ServerMain {
 
     public static final int PORT = 6521;
+    public static final int POLLING_PORT = 6523;
     private static final int OPERATION_TIMEOUT_MILLIS = 10000;
     private static final int SESSION_TIMEOUT_MILLIS = 60000;
 
@@ -27,10 +28,23 @@ public class ServerMain {
             e.printStackTrace();
             System.exit(-1);
         }
+        ServerSocket incomingPolls = null;
+        try {
+            incomingPolls = new ServerSocket(POLLING_PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        runService(incoming, false);
+        runService(incomingPolls, true);
+    }
+
+    private static void runService(ServerSocket incoming, boolean pollsOnly) {
         while (true) {
             Socket client = null;
             try {
                 client = incoming.accept();
+                System.out.println("hello, client " + pollsOnly);
                 client.setSoTimeout(OPERATION_TIMEOUT_MILLIS);
             } catch (IOException e) {
                 System.err.println("Error encountered when receiving client socket:");
@@ -57,7 +71,7 @@ public class ServerMain {
                     try {
                         String strIn = in.readLine();
                         if (strIn != null)
-                            call = new ServerCall(strIn, closableWithoutAuth);
+                            call = new ServerCall(strIn, closableWithoutAuth, pollsOnly);
                         else return;
                     } catch (SocketTimeoutException e) {
                         return;

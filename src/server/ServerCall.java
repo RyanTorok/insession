@@ -22,8 +22,10 @@ public class ServerCall {
     String[] arguments;
     private boolean requestedClose;
     private boolean closableWithoutAuth;
+    private boolean pollsOnly;
 
-    ServerCall(String command, boolean closableWithoutAuth) {
+    ServerCall(String command, boolean closableWithoutAuth, boolean pollsOnly) {
+        this.pollsOnly = pollsOnly;
         command = new String(Base64.getDecoder().decode(command), StandardCharsets.UTF_8);
         arguments = command.split(" ");
         //de-escape all the command arguments, but not the command name or one time key
@@ -35,7 +37,7 @@ public class ServerCall {
     }
 
     public String execute() {
-        //System.out.println(Arrays.toString(arguments));
+        System.out.println("central: " + Arrays.toString(arguments) + " " +  pollsOnly);
         if (arguments.length < 1)
             return "error : too few arguments";
 
@@ -54,14 +56,18 @@ public class ServerCall {
                 String key = ServerMain.keyGen();
                 //we can set the permissions to privileged because we authenticate anyway
                 SessionToken o = new SessionToken(key, false);
+                System.out.println(userID);
                 HashSet<SessionToken> tokens = oneTimeKeys.computeIfAbsent(userID, k -> new HashSet<>());
                 tokens.add(o);
                 closableWithoutAuth = false;
+                System.out.println("done auth");
                 return key + "\n" + userID;
             }
             return "error : authentication failure";
         }
 
+        //these anonymous commands are safe and fast, we don't really have to prevent the polling module accessing these.
+        // There's no reason to use it this way, but we won't fail if they do.
         if (opcode.equals("anonymous")) {
             String key = ServerMain.keyGen();
             HashSet<SessionToken> tokens = oneTimeKeys.computeIfAbsent(0L, k -> new HashSet<>());
@@ -96,6 +102,13 @@ public class ServerCall {
             }
         }
 
+        if (opcode.equals("close")) {
+            if (closableWithoutAuth) {
+                requestedClose = true;
+                return "done";
+            }
+        }
+
         if (arguments.length < 3)
             return "error : too few arguments";
          String oneTimeKey = arguments[1],
@@ -114,6 +127,9 @@ public class ServerCall {
             Command command = Command.getAsType(arguments[0], arguments, userID);
             if (command instanceof Close) {
                 requestedClose = true;
+            }
+            if (pollsOnly && !(command instanceof Poll)) {
+                return "error : tried to execute normal command on polling socket";
             }
             if (command != null) {
                 if (!(command instanceof AnonymousCommand) && newToken.anonymous)
@@ -151,6 +167,7 @@ public class ServerCall {
     }
 
     private synchronized SessionToken quickAuthenticate(long userID, String oneTimeKey) {
+        HashMap<Long, HashSet<SessionToken>> total = oneTimeKeys;
         HashSet<SessionToken> keys = oneTimeKeys.get(userID);
         if (keys == null)
             return null;

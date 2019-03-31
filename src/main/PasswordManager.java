@@ -69,9 +69,14 @@ public class PasswordManager {
         }
     }
 
-    public static PasswordCombo newGenLocal(String password, String username) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public static PasswordCombo newGenLocal(String password, String username)  {
         byte[] salt = username.getBytes(StandardCharsets.UTF_8);
-        return new PasswordCombo(encrypt(password, salt), salt);
+        try {
+            return new PasswordCombo(encrypt(password, salt), salt);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static class PasswordCombo {

@@ -40,7 +40,10 @@ public class DHTable {
             return null;
         SecureRandom rand = new SecureRandom();
         BigInteger n = new BigInteger(BIT_LENGTH, rand);
+        //we have to set the highest order bit because otherwise the security interface complains about key being too short
+        n = n.setBit(2047);
         BigInteger g = new BigInteger(BIT_LENGTH, rand);
+        g = g.setBit(2047);
         Pair value = new Pair(n, g);
         publicVarTable.put(token, value);
         return value;

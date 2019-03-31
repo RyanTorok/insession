@@ -167,7 +167,7 @@ public class NewUserWindow extends Pane {
                             type = -3;
 
                     }
-                } catch (IOException | InvalidKeySpecException | NoSuchAlgorithmException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                     type = -2;
                 }

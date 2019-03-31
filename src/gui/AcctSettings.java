@@ -116,8 +116,6 @@ public class AcctSettings extends Stage {
                     }
                 } catch (IOException e) {
                     invalidMsg.setText("A connection error occurred. Please try again.");
-                } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-                    invalidMsg.setText("A security exception occurred. Please try again.");
                 }
             }
         });

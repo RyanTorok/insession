@@ -3,36 +3,34 @@ package localserver;
 import java.io.*;
 import java.net.Socket;
 
-public class PollingSocket extends Socket {
-    private static final int PORT = 6521;
+public class PollingSocket extends CentralServerSession {
+    private static final int PORT = 6523;
     private static final String HOST = "localhost";
+    private final int DELAY_MILLIS = 3000;
 
-    private BufferedReader reader;
-    private PrintWriter writer;
 
     public PollingSocket() throws IOException {
         this(HOST);
+        open();
     }
 
     protected PollingSocket(String host) throws IOException {
         super(host, PORT);
-        reader = new BufferedReader(new InputStreamReader(this.getInputStream()));
-        writer = new PrintWriter(this.getOutputStream(), true);
     }
 
     public String[] poll() {
-        try {
-            String s = reader.readLine();
-            if (s == null)
-                return null;
-            return s.split("\\s+");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        System.out.println("polling socket poll! Tra la laaaa!");
+        String[] result;
+        do {
+            try {
+                Thread.sleep(DELAY_MILLIS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            result = callAndResponse("poll");
+        } while (result.length == 1 && result[0].equals("done"));
+        return result;
+
     }
 
-    public PrintWriter getWriter() {
-        return writer;
-    }
 }

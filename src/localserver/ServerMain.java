@@ -25,8 +25,7 @@ public class ServerMain {
         environment = ServerInfo.read();
         Scanner readPassword = new Scanner(System.in);
         System.out.println("Password: ");
-        String pwd = readPassword.nextLine();
-        System.out.println(pwd);
+        String pwd = "test"; //readPassword.nextLine();
         environment.setPassword(pwd);
         //initialize link with central server
         ExternalListener listener = new ExternalListener();

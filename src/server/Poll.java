@@ -2,6 +2,7 @@ package server;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -12,6 +13,8 @@ public class Poll extends Command {
 
     static {
         availablePolls = new HashMap<>();
+        //TODO automate this, this part here is just for testing purposes
+        availablePolls.put(6049242897348703150L, new LinkedList<>());
     }
 
     public Poll(String[] arguments) {
@@ -20,8 +23,12 @@ public class Poll extends Command {
 
     @Override
     String execute() {
+        System.out.println("server poll!");
         Long me = getExecutorId();
-        return availablePolls.get(me).poll();
+        Queue<String> requests = availablePolls.get(me);
+        if (requests.isEmpty())
+            return "done";
+        return requests.poll();
     }
 
     public static void request(Long serverId, Long token, String sourceNickname, String commandName, Object... arguments) {

@@ -3,9 +3,9 @@ package server;
 import java.sql.SQLException;
 import java.util.Random;
 
-public class DHgen extends Command {
+public class DHGen extends Command {
 
-    public DHgen(String[] arguments) {
+    public DHGen(String[] arguments) {
         super(arguments);
     }
 

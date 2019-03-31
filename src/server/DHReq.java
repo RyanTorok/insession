@@ -1,6 +1,6 @@
 package server;
 
-import localserver.database.QueryGate;
+import server.database.QueryGate;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -25,10 +25,12 @@ public class DHReq extends Command {
 
         //get targetServerID from nickname
         ResultSet result = new QueryGate().query("SELECT `id` FROM registered_hosts WHERE nickname = ?;", "s", targetNickname);
-        while (!result.isAfterLast()) {
+        if (!result.isBeforeFirst())
+            return "error : invalid server nickname";
+        while (result.isBeforeFirst()) {
             result.next();
-            targetServerID = result.getLong("id");
         }
+        targetServerID = result.getLong("id");
         if (targetServerID == 0L) {
             return "error : host does not exist";
         }
