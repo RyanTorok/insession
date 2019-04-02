@@ -473,15 +473,12 @@ public class Main extends Application {
 
         //organizations
 
-
         GridPane organizationsGrid = new GridPane();
         contentPanes[2] = organizationsGrid;
 
         //browse lessons
 
         VBox browseLessonsGrid = new VBox();
-
-        System.out.println(User.active().getImports().get("test").testConnection());
 
         contentPanes[3] = browseLessonsGrid;
 
@@ -516,8 +513,8 @@ public class Main extends Application {
         state = BASE_STATE;
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
-        System.out.println("w: " + getPrimaryStage().getWidth());
-        System.out.println("h: " + getPrimaryStage().getHeight());
+        //System.out.println("w: " + getPrimaryStage().getWidth());
+        //System.out.println("h: " + getPrimaryStage().getHeight());
         Root.getUtilAndConstants().updateScreenSize();
       /*  launchClass(new ClassPd() {
             @Override

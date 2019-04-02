@@ -4,6 +4,7 @@ import javax.crypto.KeyAgreement;
 import javax.crypto.interfaces.DHPublicKey;
 import javax.crypto.spec.DHParameterSpec;
 import javax.crypto.spec.DHPublicKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.*;
@@ -27,8 +28,7 @@ public class ExternalListener implements Runnable {
                             BigInteger n = new BigInteger(cmd[3]);
                             BigInteger g = new BigInteger(cmd[4]);
                             BigInteger publicBG = new BigInteger(cmd[5]);
-
-                            boolean sendBack = ExternalCall.isSendBack(token);
+                            boolean sendBack = Boolean.valueOf(cmd[6]);
                             //Generate ag public key
                             PublicKey pub;
                             KeyAgreement ka;
@@ -51,42 +51,61 @@ public class ExternalListener implements Runnable {
                             ka.doPhase(publicBGKey, true);
 
                             //store our secret key
-                            ExternalCall.setSecretKey(token, ka.generateSecret("AES"));
+                            byte[] sharedSecret = ka.generateSecret();
+                            SecretKeySpec key = new SecretKeySpec(sharedSecret, 0, 16, "AES");
 
-                            //allow the code in ExternallCall.open() to advance
-                            ExternalCall.satisfyOtherPartyPublicKey(token, publicBG);
-
-                            //send back our public key to Alice if we're Bob
+                            //create new external call instance for bob
                             if (sendBack) {
+                                ExternalCall.activeCalls.put(token, new ExternalCall(source, ExternalCall.QUEUE_SIZE_DEFAULT, token, publicBG));
+                                ExternalCall.setSecretKey(token, sendBack ? ExternalCall.WhoAmI.BOB : ExternalCall.WhoAmI.ALICE, key);
+
+                                //System.out.println("Bob's   secret key: " + Arrays.toString(sharedSecret));
+
+                                //send back our public key to Alice if we're Bob
                                 CentralServerSession session = new CentralServerSession();
                                 session.open();
-                                session.sendOnly("dhreq", source, token.toString(), publicAG.toString());
+                                session.sendOnly("dhreq", source, token.toString(), publicAG.toString(), Boolean.toString(false));
                                 session.close();
                             }
+
+                            //allow the code in ExternallCall.open() to advance. We do this after the send back just for testing reasons (so we don't crash if we send to ourself).
+                            ExternalCall.satisfyOtherPartyPublicKey(token, sendBack ? ExternalCall.WhoAmI.BOB : ExternalCall.WhoAmI.ALICE, publicBG);
+
+                            break;
+
                         } catch (NumberFormatException e) {
                             break;
                         } catch (NoSuchAlgorithmException | InvalidKeyException | InvalidKeySpecException e) {
                             e.printStackTrace();
                             break;
                         }
-                    case "decode":
+                    case "decode_cmd": {
                         String encodedMsg = cmd[3];
                         try {
                             String decodedMsg = decode(token, encodedMsg);
                             if (decodedMsg == null)
                                 throw new IllegalStateException("null command after decode");
-                            External.receiveEnqueue(token, decodedMsg);
+                            ExternalCall call = ExternalCall.activeCalls.get(token);
+                            String result = call.command(decodedMsg, token);
+                            call.sendMessage(result);
                             break;
                         } catch (NumberFormatException e) {
                             break;
                         }
-                    case "connectiontest":
-                        CentralServerSession session = new CentralServerSession();
-                        session.open();
-                        session.sendOnly("message", source, token.toString(), "connectiontestsuccess");
-                        break;
-                    case "connectiontestsuccess":
-                        External.receiveEnqueue(token, "success");
+                    }
+                    case "decode_msg": {
+                        String encodedMsg = cmd[3];
+                        try {
+                            String decodedMsg = decode(token, encodedMsg);
+                            if (decodedMsg == null)
+                                throw new IllegalStateException("null command after decode");
+                            ExternalCall call = ExternalCall.activeCalls.get(token);
+                            call.receiveEnqueue(decodedMsg);
+                            break;
+                        } catch (NumberFormatException e) {
+                            break;
+                        }
+                    }
                     default:
                         break;
                 }

@@ -1,21 +1,19 @@
 package localserver;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Random;
 
 public class External extends AnonymousCommand {
 
-    private static HashMap<Long, ExternalCall> existingSessions = new HashMap<>();
+    private static HashMap<Long, ExternalCall> existingSessions = ExternalCall.activeCalls;
 
     public External(String[] arguments) {
         super(arguments);
     }
 
     @Override
-    String execute() throws WrongArgumentTypeException, SQLException {
+    String execute() {
         String nickname = getArgumentAsString(0);
         ExternalCall externalCall = new ExternalCall(nickname);
         try {
@@ -25,7 +23,7 @@ public class External extends AnonymousCommand {
         }
         Random random = new Random();
         long token = random.nextLong();
-        //TODO this is bad form, fix it
+        //TODO this is bad form - basically a spin lock.
         while (existingSessions.containsKey(token)) {
             token = random.nextLong();
         }
@@ -33,10 +31,16 @@ public class External extends AnonymousCommand {
         return Long.toString(token);
     }
 
-    public static void send(Long token, String message) throws IOException {
+    public static void sendMessage(Long token, String message) throws IOException {
         ExternalCall call = existingSessions.get(token);
         if (call != null)
-            call.send(message);
+            call.sendMessage(message);
+    }
+
+    public static void sendCommand(Long token, String message) throws IOException {
+        ExternalCall call = existingSessions.get(token);
+        if (call != null)
+            call.sendCommand(message);
     }
 
     public static String receive(Long token) {

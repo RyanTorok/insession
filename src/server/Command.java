@@ -33,15 +33,16 @@ public abstract class Command {
 
     private static Command getAsType(String name, String[] arguments) {
         switch (name) {
+            case "close": return new Close(arguments);
             case "connectiontest": return new ConnectionTest(arguments);
             case "dhgen": return new DHGen(arguments);
             case "dhreq": return new DHReq(arguments);
             case "hostexists": return new HostExists(arguments);
+            case "message": return new Message(arguments);
             case "poll": return new Poll(arguments);
             case "registerhost": return new RegisterHost(arguments);
-            case "close": return new Close(arguments);
             default:
-                System.out.println("Unexpected command : " + name);
+                System.err.println("Unexpected command : " + name);
                 return null;
         }
     }
@@ -63,8 +64,8 @@ public abstract class Command {
     }
 
     protected Long getServerID(String nickname) throws SQLException {
-        ResultSet resultSet = new QueryGate().query("SELECT `id` FROM registered_hosts WHERE `id` = ?", "s", nickname);
-        if (resultSet.isAfterLast())
+        ResultSet resultSet = new QueryGate().query("SELECT `id` FROM registered_hosts WHERE `nickname` = ?", "s", nickname);
+        if (!resultSet.isBeforeFirst())
             return null;
         resultSet.next();
         return resultSet.getLong("id");
@@ -107,7 +108,7 @@ public abstract class Command {
     protected Boolean getArgumentAsBoolean(int index) throws WrongArgumentTypeException {
         String arg = getArgumentAsString(index);
         try {
-            return Boolean.getBoolean(arg.toLowerCase());
+            return Boolean.valueOf(arg);
         } catch (Exception e) {
             throw new WrongArgumentTypeException("expected boolean at index " + index + ", got " + arg);
         }

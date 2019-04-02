@@ -14,7 +14,7 @@ public class TestExternal extends Command {
         ExternalCall call = new ExternalCall(nickname);
         try {
             call.open();
-            call.send("connectiontest");
+            call.sendCommand("connectiontest");
             return call.receive();
         } catch (IOException e) {
             e.printStackTrace();

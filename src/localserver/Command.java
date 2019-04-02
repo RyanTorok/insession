@@ -37,6 +37,7 @@ public abstract class Command {
         switch (name) {
             case "close": return new Close(arguments);
             case "changepassword": return new ChangePassword(arguments);
+            case "connectiontest": return new ConnectionTest(arguments);
             case "createaccount": return new CreateAccount(arguments);
             case "deletepost": return new DeletePost(arguments);
             case "external": return new External(arguments);

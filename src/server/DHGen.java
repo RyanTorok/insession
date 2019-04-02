@@ -15,7 +15,7 @@ public class DHGen extends Command {
         DHTable.Pair p;
         long token;
         do {
-            token = rand.nextLong();
+            token = Math.abs(rand.nextLong());
             p = DHTable.newGen(token);
         } while (p == null);
         return p.n + " " + p.g + " " + token;

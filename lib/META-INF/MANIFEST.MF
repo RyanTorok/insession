@@ -234,7 +234,9 @@ Import-Package: javafx.collections,
  org.fxmisc.richtext,
  javafx.beans.value,
  org.reactfx,
- javafx.concurrent
+ javafx.concurrent,
+ javax.net.ssl,
+ javax.net
 
 Name: org/eclipse/fx/ui/controls/stage/NativeDecoratedTrimmedWindow.ja
  va

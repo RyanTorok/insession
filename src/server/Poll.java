@@ -23,7 +23,6 @@ public class Poll extends Command {
 
     @Override
     String execute() {
-        System.out.println("server poll!");
         Long me = getExecutorId();
         Queue<String> requests = availablePolls.get(me);
         if (requests.isEmpty())

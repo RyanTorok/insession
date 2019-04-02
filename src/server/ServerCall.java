@@ -37,7 +37,7 @@ public class ServerCall {
     }
 
     public String execute() {
-        System.out.println("central: " + Arrays.toString(arguments) + " " +  pollsOnly);
+        //System.out.println("central: " + Arrays.toString(arguments));
         if (arguments.length < 1)
             return "error : too few arguments";
 
@@ -56,11 +56,9 @@ public class ServerCall {
                 String key = ServerMain.keyGen();
                 //we can set the permissions to privileged because we authenticate anyway
                 SessionToken o = new SessionToken(key, false);
-                System.out.println(userID);
                 HashSet<SessionToken> tokens = oneTimeKeys.computeIfAbsent(userID, k -> new HashSet<>());
                 tokens.add(o);
                 closableWithoutAuth = false;
-                System.out.println("done auth");
                 return key + "\n" + userID;
             }
             return "error : authentication failure";
@@ -167,16 +165,17 @@ public class ServerCall {
     }
 
     private synchronized SessionToken quickAuthenticate(long userID, String oneTimeKey) {
-        HashMap<Long, HashSet<SessionToken>> total = oneTimeKeys;
         HashSet<SessionToken> keys = oneTimeKeys.get(userID);
         if (keys == null)
             return null;
-        boolean exists = keys.removeIf(sessionToken -> oneTimeKey.equals(sessionToken.oneTimeKey));
-        if (exists) {
-            String newKey = ServerMain.keyGen();
-            SessionToken token = new SessionToken(newKey, userID == 0);
-            keys.add(token);
-            return token;
+        synchronized (oneTimeKeys.get(userID)) {
+            boolean exists = keys.removeIf(sessionToken -> oneTimeKey.equals(sessionToken.oneTimeKey));
+            if (exists) {
+                String newKey = ServerMain.keyGen();
+                SessionToken token = new SessionToken(newKey, userID == 0);
+                keys.add(token);
+                return token;
+            }
         }
         return null;
     }

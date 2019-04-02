@@ -5,6 +5,8 @@ import main.PasswordManager;
 import main.Root;
 import main.User;
 
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,10 +18,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 import java.util.Base64;
 
-public class ServerSession extends Socket {
+public class ServerSession implements AutoCloseable {
 
     public static final int PORT = 6520;
     private static final int TIMEOUT_MILLIS = 100000;
@@ -32,17 +33,19 @@ public class ServerSession extends Socket {
     private long tempId;
     private boolean promptOnAuthenticationFailure;
     private boolean enableProgressBar;
+    private Socket socket;
 
     public ServerSession() throws IOException {
         this("localhost", PORT);
     }
 
     protected ServerSession(String host, int port) throws IOException {
-        super(host, port);
+        //socket = SSLSocketFactory.getDefault().createSocket(host, port);
+        socket = new Socket(host, port);
         try {
-            reader = new BufferedReader(new InputStreamReader(this.getInputStream()));
-            writer = new PrintWriter(this.getOutputStream(), true);
-            setSoTimeout(TIMEOUT_MILLIS);
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer = new PrintWriter(socket.getOutputStream(), true);
+            socket.setSoTimeout(TIMEOUT_MILLIS);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,11 +71,9 @@ public class ServerSession extends Socket {
             setErrorMsg("error : security exception occurred");
             return false;
         }
-        System.out.println("here!");
         String nonce;
         try {
             nonce = reader.readLine();
-            System.out.println(nonce);
             if (nonce == null || isError(nonce)) {
                 setErrorMsg(nonce);
                 if (promptOnAuthenticationFailure) {
@@ -103,10 +104,9 @@ public class ServerSession extends Socket {
     }
 
     protected void closeSocket() throws IOException {
-        super.close();
+        socket.close();
     }
 
-    @Override
     public void close() throws IOException {
         if (!open)
             return;
@@ -141,7 +141,6 @@ public class ServerSession extends Socket {
                 return true;
             String s;
             try {
-                System.out.println(name);
                 s = reader.readLine();
             } catch (SocketTimeoutException e) {
                 e.printStackTrace();
@@ -276,6 +275,7 @@ public class ServerSession extends Socket {
             String result = getReader().readLine().trim();
             return result.equals("success");
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -299,5 +299,9 @@ public class ServerSession extends Socket {
 
     protected long getTempId() {
         return tempId;
+    }
+
+    protected boolean isClosed() {
+        return !open;
     }
 }

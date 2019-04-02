@@ -48,8 +48,8 @@ public class UtilAndConstants {
 
     public void updateScreenSize() {
         Window w = Root.getPortal().getCurrentWindow();
-        System.out.println(screenWidth);
-        System.out.println(screenHeight);
+        //System.out.println(screenWidth);
+        //System.out.println(screenHeight);
         screenWidth = w.getWidth();
         screenHeight = w.getHeight();
     }

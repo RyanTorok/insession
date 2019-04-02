@@ -1,5 +1,7 @@
 package localserver;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,11 +46,13 @@ public class ServerMain {
             System.exit(1);
         }
         Thread thread = new Thread(listener);
+        thread.setName("Local Domain Server - Polling");
         thread.start();
 
         //open server for client connections
         ServerSocket incoming = null;
         try {
+            //incoming = SSLServerSocketFactory.getDefault().createServerSocket(PORT);
             incoming = new ServerSocket(PORT);
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,7 +101,8 @@ public class ServerMain {
                     out.println(result);
                 }
             };
-            ExecutorService execution = Executors.newSingleThreadExecutor();
+            NamedThreadFactory factory = new NamedThreadFactory("Handle Client " + incoming.getInetAddress());
+            ExecutorService execution = Executors.newSingleThreadExecutor(factory);
             Future<?> submit = execution.submit(handleClient);
             try {
                 submit.get(SESSION_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);

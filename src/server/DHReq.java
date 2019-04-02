@@ -34,8 +34,10 @@ public class DHReq extends Command {
         if (targetServerID == 0L) {
             return "error : host does not exist";
         }
-        DHTable.Pair publicVars = DHTable.getPublicVars(token);
-        Poll.request(targetServerID, token, getExecutorNickname(), "dhreq", publicVars.n, publicVars.g, publicAG);
+        DHTable.Pair publicVars = DHTable.getPublicVars(Math.abs(token));
+        Boolean argumentAsBoolean = getArgumentAsBoolean(3);
+        String s = Boolean.toString(argumentAsBoolean);
+        Poll.request(targetServerID, token * -1, getExecutorNickname(), "dhreq", publicVars.n, publicVars.g, publicAG, s);
         return "done";
     }
 }
