@@ -128,7 +128,7 @@ public abstract class Command {
     static String makeReturn(Object... values) {
         StringBuilder combined = new StringBuilder();
         for (Object o : values) {
-           String str = o.toString();
+           String str = o == null ? "null" : o.toString();
            combined.append(URLEncoder.encode(str, StandardCharsets.UTF_8)).append(" ");
         }
         return combined.toString();

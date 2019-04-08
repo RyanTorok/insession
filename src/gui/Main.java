@@ -6,8 +6,6 @@ import classes.Course;
 import classes.Record;
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -16,7 +14,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -35,14 +32,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.*;
-import net.ServerSession;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.QueryEngine;
 import terminal.Address;
 
 import java.awt.*;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -71,7 +66,7 @@ public class Main extends Application {
     private Pane[] contentPanes;
     private HBox contentPanesWrapper;
 
-    private HBox top_bar;
+    private HBox topbar;
     Line topBarScrollBar;
     private boolean tbsbDrag = false;
     private Node sleepBody;
@@ -99,6 +94,7 @@ public class Main extends Application {
     private AnchorPane weatherPane;
     private boolean day;
     private StackPane topbarWrapper;
+    private String borderWidth;
 
     //Task Views
     private TaskViewWrapper taskViews;
@@ -222,20 +218,19 @@ public class Main extends Application {
         menusWrapper.setSpacing(Size.width(30));
         allMenusAndSearchBar = new StackPane(menusWrapper);
         popupWrapper = new HBox();
-        HBox topbar = new HBox(titles, allMenusAndSearchBar, new Layouts.Filler(), new AnchorPane(name), new AnchorPane(picture), popupWrapper);
+        topbar = new HBox(titles, allMenusAndSearchBar, new Layouts.Filler(), new AnchorPane(name), new AnchorPane(picture), popupWrapper);
         AnchorPane.setTopAnchor(name, Size.height(40));
         AnchorPane.setLeftAnchor(picture, Size.width(5));
         AnchorPane.setTopAnchor(picture, Size.height(22.5));
         topbarPictureIndex = topbar.getChildren().size() - 2; //picture is last item in top bar, besides the popup handler
-        top_bar = topbar;
         topbar.setSpacing(Size.width(35));
         topbar.setAlignment(Pos.TOP_LEFT);
         String color = Colors.colorToHex(User.active().getAccentColor());
-        String borderWidth = (int) Size.height(8) + "px";
+        borderWidth = (int) Size.height(8) + "px";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(Size.insets(15));
-        top_bar.setPrefHeight(Size.height(135));
-        top_bar.setMinHeight(Size.height(135));
+        this.topbar.setPrefHeight(Size.height(135));
+        this.topbar.setMinHeight(Size.height(135));
 
         //top bar scroll bar
         topBarScrollBar = new Line();
@@ -246,7 +241,7 @@ public class Main extends Application {
         topBarScrollBar.setStrokeWidth(Size.lessWidthHeight(8));
         topBarScrollBar.setStroke(Colors.highlightColor(User.active().getAccentColor()));
 
-        top_bar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+        this.topbar.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             if (state == SEARCH_STATE)
                 return;
             //don't trigger drags on name or picture
@@ -257,7 +252,7 @@ public class Main extends Application {
             tbsbDrag = true;
         });
 
-        top_bar.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+        this.topbar.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             if (!tbsbDrag && event.getTarget() != topbar && event.getTarget() != menusWrapper && event.getTarget() != allMenusAndSearchBar)
                 return;
             tbsbDrag = false;
@@ -280,6 +275,11 @@ public class Main extends Application {
         topbarWrapper = new StackPane(topbar, topBarScrollBar);
         topbarWrapper.setAlignment(Pos.BOTTOM_LEFT);
 
+        //secret space game
+        keyMap.associate(BASE_STATE, KeyMap.BOTH, "Ctrl+G", node -> {
+            startGame(true);
+        });
+
         //clock
         final Text clock = new Text("");
         this.clock = clock;
@@ -293,6 +293,7 @@ public class Main extends Application {
             Main.this.updateTime();
             lastInteractSecs += 0.5;
             if (lastInteractSecs >= User.active().getSleepTime() && state != SLEEP_STATE) {
+                closeGame();
                 quitTerminal();
                 closeSearchBar();
                 closeSideBar();
@@ -342,6 +343,8 @@ public class Main extends Application {
         mainBodyAndTaskViews = new StackPane();
         StackPane allBodyPanes = new StackPane(sleepbody, mainBodyAndTaskViews);
         VBox root = new VBox(topbarWrapper, allBodyPanes);
+        topbarWrapper.setViewOrder(Integer.MAX_VALUE);
+        allBodyPanes.setViewOrder(Integer.MIN_VALUE);
         root.setMinHeight(Size.height(1080));
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
@@ -541,6 +544,13 @@ public class Main extends Application {
         state = BASE_STATE;
     }
 
+    void closeGame() {
+        if (topbarWrapper.getChildren().size() > 2) {
+            ((SpaceGame) topbarWrapper.getChildren().get(1)).quit();
+            topbarWrapper.getChildren().remove(1);
+        }
+    }
+
     void updateWeather() {
         Task<Void> updateTask = new Task<Void>() {
             @Override
@@ -626,7 +636,6 @@ public class Main extends Application {
         if (backgd == null)
             return;
         backgd.setEffect(null);
-
         boolean needMoon = false;
         if (this.manager.getCurrent() == null)
            this.manager.setCurrent(WeatherState.Sunny);
@@ -848,8 +857,8 @@ public class Main extends Application {
         return caps;
     }
 
-    public HBox getTop_bar() {
-        return top_bar;
+    public HBox getTopbar() {
+        return topbar;
     }
 
     public Node getSleepBody() {
@@ -964,12 +973,12 @@ public class Main extends Application {
     }
 
     public void expandTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), Size.height(1080)), new KeyValue(top_bar.minHeightProperty(), Size.height(1080))));
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(1080)), new KeyValue(topbar.minHeightProperty(), Size.height(1080))));
         expansion.play();
     }
 
     public void collapseTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(top_bar.prefHeightProperty(), Size.height(135)), new KeyValue(top_bar.minHeightProperty(), Size.height(135))));
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(135)), new KeyValue(topbar.minHeightProperty(), Size.height(135))));
         expansion.play();
     }
 
@@ -989,6 +998,18 @@ public class Main extends Application {
         TextInputDialog dialog = new TextInputDialog();
         Optional<String> s = dialog.showAndWait();
         return s.orElse(null);
+    }
+
+    public void startGame(boolean fade) {
+        SpaceGame game = new SpaceGame(this);
+        //copied from topbar code above
+        game.setStyle("-fx-background-color: #000000; -fx-border-color: " + Colors.colorToHex(User.active().getAccentColor()) + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
+        topbarWrapper.getChildren().add(1, game);
+        FadeTransition fadeInGame = new FadeTransition(Duration.millis(750), game);
+        fadeInGame.setFromValue(fade ? 0 : 1);
+        fadeInGame.setToValue(1);
+        fadeInGame.play();
+        game.start();
     }
 
 
@@ -1158,7 +1179,7 @@ public class Main extends Application {
                 closeSideBar();
                 if (User.active() != null && User.active().getUsername() != null) {
                     //Events.fireMouse(Main.this.getPicture(), MouseEvent.MOUSE_CLICKED); -- commented because leaving it in kept the sidebar open
-                    new AcctSettings().show();
+                    new AccountSettings().show();
                 }
             });
 
@@ -1430,6 +1451,8 @@ public class Main extends Application {
     public KeyMap getKeyMap() {
         return keyMap;
     }
+
+
     
     private double lastProgressBar = -1;
 

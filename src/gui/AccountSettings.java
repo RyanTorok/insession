@@ -1,14 +1,10 @@
 package gui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,24 +18,20 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.*;
-import net.Login;
-import net.Net;
 import net.ServerSession;
 import terminal.Address;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
-public class AcctSettings extends Stage {
+public class AccountSettings extends Stage {
 
     private Scene root = null;
 
-    public AcctSettings() {
+    public AccountSettings() {
         super();
         setTitle("Account Settings");
         setMaximized(false);
@@ -137,7 +129,7 @@ public class AcctSettings extends Stage {
         colorPicker.setOnAction(event1 -> {
             colorSquare.setFill(colorPicker.getValue());
             User.active().setAccentColor(colorPicker.getValue());
-            Root.getPortal().getTop_bar().setStyle(Root.getPortal().getTop_bar().getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + Colors.colorToHex(colorPicker.getValue())));
+            Root.getPortal().getTopbar().setStyle(Root.getPortal().getTopbar().getStyle().replaceAll("-fx-border-color: #......", "-fx-border-color: " + Colors.colorToHex(colorPicker.getValue())));
             Root.getPortal().getSideBar().setColor(colorPicker.getValue());
             Root.getPortal().topBarScrollBar.setStroke(Colors.highlightColor(colorPicker.getValue()));
             if (!colorPicker.getValue().equals(original)) {

@@ -128,11 +128,13 @@ public class ServerCall {
         if (keys == null)
             return null;
         boolean exists = keys.removeIf(sessionToken -> oneTimeKey.equals(sessionToken.oneTimeKey));
-        if (exists) {
-            String newKey = ServerMain.keyGen();
-            SessionToken token = new SessionToken(newKey, userID == 0);
-            keys.add(token);
-            return token;
+        synchronized (oneTimeKeys.get(userID)) {
+            if (exists) {
+                String newKey = ServerMain.keyGen();
+                SessionToken token = new SessionToken(newKey, userID == 0);
+                keys.add(token);
+                return token;
+            }
         }
         return null;
     }

@@ -202,7 +202,7 @@ public class KeyMap implements Serializable {
         CONTROL, ALT, SHIFT
     }
 
-    private static class KeyCombo {
+    static class KeyCombo {
         Set<FunctionKey> functionKeys;
         KeyCode key;
 

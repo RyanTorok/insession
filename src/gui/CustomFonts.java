@@ -11,6 +11,7 @@ public class CustomFonts {
     private static final Font COMFORTAA = Font.loadFont("file:" + Address.fromRootAddr("resources", "fonts", "Comfortaa-Regular.ttf") , 12);
     private static final Font COMFORTAA_BOLD = Font.loadFont("file:" + Address.fromRootAddr("resources", "fonts", "Comfortaa-Bold.ttf") , 12);
     private static final Font COMFORTAA_LIGHT = Font.loadFont("file:" + Address.fromRootAddr("resources", "fonts", "Comfortaa-Light.ttf") , 12);
+    private static final Font SH_PINSCHER = Font.loadFont("file: " + Address.fromRootAddr("resources", "fonts", "SHPinscher-Regular.otf"), 12);
 
     public static Font comfortaa(double size) {
         return Font.font(COMFORTAA.getFamily(), Size.fontSize(size));
@@ -22,5 +23,9 @@ public class CustomFonts {
 
     public static Font comfortaa_light(double size) {
         return Font.font(COMFORTAA_LIGHT.getFamily(), Size.fontSize(size));
+    }
+
+    public static Font sh_pinscher(double size) {
+        return Font.font("SH Pinscher", Size.fontSize(size));
     }
 }

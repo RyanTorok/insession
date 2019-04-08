@@ -5,8 +5,6 @@ import main.PasswordManager;
 import main.Root;
 import main.User;
 
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,7 +39,7 @@ public class ServerSession implements AutoCloseable {
 
     protected ServerSession(String host, int port) throws IOException {
         //socket = SSLSocketFactory.getDefault().createSocket(host, port);
-        socket = new Socket(host, port);
+            socket = new Socket(host, port);
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
