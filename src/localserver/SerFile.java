@@ -14,13 +14,12 @@ public class SerFile extends Command {
     @Override
     String execute() throws SQLException {
         ResultSet results = new QueryGate().query("SELECT serfile FROM users WHERE id = ?", "l", getExecutorId());
+        if (!results.isBeforeFirst())
+            return "error : no entry exists";
         while (results.isBeforeFirst()) {
             results.next();
         }
-        if (results.isAfterLast())
-            return "error : no entry exists";
         String serfile = results.getString("serfile");
-        //remove + signs for pass over URL
         serfile = serfile.replaceAll("\\+", "#");
         if (serfile == null)
             return "error : no file exists";

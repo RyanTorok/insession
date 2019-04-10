@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.scene.CacheHint;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

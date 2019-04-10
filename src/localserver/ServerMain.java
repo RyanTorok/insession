@@ -116,8 +116,7 @@ public class ServerMain {
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[32];
         random.nextBytes(bytes);
-        byte[] encoded = Base64.getEncoder().encode(bytes);
-        return new String(encoded, StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(bytes);
     }
 
     public static ServerInfo getEnvironment() {

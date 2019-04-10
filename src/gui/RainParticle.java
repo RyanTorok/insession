@@ -10,8 +10,6 @@ import java.util.Random;
 
 public class RainParticle extends PrecipParticle {
 
-    private AnchorPane holder;
-
     RainParticle(AnchorPane holder, boolean day) {
         super(holder, 5, day);
     }

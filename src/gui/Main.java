@@ -118,6 +118,7 @@ public class Main extends Application {
     }
 
     public void newUser() {
+        User.setActive(null);
         getPrimaryStage().setMaximized(false);
         Scene window = NewUserWindow.get(this);
         getPrimaryStage().setScene(window);
@@ -292,7 +293,7 @@ public class Main extends Application {
         Timeline clockTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
             Main.this.updateTime();
             lastInteractSecs += 0.5;
-            if (lastInteractSecs >= User.active().getSleepTime() && state != SLEEP_STATE) {
+            if (User.active() != null && lastInteractSecs >= User.active().getSleepTime() && state != SLEEP_STATE) {
                 closeGame();
                 quitTerminal();
                 closeSearchBar();

@@ -27,6 +27,7 @@ import main.Layouts;
 import main.Root;
 import main.Size;
 import main.UtilAndConstants;
+import searchengine.StemIndex;
 
 import javax.swing.text.Style;
 import java.security.Key;
@@ -52,11 +53,13 @@ public class SpaceGame extends StackPane {
     public static final double ADVANCE_SPEED = 400;
     private EventHandler<KeyEvent> gameOverHandler;
     private int gameOverState = -1;
+    private HashSet<Timeline> allTimelines;
 
     public SpaceGame(Main wrapper) {
         this.wrapper = wrapper;
         width = UtilAndConstants.DEFAULT_WIDTH;
         height = 130;
+        allTimelines = new HashSet<>();
         setPrefHeight(Size.height(height));
         setMinHeight(Size.height(height));
         getChildren().add(new Layouts.Filler()); //just a hack to make it fill the bar
@@ -64,6 +67,11 @@ public class SpaceGame extends StackPane {
         ship = new Ship(true, CollisionType.ALLY);
         frontPlane = new Pane();
         backPlane = new Pane();
+    }
+
+    void playTimeline(Timeline t) {
+        t.play();
+        allTimelines.add(t);
     }
 
     public void setHighScore(int highScore) {
@@ -109,7 +117,7 @@ public class SpaceGame extends StackPane {
             star.spawn(false);
         }));
         spawnStars.setCycleCount(Animation.INDEFINITE);
-        spawnStars.play();
+        playTimeline(spawnStars);
     }
 
     private void runIntro() {
@@ -130,7 +138,7 @@ public class SpaceGame extends StackPane {
                 Timeline newAnimation = new Timeline(new KeyFrame(Duration.millis(500), new KeyValue(lineParticle.strokeProperty(), Color.gray(0.5)), new KeyValue(lineParticle.endXProperty(), lineParticle.startXProperty().doubleValue())));
                 newAnimation.setOnFinished(lineParticle.currentAnimation.getOnFinished());
                 lineParticle.currentAnimation = newAnimation;
-                newAnimation.play();
+                playTimeline(newAnimation);
             });
             ship.setVisible(true);
             final HashSet<Pair<Sprite, Sprite>> collisionPairs = new HashSet<>();
@@ -161,7 +169,7 @@ public class SpaceGame extends StackPane {
                 collisionPairs.clear();
             }));
             collisionHandler.setCycleCount(Animation.INDEFINITE);
-            collisionHandler.play();
+            playTimeline(collisionHandler);
             Timeline shipMoveIn = new Timeline(new KeyFrame(Duration.seconds(1), new KeyValue(ship.translateXProperty(), 200)));
             shipMoveIn.setOnFinished(event1 -> {
                 ship.hitBox.translateX(300);
@@ -170,9 +178,9 @@ public class SpaceGame extends StackPane {
                 new HUD().spawn(true);
                 startSpawnAI();
             });
-            shipMoveIn.play();
+            playTimeline(shipMoveIn);
         });
-        stopDelay.play();
+        playTimeline(stopDelay);
     }
 
     private void startSpawnAI() {
@@ -266,7 +274,7 @@ public class SpaceGame extends StackPane {
             }
         }));
         spawnTimer.setCycleCount(Animation.INDEFINITE);
-        spawnTimer.play();
+        playTimeline(spawnTimer);
     }
 
     private int timeDelay(double percent) {
@@ -337,6 +345,10 @@ public class SpaceGame extends StackPane {
         wrapper.getPrimaryStage().removeEventHandler(KeyEvent.KEY_RELEASED, releaseHandler);
         if (gameOverHandler != null)
             wrapper.getPrimaryStage().removeEventHandler(KeyEvent.KEY_RELEASED, gameOverHandler);
+        //stop animations
+        for (Timeline t : allTimelines) {
+            t.stop();
+        }
     }
 
     private class Ship extends Pane implements Sprite {
@@ -432,7 +444,7 @@ public class SpaceGame extends StackPane {
                 else shieldGraphic.setVisible(false);
             }));
             player.setCycleCount(Animation.INDEFINITE);
-            player.play();
+            playTimeline(player);
             if (!right) {
                 Ship playerShip = SpaceGame.this.ship;
                 //naive enemy AI that only tries to aim at / avoid the player and no other obstacles
@@ -468,7 +480,7 @@ public class SpaceGame extends StackPane {
                     }
                 }));
                 enemyAI.setCycleCount(Animation.INDEFINITE);
-                enemyAI.play();
+                playTimeline(enemyAI);
             }
         }
 
@@ -523,7 +535,7 @@ public class SpaceGame extends StackPane {
                 }));
                 flyLeft.setCycleCount(Animation.INDEFINITE);
                 flyLeft.setDelay(Duration.millis(delayMillis));
-                flyLeft.play();
+                playTimeline(flyLeft);
             }
             frontPlane.getChildren().add(this);
             this.setViewOrder(Integer.MIN_VALUE);
@@ -643,7 +655,7 @@ public class SpaceGame extends StackPane {
             };
             wrapper.getPrimaryStage().addEventHandler(KeyEvent.KEY_RELEASED, gameOverHandler);
         });
-        delay.play();
+        playTimeline(delay);
     }
 
     private synchronized void score(int i) {
@@ -724,7 +736,7 @@ public class SpaceGame extends StackPane {
             animation.setDelay(Duration.millis(delayMillis));
             animation.setCycleCount(Animation.INDEFINITE);
             currentAnimation = animation;
-            animation.play();
+            playTimeline(animation);
         }
 
         private double getX() {
@@ -781,7 +793,7 @@ public class SpaceGame extends StackPane {
         private void delayDespawn(int delayMillis) {
             Timeline delay = new Timeline(new KeyFrame(Duration.millis(delayMillis)));
             delay.setOnFinished(event -> despawn());
-            delay.play();
+            playTimeline(delay);
         }
     }
 
@@ -824,7 +836,7 @@ public class SpaceGame extends StackPane {
             }));
             animation.setDelay(Duration.millis(delayMillis));
             animation.setCycleCount(Animation.INDEFINITE);
-            animation.play();
+            playTimeline(animation);
         }
 
         @Override
@@ -920,7 +932,7 @@ public class SpaceGame extends StackPane {
             }));
             animation.setDelay(Duration.millis(delayMillis));
             animation.setCycleCount(Animation.INDEFINITE);
-            animation.play();
+            playTimeline(animation);
         }
 
         @Override
@@ -989,8 +1001,8 @@ public class SpaceGame extends StackPane {
             animation.setDelay(Duration.millis(delayMillis));
             Timeline wait = new Timeline(new KeyFrame(Duration.millis(400)));
             wait.setOnFinished(event -> despawn());
-            animation.setOnFinished(event -> wait.play());
-            animation.play();
+            animation.setOnFinished(event -> playTimeline(wait));
+            playTimeline(animation);
         }
 
         @Override
@@ -1057,7 +1069,7 @@ public class SpaceGame extends StackPane {
                 getChildren().add(last);
             }));
             removeInstructions.setDelay(Duration.millis(5000));
-            removeInstructions.play();
+            playTimeline(removeInstructions);
             removeInstructions.setOnFinished(event -> {
                 Timeline updateScore = new Timeline(new KeyFrame(Duration.millis(32), event1 -> {
                     ((Text) getChildren().get(0)).setText(new DecimalFormat("#####000000").format(getScore()));
@@ -1079,7 +1091,7 @@ public class SpaceGame extends StackPane {
                     }
                 }));
                 updateScore.setCycleCount(Animation.INDEFINITE);
-                updateScore.play();
+                playTimeline(updateScore);
             });
         }
 
@@ -1296,7 +1308,7 @@ public class SpaceGame extends StackPane {
             }));
             animation.setCycleCount(Animation.INDEFINITE);
             animation.setDelay(Duration.millis(delayMillis));
-            animation.play();
+            playTimeline(animation);
         }
 
         @Override
