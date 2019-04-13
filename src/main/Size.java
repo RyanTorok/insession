@@ -101,6 +101,11 @@ public class Size {
                     double newSize = Math.min(scaledSize * width / DEFAULT_WIDTH, scaledSize * height / DEFAULT_HEIGHT);
                     Styles.setProperty(n, "-fx-font-size", String.valueOf(newSize));
                 }
+                if (!(((TextField) n).getPadding().equals(Insets.EMPTY))) {
+                    Insets old = ((TextField) n).getPadding();
+                    //we hack a 1 in one position to allow upsizing later. Otherwise the EMPTY check would be true even though values were set.
+                    ((TextField) n).setPadding(new Insets(convertHeight(old.getTop(), height), convertWidth(old.getRight(), width), convertHeight(old.getBottom(), height), convertWidth(old.getLeft(), width)));
+                }
             }
             if (n instanceof Circle) {
                 //which direction is limiting the size?
@@ -159,7 +164,7 @@ public class Size {
         if (!(r.getPadding().equals(Insets.EMPTY))) {
             Insets old = r.getPadding();
             //we hack a 1 in one position to allow upsizing later. Otherwise the EMPTY check would be true even though values were set.
-            r.setPadding(new Insets(Math.max(1, convertHeight(old.getTop(), height)), convertWidth(old.getRight(), width), convertHeight(old.getBottom(), height), convertWidth(old.getLeft(), width)));
+            r.setPadding(new Insets(convertHeight(old.getTop(), height), convertWidth(old.getRight(), width), convertHeight(old.getBottom(), height), convertWidth(old.getLeft(), width)));
         }
         if (r instanceof HBox) {
             double oldSpacing = ((HBox) r).getSpacing();

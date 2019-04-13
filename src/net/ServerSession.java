@@ -226,7 +226,7 @@ public class ServerSession implements AutoCloseable {
 
     public final String getTruncatedErrorMsg() {
         String orig = getErrorMsg();
-        return orig.substring(orig.indexOf(":") + 1);
+        return orig.substring(orig.indexOf(":") + 1).trim();
     }
 
     protected final void setErrorMsg(String errorMsg) {

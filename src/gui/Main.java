@@ -340,11 +340,10 @@ public class Main extends Application {
 
         BorderPane body = new BorderPane();
         mainBody = body;
-        ImageView backgd = new ImageView();
-        this.background = backgd;
-        backgd.setFitWidth(Size.width(1920));
-        backgd.setPreserveRatio(true);
-        setWeatherGraphics(background, weatherPane);
+        this.background = new ImageView();
+        background.setFitWidth(Size.width(1920));
+        background.setPreserveRatio(true);
+        setWeatherGraphics(this.background, weatherPane);
         mainBodyAndTaskViews = new StackPane();
         StackPane allBodyPanes = new StackPane(sleepbody, mainBodyAndTaskViews);
         VBox root = new VBox(topbarWrapper, allBodyPanes);
@@ -373,7 +372,7 @@ public class Main extends Application {
         });
         term.setVisible(false);
 
-        StackPane mainArea = new StackPane(backgd, weatherPane, terminalpane, root);
+        StackPane mainArea = new StackPane(background, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
         getPrimaryStage().setScene(new Scene(mainArea, Size.width(1920), Size.height(1080)));
         getPrimaryStage().setMaximized(true);
@@ -554,7 +553,6 @@ public class Main extends Application {
 
 
     private void redrawScreen(double width, double height) {
-        System.out.println(width + " " + height);
         Root.sizeInstance().updateScreenSize(width, height);
 
         //for some bizarre reason the bar menus all became italic

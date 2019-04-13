@@ -94,18 +94,18 @@ public class NewUserWindow extends Pane {
                     e.printStackTrace();
                     invalidMessage.setText("A connection error occurred. Please try again.");
                 } catch (ClassNotFoundException e) {
-                    invalidMessage.setText("The user data file arrived corrupted.\nIf this issue persists, please visit our website.");
+                    invalidMessage.setText("The user data file arrived corrupted.\nIf this issue persists, please visit www.edulogic.org/support for assistance.");
                 }
             } else {
 
-                String  username   = entries .get(0).getField(),
+                String  username   = entries .get(0).getField().trim(),
                         password   = entries .get(1).getField(),
                         passwordC  = createAcctOnlyEntries.get(0).getField(),
-                        first      = createAcctOnlyEntries.get(1).getField(),
-                        last       = createAcctOnlyEntries.get(2).getField(),
-                        email      = createAcctOnlyEntries.get(3).getField(),
-                        domain =     createAcctOnlyEntries.get(4).getField(),
-                        schoolCode = createAcctOnlyEntries.get(5).getField();
+                        first      = createAcctOnlyEntries.get(1).getField().trim(),
+                        last       = createAcctOnlyEntries.get(2).getField().trim(),
+                        email      = createAcctOnlyEntries.get(3).getField().trim(),
+                        domain =     createAcctOnlyEntries.get(4).getField().trim(),
+                        schoolCode = createAcctOnlyEntries.get(5).getField().trim();
                 boolean valid;
                 valid = checkEmptyField(username, "Username", invalidMessage);
                 valid = valid && checkEmptyField(password, "Password", invalidMessage);
@@ -114,8 +114,14 @@ public class NewUserWindow extends Pane {
                 valid = valid && checkEmptyField(last, "Last Name", invalidMessage);
                 valid = valid && checkEmptyField(email, "Email", invalidMessage);
                 valid = valid && checkEmptyField(domain, "Domain", invalidMessage);
+
+                //check for alphanumeric characters in username
                 if (!valid)
                     return;
+                if (!(username.matches("[A-Za-z0-9]+"))) {
+                    invalidMessage.setText("Your username must contain only alphanumeric characters.");
+                    return;
+                }
                 if (!(password.equals(passwordC))) {
                     invalidMessage.setText("Your passwords do not match. Check your spelling.");
                     return;
@@ -158,6 +164,7 @@ public class NewUserWindow extends Pane {
                     String encodedPwd = Base64.getEncoder().encodeToString(pwd);
                     //System.out.println("initial encoded:" + encodedPwd);
                     String[] result = session.callAndResponse("createaccount", username, encodedPwd, first, last, email, schoolCode);
+                    session.close();
                     if (ServerSession.isError(result)) {
                         System.out.println(Arrays.toString(result));
                        type = -2;

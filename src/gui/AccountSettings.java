@@ -89,6 +89,8 @@ public class AccountSettings extends Stage {
                             invalidMsg.setText("Your old password is incorrect.");
                         else
                             invalidMsg.setText("A connection error occurred. Please try again.");
+                        session.close();
+                        return;
                     }
                     String password = newPassword.getText();
                     PasswordManager.PasswordCombo encryptedPassword = PasswordManager.newGenLocal(password, username);

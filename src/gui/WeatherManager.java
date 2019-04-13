@@ -35,6 +35,8 @@ public class WeatherManager{
     }
 
     public void update() {
+        if (zipCode == 0)
+            return;
         try {
             AnonymousServerSession session = new AnonymousServerSession();
             session.setEnableProgressBar(false);
