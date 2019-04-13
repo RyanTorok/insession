@@ -57,6 +57,7 @@ public class SpaceGame extends StackPane {
         allTimelines = new HashSet<>();
         setPrefHeight(Size.height(height));
         setMinHeight(Size.height(height));
+        setMaxHeight(height);
         getChildren().add(new Layouts.Filler()); //just a hack to make it fill the bar
         Styles.setBackgroundColor(this, Color.BLACK);
         ship = new Ship(true, CollisionType.ALLY);
@@ -118,7 +119,7 @@ public class SpaceGame extends StackPane {
     private void runIntro() {
         HashSet<LineParticle> activeHyperspaceLines = new HashSet<>();
         for (int i = 0; i < 200; i++) {
-            LineParticle line = new LineParticle(Size.width(100), Size.width(1920), Math.random() * (height - 10), -1 * Size.width(4000), 0);
+            LineParticle line = new LineParticle(Size.width(100), Size.width(1950), Math.random() * (height - 10), -1 * Size.width(4000), 0);
             line.spawn(false, Math.max(0, i - 10) * 15, pane -> {
                 activeHyperspaceLines.remove(line);
                 backPlane.getChildren().remove(line);
@@ -417,14 +418,14 @@ public class SpaceGame extends StackPane {
                         lastFire = 0;
                         double xSpeed = Size.width((right ? 1 : -1) * 1000);
                         double offset = Size.width(right ? 20 : -20);
-                        LineParticle straight = new LineParticle(Size.width(20), getTranslateX() + offset, Size.height(getTranslateY() + 7.5), xSpeed, 0);
+                        LineParticle straight = new LineParticle(Size.width(20), getTranslateX() + offset, Size.height(getTranslateY() + 10), xSpeed, 0);
                         straight.setCollision(getCollision());
                         straight.spawn(true);
                         if (tripleShot > 0) {
-                            LineParticle up = new LineParticle(Size.width(20), getTranslateX() + offset, Size.height(getTranslateY() + 7.5), xSpeed, Size.height(50));
+                            LineParticle up = new LineParticle(Size.width(20), getTranslateX() + offset, Size.height(getTranslateY() + 10), xSpeed, Size.height(50));
                             up.setCollision(getCollision());
                             up.spawn(true);
-                            LineParticle down = new LineParticle(Size.width(20), getTranslateX() + offset, Size.height(getTranslateY() + 7.5), xSpeed, Size.height(-50));
+                            LineParticle down = new LineParticle(Size.width(20), getTranslateX() + offset, Size.height(getTranslateY() + 10), xSpeed, Size.height(-50));
                             down.setCollision(getCollision());
                             down.spawn(true);
                         }
@@ -809,8 +810,8 @@ public class SpaceGame extends StackPane {
             setStroke(Color.WHITE);
             setStrokeWidth(LINE_HEIGHT * 2);
             hitBox = new CircleHitBox(0, 0, Size.lessWidthHeight(30));
-            setTranslateX(Size.width(1950));
-            hitBox.translateX(Size.width(1950));
+            setTranslateX(Size.width(1930) + getRadius());
+            hitBox.translateX(Size.width(1930) + getRadius());
             double offset = Size.height(30 + 35 * height);
             setTranslateY(offset);
             hitBox.translateY(offset);
@@ -895,7 +896,7 @@ public class SpaceGame extends StackPane {
             arc = null;
             if (!top) {
                 setVisible(false);
-                arc = new Arc(this.getCenterX(), this.getCenterY(), this.getRadius(), this.getRadius(), 40.0, 100);
+                arc = new Arc(this.getCenterX(), this.getCenterY(), this.getRadius(), this.getRadius(), 36.0, 108);
                 arc.setFill(Color.BLACK);
                 arc.setStroke(Color.WHITE);
                 arc.setStrokeWidth(Size.lessWidthHeight(3));

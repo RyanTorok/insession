@@ -6,6 +6,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
@@ -105,7 +107,13 @@ public class Size {
                 double desiredXRadius = ((Circle) n).getRadius() * DEFAULT_WIDTH / screenWidth;
                 double desiredYRadius = ((Circle) n).getRadius() * DEFAULT_HEIGHT / screenHeight;
                 double originalRadius = Math.max(desiredXRadius, desiredYRadius);
-            ((Circle) n).setRadius(originalRadius * Math.min(width / DEFAULT_WIDTH, height / DEFAULT_HEIGHT));
+                ((Circle) n).setRadius(originalRadius * Math.min(width / DEFAULT_WIDTH, height / DEFAULT_HEIGHT));
+            }
+            if (n instanceof Line) {
+                ((Line) n).setStartX(convertWidth(((Line) n).getStartX(), width));
+                ((Line) n).setEndX(convertWidth(((Line) n).getEndX(), width));
+                ((Line) n).setStartY(convertHeight(((Line) n).getStartY(), height));
+                ((Line) n).setEndY(convertHeight(((Line) n).getEndY(), height));
             }
             if (AnchorPane.getTopAnchor(n) != null) {
                 AnchorPane.setTopAnchor(n, convertHeight(AnchorPane.getTopAnchor(n), height));
@@ -118,6 +126,12 @@ public class Size {
             }
             if (AnchorPane.getRightAnchor(n) != null) {
                 AnchorPane.setRightAnchor(n, convertWidth(AnchorPane.getRightAnchor(n), width));
+            }
+            if (n.getTranslateX() != 0) {
+                n.setTranslateX(convertWidth(n.getTranslateX(), width));
+            }
+            if (n.getTranslateY() != 0) {
+                n.setTranslateY(convertHeight(n.getTranslateY(), height));
             }
         }
     }
@@ -141,18 +155,6 @@ public class Size {
         }
         if (r.getMaxHeight() != Region.USE_COMPUTED_SIZE) {
             r.setMaxHeight(convertHeight(r.getMaxHeight(), height));
-        }
-        if (r.getTranslateX() != 0) {
-            r.setTranslateX(convertWidth(r.getTranslateX(), width));
-        }
-        if (r.getTranslateY() != 0) {
-            r.setTranslateY(convertHeight(r.getTranslateY(), height));
-        }
-        if (r.getLayoutX() != 0) {
-            r.setLayoutX(convertWidth(r.getLayoutX(), width));
-        }
-        if (r.getLayoutY() != 0) {
-            r.setLayoutY(convertHeight(r.getLayoutY(), height));
         }
         if (!(r.getPadding().equals(Insets.EMPTY))) {
             Insets old = r.getPadding();

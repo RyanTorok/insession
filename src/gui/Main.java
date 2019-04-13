@@ -6,6 +6,8 @@ import classes.Course;
 import classes.Record;
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -96,6 +98,8 @@ public class Main extends Application {
     private StackPane topbarWrapper;
     private String borderWidth;
 
+    private boolean playingGame = false;
+
     //Task Views
     private TaskViewWrapper taskViews;
 
@@ -122,6 +126,7 @@ public class Main extends Application {
         getPrimaryStage().setMaximized(false);
         Scene window = NewUserWindow.get(this);
         getPrimaryStage().setScene(window);
+        getPrimaryStage().setResizable(false);
         getPrimaryStage().show();
     }
 
@@ -515,12 +520,18 @@ public class Main extends Application {
 
         state = BASE_STATE;
         Root.sizeInstance().updateScreenSize();
-        getPrimaryStage().getScene().widthProperty().addListener((observable, oldValue, newValue) -> {
-            redrawScreen(newValue.doubleValue(), Root.sizeInstance().getScreenHeight());
+        getPrimaryStage().getScene().widthProperty().addListener((observable, oldValue, newValue) -> redrawScreen(Math.max(50, newValue.doubleValue()), Root.sizeInstance().getScreenHeight()));
+        getPrimaryStage().getScene().heightProperty().addListener((observable, oldValue, newValue) -> redrawScreen(Root.sizeInstance().getScreenWidth(), Math.max(50, newValue.doubleValue())));
+        getPrimaryStage().maximizedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                //the resize handler seems to have trouble with this so it's hard coded.
+                Timeline delay = new Timeline(new KeyFrame(Duration.millis(100)));
+                delay.setOnFinished(event ->  repositionTopBarScrollBar(currentMenu, 0));
+                delay.play();
+            }
         });
-        getPrimaryStage().getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
-            redrawScreen(Root.sizeInstance().getScreenWidth(), newValue.doubleValue());
-        });
+        getPrimaryStage().setResizable(true);
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
         //System.out.println("w: " + getPrimaryStage().getWidth());
@@ -540,7 +551,10 @@ public class Main extends Application {
         updateWeather();
     }
 
+
+
     private void redrawScreen(double width, double height) {
+        System.out.println(width + " " + height);
         Root.sizeInstance().updateScreenSize(width, height);
 
         //for some bizarre reason the bar menus all became italic
@@ -552,7 +566,7 @@ public class Main extends Application {
         //TODO don't hard code this, the window resize handler seems to have trouble with this so I hard coded the size here.
         Styles.setProperty(searchBox.getSearchBox(), "-fx-font-size", String.valueOf(Size.fontSize(30)));
 
-        repositionTopBarScrollBar(currentMenu, 1);
+        repositionTopBarScrollBar(currentMenu, 0);
     }
 
     void closeSearchBar() {
@@ -566,6 +580,7 @@ public class Main extends Application {
     }
 
     void closeGame() {
+        getPrimaryStage().setResizable(true);
         if (topbarWrapper.getChildren().size() > 2) {
             ((SpaceGame) topbarWrapper.getChildren().get(1)).quit();
             topbarWrapper.getChildren().remove(1);
@@ -1022,6 +1037,21 @@ public class Main extends Application {
     }
 
     public void startGame(boolean fade) {
+        //the game area is not resize-safe, so we need to keep it maximized.
+        playingGame = true;
+        if (!getPrimaryStage().isMaximized()) {
+            //if we need to change size, give the window resize handler time to do its job before we start the game, otherwise everything will be sized incorrectly.
+            getPrimaryStage().setMaximized(true);
+            Timeline delay = new Timeline(new KeyFrame(Duration.millis(1000)));
+            delay.setOnFinished(event -> startGameInner(fade));
+            delay.play();
+        } else {
+            startGameInner(fade);
+        }
+    }
+
+    private void startGameInner(boolean fade) {
+        getPrimaryStage().setResizable(false);
         SpaceGame game = new SpaceGame(this);
         //copied from topbar code above
         game.setStyle("-fx-background-color: #000000; -fx-border-color: " + Colors.colorToHex(User.active().getAccentColor()) + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
@@ -1075,18 +1105,23 @@ public class Main extends Application {
     }
 
     private void repositionTopBarScrollBar(int scrollPos, int duration) {
-        TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
         double offset = 0;
         Node n = menus[scrollPos];
         while (n != null) {
             offset += n.getLayoutX();
             n = n.getParent();
         }
-        scrollBarTransition.setToX(offset);
-        Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), Size.fontDimension(10 * menus[scrollPos].getText().length()))));
-        growShrink.setCycleCount(1);
-        growShrink.play();
-        scrollBarTransition.play();
+        double endX = Size.fontDimension(10 * menus[scrollPos].getText().length());
+        if (duration == 0) {
+            topBarScrollBar.setEndX(endX);
+            topBarScrollBar.setTranslateX(offset);
+        } else {
+            TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
+            scrollBarTransition.setToX(offset);
+            Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), endX)));
+            growShrink.play();
+            scrollBarTransition.play();
+        }
     }
 
     public void quitTerminal() {
