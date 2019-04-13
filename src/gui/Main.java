@@ -131,8 +131,7 @@ public class Main extends Application {
         try {
             this.primaryStage = primaryStage;
             Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-            Root.getUtilAndConstants().setScreenWidth(visualBounds.getWidth());
-            Root.getUtilAndConstants().setScreenHeight(visualBounds.getHeight());
+            Root.sizeInstance().updateScreenSize(visualBounds.getWidth(), visualBounds.getHeight());
             contentPanes = new Pane[5];
             Root.setPortal(this);
             User user = User.read();
@@ -230,8 +229,8 @@ public class Main extends Application {
         borderWidth = (int) Size.height(8) + "px";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(Size.insets(15));
-        this.topbar.setPrefHeight(Size.height(135));
-        this.topbar.setMinHeight(Size.height(135));
+        this.topbar.setPrefHeight(Size.height(140));
+        this.topbar.setMinHeight(Size.height(140));
 
         //top bar scroll bar
         topBarScrollBar = new Line();
@@ -515,11 +514,17 @@ public class Main extends Application {
         });
 
         state = BASE_STATE;
+        Root.sizeInstance().updateScreenSize();
+        getPrimaryStage().getScene().widthProperty().addListener((observable, oldValue, newValue) -> {
+            redrawScreen(newValue.doubleValue(), Root.sizeInstance().getScreenHeight());
+        });
+        getPrimaryStage().getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
+            redrawScreen(Root.sizeInstance().getScreenWidth(), newValue.doubleValue());
+        });
         getPrimaryStage().show();
         repositionTopBarScrollBar(0, 1);
         //System.out.println("w: " + getPrimaryStage().getWidth());
         //System.out.println("h: " + getPrimaryStage().getHeight());
-        Root.getUtilAndConstants().updateScreenSize();
       /*  launchClass(new ClassPd() {
             @Override
             public JSONObject toJSONObject() {
@@ -533,6 +538,21 @@ public class Main extends Application {
             searchBox.getEngine().getIndex().index(list);
         }
         updateWeather();
+    }
+
+    private void redrawScreen(double width, double height) {
+        Root.sizeInstance().updateScreenSize(width, height);
+
+        //for some bizarre reason the bar menus all became italic
+        for (BarMenu m1 : getMenus()) {
+            m1.setFont(Font.font(m1.getFont().getFamily(), FontPosture.REGULAR, m1.getFont().getSize()));
+        }
+        name.setFont(Font.font(name.getFont().getFamily(), FontPosture.REGULAR, name.getFont().getSize()));
+
+        //TODO don't hard code this, the window resize handler seems to have trouble with this so I hard coded the size here.
+        Styles.setProperty(searchBox.getSearchBox(), "-fx-font-size", String.valueOf(Size.fontSize(30)));
+
+        repositionTopBarScrollBar(currentMenu, 1);
     }
 
     void closeSearchBar() {
@@ -979,7 +999,7 @@ public class Main extends Application {
     }
 
     public void collapseTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(135)), new KeyValue(topbar.minHeightProperty(), Size.height(135))));
+        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(140)), new KeyValue(topbar.minHeightProperty(), Size.height(140))));
         expansion.play();
     }
 
@@ -1021,7 +1041,7 @@ public class Main extends Application {
             super(text);
             scrollPos = order;
             Events.underlineOnMouseOver(this);
-            setFont(Font.font("Confortaa", Size.fontSize(20)));
+            setFont(Font.font("Sans Serif", Size.fontSize(20)));
             setFill(Color.WHITE);
             setTextAlignment(TextAlignment.CENTER);
         }
@@ -1042,8 +1062,7 @@ public class Main extends Application {
             changeText.setText(getSubtitles()[scrollPos]);
         currentMenu = scrollPos;
         BarMenu m = getMenus()[scrollPos];
-        for (BarMenu m1 :
-                getMenus()) {
+        for (BarMenu m1 : getMenus()) {
             m1.setFont(Font.font(m.getFont().getFamily(), FontPosture.REGULAR, m.getFont().getSize()));
         }
         m.setFont(Font.font(m.getFont().getFamily(), FontPosture.ITALIC, m.getFont().getSize()));
@@ -1119,14 +1138,12 @@ public class Main extends Application {
             in = new TranslateTransition();
             in.setNode(this);
             in.setDuration(Duration.millis(200));
-            in.setToX(Size.width(1670));
             in.setAutoReverse(false);
 
             //exit screen animation
             out = new TranslateTransition();
             out.setNode(this);
             out.setDuration(Duration.millis(200));
-            out.setToX(Size.width(1920));
             out.setAutoReverse(false);
 
             menus = new ArrayList<>();
@@ -1220,6 +1237,7 @@ public class Main extends Application {
         public void enter() {
             //resolves strange behavior on first load
             selectedMenu = -1;
+            in.setToX(Size.width(1670));
             in.play();
         }
 
@@ -1230,6 +1248,7 @@ public class Main extends Application {
             selectedMenu = -1;
             Duration old = out.getDuration();
             out.setDuration(Duration.ZERO);
+            out.setToX(Size.width(1920));
             out.play();
             out.setOnFinished(event -> out.setDuration(old));
         }
@@ -1238,6 +1257,7 @@ public class Main extends Application {
             if (selectedMenu != -1)
                 Events.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
             selectedMenu = -1;
+            out.setToX(Size.width(1920));
             out.play();
         }
 
@@ -1467,7 +1487,7 @@ public class Main extends Application {
             repositionTopBarScrollBar(getCurrentMenu(), 200);
             return;
         }
-        double width = Size.width((UtilAndConstants.DEFAULT_WIDTH - Size.width(10)) * num);
+        double width = Size.width((Size.DEFAULT_WIDTH - Size.width(10)) * num);
         topBarScrollBar.setTranslateX(0);
         topBarScrollBar.setStartX(0);
         if (lastProgressBar == -1)

@@ -17,8 +17,8 @@ public class Styles {
         int[] propertyBounds = getPropertyBounds(n, property);
         if (propertyBounds != null)
             n.setStyle(n.getStyle().substring(0, propertyBounds[1]) + value + n.getStyle().substring(propertyBounds[2] - 2));
-        else
-            n.setStyle(n.getStyle() + property + ": " + value + " ; ");
+        else //we may add extra semicolons because the SDK doesn't follow my rules here.
+            n.setStyle(n.getStyle() + "; " + property + ": " + value + " ; ");
     }
 
     public static void removeProperty(Node n, String property) {

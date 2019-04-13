@@ -23,6 +23,7 @@ public class Root {
     private static Main portal;
     private static String macAddress;
     private static Long activeID;
+    private static Size size;
 
 
     public static void main(String[] args) {
@@ -34,7 +35,7 @@ public class Root {
         }
 
         utilAndConstants = new UtilAndConstants();
-
+        size = new Size();
 
         Main.main(new String[]{startupError});
     }
@@ -139,5 +140,9 @@ public class Root {
 
     public static void setUtilAndConstants(UtilAndConstants utilAndConstants) {
         Root.utilAndConstants = utilAndConstants;
+    }
+
+    public static Size sizeInstance() {
+        return size;
     }
 }

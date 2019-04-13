@@ -1,0 +1,21 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f1850c2efb2, pid=28257, tid=28339
+#
+# JRE version: Java(TM) SE Runtime Environment (10.0.1+10) (build 10.0.1+10)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (10.0.1+10, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x3fb2]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x42
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport %p %s %c %d %P" (or dumping to /home/rtorok/paintbrush_lms/core.28257)
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:46665,suspend=y,server=n -Xmx2048m --module-path=/Users/<user>/Downloads/javafx-sdk-11/lib --add-modules=javafx.controls,javafx.fxml -javaagent:/home/rtorok/Downloads/idea-IU-183.5429.30/lib/rt/debugger-agent.jar -Dfile.encoding=UTF-8 main.RunAll
+
+Host: 

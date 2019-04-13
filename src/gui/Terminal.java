@@ -57,13 +57,11 @@ public class Terminal extends AnchorPane {
         ent = new TranslateTransition();
         ent.setDuration(Duration.millis(200));
         ent.setNode(this.wrapper);
-        ent.setByX(Size.width(2300));
         ent.setAutoReverse(false);
 
         exit = new TranslateTransition();
         exit.setDuration(Duration.millis(200));
         exit.setNode(this.wrapper);
-        exit.setByX(Size.width(-2300));
         exit.setAutoReverse(false);
 
         eval = new TerminalUI();
@@ -74,12 +72,14 @@ public class Terminal extends AnchorPane {
     }
 
     void start(){
+        ent.setToX(Size.width(300));
         ent.play();
         if (current != null)
             current.setEditable(true);
     }
 
     void exit() {
+        exit.setToX(Size.width(-2000));
         exit.play();
         current.setEditable(false);
     }

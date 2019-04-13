@@ -2,15 +2,8 @@ package main;
 
 import classes.MasterSchedule;
 import classes.School;
-import javafx.event.EventType;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 
 import java.math.BigDecimal;
@@ -32,9 +25,6 @@ import java.util.Date;
  */
 public class UtilAndConstants {
 
-    public static final double DEFAULT_WIDTH = 1920, DEFAULT_HEIGHT = 1080;
-
-    private double screenWidth = DEFAULT_WIDTH, screenHeight = DEFAULT_HEIGHT;
     private School school;
 
     /**
@@ -46,13 +36,6 @@ public class UtilAndConstants {
         return operatingSystem;
     }
 
-    public void updateScreenSize() {
-        Window w = Root.getPortal().getCurrentWindow();
-        //System.out.println(screenWidth);
-        //System.out.println(screenHeight);
-        screenWidth = w.getWidth();
-        screenHeight = w.getHeight();
-    }
 
     /**
      * @param aOperatingSystem the operatingSystem to set
@@ -252,22 +235,6 @@ public class UtilAndConstants {
         this.attendanceStartTime = attendanceStartTime;
     }
 
-    public double getScreenHeight() {
-        return screenHeight;
-    }
-
-    public void setScreenHeight(double screenHeight) {
-        this.screenHeight = screenHeight;
-    }
-
-    public double getScreenWidth() {
-        return screenWidth;
-    }
-
-    public void setScreenWidth(double screenWidth) {
-        this.screenWidth = screenWidth;
-    }
-
     public static String[] parsePHPDataOutBase64(String base64, int expectedLength) {
         byte[] actualBytes = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
         String string = new String(actualBytes);
@@ -303,29 +270,6 @@ public class UtilAndConstants {
         return split;
     }
 
-    double height(double height) {
-        return height * screenHeight / DEFAULT_HEIGHT;
-    }
-
-    double width(double width) {
-        return width * screenWidth / DEFAULT_WIDTH;
-    }
-
-    double fontSize(double fontSize) {
-        return Math.min(fontSize * screenWidth / DEFAULT_WIDTH, fontSize * screenHeight / DEFAULT_HEIGHT);
-    }
-
-    double scaledWidth(double actualWidth) {
-        return actualWidth * DEFAULT_WIDTH / screenWidth;
-    }
-
-    double scaledHeight(double actualHeight) {
-        return actualHeight * DEFAULT_HEIGHT / screenHeight;
-    }
-
-    double fontDimension(double widthHeight) {
-        return widthHeight * Math.min(screenHeight / DEFAULT_HEIGHT, screenWidth / DEFAULT_WIDTH);
-    }
 
     public static String ordinal(int i) {
         String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };

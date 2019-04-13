@@ -28,14 +28,15 @@
       <change beforePath="$PROJECT_DIR$/html/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/html/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Paintbrush.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Paintbrush.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/classes/ClassPd$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/classes/ClassPd$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$BarMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$BarMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$SideBar$Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$SideBar$Menu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$SideBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main$SideBar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/RainParticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/RainParticle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SnowParticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SnowParticle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SearchFilterMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SearchFilterMenu$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$CircleHitBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$CircleHitBox.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$CollisionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$CollisionType.class" afterDir="false" />
@@ -51,14 +52,18 @@
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$SmallPlanet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$SmallPlanet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$Sprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame$Sprite.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/SpaceGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/localserver/SerFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/localserver/SerFile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/localserver/ServerMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/localserver/ServerMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Styles.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Styles.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Terminal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/gui/Terminal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/main/Root.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/main/Root.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/main/Size.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/main/Size.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/paintbrush_lms/main/UtilAndConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/paintbrush_lms/main/UtilAndConstants.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/RainParticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/RainParticle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SnowParticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SnowParticle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/SpaceGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SpaceGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/SerFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/SerFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/localserver/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/localserver/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Styles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Styles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Root.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Size.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Size.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/UtilAndConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/UtilAndConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usr/nayr.ser" beforeDir="false" afterPath="$PROJECT_DIR$/usr/nayr.ser" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -99,20 +104,52 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/SnowParticle.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="120" column="29" lean-forward="true" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
+            <state relative-caret-position="279">
+              <caret line="551" column="125" selection-start-line="551" selection-start-column="125" selection-end-line="551" selection-end-column="125" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#34677#34678#0" expanded="true" />
+                <element signature="e#34705#34706#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/SearchModule.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="56" column="67" selection-start-line="56" selection-start-column="67" selection-end-line="56" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/LatestPane.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-660">
+              <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="76" column="17" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/Size.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="224" column="98" lean-forward="true" selection-start-line="224" selection-start-column="98" selection-end-line="224" selection-end-column="98" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -121,94 +158,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/terminal/SWITCH.java">
+        <entry file="file://$PROJECT_DIR$/src/gui/Styles.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+            <state relative-caret-position="61">
+              <caret line="8" column="32" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
+        <entry file="file://$PROJECT_DIR$/src/main/Root.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-              <folding>
-                <element signature="e#19207#19208#0" expanded="true" />
-                <element signature="e#19279#19280#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="167" column="96" selection-start-line="167" selection-start-column="96" selection-end-line="167" selection-end-column="96" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
-              <folding>
-                <element signature="e#3821#3822#0" expanded="true" />
-                <element signature="e#3850#3851#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/localserver/SerFile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
-              <folding>
-                <element signature="e#5684#5685#0" expanded="true" />
-                <element signature="e#5721#5722#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="118" column="55" selection-start-line="118" selection-start-column="55" selection-end-line="118" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="390">
+              <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -230,40 +192,41 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>gameov</find>
-      <find>gameover</find>
-      <find>Largeplan</find>
-      <find>removeev</find>
-      <find>gameoverhand</find>
-      <find>space</find>
-      <find>.space</find>
-      <find>case SP</find>
-      <find>keycon</find>
-      <find>keycont</find>
-      <find>static</find>
-      <find>start()</find>
-      <find>escape</find>
-      <find>quit(</find>
-      <find>quit</find>
-      <find>gameoverhandler</find>
-      <find>ship.lock</find>
-      <find>gameover()</find>
-      <find>new ship</find>
-      <find>lock()</find>
-      <find>.play</find>
-      <find>quit()</find>
-      <find>weather</find>
-      <find>serfile</find>
-      <find>sessiontoken</find>
-      <find>quicka</find>
-      <find>switch</find>
-      <find>newuserwind</find>
-      <find>newuserwindow</find>
-      <find>newu</find>
+      <find>screenhegit</find>
+      <find>135</find>
+      <find>topbar</find>
+      <find>scroll</find>
+      <find>barmenu</find>
+      <find>fontsize_obj</find>
+      <find>math.m</find>
+      <find>getprop</find>
+      <find>redraw</find>
+      <find>getsize</find>
+      <find>scrollbod</find>
+      <find>scrollbody</find>
+      <find>sidebar</find>
+      <find>redraws</find>
+      <find>in.play</find>
+      <find>out.play</find>
+      <find>terminal</find>
+      <find>repos</find>
+      <find>menus</find>
+      <find>barmenu[]</find>
+      <find>addall</find>
+      <find>m.set</find>
+      <find>coming up</find>
+      <find>height</find>
+      <find>println*</find>
+      <find>allmenus</find>
+      <find>searchbar</find>
+      <find>closesearch</find>
+      <find>system</find>
+      <find>redrawscr</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>return</replace>
+      <replace>sizeInstance()</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -273,10 +236,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/server/HostExists.java" />
-        <option value="$PROJECT_DIR$/src/gui/ImportManager.java" />
-        <option value="$PROJECT_DIR$/src/main/User.java" />
-        <option value="$PROJECT_DIR$/src/localserver/Unimport.java" />
         <option value="$PROJECT_DIR$/src/localserver/Import.java" />
         <option value="$PROJECT_DIR$/src/localserver/ExternalReceive.java" />
         <option value="$PROJECT_DIR$/src/server/ConnectionTest.java" />
@@ -302,7 +261,6 @@
         <option value="$PROJECT_DIR$/src/localserver/ConnectionTestSuccess.java" />
         <option value="$PROJECT_DIR$/src/localserver/ExternalSend.java" />
         <option value="$PROJECT_DIR$/src/localserver/TestExternal.java" />
-        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
         <option value="$PROJECT_DIR$/src/server/ServerCall.java" />
         <option value="$PROJECT_DIR$/src/main/RunAll.java" />
         <option value="$PROJECT_DIR$/src/localserver/NamedThreadFactory.java" />
@@ -323,6 +281,11 @@
         <option value="$PROJECT_DIR$/src/localserver/SerFile.java" />
         <option value="$PROJECT_DIR$/src/localserver/ServerMain.java" />
         <option value="$PROJECT_DIR$/src/localserver/ServerCall.java" />
+        <option value="$PROJECT_DIR$/src/main/UtilAndConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/Root.java" />
+        <option value="$PROJECT_DIR$/src/gui/Styles.java" />
+        <option value="$PROJECT_DIR$/src/gui/Terminal.java" />
+        <option value="$PROJECT_DIR$/src/main/Size.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
       </list>
     </option>
@@ -339,10 +302,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="289" />
-    <option name="y" value="27" />
-    <option name="width" value="1389" />
-    <option name="height" value="789" />
+    <option name="x" value="1920" />
+    <option name="y" value="-2" />
+    <option name="width" value="1853" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -410,7 +373,7 @@
     <property name="SearchEverywhereHistoryKey" value="NewU&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/NewUserWindow.java&#10;Createa&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Serverse&#9;PSI&#9;JAVA://net.ServerSession&#10;Comm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Command.java&#10;PostB&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;Post.jav&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;Serverses&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/ServerSession.java&#10;Servercall&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java&#10;Postb&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostsBody.java&#10;postwi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostWindow.java&#10;postare&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/PostArea.java&#10;Run&#9;ACTION&#9;ActivateRunToolWindow&#10;PasswordManager&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;newpost&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/NewPost.java&#10;Command&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Command.java&#10;Settings&#9;ACTION&#9;Database.Settings&#10;Weather&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Post&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/classes/Post.java&#10;newPost&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/NewPost.java&#10;Term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;Sess&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/ServerSession.java&#10;Weat&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Serverma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerMain.java&#10;Serfile&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SerFile.java&#10;Serf&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SetSerFile.java&#10;Create&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Weath&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Root&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/Root.java&#10;User&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Weatherma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/WeatherManager.java&#10;Wea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/Weather.java&#10;Main&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/Main.java&#10;settings&#9;PSI&#9;JAVA://gui.AcctSettings&#10;Cr&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;SQLM&#9;PSI&#9;JAVA://db.SQLMaster&#10;Rua&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/RunAll.java&#10;Weatherm&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/gui/WeatherManager.java&#10;User.j&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/User.java&#10;Serfi&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/SerFile.java&#10;CreateA&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Identifi&#9;PSI&#9;JAVA://searchengine.Identifier&#10;SErverma&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerMain.java&#10;Servercal&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java&#10;Anony&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/net/AnonymousServerSession.java&#10;Crea&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/CreateAccount.java&#10;Get&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/GetLocalSalt.java&#10;Userma&#9;PSI&#9;JAVA://net.Net.UserMaybe&#10;Pass&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/main/PasswordManager.java&#10;Userm&#9;PSI&#9;JAVA://net.Net.UserMaybe&#10;ServerC&#9;FILE&#9;file:///home/rtorok/Paintbrush/src/server/ServerCall.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554741875978" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555107922684" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -432,13 +395,6 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="localserver" />
-      <recent name="server" />
-      <recent name="net" />
-      <recent name="data" />
-      <recent name="server.database" />
-    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -449,15 +405,22 @@
       <recent name="gui" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="main.Size" />
+      <recent name="Size" />
       <recent name="searchengine.ItemNode" />
       <recent name="net.ThreadedCall" />
       <recent name="main.UtilAndConstants" />
-      <recent name="main.Colors" />
-      <recent name="main.Events" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="server" />
       <recent name="main" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/server" />
+      <recent name="$PROJECT_DIR$/src/server/" />
+      <recent name="$PROJECT_DIR$/src/gui" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="localserver" />
@@ -467,12 +430,12 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/server" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/server" />
-      <recent name="$PROJECT_DIR$/src/server/" />
-      <recent name="$PROJECT_DIR$/src/gui" />
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="localserver" />
+      <recent name="server" />
+      <recent name="net" />
+      <recent name="data" />
+      <recent name="server.database" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -991,7 +954,11 @@
       <workItem from="1554682616874" duration="12303000" />
       <workItem from="1554738023673" duration="4403000" />
       <workItem from="1554746572789" duration="2189000" />
-      <workItem from="1554861956562" duration="2199000" />
+      <workItem from="1554861956562" duration="4238000" />
+      <workItem from="1554921439804" duration="1040000" />
+      <workItem from="1555036550359" duration="602000" />
+      <workItem from="1555082711074" duration="7524000" />
+      <workItem from="1555108080414" duration="8006000" />
     </task>
     <servers />
   </component>
@@ -1028,10 +995,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2007949000" />
+    <option name="totallyTimeSpent" value="2027160000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892008" weight="0.1953514" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -1117,29 +1085,12 @@
     <option name="version" value="1" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/localserver/SerFile.java</url>
-          <line>14</line>
-          <properties class="localserver.SerFile" method="execute">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/localserver/ServerCall.java</url>
-          <line>54</line>
-          <properties />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="highScore" language="JAVA" />
         <watch expression="oneTimeKeys" language="JAVA" />
         <watch expression="((SessionToken)((HashSet)((HashMap.Node)oneTimeKeys.entrySet().toArray()[0]).getValue()).toArray()[0]).oneTimeKey" custom="localserver.ServerCall.SessionToken,java.util.HashMap.Node,java.util.HashSet" />
+        <watch expression="Root.getPortal()" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
@@ -1157,6 +1108,11 @@
     </expressions>
     <expressions id="watch">
       <expression>
+        <expression-string>Root.getPortal()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>oneTimeKeys</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -1164,193 +1120,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/localserver/PollingSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jrt:///home/rtorok/lib/java-10-openjdk-amd64!/java.base/javax/net/ssl/SSLSocketFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="52" column="28" selection-start-line="52" selection-start-column="28" selection-end-line="52" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/java.base/java/net/ServerSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="512" column="18" selection-start-line="512" selection-start-column="18" selection-end-line="512" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jrt:///home/rtorok/lib/java-10-openjdk-amd64!/java.base/javax/net/ServerSocketFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="33" column="43" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/ExternalListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/External.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/TestExternal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/AnonymousCentralServerSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/PostsBody.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2115">
-          <caret line="158" column="56" selection-start-line="158" selection-start-column="56" selection-end-line="158" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Layouts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/SSPBuilder.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/animation/Animation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="571" column="22" selection-start-line="571" selection-start-column="22" selection-end-line="571" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/paint/Color.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="944" column="30" selection-start-line="944" selection-start-column="30" selection-end-line="944" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/AccountSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1590">
-          <caret line="131" column="33" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/KeyMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5953#5954#0" expanded="true" />
-            <element signature="e#6014#6015#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/ServerMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="37" column="59" selection-start-line="37" selection-start-column="59" selection-end-line="37" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/Weather.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/FontLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/text/Font.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="485" column="40" selection-start-line="485" selection-start-column="40" selection-end-line="485" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/DummyToolkit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="283" column="22" selection-start-line="283" selection-start-column="22" selection-end-line="283" selection-end-column="22" />
-          <folding>
-            <element signature="e#8847#8848#0" expanded="true" />
-            <element signature="e#8924#8925#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/Toolkit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="716" column="31" selection-start-line="716" selection-start-column="31" selection-end-line="716" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/quantum/QuantumToolkit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="1082" column="57" selection-start-line="1082" selection-start-column="57" selection-end-line="1082" selection-end-column="57" />
-          <folding>
-            <element signature="e#40245#40246#0" expanded="true" />
-            <element signature="e#40317#40318#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/PrismFontLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="108" column="28" lean-forward="true" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/PrismFontFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="1737" column="22" selection-start-line="1737" selection-start-column="22" selection-end-line="1737" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/FontFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="130" column="35" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -1365,19 +1138,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="437" column="11" selection-start-line="437" selection-start-column="11" selection-end-line="437" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Size.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-          <folding>
-            <element signature="e#410#411#0" expanded="true" />
-            <element signature="e#472#473#0" expanded="true" />
-            <element signature="e#1074#1075#0" expanded="true" />
-            <element signature="e#1126#1127#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1398,13 +1158,6 @@
             <element signature="e#234214#234215#0" expanded="true" />
             <element signature="e#234260#234261#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/layout/Region.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="1448" column="22" selection-start-line="1448" selection-start-column="22" selection-end-line="1448" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1478,17 +1231,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="28" column="37" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
-          <folding>
-            <element signature="e#1158#1159#0" expanded="true" />
-            <element signature="e#1226#1227#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/SnowParticle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1496,36 +1238,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/SerFile.java">
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/quantum/QuantumToolkit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+        <state relative-caret-position="147">
+          <caret line="489" selection-start-line="489" selection-end-line="489" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#40245#40246#0" expanded="true" />
+            <element signature="e#40317#40318#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
+    <entry file="file://$PROJECT_DIR$/src/terminal/SWITCH.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="118" column="55" selection-start-line="118" selection-start-column="55" selection-end-line="118" selection-end-column="55" />
+        <state relative-caret-position="327">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/stage/Stage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="1108" column="24" selection-start-line="1108" selection-start-column="24" selection-end-line="1108" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#34684#34685#0" expanded="true" />
+            <element signature="e#34746#34747#0" expanded="true" />
+            <element signature="e#35540#35541#0" expanded="true" />
+            <element signature="e#35598#35599#0" expanded="true" />
+            <element signature="e#37254#37255#0" expanded="true" />
+            <element signature="e#37331#37332#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+          <folding>
+            <element signature="e#19207#19208#0" expanded="true" />
+            <element signature="e#19279#19280#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/ServerSession.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
+        <state relative-caret-position="2235">
           <caret line="167" column="96" selection-start-line="167" selection-start-column="96" selection-end-line="167" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1535,8 +1294,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+        <state relative-caret-position="1560">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
           <folding>
             <element signature="e#3821#3822#0" expanded="true" />
             <element signature="e#3850#3851#0" expanded="true" />
@@ -1544,28 +1303,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/NewUserWindow.java">
+    <entry file="file://$PROJECT_DIR$/src/localserver/SerFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-          <folding>
-            <element signature="e#19207#19208#0" expanded="true" />
-            <element signature="e#19279#19280#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="330">
+          <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/terminal/SWITCH.java">
+    <entry file="file://$PROJECT_DIR$/src/localserver/Command.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="120" column="29" lean-forward="true" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
+        <state relative-caret-position="270">
+          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1574,11 +1322,231 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/localserver/ServerCall.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="1395">
+          <caret line="105" column="71" selection-start-line="105" selection-start-column="71" selection-end-line="105" selection-end-column="71" />
           <folding>
             <element signature="e#5684#5685#0" expanded="true" />
             <element signature="e#5721#5722#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/localserver/ServerMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1575">
+          <caret line="118" column="55" selection-start-line="118" selection-start-column="55" selection-end-line="118" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/UtilAndConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="272" selection-start-line="272" selection-end-line="272" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/text/FontPosture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/tk/FontLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/PrismFontLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="199" column="42" selection-start-line="199" selection-start-column="42" selection-end-line="199" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/FontFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/PrismFontFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="571" column="35" selection-start-line="571" selection-start-column="35" selection-end-line="571" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/FontConfigManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="311" selection-start-line="311" selection-end-line="311" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/com/sun/javafx/font/LogicalFont.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="179" column="43" selection-start-line="179" selection-start-column="43" selection-end-line="179" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.controls/javafx/scene/control/TextField.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="144" column="10" selection-start-line="144" selection-start-column="10" selection-end-line="144" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.base/javafx/beans/property/ObjectPropertyBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="142" selection-start-line="142" selection-end-line="142" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/css/StyleableObjectProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/text/Text.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="1292" column="54" selection-start-line="1292" selection-start-column="49" selection-end-line="1292" selection-end-column="54" />
+          <folding>
+            <element signature="e#17625#17626#0" expanded="true" />
+            <element signature="e#17666#17667#0" expanded="true" />
+            <element signature="e#17701#17702#0" expanded="true" />
+            <element signature="e#17769#17770#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/CustomFonts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding>
+            <element signature="e#759#760#0" expanded="true" />
+            <element signature="e#835#836#0" expanded="true" />
+            <element signature="e#1158#1159#0" expanded="true" />
+            <element signature="e#1226#1227#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Root.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/java.base/java/lang/Double.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="541" column="25" selection-start-line="541" selection-start-column="25" selection-end-line="541" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Styles.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/text/Font.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="307" column="50" selection-start-line="307" selection-start-column="50" selection-end-line="307" selection-end-column="50" />
+          <folding>
+            <element signature="e#9504#9505#0" expanded="true" />
+            <element signature="e#9555#9556#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Terminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="76" column="17" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/layout/AnchorPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="188" column="25" selection-start-line="188" selection-start-column="25" selection-end-line="188" selection-end-column="25" />
+          <folding>
+            <element signature="e#7933#7934#0" expanded="true" />
+            <element signature="e#7999#8000#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/layout/Region.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="569">
+          <caret line="688" column="24" selection-start-line="688" selection-start-column="24" selection-end-line="688" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/layout/GridPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="769" column="24" selection-start-line="769" selection-start-column="24" selection-end-line="769" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/LatestPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-660">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../lib/java-10-openjdk-amd64/lib/src.zip!/javafx.graphics/javafx/scene/layout/HBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="299" column="24" selection-start-line="299" selection-start-column="24" selection-end-line="299" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Size.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="224" column="98" lean-forward="true" selection-start-line="224" selection-start-column="98" selection-end-line="224" selection-end-column="98" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/SearchModule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="56" column="67" selection-start-line="56" selection-start-column="67" selection-end-line="56" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="551" column="125" selection-start-line="551" selection-start-column="125" selection-end-line="551" selection-end-column="125" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#34677#34678#0" expanded="true" />
+            <element signature="e#34705#34706#0" expanded="true" />
           </folding>
         </state>
       </provider>

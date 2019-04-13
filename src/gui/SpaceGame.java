@@ -24,13 +24,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import main.Layouts;
-import main.Root;
 import main.Size;
-import main.UtilAndConstants;
-import searchengine.StemIndex;
 
-import javax.swing.text.Style;
-import java.security.Key;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Random;
@@ -57,7 +52,7 @@ public class SpaceGame extends StackPane {
 
     public SpaceGame(Main wrapper) {
         this.wrapper = wrapper;
-        width = UtilAndConstants.DEFAULT_WIDTH;
+        width = Size.DEFAULT_WIDTH;
         height = 130;
         allTimelines = new HashSet<>();
         setPrefHeight(Size.height(height));
@@ -184,7 +179,7 @@ public class SpaceGame extends StackPane {
     }
 
     private void startSpawnAI() {
-        Timeline spawnTimer = new Timeline(new KeyFrame(Duration.millis(UtilAndConstants.DEFAULT_WIDTH / ADVANCE_SPEED * 1000), event -> {
+        Timeline spawnTimer = new Timeline(new KeyFrame(Duration.millis(Size.DEFAULT_WIDTH / ADVANCE_SPEED * 1000), event -> {
             //spawn a new enemy pattern every screen
             Random rand = new Random();
             score(100);
@@ -278,7 +273,7 @@ public class SpaceGame extends StackPane {
     }
 
     private int timeDelay(double percent) {
-        return (int) (UtilAndConstants.DEFAULT_WIDTH / ADVANCE_SPEED * percent * 10);
+        return (int) (Size.DEFAULT_WIDTH / ADVANCE_SPEED * percent * 10);
     }
 
     private void initializeKeyControls() {
@@ -730,7 +725,7 @@ public class SpaceGame extends StackPane {
                 hitBox.translateX(dx);
                 hitBox.translateY(dy);
                 //bounds check
-                if (x0 + this.getTranslateX() + xPadding < 0 - length || x0 + this.getTranslateX() - xPadding > Size.width(UtilAndConstants.DEFAULT_WIDTH) || y0 + this.getTranslateY() + yPadding < 0 || y0 + this.getTranslateY() - yPadding > Size.height(125))
+                if (x0 + this.getTranslateX() + xPadding < 0 - length || x0 + this.getTranslateX() - xPadding > Size.width(Size.DEFAULT_WIDTH) || y0 + this.getTranslateY() + yPadding < 0 || y0 + this.getTranslateY() - yPadding > Size.height(125))
                     despawn();
             }));
             animation.setDelay(Duration.millis(delayMillis));
