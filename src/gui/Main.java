@@ -6,10 +6,9 @@ import classes.Course;
 import classes.Record;
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -32,18 +31,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import main.*;
+import org.json.JSONObject;
 import searchengine.Index;
 import searchengine.Indexable;
 import searchengine.QueryEngine;
 import terminal.Address;
 
 import java.awt.*;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -98,6 +101,8 @@ public class Main extends Application {
     private StackPane topbarWrapper;
     private String borderWidth;
 
+    public static final int SCALED_BORDER_THICKNESS = 8;
+
     private boolean playingGame = false;
 
     //Task Views
@@ -112,6 +117,7 @@ public class Main extends Application {
     private String upper;
     private String lower;
     private boolean keyMapLockedOnSleep;
+    private Index searchIndex;
 
     public static void main(String[] args) {
         launch(args);
@@ -161,6 +167,8 @@ public class Main extends Application {
 
     public void switchToMain() {
 
+        Events.initAnimations();
+
         keyMap = User.active().getKeyMap();
 
         getPrimaryStage().setMaximized(false);
@@ -172,12 +180,11 @@ public class Main extends Application {
         upper = mainlogo.getText().toUpperCase();
         lower = mainlogo.getText();
 
-        Text subText = new Text("Let's get something done today.");
-        subtitle = subText;
-        subText.setFont(Font.font("Sans Serif", FontPosture.ITALIC,  Size.fontSize(20)));
-        subText.setFill(Color.WHITE);
-        titles = new VBox(mainlogo, subText);
-        titles.setSpacing(5);
+        subtitle = new Text("Let's get something done today.");
+        subtitle.setFont(Font.font("Sans Serif", FontPosture.ITALIC,  Size.fontSize(20)));
+        subtitle.setFill(Color.WHITE);
+        titles = new VBox(mainlogo, subtitle);
+        titles.setSpacing(Size.height(10));
         titles.setPadding(Size.insets(10, 0, 0, 0));
         titles.setPrefWidth(Size.width(300));
         titles.setMinWidth(Size.width(400));
@@ -231,11 +238,12 @@ public class Main extends Application {
         topbar.setSpacing(Size.width(35));
         topbar.setAlignment(Pos.TOP_LEFT);
         String color = Colors.colorToHex(User.active().getAccentColor());
-        borderWidth = (int) Size.height(8) + "px";
+        borderWidth = (int) Size.height(SCALED_BORDER_THICKNESS) + "px";
         topbar.setStyle("-fx-background-color: #000000; -fx-border-color: " + color + "; -fx-border-width: 0em 0em " + borderWidth + " 0em; -fx-border-style: solid");
         topbar.setPadding(Size.insets(15));
         this.topbar.setPrefHeight(Size.height(140));
         this.topbar.setMinHeight(Size.height(140));
+        this.topbar.setMaxHeight(Size.height(140));
 
         //top bar scroll bar
         topBarScrollBar = new Line();
@@ -274,7 +282,7 @@ public class Main extends Application {
                 }
                 i++;
             }
-            scrollBody(closestIndex, subText);
+            scrollBody(closestIndex, subtitle);
         });
 
         topbarWrapper = new StackPane(topbar, topBarScrollBar);
@@ -306,7 +314,7 @@ public class Main extends Application {
             }
         }));
         clockTimeline.setCycleCount(Animation.INDEFINITE);
-        clockTimeline.play();
+        Events.animation(clockTimeline, false);
         BorderPane sleepbody = new BorderPane();
         sleepBody = sleepbody;
 
@@ -316,7 +324,7 @@ public class Main extends Application {
         //getManager().update();
         Timeline weatherUpdateTimer = new Timeline(new KeyFrame(Duration.millis(300000), event -> updateWeather()));
         weatherUpdateTimer.setCycleCount(Animation.INDEFINITE);
-        weatherUpdateTimer.play();
+        Events.animation(weatherUpdateTimer, false);
         temperature = new Text();
         setTemperatureDisplay();
         getTemperature().setFill(Color.WHITE);
@@ -349,13 +357,14 @@ public class Main extends Application {
         VBox root = new VBox(topbarWrapper, allBodyPanes);
         topbarWrapper.setViewOrder(Integer.MAX_VALUE);
         allBodyPanes.setViewOrder(Integer.MIN_VALUE);
-        root.setMinHeight(Size.height(1080));
+        root.setMinWidth(Size.width(Size.DEFAULT_WIDTH));
+        root.setMaxWidth(Size.width(Size.DEFAULT_WIDTH));
         ScrollPane terminalWrapper = new ScrollPane();
         Terminal term = new Terminal(this, terminalWrapper);
         this.terminal = term;
         terminalWrapper.setContent(term);
         terminalWrapper.setFitToHeight(true);
-        terminalWrapper.setStyle("-fx-background-color: #202020");
+        Styles.setBackgroundColor(terminalWrapper, Color.web("#202020"));
         terminalWrapper.setPrefWidth(term.getPrefWidth());
         terminalWrapper.setPrefHeight(term.getPrefHeight());
         terminalWrapper.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -374,6 +383,7 @@ public class Main extends Application {
 
         StackPane mainArea = new StackPane(background, weatherPane, terminalpane, root);
         this.mainArea = mainArea;
+        mainArea.setAlignment(Pos.TOP_CENTER);
         getPrimaryStage().setScene(new Scene(mainArea, Size.width(1920), Size.height(1080)));
         getPrimaryStage().setMaximized(true);
 
@@ -389,7 +399,7 @@ public class Main extends Application {
 
 
         //load search index
-        Index searchIndex = Index.loadLocal();
+        searchIndex = Index.loadLocal();
 
         //search box
         searchBox = new SearchModule(new QueryEngine(searchIndex), this);
@@ -450,6 +460,14 @@ public class Main extends Application {
         classLauncherGrid.setHgap(Size.width(40));
         classLauncherGrid.setVgap(Size.height(40));
 
+        ClassPd test = new ClassPd();
+        test.setPeriodNo(1);
+        test.setTeacherFirst("FirstName");
+        test.setTeacherLast("LastName");
+        test.setCastOf(new Course() {{
+            setName("Test Class");
+        }});
+
         if (allClasses.size() > 0) {
 
             int numRows = (int) Math.ceil(Math.sqrt(allClasses.size() / 2.0));
@@ -460,11 +478,6 @@ public class Main extends Application {
             int remainder = (int) Size.width(1920 - ((clWidth + classLauncherGrid.getHgap()) * launchersPerRow + classLauncherGrid.getHgap())) / 2;
             classLauncherGrid.setPadding(Size.insets(classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder, classLauncherGrid.getHgap(), classLauncherGrid.getHgap() + remainder));
 
-            ClassPd test = new ClassPd();
-            test.setPeriodNo(1);
-            test.setTeacherFirst("FirstName");
-            test.setTeacherLast("LastName");
-            test.setCastOf(new Course());
             for (int i = 0; i < 7; i++) {
                 test.setPeriodNo(new Random().nextInt(10));
                 allClasses.set(i, test);
@@ -518,36 +531,27 @@ public class Main extends Application {
         });
 
         state = BASE_STATE;
-        Root.sizeInstance().updateScreenSize();
         getPrimaryStage().getScene().widthProperty().addListener((observable, oldValue, newValue) -> redrawScreen(Math.max(50, newValue.doubleValue()), Root.sizeInstance().getScreenHeight()));
         getPrimaryStage().getScene().heightProperty().addListener((observable, oldValue, newValue) -> redrawScreen(Root.sizeInstance().getScreenWidth(), Math.max(50, newValue.doubleValue())));
-        getPrimaryStage().maximizedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                //the resize handler seems to have trouble with this so it's hard coded.
-                Timeline delay = new Timeline(new KeyFrame(Duration.millis(100)));
-                delay.setOnFinished(event ->  repositionTopBarScrollBar(currentMenu, 0));
-                delay.play();
-            }
+        getPrimaryStage().maximizedProperty().addListener((observable, oldValue, newValue) -> {
+            //the resize handler seems to have trouble with this so it's hard coded.
+            Timeline delay = new Timeline(new KeyFrame(Duration.millis(100)));
+            delay.setOnFinished(event ->  repositionTopBarScrollBar(currentMenu, 0));
+            Events.animation(delay);
         });
         getPrimaryStage().setResizable(true);
         getPrimaryStage().show();
-        repositionTopBarScrollBar(0, 1);
-        //System.out.println("w: " + getPrimaryStage().getWidth());
-        //System.out.println("h: " + getPrimaryStage().getHeight());
-      /*  launchClass(new ClassPd() {
-            @Override
-            public JSONObject toJSONObject() {
-                return null;
-            }
-
-            {setCastOf(new Course() {{setName("Test Class");}}); setPeriodNo(4);}});*/
-
+        Root.sizeInstance().updateScreenSize();
+        Timeline delay = new Timeline(new KeyFrame(Duration.millis(1000), event -> {}));
+        delay.setOnFinished(event -> repositionTopBarScrollBar(0, 0));
+        Events.animation(delay, false);
         for (Collection<Indexable> list :
                 QueryEngine.getPrimaryIndexSets()) {
             searchBox.getEngine().getIndex().index(list);
         }
         updateWeather();
+        launchClass(test);
+
     }
 
 
@@ -560,9 +564,6 @@ public class Main extends Application {
             m1.setFont(Font.font(m1.getFont().getFamily(), FontPosture.REGULAR, m1.getFont().getSize()));
         }
         name.setFont(Font.font(name.getFont().getFamily(), FontPosture.REGULAR, name.getFont().getSize()));
-
-        //TODO don't hard code this, the window resize handler seems to have trouble with this so I hard coded the size here.
-        Styles.setProperty(searchBox.getSearchBox(), "-fx-font-size", String.valueOf(Size.fontSize(30)));
 
         repositionTopBarScrollBar(currentMenu, 0);
     }
@@ -794,7 +795,7 @@ public class Main extends Application {
                     background.setEffect(flash);
                 }));
                 pulser.setCycleCount((rand.nextInt(5) + 1) * 2);
-                pulser.play();
+                Events.animation(pulser, false);
             }
         }, (long) (1000.0 / flashesPerSecond), (long) (1000.0 / flashesPerSecond));
     }
@@ -803,14 +804,14 @@ public class Main extends Application {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new RainParticle(weatherPane, day).shape)));
         timeline.setCycleCount(Animation.INDEFINITE);
         weatherParticleTimer = timeline;
-        timeline.play();
+        Events.animation(timeline, false);
     }
 
     private void snow(AnchorPane weatherPane, int particlesPerSecond) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.0 / particlesPerSecond), event -> weatherPane.getChildren().add(new SnowParticle(weatherPane, day).shape)));
         timeline.setCycleCount(Animation.INDEFINITE);
         weatherParticleTimer = timeline;
-        timeline.play();
+        Events.animation(timeline, false);
     }
 
     private void updateTime() {
@@ -842,12 +843,12 @@ public class Main extends Application {
         FadeTransition fadein = new FadeTransition(Duration.millis(200), topbarWrapper);
         fadein.setFromValue(0);
         fadein.setToValue(1);
-        fadein.play();
+        Events.animation(fadein, false);
         mainBodyAndTaskViews.setVisible(true);
         FadeTransition fadein_ = new FadeTransition(Duration.millis(200), mainBodyAndTaskViews);
         fadein_.setFromValue(0);
         fadein_.setToValue(1);
-        fadein_.play();
+        Events.animation(fadein, false);
         getSleepBody().setVisible(false);
     }
 
@@ -862,7 +863,7 @@ public class Main extends Application {
         ft.setToValue(1);
         updateTime();
         getSleepBody().setVisible(true);
-        ft.play();
+        Events.animation(ft, false);
     }
 
     public void clearStage() {
@@ -1007,13 +1008,11 @@ public class Main extends Application {
     }
 
     public void expandTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(1080)), new KeyValue(topbar.minHeightProperty(), Size.height(1080))));
-        expansion.play();
+        Events.animation(new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(1080)), new KeyValue(topbar.minHeightProperty(), Size.height(1080)))));
     }
 
     public void collapseTopBar() {
-        Timeline expansion = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(140)), new KeyValue(topbar.minHeightProperty(), Size.height(140))));
-        expansion.play();
+        Events.animation(new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(topbar.prefHeightProperty(), Size.height(140)), new KeyValue(topbar.minHeightProperty(), Size.height(140)))));
     }
 
     public VBox getTitles() {
@@ -1042,7 +1041,7 @@ public class Main extends Application {
             getPrimaryStage().setMaximized(true);
             Timeline delay = new Timeline(new KeyFrame(Duration.millis(1000)));
             delay.setOnFinished(event -> startGameInner(fade));
-            delay.play();
+            Events.animation(delay);
         } else {
             startGameInner(fade);
         }
@@ -1057,7 +1056,7 @@ public class Main extends Application {
         FadeTransition fadeInGame = new FadeTransition(Duration.millis(750), game);
         fadeInGame.setFromValue(fade ? 0 : 1);
         fadeInGame.setToValue(1);
-        fadeInGame.play();
+        Events.animation(fadeInGame, false);
         game.start();
     }
 
@@ -1097,7 +1096,7 @@ public class Main extends Application {
         int duration = 200;
         TranslateTransition bodyTransition = new TranslateTransition(Duration.millis(duration), contentPanesWrapper);
         bodyTransition.setToX(Size.width(-1920 * scrollPos));
-        bodyTransition.play();
+        Events.animation(bodyTransition);
 
         repositionTopBarScrollBar(scrollPos, duration);
     }
@@ -1117,8 +1116,8 @@ public class Main extends Application {
             TranslateTransition scrollBarTransition = new TranslateTransition(Duration.millis(duration), topBarScrollBar);
             scrollBarTransition.setToX(offset);
             Timeline growShrink = new Timeline(new KeyFrame(Duration.millis(duration), new KeyValue(topBarScrollBar.endXProperty(), endX)));
-            growShrink.play();
-            scrollBarTransition.play();
+            Events.animation(growShrink);
+            Events.animation(scrollBarTransition);
         }
     }
 
@@ -1136,7 +1135,13 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        Root.saveAll();
+        try {
+            Root.saveAll().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         System.exit(1);
     }
 
@@ -1164,17 +1169,19 @@ public class Main extends Application {
             init.setNode(this);
             init.setDuration(Duration.millis(1));
             init.setByX(Size.width(1920));
-            init.setAutoReverse(false);
-            init.play();
+            init.setOnFinished(event -> {
+                setVisible(false);
+            });
+            Events.animation(init, false);
 
             //enter screen animation
             in = new TranslateTransition();
             in.setNode(this);
             in.setDuration(Duration.millis(200));
-            in.setAutoReverse(false);
 
             //exit screen animation
             out = new TranslateTransition();
+            out.setOnFinished(event -> setVisible(false));
             out.setNode(this);
             out.setDuration(Duration.millis(200));
             out.setAutoReverse(false);
@@ -1192,6 +1199,7 @@ public class Main extends Application {
             Menu privacy = new Menu("Privacy Policy");
             Menu help = new Menu("Help");
             Menu switch_user = new Menu(signedIn ? "Switch User" : "Sign in");
+            Menu sign_out = new Menu("Sign Out");
             Menu save = new Menu(signedIn ? "Save and Exit" : "Exit");
 
             menus.add(openTerminal);
@@ -1204,6 +1212,8 @@ public class Main extends Application {
             menus.add(privacy);
             menus.add(help);
             menus.add(switch_user);
+            if (signedIn)
+                menus.add(sign_out);
             menus.add(save);
 
             openTerminal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> getPrimaryStage().getScene().getRoot()
@@ -1255,6 +1265,28 @@ public class Main extends Application {
                 Main.this.newUser();
             });
 
+            sign_out.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                Main.this.getPrimaryStage().setMaximized(false);
+                boolean success;
+                try {
+                    success = Root.saveAll().get();
+                } catch (InterruptedException | ExecutionException e) {
+                    success = false;
+                }
+                if (success) {
+                    //delete the user's object file
+                    String filename = Address.fromRootAddr("usr", User.active().getUsername() + ".ser");
+                    File serFile = new File(filename);
+                    final boolean deleteSuccess = serFile.delete();
+                    if (!deleteSuccess) {
+                        //TODO show an error message
+                    }
+                } else {
+                    //TODO show an error message
+                }
+                Main.this.newUser();
+            });
+
             save.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Main.this.stop());
             getChildren().addAll(menus);
             setAlignment(Pos.TOP_CENTER);
@@ -1271,7 +1303,8 @@ public class Main extends Application {
             //resolves strange behavior on first load
             selectedMenu = -1;
             in.setToX(Size.width(1670));
-            in.play();
+            setVisible(true);
+            Events.animation(in);
         }
 
         @Deprecated
@@ -1282,7 +1315,7 @@ public class Main extends Application {
             Duration old = out.getDuration();
             out.setDuration(Duration.ZERO);
             out.setToX(Size.width(1920));
-            out.play();
+            Events.animation(out);
             out.setOnFinished(event -> out.setDuration(old));
         }
 
@@ -1291,7 +1324,7 @@ public class Main extends Application {
                 Events.fireMouse(menus.get(selectedMenu), MouseEvent.MOUSE_EXITED);
             selectedMenu = -1;
             out.setToX(Size.width(1920));
-            out.play();
+            Events.animation(out);
         }
 
         public void setColor(Color color) {
@@ -1417,21 +1450,21 @@ public class Main extends Application {
         transition.setNode(searchBox);
         transition.setFromValue(0);
         transition.setToValue(1);
-        transition.play();
+        Events.animation(transition);
 
         return searchBox;
     }
 
     public KeyMap defaultKeyMap() {
         KeyMap newKeyMap = new KeyMap();
-        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Space", event -> openSearchBar());
+        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "S", event -> openSearchBar());
         newKeyMap.associate(SEARCH_STATE, KeyMap.BOTH, "Escape", event -> closeSearchBar());
         newKeyMap.associate(SLEEP_STATE, KeyMap.BOTH, "Escape", event -> {}); // overrides next statement
         newKeyMap.associate(SLEEP_STATE, KeyMap.BOTH, KeyMap.ALL, event -> {
             wakeup();
             getKeyMap().consume();
         });
-        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "Tab", event -> {
+        newKeyMap.associate(BASE_STATE, KeyMap.BOTH, "T", event -> {
             terminal.setVisible(true);
             terminal.start();
             state = TERMINAL_STATE;
@@ -1532,10 +1565,17 @@ public class Main extends Application {
                 lastProgressBar = -1;
             }
         });
-        timeline.play();
+        Events.animation(timeline);
     }
 
     public javafx.stage.Window getCurrentWindow() {
-        return Stage.getWindows().filtered(javafx.stage.Window::isShowing).get(0);
+        final FilteredList<Window> filtered = Stage.getWindows().filtered(Window::isShowing);
+        if (filtered.isEmpty())
+            return null;
+        return filtered.get(0);
+    }
+
+    public Index getSearchIndex() {
+        return searchIndex;
     }
 }

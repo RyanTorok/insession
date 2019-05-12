@@ -35,18 +35,21 @@ public class CompressedRichText {
     }
 
     public TextFlow extract() {
+        //TODO optimize this. Stress tests cause havoc since we have every character as a different Text node
         TextFlow flow = new TextFlow();
         for (int i = 0; i < unformattedText.length(); i++) {
             flow.getChildren().add(new Text(Character.toString(unformattedText.charAt(i))));
         }
         for (String styleComponent : styles.keySet()) {
-            System.out.println("style component: " + styleComponent);
             List<Pair<Integer, Integer>> indexList = styles.get(styleComponent);
-            for (Pair<Integer, Integer> range :
-                    indexList) {
+            for (Pair<Integer, Integer> range : indexList) {
                 for (int i = range.getKey(); i < range.getValue(); i++) {
                     String[] split = styleComponent.split(":");
-                    Styles.setProperty(flow.getChildren().get(i), split[0], split[1]);
+                    try {
+                        Styles.setProperty(flow.getChildren().get(i), split[0], split[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("error!");
+                    }
                 }
             }
         }

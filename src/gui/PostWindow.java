@@ -5,10 +5,12 @@ import classes.Post;
 import classes.PostStatus;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
@@ -29,7 +31,11 @@ class PostWindow extends VBox {
     PostWindow(PostsBody wrapper, Post post) {
         this.wrapper = wrapper;
         titleBar = new HBox();
-        Text title = new Text(post.getTitle());
+        Label title = new Label(post.getTitle());
+        title.setTextFill(Color.BLACK);
+        title.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            //Layouts.expandText(title);
+        });
         title.setFont(Font.font(Size.fontSize(24)));
         titleBar.getChildren().add(title);
         Region region = new Region();
@@ -41,6 +47,7 @@ class PostWindow extends VBox {
         typeText.setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(14)));
         titleBar.getChildren().add(typeText);
         titleBar.getChildren().add(new Layouts.Filler());
+        titleBar.setSpacing(Size.width(10));
         boolean updated = post.getStatusLabels().contains(PostStatus.UPDATED);
 
         Text uploadedText = new Text((updated ? "Updated " : "Uploaded ") + UtilAndConstants.parseTimestamp(new Timestamp(updated ? post.getIdentifier().getTime2() : post.getIdentifier().getTime1())) + " by ");

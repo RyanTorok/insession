@@ -49,15 +49,18 @@ public class PostEngine implements Serializable {
     }
 
     public void deletePost(Post post) {
+        try (ServerSession serverSession = new ServerSession()) {
+            serverSession.open();
+            serverSession.sendOnly("deletepost", String.valueOf(post.getIdentifier().getId()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO tell user the delete failed
+            return;
+        }
         getPosts().remove(post);
         Root.getPortal().getSearchBox().getEngine().getIndex().remove(post);
+        Root.getPortal().getSearchIndex().remove(post);
         //remove from server
-        new ThreadedCall<Boolean>("post/deletePost.php", true,
-                new PostRequest("classId", post.getClassId()),
-                new PostRequest("postId", post.getIdentifier().getId()),
-                new PostRequest("classItemId", post.getClassItemId())).procedureCall((list) ->
-                list.contains("done"), (b) -> {}
-        );
 
     }
 

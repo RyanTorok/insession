@@ -4,6 +4,7 @@ import classes.ClassPd;
 import classes.Post;
 import classes.PostStatus;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -117,8 +118,20 @@ public class PostArea extends VBox {
             if (compressedRichText != null) {
                 post.update(post.getTitle(), compressedRichText);
                 Root.getPortal().getSearchBox().getEngine().getIndex().index(post);
-                wrapper.getWrapper().fire(post);
+                //update the sidebar in case this post is expanded, to see the text change
+                final ClassView classView = this.wrapper.getWrapper().getWrapper();
+                for (Node n : classView.getPostsList().getChildren())
+                    if (n instanceof ClassView.PostSBItem) {
+                        final ClassView.PostSBItem sbItem = (ClassView.PostSBItem) n;
+                        if (sbItem.getPost() == this.post) {
+                            if (sbItem.isExpanded()) {
+                                sbItem.collapse();
+                                sbItem.expand();
+                            }
+                        }
+                    }
             }
+            wrapper.getWrapper().fire(post);
         });
     }
 

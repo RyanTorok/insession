@@ -155,4 +155,8 @@ public abstract class Command {
     protected String allQuestionMarks(String table_name, boolean paren) {
         return DatabaseUtils.questionMarks(QueryGate.numColumns(table_name), paren);
     }
+
+    protected UUID uuidNoDashes(String uuid) {
+        return UUID.fromString(uuid.substring(0, 8) + "-" + uuid.substring(8, 12) + "-" + uuid.substring(12, 16) + "-" + uuid.substring(16,20) + "-" + uuid.substring(20));
+    }
 }

@@ -61,7 +61,7 @@ public class TaskViewWrapper extends StackPane {
                             lastShift = 1;
                             shiftCount = 2;
                             if (lastViewed != null)
-                                    select(lastViewed);
+                                select(lastViewed);
                             else if (lastClosed != null) {
                                 select(lastClosed);
                             }
@@ -100,37 +100,64 @@ public class TaskViewWrapper extends StackPane {
                     break;
                 }
                 case NUMPAD1:
-                case DIGIT1: scroll(Math.min(activeViews.size() - 1, 0)); break;
+                case DIGIT1:
+                    scroll(Math.min(activeViews.size() - 1, 0));
+                    break;
                 case NUMPAD2:
-                case DIGIT2: scroll(Math.min(activeViews.size() - 1, 1)); break;
+                case DIGIT2:
+                    scroll(Math.min(activeViews.size() - 1, 1));
+                    break;
                 case NUMPAD3:
-                case DIGIT3: scroll(Math.min(activeViews.size() - 1, 2)); break;
+                case DIGIT3:
+                    scroll(Math.min(activeViews.size() - 1, 2));
+                    break;
                 case NUMPAD4:
-                case DIGIT4: scroll(Math.min(activeViews.size() - 1, 3)); break;
+                case DIGIT4:
+                    scroll(Math.min(activeViews.size() - 1, 3));
+                    break;
                 case NUMPAD5:
-                case DIGIT5: scroll(Math.min(activeViews.size() - 1, 4)); break;
+                case DIGIT5:
+                    scroll(Math.min(activeViews.size() - 1, 4));
+                    break;
                 case NUMPAD6:
-                case DIGIT6: scroll(Math.min(activeViews.size() - 1, 5)); break;
+                case DIGIT6:
+                    scroll(Math.min(activeViews.size() - 1, 5));
+                    break;
                 case NUMPAD7:
-                case DIGIT7: scroll(Math.min(activeViews.size() - 1, 6)); break;
+                case DIGIT7:
+                    scroll(Math.min(activeViews.size() - 1, 6));
+                    break;
                 case NUMPAD8:
-                case DIGIT8: scroll(Math.min(activeViews.size() - 1, 7)); break;
+                case DIGIT8:
+                    scroll(Math.min(activeViews.size() - 1, 7));
+                    break;
                 case NUMPAD9:
-                case DIGIT9: scroll(Math.min(activeViews.size() - 1, 8)); break;
+                case DIGIT9:
+                    scroll(Math.min(activeViews.size() - 1, 8));
+                    break;
                 case NUMPAD0:
-                case DIGIT0: scroll(Math.min(activeViews.size() - 1, 9)); break;
+                case DIGIT0:
+                    scroll(Math.min(activeViews.size() - 1, 9));
+                    break;
             }
         });
     }
 
     static final int centerLocX = 0;
-    static final double fullWidth = Size.width(1922);
-    static final double fullHeight = Size.height(937);
-    static final double smallWidth = fullWidth / 2;
-    static final double smallHeight = fullHeight / 2;
+    static double fullWidth = 0;
+    static double fullHeight = 0;
+    static double smallWidth = 0;
+    static double smallHeight = 0;
 
-    public static final int BASE_STATE  = 0;
-    public static final int TILE_STATE  = 1;
+    public static void rescale() {
+        fullWidth = Size.width(Size.DEFAULT_WIDTH);
+        fullHeight = Root.getPortal() == null || Root.getPortal().getTopbar() == null ? Size.height(925) : Size.height(Size.DEFAULT_HEIGHT - (Size.scaledHeight(Root.getPortal().getTopbar().getPrefHeight()) + Main.SCALED_BORDER_THICKNESS)+ 5);
+        smallWidth = fullWidth / 2;
+        smallHeight = fullHeight / 2;
+    }
+
+    public static final int BASE_STATE = 0;
+    public static final int TILE_STATE = 1;
     public static final int STACK_STATE = 2;
 
     private int state;
@@ -159,12 +186,12 @@ public class TaskViewWrapper extends StackPane {
             lastViewed = lastClosed;
         }
         long manualScrollDelay = Math.max(0, SCROLL_MILLIS - (System.currentTimeMillis() - lastAutoScroll));
-        Timeline delay =  new Timeline(new KeyFrame(Duration.millis((orig == index ? 0 : 400) + manualScrollDelay)));
+        Timeline delay = new Timeline(new KeyFrame(Duration.millis((orig == index ? 0 : 400) + manualScrollDelay)));
         delay.setOnFinished(event -> {
             scroll(index);
             stackTileSlideOut(millis);
         });
-        delay.play();
+        Events.animation(delay);
         which = index;
         state = BASE_STATE;
     }
@@ -178,7 +205,7 @@ public class TaskViewWrapper extends StackPane {
         shrinkActive(millis);
         Timeline delay = new Timeline(new KeyFrame(Duration.millis(millis)));
         delay.setOnFinished(event -> stackTileSlideIn(millis));
-        delay.play();
+        Events.animation(delay);
         state = STACK_STATE;
     }
 
@@ -192,16 +219,16 @@ public class TaskViewWrapper extends StackPane {
             int distance = index - i;
             double offset = stretch * Math.sqrt(distance);
             Timeline comeFromLeft = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), centerLocX - offset)));
-            comeFromLeft.play();
+            Events.animation(comeFromLeft);
         }
         TaskView me = activeViews.get(index);
         Timeline centerMe = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(me.translateXProperty(), centerLocX)));
-        centerMe.play();
+        Events.animation(centerMe);
         for (int i = index + 1; i < activeViews.size(); i++) {
             int distance = i - index;
             double offset = stretch * Math.sqrt(distance);
             Timeline comeFromRight = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), centerLocX + offset)));
-            comeFromRight.play();
+            Events.animation(comeFromRight);
         }
         //swap z positions
         ArrayList<TaskView> zIndexTable = new ArrayList<>();
@@ -221,13 +248,13 @@ public class TaskViewWrapper extends StackPane {
         int index = which;
         for (int i = 0; i < index; i++) {
             Timeline goLeft = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), Size.width(-2000))));
-            goLeft.play();
+            Events.animation(goLeft);
         }
         TaskView me = activeViews.get(index);
         growView(me, millis);
         for (int i = index + 1; i < activeViews.size(); i++) {
             Timeline goRight = new Timeline(new KeyFrame(Duration.millis(millis), new KeyValue(activeViews.get(i).translateXProperty(), Size.width(2000))));
-            goRight.play();
+            Events.animation(goRight);
         }
     }
 
@@ -243,7 +270,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     private void growView(TaskView me, int millis) {
-        changeSize(me, millis, 0, Size.height(-5), fullWidth, fullHeight, true, false);
+        changeSize(me, millis, 0, Size.height(-2), fullWidth, fullHeight, true, false);
     }
 
     private void initView(TaskView me) {
@@ -269,7 +296,7 @@ public class TaskViewWrapper extends StackPane {
         if (!initial && modifiableAfter) {
             change.setOnFinished(event -> me.expand());
         }
-        change.play();
+        Events.animation(change);
         lastStackTransition = System.currentTimeMillis();
         lastStackTransitionLength = millis;
     }
@@ -370,7 +397,7 @@ public class TaskViewWrapper extends StackPane {
                         removeView(view);
                     });
                 }
-                timeline.play();
+                Events.animation(timeline);
             }
         });
         lastClosed = lastViewed = current();
@@ -395,13 +422,13 @@ public class TaskViewWrapper extends StackPane {
                         stackTileSlideOut(millis / 2);
                         onStartup.accept(view);
                     });
-                    delay2.play();
+                    Events.animation(delay2);
                 });
-                riseUp.play();
+                Events.animation(riseUp);
             });
-            delay.play();
+            Events.animation(delay);
         });
-        initNew.play();
+        Events.animation(initNew);
         state = BASE_STATE;
     }
 
@@ -425,7 +452,7 @@ public class TaskViewWrapper extends StackPane {
             select(which);
     }
 
-    public void close (int index) {
+    public void close(int index) {
         if (index < 0 || index >= activeViews.size())
             return;
         close(activeViews.get(index));
@@ -440,7 +467,7 @@ public class TaskViewWrapper extends StackPane {
             stackTileSlideIn(SCROLL_MILLIS);
             Root.getPortal().getSubtitle().setText(activeViews.get(index).getTitle());
         });
-        delay.play();
+        Events.animation(delay);
     }
 
     public TaskView current() {
@@ -472,6 +499,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     public void launch(TaskView view) {
-        launch(view, (view1)->{});
+        launch(view, (view1) -> {
+        });
     }
 }

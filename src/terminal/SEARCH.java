@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+import main.Events;
 import main.Root;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class SEARCH extends Command {
                         searchBox.positionCaret(searchBox.getText().length());
                         module.getSearchBox().getOnAction().handle(new ActionEvent());
                     });
-                    delay.play();
+                    Events.animation(delay);
                     return true;
                 }));
     }

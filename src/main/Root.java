@@ -7,11 +7,14 @@ import net.ServerSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.*;
 import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * Created by 11ryt on 4/14/2017.
@@ -91,22 +94,28 @@ public class Root {
         Root.macAddress = macAddress;
     }
 
-    public static void saveAll() {
-        if (User.active() != null && User.active().getUsername() != null) {
-            User.active().write();
-            syncSerFileUp();
-        }
-        DefaultUser def = new DefaultUser();
-        def.read();
-        def.write();
+    public static Future<Boolean> saveAll() {
+        Callable<Boolean> function = () -> {
+            boolean success = false;
+            if (User.active() != null && User.active().getUsername() != null) {
+                User.active().write();
+                success = syncSerFileUp();
+            }
+            DefaultUser def = new DefaultUser();
+            def.read();
+            def.write();
+            return success;
+        };
+        ExecutorService execution = Executors.newSingleThreadExecutor();
+        return execution.submit(function);
     }
 
-    private static void syncSerFileUp() {
+    private static boolean syncSerFileUp() {
         //don't send the server our password or location
         byte[] temp = User.active().getPassword();
         int zipcode = User.active().getZipcode();
         if (temp == null)
-            return;
+            return false;
         User.active().setPassword(null);
         User.active().setZipcode(0);
 
@@ -122,16 +131,30 @@ public class Root {
             e.printStackTrace();
         }
         String encoding = Base64.getEncoder().encodeToString(bytes);
-        try (ServerSession session = new ServerSession()) {
+        ServerSession session = null;
+        boolean success = false;
+        try {
+            session = new ServerSession();
             boolean open = session.open(User.active().getUsername(), new String(temp));
-            if (open)
-                session.sendOnly("setserfile", encoding);
+            if (open) {
+                success = session.sendOnly("setserfile", encoding);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                if (session != null) {
+                    session.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         User.active().setPassword(temp);
         User.active().setZipcode(zipcode);
+        return success;
     }
 
     public static void setPortal(Main main) {

@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.Colors;
+import main.Events;
 import main.Layouts;
 import main.Size;
 
@@ -47,14 +48,13 @@ public class LatestPane extends VBox {
                             RotateTransition spin = new RotateTransition(Duration.millis(500), this);
                             spin.setByAngle(360);
                             spin.setCycleCount(Animation.INDEFINITE);
-                            spin.play();
+                            Events.animation(spin);
                             boolean success = false; //refresh();, use another thread for net connections
                             //TODO code to wait for net thread but keep animation running
                             spin.stop();
                             spin.setToAngle(0);
                             spin.setCycleCount(1);
                             spin.setDuration(Duration.millis(1));
-                            spin.play();
                             spin.setOnFinished(event1 -> {
                                 if (!success) {
                                     setFill(Color.RED);
@@ -64,9 +64,11 @@ public class LatestPane extends VBox {
                                         refreshColor = Color.WHITE;
                                         setFill(Color.WHITE);
                                     }));
-                                    colorChangeTimer.play();
+                                    Events.animation(colorChangeTimer, false);
                                 }
                             });
+                            //spinning has no sizing issues, so we don't have to delay a resize
+                            Events.animation(spin, false);
                         });
                         setOnMouseEntered(event -> setFill(refreshColor.equals(Color.WHITE) ? Colors.highlightColor((Color) getFill()) : (Color) getFill()));
                         setOnMouseExited(event -> setFill(refreshColor));

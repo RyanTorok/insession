@@ -1,5 +1,6 @@
 package classes;
 
+import com.mysql.fabric.Server;
 import gui.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -15,6 +16,7 @@ import searchengine.RankedString;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.SyncFailedException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -443,7 +445,11 @@ public class Post implements Indexable, Serializable, Comparable<Post> {
             session.setPromptOnAuthenticationFailure(true);
             session.open();
             String[] result = session.callAndResponse("newpost", classId.toString(), classItemId.toString(), title, formattedText.getUnformattedText(), formattedText.getStyleRegex(), Long.toString(visibleTo), Long.toString(posterNameVisible), parentId.toString(), type.name().toLowerCase(), Boolean.toString(pinned), this.identifier.getId().toString());
-            identifier.setId(UUID.fromString(result[0]));
+            if (ServerSession.isError(result)) {
+                //TODO tell user the sync failed
+            } else {
+                identifier.setId(UUID.fromString(result[0]));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

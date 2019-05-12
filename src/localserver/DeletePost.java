@@ -18,15 +18,16 @@ public class DeletePost extends Command {
         QueryGate gate = new QueryGate();
 
         while (id != null) {
-            ResultSet previousVersion = gate.query("SELECT previous_verison FROM posts WHERE uuid = ? AND poster = ?", "ul", id, getExecutorId());
+            ResultSet previousVersion = gate.query("SELECT HEX(previous_version) as prev FROM posts WHERE uuid = ? AND poster = ?", "ul", id, getExecutorId());
             while (previousVersion.isBeforeFirst())
                 previousVersion.next();
             if (previousVersion.isAfterLast())
                 return "error : nonexistent post or not authorized";
-            gate.update("DELETE FROM posts WHERE uuid = ? AND poster = ?", id.toString(), getExecutorId().toString());
-            id = UUID.fromString(previousVersion.getString("previous_version"));
-            if (previousVersion.wasNull())
-                id = null;
+            //in case the result set is altered by removing its row
+            final String previous_version = previousVersion.getString("prev");
+            UUID temp = previous_version == null ? null : uuidNoDashes(previous_version);
+            gate.update("DELETE FROM posts WHERE uuid = ? AND poster = ?", "ul", id.toString(), getExecutorId().toString());
+            id = temp;
         }
         return "done";
     }

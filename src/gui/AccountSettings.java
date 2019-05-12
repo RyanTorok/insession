@@ -94,7 +94,12 @@ public class AccountSettings extends Stage {
                     }
                     String password = newPassword.getText();
                     PasswordManager.PasswordCombo encryptedPassword = PasswordManager.newGenLocal(password, username);
-                    byte[] pwd = encryptedPassword.getEncryptedPassword();
+                    byte[] pwd = new byte[0];
+                    if (encryptedPassword != null) {
+                        pwd = encryptedPassword.getEncryptedPassword();
+                    } else {
+                        throw new IllegalStateException("null password combo");
+                    }
                     String encodedPwd = Base64.getEncoder().encodeToString(pwd).replaceAll("\\+", "!");
                     boolean success = session.sendOnly("changepassword", encodedPwd);
                     session.close();

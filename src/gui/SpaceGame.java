@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import main.Events;
 import main.Layouts;
 import main.Size;
 
@@ -66,7 +67,8 @@ public class SpaceGame extends StackPane {
     }
 
     void playTimeline(Timeline t) {
-        t.play();
+        //Don't let this stop a resize, we'd be here forever. We protect against this by disallowing resizes while the game is active.
+        Events.animation(t, false);
         allTimelines.add(t);
     }
 

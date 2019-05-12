@@ -4,28 +4,42 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import main.Colors;
 
+import java.util.Objects;
+
 public class Styles {
 
     public static String getProperty(Node n, String property) {
+        Objects.requireNonNull(n);
+        Objects.requireNonNull(property);
         int[] propertyBounds = getPropertyBounds(n, property);
         if (propertyBounds == null)
             return "";
-        return n.getStyle().substring(propertyBounds[1], propertyBounds[2] - 2); //subtract 2 for semicolon
+        return n.getStyle().substring(propertyBounds[1], propertyBounds[2] - 1).trim();
     }
 
     public static void setProperty(Node n, String property, String value) {
+        Objects.requireNonNull(n);
+        Objects.requireNonNull(property);
+        Objects.requireNonNull(value);
         int[] propertyBounds = getPropertyBounds(n, property);
         if (propertyBounds != null)
             n.setStyle(n.getStyle().substring(0, propertyBounds[1]) + value + n.getStyle().substring(propertyBounds[2] - 2));
         else //we may add extra semicolons because the SDK doesn't follow my rules here.
             n.setStyle(n.getStyle() + "; " + property + ": " + value + " ; ");
+
+        //remove unnecessary semicolons
+        n.setStyle(n.getStyle().replaceAll("; ;", ";"));
     }
 
     public static void removeProperty(Node n, String property) {
+        Objects.requireNonNull(n);
+        Objects.requireNonNull(property);
         int[] propertyBounds = getPropertyBounds(n, property);
         if (propertyBounds == null)
             return;
         n.setStyle(n.getStyle().substring(0, propertyBounds[0]) + n.getStyle().substring(propertyBounds[2]));
+        //remove unnecessary semicolons
+        n.setStyle(n.getStyle().replaceAll("; ;", ";"));
 
     }
 

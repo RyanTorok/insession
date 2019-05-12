@@ -4,7 +4,10 @@ import classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -13,11 +16,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.*;
+import javafx.util.Duration;
 import main.*;
 import net.PostEngine;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -39,9 +46,13 @@ public class ClassView extends TaskView {
     private VBox filters;
     private Color backgroundColor = Color.web("#e6e8f2");
     private DateFilter dateFilter;
+    private VBox mainSideBar;
+    private VBox sideBarsPane;
+
+    private final int SIDEBAR_SCALED_WIDTH = 350;
 
     public ClassView(ClassPd classPd) {
-        super(classPd.getCastOf().getName() + " - P" + classPd.getPeriodNo() + " - " + classPd.getTeacherLast());
+        super(classPd.getCastOf().getName() + " - " + classPd.getTeacherLast() + " - P" + classPd.getPeriodNo());
         this.classPd = classPd;
         primary = classPd.getColor();
         lighter = Colors.highlightColor(primary).desaturate().desaturate();
@@ -59,17 +70,39 @@ public class ClassView extends TaskView {
         return null;
     }
 
+    ScrollPane bodyPanesWrapper;
+
     @Override
     public Pane initDisplay() {
-        VBox titleBar = makeTitleBar();
+        //VBox titleBar = makeTitleBar();
         sideBars = makeSideBars();
         bodyPanes = makeBodyPanes();
-        sideBarAndBody = new HBox(makeSideBarsWrapper(), bodyPanes[0]);
-        sideBarAndBody.setHgrow(bodyPanes[0], Priority.ALWAYS);
+        bodyPanesWrapper = new ScrollPane(bodyPanes[0]);
+        Styles.setBackgroundColor(bodyPanesWrapper, backgroundColor);
+        bodyPanesWrapper.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        bodyPanesWrapper.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        bodyPanesWrapper.setMaxWidth(Size.width(Size.DEFAULT_WIDTH));
+        bodyPanesWrapper.setFitToWidth(true);
+        bodyPanesWrapper.setFitToHeight(true);
+        sideBarAndBody = new HBox(makeSideBarsWrapper(), bodyPanesWrapper);
+        HBox.setHgrow(bodyPanesWrapper, Priority.ALWAYS);
+        sideBarAndBody.setMaxWidth(Size.width(Size.DEFAULT_WIDTH));
         Styles.setBackgroundColor(sideBarAndBody, backgroundColor);
-        VBox toReturn = new VBox(titleBar, sideBarAndBody);
-        toReturn.setVgrow(sideBarAndBody, Priority.ALWAYS);
+        VBox toReturn = new VBox(sideBarAndBody);
+        VBox.setVgrow(sideBarAndBody, Priority.ALWAYS);
         return toReturn;
+    }
+
+    private VBox makeMainSideBar() {
+        String[] titles = {"Discussion", "Lectures", "Files", "Assignments", "Workspaces", "Syllabus", "Grades", "People", "Groups"};
+        MainSBItem[] cards = new MainSBItem[titles.length];
+        for (int i = 0; i < titles.length; i++) {
+            cards[i] = new MainSBItem(this, titles[i]);
+            HBox.setHgrow(cards[i], Priority.ALWAYS);
+        }
+        mainSideBar = new VBox(cards);
+        mainSideBar.setPrefWidth(Size.width(SIDEBAR_SCALED_WIDTH));
+        return mainSideBar;
     }
 
     private VBox makeTitleBar() {
@@ -93,9 +126,60 @@ public class ClassView extends TaskView {
         border.setEndY(TaskViewWrapper.fullHeight - Size.height(60));
         border.setStrokeWidth(Size.width(2));
         border.setStrokeLineCap(StrokeLineCap.ROUND);
-        HBox toReturn = new HBox(sideBars[0], border);
-        toReturn.setAlignment(Pos.CENTER);
-        return toReturn;
+
+        final double smallWidth = Size.width(20);
+        final double largeWidth = Size.width(350);
+
+        HBox borderHitbox = new HBox(border);
+        borderHitbox.setMinWidth(smallWidth);
+        borderHitbox.setAlignment(Pos.CENTER);
+        borderHitbox.setCursor(Cursor.E_RESIZE);
+        borderHitbox.setViewOrder(1);
+
+        sideBarsPane = new VBox(makeMainSideBar());
+        sideBarsPane.setFillWidth(true);
+        sideBarsPane.setPrefWidth(Size.width(SIDEBAR_SCALED_WIDTH));
+        ScrollPane sidebarsWrapper = new ScrollPane(sideBarsPane);
+        Styles.setBackgroundColor(sidebarsWrapper, backgroundColor);
+        sidebarsWrapper.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        sidebarsWrapper.setHbarPolicy(ScrollBarPolicy.NEVER);
+        sidebarsWrapper.setPrefWidth(largeWidth);
+        sidebarsWrapper.setFitToWidth(true);
+
+        HBox sideBarAndBorder = new HBox(sidebarsWrapper, borderHitbox);
+        sideBarAndBorder.setSpacing(Size.width(15));
+        sideBarAndBorder.setAlignment(Pos.CENTER);
+        //border drag sidebar code
+        borderHitbox.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            sidebarsWrapper.setMinWidth(Math.max(sidebarsWrapper.getMinWidth() + event.getX(), 0));
+            sidebarsWrapper.setPrefWidth(Math.max(sidebarsWrapper.getPrefWidth() + event.getX(), 0));
+            sidebarsWrapper.setMaxWidth(Math.max(sidebarsWrapper.getMaxWidth() + event.getX(), 0));
+            //emulate the click-disappear so that it re-expands when you click it.
+            if (sidebarsWrapper.getPrefWidth() == 0)
+                sidebarsWrapper.setVisible(false);
+            else sidebarsWrapper.setVisible(true);
+        });
+
+
+        borderHitbox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                if (sidebarsWrapper.isVisible()) {
+                    sidebarsWrapper.setMinWidth(0);
+                    sidebarsWrapper.setPrefWidth(0);
+                    sidebarsWrapper.setMaxWidth(0);
+                    sidebarsWrapper.setVisible(false);
+                } else {
+                    sidebarsWrapper.setMinWidth(largeWidth);
+                    sidebarsWrapper.setPrefWidth(largeWidth);
+                    sidebarsWrapper.setMaxWidth(largeWidth);
+                    sidebarsWrapper.setVisible(true);
+                }
+            }
+        });
+        sidebarsWrapper.setMinWidth(largeWidth);
+        sidebarsWrapper.setPrefWidth(largeWidth);
+        sidebarsWrapper.setMaxWidth(largeWidth);
+        return sideBarAndBorder;
     }
 
     private VBox[] makeSideBars() {
@@ -107,12 +191,11 @@ public class ClassView extends TaskView {
     }
 
     private VBox makePostsSB() {
-        Text newThread = new Text("New Thread") {{
-            setFill(Colors.textFill(backgroundColor));
-            Events.underlineOnMouseOver(this);
-            setFont(Font.font(Size.fontSize(14)));
-            addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newThread());
-        }};
+        Text newThread = new Text("New Thread");
+        newThread.setFill(Colors.textFill(backgroundColor));
+        Events.underlineOnMouseOver(newThread);
+        newThread.setFont(Font.font(Size.fontSize(14)));
+        newThread.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((PostsBody) bodyPanes[0]).newThread());
         Text expandAllToggle = new Text("Expand All") {
 
             private boolean state = false;
@@ -126,8 +209,7 @@ public class ClassView extends TaskView {
                     if (state) {
                         setText("Collapse All");
                         postsList.getChildren().forEach(child -> ((PostSBItem) child).expand());
-                    }
-                    else {
+                    } else {
                         setText("Expand All");
                         postsList.getChildren().forEach(child -> ((PostSBItem) child).collapse());
                     }
@@ -202,7 +284,7 @@ public class ClassView extends TaskView {
                 new Filter("Questions", Post.Type.Question),
                 new Filter("My Posts", PostStatus.MINE),
                 new Filter("Liked", PostStatus.LIKED),
-                new Filter("Teacher Posts", PostStatus.INSTRUCTOR),
+                new Filter("Instructor Posts", PostStatus.INSTRUCTOR),
                 new Filter("Class-Visible Posts", PostStatus.PUBLIC),
                 new Filter("Group-Visible Posts", PostStatus.GROUP),
                 new Filter("Private Posts", PostStatus.PRIVATE)
@@ -275,7 +357,8 @@ public class ClassView extends TaskView {
         arrowsAndHeader.get(0).setVisible(true);
         arrowsAndHeader.get(2).setVisible(true);
         if (newValue <= 1) arrowsAndHeader.get(0).setVisible(false);
-        if (newValue >= School.active().getSchedule().getCurrentMarkingPeriod()) arrowsAndHeader.get(2).setVisible(false);
+        if (newValue >= School.active().getSchedule().getCurrentMarkingPeriod())
+            arrowsAndHeader.get(2).setVisible(false);
         ((Text) arrowsAndHeader.get(1)).setText("  Grading Period " + newValue + "  ");
         classPd.getGradebook().getCategories().forEach(cat -> gradesSB.getChildren().add(new GradesSBCategory(classPd, cat, newGrades, gradesBody)));
     }
@@ -356,6 +439,50 @@ public class ClassView extends TaskView {
         return backgroundColor;
     }
 
+    public void selectSubSection(MainSBItem choice) {
+        int i = 0;
+        for (Node child : mainSideBar.getChildren()) {
+            if (child instanceof MainSBItem) {
+                final Duration duration = Duration.millis(200);
+                if (child == choice) {
+                    ((MainSBItem) child).setState(MainSBItem.State.SELECTED);
+                    int atomicIndex = i;
+                    Events.translate(child, TranslateMode.ABSOLUTE, null, ((MainSBItem) child).getHeight() * (i) * -1, duration, onFinished-> {
+                        sideBars[atomicIndex].setTranslateY(((MainSBItem) child).getHeight() * (mainSideBar.getChildren().size() - 1) * -1);
+                        sideBarsPane.getChildren().add(1,sideBars[atomicIndex]);
+                        Events.fade(sideBars[atomicIndex], 0.0, 1.0, Duration.millis(100));
+                    });
+                } else {
+                    ((MainSBItem) child).setState(MainSBItem.State.INVISIBLE);
+                    Events.fade(child, null, 0.0, duration);
+                }
+            }
+            i++;
+        }
+    }
+
+    public void returnToHome() {
+        final Duration duration = Duration.millis(200);
+        Events.fade(sideBarsPane.getChildren().get(1), 1.0, 0.0, duration, event -> {
+            sideBarsPane.getChildren().remove(1);
+            for (Node child : mainSideBar.getChildren()) {
+                if (child instanceof MainSBItem) {
+                    if (child.getTranslateY() != 0) {
+                        Events.translate(child, TranslateMode.ABSOLUTE, null, 0.0, duration);
+                    } else {
+                        Events.fade(child, null, 1.0, duration);
+                    }
+                    ((MainSBItem) child).setState(MainSBItem.State.UNSELECTED);
+                }
+            }
+        });
+
+    }
+
+    VBox getMainSidebar() {
+        return mainSideBar;
+    }
+
     private class Tab extends HBox {
 
         private int index;
@@ -386,44 +513,36 @@ public class ClassView extends TaskView {
         public PostSBItem(Post post) {
             this.post = post;
             expanded = false;
-            Text text = new Text(post.getTitle());
+            Label text = new Label(post.getTitle());
+            text.setTextFill(Color.BLACK);
             text.setFont(Font.font("Sans Serif", FontWeight.BOLD, Font.getDefault().getSize()));
-            HBox main = new HBox(text, new Layouts.Filler());
-            main.getChildren().add(new HBox() {
-                {
-                //insert status icons
-                if (post.getStatusLabels().contains(PostStatus.UNANSWERED))
-                    getChildren().add(new ColorText("?"));
-                else if (post.getType().equals(Post.Type.Question)) {
-                    if (post.getStudentAnswers().size() != 0) {
-                        getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "s")); //0x1f5e9 is the speech bubble
-                    }
-                    if (post.getInstructorAnswer() != null) {
-                        getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "i"));
-                    }
-                }
-                if (post.getStatusLabels().contains(PostStatus.INSTRUCTOR)) {
-                    getChildren().add(new ColorText("A"));
-                }
-                if (post.getStatusLabels().contains(PostStatus.GROUP)) {
-                    getChildren().add(new ColorText("G"));
-                }
-                if (post.getStatusLabels().contains(PostStatus.PRIVATE)) {
-                    getChildren().add(new ColorText("P"));
-                }
-                setSpacing(Size.width(5));
-                setPadding(Size.insets(5, 0, 0, 0));
-            }
+            HBox statusIcons = new HBox();
 
-            class ColorText extends Text {
-                ColorText(String s) {
-                    super(s);
-                    setFill(Colors.textFill(ClassView.this.backgroundColor));
-                    setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, Font.getDefault().getSize()));
+            //insert status icons
+            if (post.getStatusLabels().contains(PostStatus.UNANSWERED))
+                statusIcons.getChildren().add(new ColorText("?"));
+            else if (post.getType().equals(Post.Type.Question)) {
+                if (post.getStudentAnswers().size() != 0) {
+                    statusIcons.getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "s")); //0x1f5e9 is the speech bubble
+                }
+                if (post.getInstructorAnswer() != null) {
+                    statusIcons.getChildren().add(new ColorText(Character.toString((char) 0x1f5e9) + "i"));
                 }
             }
+            if (post.getStatusLabels().contains(PostStatus.INSTRUCTOR)) {
+                statusIcons.getChildren().add(new ColorText("A"));
+            }
+            if (post.getStatusLabels().contains(PostStatus.GROUP)) {
+                statusIcons.getChildren().add(new ColorText("G"));
+            }
+            if (post.getStatusLabels().contains(PostStatus.PRIVATE)) {
+                statusIcons.getChildren().add(new ColorText("P"));
+            }
+            statusIcons.setSpacing(Size.width(5));
+            statusIcons.setPadding(Size.insets(5, 0, 0, 0));
 
-            });
+            HBox main = new HBox(text, new Layouts.Filler(), statusIcons);
+
             getChildren().add(main);
             displayPostTextOnSidebar = true;
             if (displayPostTextOnSidebar) {
@@ -431,16 +550,15 @@ public class ClassView extends TaskView {
                 gap.setPrefHeight(Size.height(5));
                 getChildren().add(gap);
             }
-            Line line = new Line();
-            line.setStroke(Color.DARKGRAY);
-            line.setStartX(Size.width(5));
-            line.setEndX(Size.width(345));
-            line.setStrokeWidth(Size.width(2));
-            line.setStrokeLineCap(StrokeLineCap.ROUND);
+            Pane line = new Pane();
+            Styles.setBackgroundColor(line, Color.DARKGRAY);
+            line.setPrefHeight(Size.height(2));
+            line.setPrefWidth(SIDEBAR_SCALED_WIDTH);
+            setPadding(Size.insets(5, 0));
             getChildren().add(line);
             addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getButton().equals(MouseButton.SECONDARY))
-                    if (expanded)
+                    if (isExpanded())
                         collapse();
                     else
                         expand();
@@ -453,7 +571,7 @@ public class ClassView extends TaskView {
         }
 
         void expand() {
-            if (expanded)
+            if (isExpanded())
                 return;
             Text author = new Text(post.getIdentifier().getAuthorName());
             author.setFill(Colors.textFill(backgroundColor));
@@ -475,7 +593,7 @@ public class ClassView extends TaskView {
         }
 
         void collapse() {
-            if (!expanded)
+            if (!isExpanded())
                 return;
             getChildren().remove(5);
             getChildren().remove(4);
@@ -488,10 +606,22 @@ public class ClassView extends TaskView {
         public Post getPost() {
             return post;
         }
+
+        public boolean isExpanded() {
+            return expanded;
+        }
     }
 
     @Override
     protected boolean isDuplicate(TaskView view) {
         return super.isDuplicate(view) && ((ClassView) view).classPd.equals(classPd);
+    }
+
+    class ColorText extends Text {
+        ColorText(String s) {
+            super(s);
+            setFill(Colors.textFill(ClassView.this.backgroundColor));
+            setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, Font.getDefault().getSize()));
+        }
     }
 }

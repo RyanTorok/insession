@@ -4,6 +4,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import main.Events;
 import main.Size;
 
 import java.util.Random;
@@ -38,7 +39,8 @@ public abstract class PrecipParticle {
         move.setNode(shape);
         move.setByX(Size.width(1000 + (Math.random() * 500) - 250));
         move.setByY(Size.height(2000));
-        move.play();
+        //Don't let this stop a screen resize, otherwise the resize would never happen
+        Events.animation(move, false);
         move.setOnFinished(event -> holder.getChildren().remove(shape));
 
     }

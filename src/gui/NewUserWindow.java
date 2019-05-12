@@ -79,14 +79,20 @@ public class NewUserWindow extends Pane {
                             User fromSrc = (User) new ObjectInputStream(new ByteArrayInputStream(serfile)).readObject();
                             //check if user already exists on client machine
                             User localRead = User.read(username);
+                            boolean save = false;
                             if (localRead != null) {
                                 localRead.syncExternal(fromSrc);
-                                Root.saveAll();
                                 //TODO we can improve this by testing if we actually have to sync the combined user file back.
+                                save = true;
                             } else {
+                                //we didn't have a record on file for the user, we need to save the one we got from the server.
+                                save = true;
                             }
                             fromSrc.setPassword(password.getBytes(StandardCharsets.UTF_8));
                             User.setActive(fromSrc);
+                            if (save) {
+                                Root.saveAll();
+                            }
                             Root.getPortal().switchToMain();
                         }
                     }

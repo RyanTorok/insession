@@ -1,16 +1,23 @@
 package main;
 
 import gui.Styles;
+import gui.TaskViewWrapper;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
+import javafx.util.Pair;
+import localserver.NamedThreadFactory;
+
+import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Utility class for scalable size calculations. Actual scalability data is in UtilAndConstants.java.
@@ -21,7 +28,7 @@ public class Size {
 
     public static final double DEFAULT_WIDTH = 1920;
     public static final double DEFAULT_HEIGHT = 1080;
-    
+
     private double screenWidth = DEFAULT_WIDTH, screenHeight = DEFAULT_HEIGHT;
 
     public static double fontSize(double i) {
@@ -64,20 +71,28 @@ public class Size {
     public static double fontDimension(double widthHeight) {
         return Root.sizeInstance().fontDimension_obj(widthHeight);
     }
-    
+
     public void updateScreenSize() {
         Window w = Root.getPortal().getCurrentWindow();
-        updateScreenSize(w.getWidth(), w.getHeight());
+        if (w != null) updateScreenSize(w.getWidth(), w.getHeight());
     }
 
+    private Pair<Double, Double> queuedSizeTransition = null;
+
     public synchronized void updateScreenSize(double width, double height) {
+        redrawSceneGraph(width, height);
+    }
+
+    private synchronized void redrawSceneGraph(double width, double height) {
+        //wait for location-dependent animations to finish
         //iterate through the scene graph and set size constraints
-        if (Root.getPortal() != null) {
+        if (Root.getPortal() != null && Root.getPortal().getMainArea() != null) {
             Pane mainArea = Root.getPortal().getMainArea();
             updateSizeAllChildren(mainArea, width, height);
         }
         screenWidth = width;
         screenHeight = height;
+        TaskViewWrapper.rescale();
     }
 
     private void updateSizeAllChildren(Region r, double width, double height) {
@@ -95,16 +110,12 @@ public class Size {
                 }
             }
             if (n instanceof TextField) {
-                double oldSize = ((TextField) n).getFont().getSize();
+                String oldSizeStr = Styles.getProperty(n, "-fx-font-size");
+                double oldSize = oldSizeStr.length() > 0 ? Double.parseDouble(oldSizeStr.trim()) : ((TextField) n).getFont().getSize();
                 double scaledSize = scaledFontSize_obj(oldSize);
                 if (oldSize != -1) {
                     double newSize = Math.min(scaledSize * width / DEFAULT_WIDTH, scaledSize * height / DEFAULT_HEIGHT);
                     Styles.setProperty(n, "-fx-font-size", String.valueOf(newSize));
-                }
-                if (!(((TextField) n).getPadding().equals(Insets.EMPTY))) {
-                    Insets old = ((TextField) n).getPadding();
-                    //we hack a 1 in one position to allow upsizing later. Otherwise the EMPTY check would be true even though values were set.
-                    ((TextField) n).setPadding(new Insets(convertHeight(old.getTop(), height), convertWidth(old.getRight(), width), convertHeight(old.getBottom(), height), convertWidth(old.getLeft(), width)));
                 }
             }
             if (n instanceof Circle) {
@@ -154,7 +165,6 @@ public class Size {
         if (r.getMinHeight() != Region.USE_COMPUTED_SIZE && r.getMinHeight() != Region.USE_PREF_SIZE) {
             r.setMinHeight(convertHeight(r.getMinHeight(), height));
         }
-
         if (r.getMaxWidth() != Region.USE_COMPUTED_SIZE) {
             r.setMaxWidth(convertWidth(r.getMaxWidth(), width));
         }
@@ -163,18 +173,17 @@ public class Size {
         }
         if (!(r.getPadding().equals(Insets.EMPTY))) {
             Insets old = r.getPadding();
-            //we hack a 1 in one position to allow upsizing later. Otherwise the EMPTY check would be true even though values were set.
             r.setPadding(new Insets(convertHeight(old.getTop(), height), convertWidth(old.getRight(), width), convertHeight(old.getBottom(), height), convertWidth(old.getLeft(), width)));
         }
         if (r instanceof HBox) {
             double oldSpacing = ((HBox) r).getSpacing();
             if (oldSpacing != 0)
-                ((HBox) r).setSpacing(Math.max(1, convertWidth(oldSpacing, width)));
+                ((HBox) r).setSpacing(Math.max(Double.MIN_VALUE, convertWidth(oldSpacing, width)));
         }
         if (r instanceof VBox) {
             double oldSpacing = ((VBox) r).getSpacing();
             if (oldSpacing != 0)
-                ((VBox) r).setSpacing(Math.max(1, convertHeight(oldSpacing, height)));
+                ((VBox) r).setSpacing(Math.max(Double.MIN_VALUE, convertHeight(oldSpacing, height)));
         }
         if (r instanceof GridPane) {
             if (((GridPane) r).getHgap() != 0)

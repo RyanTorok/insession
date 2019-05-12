@@ -65,7 +65,8 @@ public abstract class TaskView extends ScrollPane {
         minimizedDisplay = new HBox(screenshot ? new ImageView(new WritableImage(this.getContent().snapshot(new SnapshotParameters(), null).getPixelReader(), 0, 0, (int) this.getContent().getLayoutBounds().getWidth(), (int) this.getContent().getLayoutBounds().getHeight()))
             {{setPreserveRatio(true); setFitWidth(width); setFitHeight(height);}} //ImageView properties
             : placeholder) // initial case, get icon or saved placeholder, depending on TaskView subclass implementation
-            {{setStyle("-fx-background-color: " + Colors.colorToHex(User.active().getAccentColor())); setAlignment(screenshot ? Pos.TOP_LEFT : Pos.CENTER);}}; //HBox (with one element) properties
+            {{setStyle("-fx-background-color: " + Colors.colorToHex(User.active().getAccentColor()));
+            setAlignment(screenshot ? Pos.TOP_LEFT : Pos.CENTER);}}; //HBox (with one element) properties
 
         minimizedDisplay.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             TaskView view = TaskView.this;
@@ -103,7 +104,7 @@ public abstract class TaskView extends ScrollPane {
     protected void initialize() {
         fullDisplay = initDisplay();
         fullDisplay.setStyle("-fx-background-color: #ffffff");
-        fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth() + Size.width(5), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTopbar().getLayoutBounds().getHeight() - Size.height(8) + Size.height(36));
+        fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTopbar().getLayoutBounds().getHeight());
     }
 
     public HBox getMinimizedDisplay() {

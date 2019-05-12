@@ -74,13 +74,13 @@ public class GradesSBCategory extends VBox {
             RotateTransition flip = new RotateTransition(Duration.millis(300));
             flip.setToAngle(expanded ? 0 : 180);
             flip.setNode(dropArrow);
-            flip.play();
+            Events.animation(flip   );
             expanded = !expanded;
         });
     }
 
     private void subFieldsFade(boolean appear) {
-        new SequentialTransition(this, (Animation[]) entries.stream().map(entry -> new Timeline(new KeyFrame(Duration.millis(20), new KeyValue(entry.visibleProperty(), appear)))).toArray()).play();
+        Events.animation(new SequentialTransition(this, (Animation[]) entries.stream().map(entry -> new Timeline(new KeyFrame(Duration.millis(20), new KeyValue(entry.visibleProperty(), appear)))).toArray()));
     }
 
     public ClassPd getPd() {

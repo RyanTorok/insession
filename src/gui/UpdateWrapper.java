@@ -38,7 +38,7 @@ public class UpdateWrapper extends GridPane {
                 User.active().getUpdates().remove(record.getChain());
                 //need to remove from server, too (TODO)
             });
-            closeAnimation.play();
+            Events.animation(closeAnimation);
         });
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getTarget() != closeX)

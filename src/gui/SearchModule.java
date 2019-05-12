@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Window;
 import main.*;
 import net.PostRequest;
 import net.ThreadedCall;
@@ -49,7 +52,7 @@ public class SearchModule extends VBox {
         this.engine = engine;
         this.wrapper = wrapper;
         this.searchResultsDisplay = new VBox();
-        searchResultsDisplay.setPadding(new Insets(30, 0, 0, 0));
+        searchResultsDisplay.setPadding(Size.insets(30, 0, 0, 0));
         textFillerStrings = new ArrayList<>();
         searchBox = new TextField("");
         searchBox.setEditable(true);

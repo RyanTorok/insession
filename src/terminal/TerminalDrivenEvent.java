@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.Events;
 import main.Root;
 
 import java.util.function.BooleanSupplier;
@@ -71,7 +72,7 @@ public class TerminalDrivenEvent {
                 }
                 else throw new IllegalStateException("Null event trigger encountered.");
             });
-            delay.play();
+            Events.animation(delay);
         }
         return true;
     }

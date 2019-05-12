@@ -3,6 +3,7 @@ package gui;
 import classes.Post;
 import classes.PostStatus;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -166,8 +167,6 @@ public class PostsBody extends VBox {
             newPost.getIdentifier().setName(newPost.getTitle());
             newPost.setParentId(new UUID(0, 0));
             wrapper.getPostsList().getChildren().add(wrapper.new PostSBItem(newPost));
-            Text title = new Text(newPost.getTitle());
-            title.setFont(Font.font(Size.fontSize(24)));
             Root.getPortal().getSearchBox().getEngine().getIndex().index(Collections.singletonList(newPost));
             getChildren().set(getChildren().indexOf(window), new PostWindow(this, newPost));
             try (ServerSession session = new ServerSession()) {
@@ -223,5 +222,9 @@ public class PostsBody extends VBox {
             }
             return false;
         });
+    }
+
+    public ClassView getWrapper() {
+        return wrapper;
     }
 }
