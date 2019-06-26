@@ -29,41 +29,42 @@ public class PostArea extends VBox {
     private final TextFlow controlsTextFlow;
     private Post post;
     private final ControlIcon like;
-    private final Text numLikes;
-    private final Text instructorEndorsed;
+    private final AutoColoredLabel numLikes;
+    private final AutoColoredLabel instructorEndorsed;
+    private final ClassView classView;
 
     public PostArea(PostWindow wrapper, Post post, TextFlow text, boolean editable) {
         super(text);
         this.text = text;
         this.wrapper = wrapper;
         this.post = post;
-        Styles.setBackgroundColor(this, Color.WHITE);
+        classView = wrapper.getWrapper().getWrapper();
+        Styles.setBackgroundColor(this, classView.getBackgroundColor());
         Styles.setProperty(this, "-fx-background-radius", Double.toString(Size.lessWidthHeight(10)));
         setPadding(Size.insets(20, 20, 10, 20));
         setMinHeight(Size.height(150));
 
-        instructorEndorsed = new Text("");
+        instructorEndorsed = new AutoColoredLabel("", classView, Color.DARKGRAY, Color.DARKGRAY);
         instructorEndorsed.setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, Size.fontSize(14)));
-        instructorEndorsed.setFill(Color.DARKGRAY);
         updateInstructorEndorsed(post);
         HBox controls = new HBox(new Layouts.Filler(), instructorEndorsed, new Layouts.Filler());
         controls.setSpacing(Size.width(15));
         controls.setAlignment(Pos.BOTTOM_LEFT);
-        Text numViews = new Text(UtilAndConstants.parseLargeNumber(post.getViews()));
+        AutoColoredLabel numViews = new AutoColoredLabel(UtilAndConstants.parseLargeNumber(post.getViews()), classView);
         ControlIcon views = new ControlIcon("\ud83d\udc41", numViews.getText() + " Views");
         numViews.setFont(Font.font(Size.fontSize(12)));
-        numViews.setFill(Color.DARKGRAY);
         like = new ControlIcon("\ud83d\udc4d", "Like");
-        numLikes = new Text(UtilAndConstants.parseLargeNumber(post.getLikes()));
+        numLikes = new AutoColoredLabel(UtilAndConstants.parseLargeNumber(post.getLikes()), wrapper.getWrapper().getWrapper());
+        numLikes.setOnWhite(Color.DARKGRAY);
+        numLikes.setOnBlack(Color.LIGHTGRAY);
         numLikes.setFont(Font.font(Size.fontSize(12)));
-        numLikes.setFill(Color.DARKGRAY);
         ControlIcon answer = new ControlIcon('a', "Answer");
         answer.setFont(CustomFonts.comfortaa(30));
         controlsTextFlow = new TextFlow(numViews, views);
         controls.getChildren().add(controlsTextFlow);
         if (post.getType().equals(Post.Type.Question))
             controls.getChildren().add(answer);
-        ControlIcon comment = new ControlIcon((char) 0x27a5, "Comment");
+        ControlIcon comment = new ControlIcon("\u27a5", "Comment");
         ControlIcon copyLink = new ControlIcon("\ud83d\udd17", "Copy Link to this Post");
         copyLink.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -75,23 +76,23 @@ public class PostArea extends VBox {
         controls.getChildren().addAll(new TextFlow(numLikes, like), comment);
         this.editable = editable;
         if (this.editable) {
-            ControlIcon edit = new ControlIcon((char) 0x270e, "Edit");
+            ControlIcon edit = new ControlIcon("\u270e", "Edit");
             edit.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> edit());
-            ControlIcon delete = new ControlIcon((char) 0x00d7, "Delete");
+            ControlIcon delete = new ControlIcon("\u00d7", "Delete");
             delete.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> delete());
             controls.getChildren().addAll(edit, copyLink, history, delete);
         } else {
             if (post.isCurrentUserLikedThis()) {
-                like.setFill(Color.GREEN);
+                like.setTextFill(Color.GREEN);
                 Events.highlightOnMouseOver(like);
-                like.setFill(Color.GREEN.brighter());
+                like.setTextFill(Color.GREEN.brighter());
             }
-            //only do this if the post is not editable (stop someone from liking their own post, e.g.)
+            //only do this if the post is not editable (e.g. stop someone from liking their own post)
             like.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (post.isCurrentUserLikedThis()) unlike();
                 else like();
             });
-            ControlIcon report = new ControlIcon((char) 0x2691, "Flag as Inappropriate");
+            ControlIcon report = new ControlIcon("\u2691", "Flag as Inappropriate");
             report.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> report());
             controls.getChildren().addAll(copyLink, history, report);
         }
@@ -140,17 +141,17 @@ public class PostArea extends VBox {
     }
 
     private void like() {
-        like.setFill(Color.GREEN);
+        like.setTextFill(Color.GREEN);
         Events.highlightOnMouseOver(like);
-        like.setFill(Color.GREEN.brighter());
+        like.setTextFill(Color.GREEN.brighter());
         post.like();
         numLikes.setText(UtilAndConstants.parseLargeNumber(post.getLikes()));
     }
 
     private void unlike() {
-        like.setFill(Color.LIGHTGRAY);
+        like.setTextFill(Color.LIGHTGRAY);
         Events.highlightOnMouseOver(like);
-        like.setFill(Color.LIGHTGRAY.darker());
+        like.setTextFill(Color.LIGHTGRAY.darker());
         post.unlike();
         numLikes.setText(UtilAndConstants.parseLargeNumber(post.getLikes()));
         updateInstructorEndorsed(post);
@@ -201,15 +202,16 @@ public class PostArea extends VBox {
         return wrapper;
     }
 
-    class ControlIcon extends Text {
+    class ControlIcon extends AutoColoredLabel {
         public ControlIcon(char character, String hoverText) {
             this(Character.toString(character), hoverText);
         }
 
         public ControlIcon(String s, String hoverText) {
-            super(s);
+            super(s, wrapper.getWrapper().getWrapper());
+            super.setOnBlack(Color.DARKGRAY);
+            super.setOnWhite(Color.LIGHTGRAY);
             setFont(Font.font(Size.fontSize(30)));
-            setFill(Color.LIGHTGRAY);
             Events.highlightOnMouseOver(this);
             Tooltip tooltip = new Tooltip(hoverText);
             tooltip.setFont(Font.font(12));

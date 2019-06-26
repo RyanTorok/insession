@@ -5,15 +5,5 @@ package classes;
  */
 
 public class Curve {
-    private Expression curve;
-    private boolean adds; //true if result is added, false if result replaces original grade.
-
-    public Curve(Expression c){
-        curve = c;
-    }
-
-    public double curveGrade(double orig){
-        double fin = curve.evaluate(orig);
-        return (adds)? orig+fin : fin;
-    }
+    private AbstractFunction function;
 }

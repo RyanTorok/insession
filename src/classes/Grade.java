@@ -5,6 +5,7 @@ import main.Student;
 import main.User;
 
 import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
 
 /**
  * Created by 11ryt on 5/23/2017.
@@ -12,11 +13,11 @@ import java.awt.event.ActionEvent;
 public class Grade extends Record {
 
     private double value = Double.MIN_VALUE;
+    private double pointsPossible = 100;
+    private GradeCategory category;
     private double acceptableRange[];
-    private double pointsPossible;
     private Assignment belongsTo;
     private int roundBehavior; // 0: nothing, 1: always round normally, 2: always floor, 3: always ceil
-    private GradeCategory category;
 
     public Grade(double lb, double ub,  double pointsPossible, Assignment belongsTo, boolean alwaysRound){
         acceptableRange = new double[2];
@@ -33,7 +34,7 @@ public class Grade extends Record {
         //notify all students in course of assignment change
         ClassPd[] cps = belongsTo.getBelongsToCourse().getClasses();
         for (ClassPd cp: cps) {
-            for (Student s : cp.getStudentList()) {
+            for (User s : cp.getStudentList()) {
                 this.createUpdate(((e == null) ? "recorded" : "updated") + "grade for " + belongsTo.getName() + ": " + castInt(value) + "out of " + castInt(pointsPossible) + ".", s);
             }
         }
@@ -77,7 +78,13 @@ public class Grade extends Record {
         this.category = category;
     }
 
-    public String getDisplayText(User active) {
-        return Double.toString(value); //TODO add support for user-level and class-level mnemonics
+    private static final DecimalFormat format = new DecimalFormat("####0.##");
+
+    public String getDisplayText(User user) {
+        return format.format(value); //TODO add support for user-level and class-level mnemonics
+    }
+
+    public String getDisplayTextOutOf(User user, boolean longForm) {
+        return getDisplayText(user) + " out of " + format.format(pointsPossible);
     }
 }

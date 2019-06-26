@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Gradebook {
 
-    private ArrayList<HashMap<Student, StudentGrades>> gradebook;
+    private ArrayList<HashMap<User, StudentGrades>> gradebook;
     private ArrayList<GradeCategory> categories;
     private HashMap<String, Grade> mnemonics;
 
@@ -18,18 +18,18 @@ public class Gradebook {
         mnemonics = new HashMap<>();
     }
 
-    public ArrayList<HashMap<Student, StudentGrades>> getGradebook() {
+    public ArrayList<HashMap<User, StudentGrades>> getGradebook() {
         return gradebook;
     }
 
-    public HashMap<Student, StudentGrades> getMPGradebook(int markingPeriod) {
+    public HashMap<User, StudentGrades> getMPGradebook(int markingPeriod) {
         return gradebook.get(markingPeriod);
     }
 
     public StudentGrades get(Integer markingPeriod, User activeUser) {
-        if (!(activeUser instanceof Student))
+        if (activeUser == null)
             return null;
-        HashMap<Student, StudentGrades> periodMap = null;
+        HashMap<User, StudentGrades> periodMap = null;
         if (gradebook.size() > markingPeriod)
         periodMap = gradebook.get(markingPeriod);
         if (periodMap != null)

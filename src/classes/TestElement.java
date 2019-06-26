@@ -6,7 +6,4 @@ package classes;
  */
 public abstract class TestElement {
 
-    private boolean returnable;
-    private boolean scatterQuestions;
-
 }

@@ -1,5 +1,6 @@
 package main;
 
+import gui.Styles;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -10,13 +11,20 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Events {
 
@@ -46,33 +54,72 @@ public class Events {
         new Thread(resizeHandler).start();
     }
 
-    public static void fireMouse(Node n, EventType<MouseEvent> type) {
+    public static void fireMouse(Node n, EventType<? extends MouseEvent> type) {
         n.fireEvent(new MouseEvent(type, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
     }
 
     public static void highlightOnMouseOver(Node n, Color... target) {
         n.setCursor(Cursor.CLOSED_HAND);
+        Color defaultColor = Styles.getBackgroundColor(n);
+        if (defaultColor == null)
+            defaultColor = Color.TRANSPARENT;
+        Color finalDefaultColor = defaultColor;
+        AtomicReference<Color> orig = new AtomicReference<>(defaultColor);
         if (n instanceof Text && ((Text) n).getFill() instanceof Color) {
-            Color orig = (Color) ((Text) n).getFill();
-            n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> ((Text) n).setFill(target.length == 0 ? Colors.highlightColor(orig) : target[0]));
-            n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> ((Text) n).setFill(orig));
+            n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+                orig.set(((Color) ((Text) n).getFill()));
+                ((Text) n).setFill(target.length == 0 ? Colors.highlightColor(orig.get()) : target[0]);
+            });
+            n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+                Color newColor = orig.get();
+                if (newColor == null)
+                    newColor = finalDefaultColor;
+                ((Text) n).setFill(newColor);
+            });
             return;
         }
-        String oldStyle_ = n.getStyle();
-        if (!oldStyle_.contains("-fx-background-color")) {
-            if (n.getStyle() == null || n.getStyle().length() == 0)
-                n.setStyle("-fx-background-color: #000000");
-            else n.setStyle(n.getStyle() + "; -fx-background-color: #000000");
-            oldStyle_ = n.getStyle();
+        AtomicReference<Boolean> firstEnter = new AtomicReference<>(false);
+        if (n instanceof Label && ((Label) n).getTextFill() instanceof Color) {
+            n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+                firstEnter.set(true);
+                final Paint textFill = ((Label) n).getTextFill();
+                if (textFill instanceof Color)
+                    orig.set((Color) textFill);
+                else orig.set(finalDefaultColor);
+                ((Label) n).setTextFill(target.length == 0 ? Colors.highlightColor(orig.get()) : target[0]);
+            });
+            n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+                if (!firstEnter.get())
+                    return;
+                Color newColor = orig.get();
+                if (newColor == null)
+                    newColor = finalDefaultColor;
+                ((Label) n).setTextFill(newColor);
+            });
+            return;
         }
-        final String oldStyle = oldStyle_;
-        int colorIndex = n.getStyle().indexOf("-fx-background-color: #") + 22;
-        String oldColorStr = n.getStyle().substring(colorIndex, colorIndex + 7);
-        Color oldColor = Color.web(oldColorStr);
-        String newColorStr = Colors.colorToHex(target.length == 0 ? Colors.highlightColor(oldColor) : target[0]);
-        String newStyle = oldStyle.replaceAll("-fx-background-color: #......", "-fx-background-color: " + newColorStr);;
-        n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> n.setStyle(oldStyle));
-        n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> n.setStyle(newStyle));
+        n.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            firstEnter.set(true);
+            Color old = Styles.getBackgroundColor(n);
+            orig.set(old);
+            CornerRadii radius = CornerRadii.EMPTY;
+            if (n instanceof Region && ((Region) n).getBackground() != null) {
+                radius = ((Region) n).getBackground().getFills().get(0).getRadii();
+            }
+            if (old != null || target.length > 0 && target[0] != null)
+                Styles.setBackgroundColor(n, target.length == 0 ? Colors.highlightColor(old) : target[0], radius);
+        });
+        n.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+            if (!firstEnter.get())
+                return;
+            Color old = Styles.getBackgroundColor(n);
+            CornerRadii radius = CornerRadii.EMPTY;
+            if (n instanceof Region && ((Region) n).getBackground() != null) {
+                radius = ((Region) n).getBackground().getFills().get(0).getRadii();
+            }
+            if (old != null || target.length > 0 && target[0] != null)
+                Styles.setBackgroundColor(n, orig.get(), radius);
+        });
     }
 
     public static void underlineOnMouseOver(Text text) {
@@ -81,6 +128,27 @@ public class Events {
         text.addEventHandler(MouseEvent.MOUSE_EXITED, event -> text.setUnderline(false));
     }
 
+    public static void underlineOnMouseOver(Label text) {
+        text.setCursor(Cursor.CLOSED_HAND);
+        text.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> text.setUnderline(true));
+        text.addEventHandler(MouseEvent.MOUSE_EXITED, event -> text.setUnderline(false));
+    }
+
+
+    /* TODO
+
+    public static void hoverPaneOnMouseOver(Node target, Pane hover) {
+        AnchorPane hoverPane = new AnchorPane(hover);
+        target.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            Root.getPortal().getMainArea().getChildren().add(hoverPane);
+        });
+    }
+
+    //0: both, 1: left, 2: right
+    public static void hoverPaneOnMouseClick(Node target, Pane hover, int button) {
+
+    }
+    */
     public static void animation(Animation a) {
         animation(a, true);
     }
@@ -104,7 +172,7 @@ public class Events {
         return animations;
     }
 
-    public static void translate(Node n, TranslateMode mode, Double x, Double y, Duration duration) {
+    public static void translate(Node n, TranslateMode mode, Double x,    Double y, Duration duration) {
         translate(n, mode, x, y, duration, null);
     }
 

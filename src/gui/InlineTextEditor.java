@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.*;
 import main.*;
+import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class InlineTextEditor extends VBox {
     private InlineCssTextArea editor;
     private boolean styleEdited;
     private boolean overrideCaretHandler;
-    private final ChoiceBox<String> fontSelector;
+    private final ComboBox<String> fontSelector;
     private final Spinner<Double> fontSizeSelector;
     private OperatorButton bold = null;
     private OperatorButton italic = null;
@@ -129,10 +130,10 @@ public class InlineTextEditor extends VBox {
 
         double fontSize = Size.fontSize(24);
 
-        fontSelector = new ChoiceBox<>(FXCollections.observableArrayList(Font.getFamilies()));
+        fontSelector = new ComboBox<>(FXCollections.observableArrayList(Font.getFamilies()));
         fontSelector.setValue(Font.getDefault().getFamily());
-        fontSelector.setMaxHeight(Size.height(500));
         fontSelector.valueProperty().addListener((observable, oldValue, newValue) -> styleSelected("-fx-font-family : " + newValue));
+        fontSelector.setVisibleRowCount(25);
 
         fontSizeSelector = new Spinner<>(new SpinnerValueFactory<>() {
             @Override
@@ -400,6 +401,7 @@ public class InlineTextEditor extends VBox {
             }
         });
         getChildren().addAll(controls, editor);
+        Colors.disableInvertColor(this);
     }
 
     private boolean emptySelection() {
@@ -411,6 +413,8 @@ public class InlineTextEditor extends VBox {
         editor = new InlineCssTextArea(source.getChildren().stream().map(text -> {
             if (text instanceof Text)
                 return ((Text) text).getText();
+            else if (text instanceof Label)
+                return ((Label) text).getText();
             else return "";
         }).collect(Collectors.joining()));
 

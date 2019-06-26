@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,7 +41,7 @@ public class NewUserWindow extends Pane {
 
     private NewUserWindow(Main main) {
         super();
-        Text mainlogo = new Text("paintbrush.");
+        Text mainlogo = new Text(".in.session.");
         mainlogo.setFill(Color.WHITE);
         mainlogo.setFont(Font.font("Comfortaa",FontWeight.NORMAL, 80));
         VBox pane = new VBox();
@@ -229,17 +231,19 @@ public class NewUserWindow extends Pane {
                 user_username.setFont(Font.font("Sans Serif", FontPosture.ITALIC, 20));
                 VBox names = new VBox(user_name, user_username);
                 HBox userPane = new HBox(names);
-                Color lightBackgd = Colors.highlightColor(backgd);
-                final String bgcStr = Colors.colorToHex(backgd);
-                final String lbgStr = Colors.colorToHex(lightBackgd);
-                userPane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> userPane.setStyle("-fx-background-color: " + lbgStr));
-                userPane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> userPane.setStyle("-fx-background-color: " + bgcStr));
+                Styles.setBackgroundColor(userPane, backgd);
+                Events.highlightOnMouseOver(userPane);
+                userPane.backgroundProperty().addListener(new ChangeListener<Background>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Background> observable, Background oldValue, Background newValue) {
+                        System.out.println("user pane backd change " + newValue);
+                    }
+                });
                 userPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     user = u;
                     User.setActive(u);
                     main.switchToMain();
                 });
-                userPane.setStyle("-fx-background-color: " + bgcStr);
                 userPane.setPadding(new Insets(20,40,20,40));
                 userPane.setPrefWidth(550);
                 existingAccts.getChildren().add(userPane);

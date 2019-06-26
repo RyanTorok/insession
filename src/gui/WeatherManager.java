@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -21,17 +22,15 @@ public class WeatherManager{
     private Double tempFahrenheit;
     private long sunriseMillis, sunsetMillis;
     private static final Double HEAVY_THRESHOLD = .00635;
-    private long lastUpdate;
 
 
     public WeatherManager(int zipCode) {
         this.setZipCode(zipCode);
         current = null;
         description = null;
-        tempCelsius = 0.0;
+        tempCelsius = null;
         sunriseMillis = 0;
         sunsetMillis = 0;
-        lastUpdate = 0;
     }
 
     public void update() {
@@ -42,14 +41,29 @@ public class WeatherManager{
             session.setEnableProgressBar(false);
             boolean open = session.open();
             String[] result = session.callAndResponse("weather", Integer.toString(zipCode));
+            System.out.println(Arrays.toString(result));
             session.close();
             if (ServerSession.isError(result)) {
+                System.out.println("here");
+                current = null;
+                tempCelsius = null;
+                description = null;
+                sunriseMillis = 0;
+                sunsetMillis = 0;
                 return;
             }
-            setLastUpdate(Long.parseLong(result[1]));
-            setTempCelsius(Double.parseDouble(result[2]));
-            setTempFahrenheit(getTempCelsius() * 1.8 + 32);
-            setCurrent(WeatherState.valueOf(result[3]));
+            if (result[2].equals("null")) {
+                setTempCelsius(null);
+                setTempFahrenheit(null);
+            } else {
+                setTempCelsius(Double.parseDouble(result[2]));
+                setTempFahrenheit(getTempCelsius() * 1.8 + 32);
+            }
+            try {
+                setCurrent(WeatherState.valueOf(result[3]));
+            } catch (IllegalArgumentException e) {
+                setCurrent(null);
+            }
             setDescription(result[4].replaceAll("_", " "));
             // today in current locale
             java.util.Calendar date = new GregorianCalendar();
@@ -60,8 +74,15 @@ public class WeatherManager{
             date.set(java.util.Calendar.MILLISECOND, 0);
             long todayUTC = System.currentTimeMillis() - (System.currentTimeMillis() % (1000 * 86400));
             long todayLocale = date.getTimeInMillis();
-            long sunriseMillisUTC = todayUTC + Long.parseLong(result[5]);
-            long sunsetMillisUTC = todayUTC + Long.parseLong(result[6]);
+            long sunriseMillisUTC;
+            long sunsetMillisUTC;
+            try {
+                sunriseMillisUTC = todayUTC + Long.parseLong(result[5]);
+                sunsetMillisUTC = todayUTC + Long.parseLong(result[6]);
+            } catch (IllegalArgumentException e) {
+                sunriseMillisUTC = 0;
+                sunsetMillisUTC = 0;
+            }
 
             //must divide as floating point to avoid truncation of fractional difference
             int sunriseDayDiff = (int) Math.floor((sunriseMillisUTC - todayLocale) / (1000.0 * 86400.0));
@@ -72,6 +93,11 @@ public class WeatherManager{
             sunsetMillis = sunsetMillisUTC - (sunsetDayDiff * 86400 * 1000);
 
         } catch (IOException e) {
+            current = null;
+            tempCelsius = null;
+            description = null;
+            sunriseMillis = 0;
+            sunsetMillis = 0;
             e.printStackTrace();
         }
     }
@@ -79,14 +105,6 @@ public class WeatherManager{
     public void update(int zipCode){
         this.setZipCode(zipCode);
         update();
-    }
-
-    public void setLastUpdate(long lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public long getLastUpdate() {
-        return lastUpdate;
     }
 
     public WeatherState getCurrent(){

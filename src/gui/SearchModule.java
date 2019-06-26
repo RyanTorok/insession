@@ -11,6 +11,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,7 +36,7 @@ public class SearchModule extends VBox {
 
     private final Main wrapper;
     private final SearchFilterBox filterBox;
-    private TextField searchBox;
+    private SubtleTextField searchBox;
     private VBox textFillers;
     private ArrayList<String> textFillerStrings;
     private int fillersIndex = -1;
@@ -54,13 +56,18 @@ public class SearchModule extends VBox {
         this.searchResultsDisplay = new VBox();
         searchResultsDisplay.setPadding(Size.insets(30, 0, 0, 0));
         textFillerStrings = new ArrayList<>();
-        searchBox = new TextField("");
+        searchBox = new SubtleTextField("");
+        Styles.setProperty(searchBox, "-fx-text-fill", Colors.colorToHex(Color.WHITE));
         searchBox.setEditable(true);
         searchBox.setPrefColumnCount(40);
         searchBox.setFont(Font.font("Sans Serif", Size.fontSize(30)));
         searchBox.setOnAction(event -> search());
         searchBox.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode().equals(KeyCode.DOWN)) {
+                if (textFillerStrings.size() == 0) {
+                    event.consume();
+                    return;
+                }
                 if (!expanded)
                     expand();
                 if (!getChildren().contains(textFillers))
@@ -69,15 +76,38 @@ public class SearchModule extends VBox {
                 if (fillersIndex < textFillers.getChildren().size() - 1)
                     setFillerSelected(fillersIndex + 1);
                 else setFillerSelected(-1);
+                event.consume();
+                return;
             }
             else if (event.getCode().equals(KeyCode.UP)) {
+                if (textFillerStrings.size() == 0) {
+                    event.consume();
+                    return;
+                }
+                if (!expanded)
+                    expand();
                 lastChangeFromUser = false;
                 if (fillersIndex >= 0)
                     setFillerSelected(fillersIndex - 1);
                 else setFillerSelected(textFillers.getChildren().size() - 1);
                 event.consume();
+                return;
+            }
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (textFillerStrings.size() > 0) {
+                    if (lastChangeFromUser)
+                        searchBox.setText(textFillerStrings.get(0) + " ");
+                    else {
+                        searchBox.setText(searchBox.getText() + " ");
+                        search();
+                    }
+                    searchBox.positionCaret(searchBox.getText().length());
+                }
+                event.consume();
             }
             lastChangeFromUser = true;
+        });
+        searchBox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
         });
         searchBox.textProperty().addListener((observable, oldText, newText) -> {
             if (lastChangeFromUser) {
@@ -100,14 +130,18 @@ public class SearchModule extends VBox {
             }
         });
         textFillers = new VBox();
-        textFillers.setStyle("-fx-background-color: white");
+        Styles.setBackgroundColor(textFillers, Color.BLACK);
+        textFillers.setBorder(Styles.defaultBorder(Color.WHITE));
         textFillers.setPadding(Size.insets(10));
         topBarSubtitle = wrapper.getSubtitle();
         getChildren().add(searchBox);
-        setStyle("-fx-background-color: black");
+        Styles.setBackgroundColor(this, Color.BLACK);
         setPrefSize(Size.width(1920), Size.height(100));
         filterBox = new SearchFilterBox(this);
-        filters = new ScrollPane(filterBox) {{setStyle("-fx-background: transparent; -fx-background-color: transparent"); setVbarPolicy(ScrollBarPolicy.AS_NEEDED); setHbarPolicy(ScrollBarPolicy.NEVER);}};
+        filters = new ScrollPane(filterBox);
+        filters.setStyle("-fx-background: transparent; -fx-background-color: transparent");
+        filters.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        filters.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
     private void setFillerSelected(int i) {
@@ -142,8 +176,13 @@ public class SearchModule extends VBox {
         for (String s : wordStems) {
             String full = beginning + s;
             textFillerStrings.add(full);
-            HBox box = new HBox(new Text(full.substring(0, orig.length())){{setFont(Font.font("Sans Serif", FontWeight.BOLD, Size.fontSize(16)));}}, new Text(full.substring(orig.length())) {{setFont(Font.font("Sans Serif", Size.fontSize(16)));}});
-            box.setStyle("-fx-background-color: #ffffff");
+            HBox box = new HBox();
+            Styles.setBackgroundColor(box, Color.BLACK);
+            final AutoColoredLabel original = new AutoColoredLabel(full.substring(0, orig.length()), box);
+            original.setFont(Font.font("Sans Serif", FontWeight.BOLD, Size.fontSize(16)));
+            final AutoColoredLabel remaining = new AutoColoredLabel(full.substring(orig.length()), box);
+            remaining.setFont(Font.font("Sans Serif", Size.fontSize(16)));
+            box.getChildren().addAll(original, remaining);
             Events.highlightOnMouseOver(box);
             box.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
                 if (textFillers.getChildren().indexOf(box) == fillersIndex && lastChangeFromUser) {

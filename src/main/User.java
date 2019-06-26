@@ -2,6 +2,7 @@ package main;
 
 import classes.ClassPd;
 import classes.Record;
+import classes.UtilScheduler;
 import classes.setbuilder.Classifiable;
 import gui.*;
 import javafx.scene.image.Image;
@@ -22,7 +23,7 @@ import java.util.*;
  * Created by 11ryt on 4/21/2017.
  */
 
-public class User implements Classifiable, Serializable, Indexable {
+public class User implements Classifiable, Serializable, Indexable, Comparable<User> {
 
     static final long serialVersionUID = 42L;
 
@@ -573,4 +574,22 @@ public class User implements Classifiable, Serializable, Indexable {
     public ImportManager getImports() {
         return imports;
     }
+
+    @Override
+    public int compareTo(User o) {
+        int lastCompare = getLast().compareTo(o.getLast());
+        if (lastCompare != 0)
+            return lastCompare;
+        return first.compareTo(o.first);
+    }
+
+    public UtilScheduler.StudentSchedulePackage getSavedSSP() {
+        return savedSSP;
+    }
+
+    public void setSavedSSP(UtilScheduler.StudentSchedulePackage savedSSP) {
+        this.savedSSP = savedSSP;
+    }
+
+    private UtilScheduler.StudentSchedulePackage savedSSP;
 }

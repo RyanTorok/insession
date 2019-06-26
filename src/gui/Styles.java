@@ -1,7 +1,12 @@
 package gui;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import main.Colors;
 
 import java.util.Objects;
@@ -51,18 +56,53 @@ public class Styles {
         returnVal[0] = index;
         returnVal[1] = index + property.length() + 2; //pass the colon and space
         int semi = n.getStyle().indexOf(';', returnVal[1]);
-        returnVal[2] = semi == -1 ? n.getStyle().length() : semi + 1;
+        returnVal[2] = semi == -1 ? n.getStyle().length() + 1 : semi + 1;
         return returnVal;
     }
 
     public static Color getBackgroundColor(Node n) {
+        if (n instanceof Region && !(n instanceof ScrollPane)) {
+            final Background background = ((Region) n).getBackground();
+            if (background == null)
+                return null;
+            final Paint fill = background.getFills().get(0).getFill();
+            if (fill instanceof Color)
+                return (Color) fill;
+            else return Color.TRANSPARENT;
+        }
         String colorString = getProperty(n, "-fx-background-color");
-        if (colorString == null)
+        if (colorString.trim().equals("")) {
             return null;
-        return Color.web(colorString);
+        }
+        if (colorString.equals("transparent")) {
+            return Color.TRANSPARENT;
+        }
+        try {
+            return Color.web(colorString);
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
+    //TODO test alternate region implementation
     public static void setBackgroundColor(Node n, Color c) {
-        setProperty(n, "-fx-background-color", Colors.colorToHex(c));
+        setBackgroundColor(n, c, CornerRadii.EMPTY);
+    }
+
+    public static void setBackgroundColor(Node n, Color c, double radius) {
+        setBackgroundColor(n, c, new CornerRadii(radius));
+    }
+
+    public static void setBackgroundColor(Node n, Color c, CornerRadii radii) {
+        if (n instanceof Region && !(n instanceof ScrollPane))
+            ((Region) n).setBackground(new Background(new BackgroundFill(c, radii, Insets.EMPTY)));
+        else {
+            setProperty(n, "-fx-background-color", Colors.colorToHex(c));
+            setProperty(n, "-fx-background-radius", String.valueOf(radii.getTopLeftHorizontalRadius()));
+        }
+    }
+
+    public static Border defaultBorder(Paint fill) {
+        return new Border(new BorderStroke(fill, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
     }
 }

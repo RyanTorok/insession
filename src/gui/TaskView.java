@@ -9,9 +9,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import main.*;
+import javafx.scene.paint.Color;
+import main.Colors;
+import main.Root;
+import main.User;
 
-public abstract class TaskView extends ScrollPane {
+public abstract class TaskView extends ScrollPane implements ColorThemeBase {
 
     private String title;
     private TaskViewWrapper wrapper;
@@ -23,6 +26,7 @@ public abstract class TaskView extends ScrollPane {
     private double lastClickY;
     private long fileId = -1;
     private boolean initializeFlag = true;
+    private boolean darkMode = false;
 
     public TaskView(String title) {
         super();
@@ -62,11 +66,18 @@ public abstract class TaskView extends ScrollPane {
             placeholder = getPlaceholderImage();
         if (!screenshot && placeholder == null)
             placeholder = new ImageView();
-        minimizedDisplay = new HBox(screenshot ? new ImageView(new WritableImage(this.getContent().snapshot(new SnapshotParameters(), null).getPixelReader(), 0, 0, (int) this.getContent().getLayoutBounds().getWidth(), (int) this.getContent().getLayoutBounds().getHeight()))
-            {{setPreserveRatio(true); setFitWidth(width); setFitHeight(height);}} //ImageView properties
-            : placeholder) // initial case, get icon or saved placeholder, depending on TaskView subclass implementation
-            {{setStyle("-fx-background-color: " + Colors.colorToHex(User.active().getAccentColor()));
-            setAlignment(screenshot ? Pos.TOP_LEFT : Pos.CENTER);}}; //HBox (with one element) properties
+
+        if (screenshot) {
+            final ImageView imageView = new ImageView(new WritableImage(this.getContent().snapshot(new SnapshotParameters(), null).getPixelReader(), 0, 0,
+                    (int) this.getContent().getLayoutBounds().getWidth(), (int) this.getContent().getLayoutBounds().getHeight()));
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            minimizedDisplay = new HBox(imageView);
+        } else {
+            minimizedDisplay = new HBox(placeholder);
+        }
+        minimizedDisplay .setAlignment(screenshot ? Pos.TOP_LEFT : Pos.CENTER);
 
         minimizedDisplay.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             TaskView view = TaskView.this;
@@ -88,6 +99,7 @@ public abstract class TaskView extends ScrollPane {
     }
 
     void collapse() {
+        Styles.setBackgroundColor(this, Color.TRANSPARENT);
         changeMinimized(TaskViewWrapper.fullWidth, TaskViewWrapper.fullHeight, true);
         setHbarPolicy(ScrollBarPolicy.NEVER);
         setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -97,13 +109,16 @@ public abstract class TaskView extends ScrollPane {
     void expand() {
        // if (fullDisplay == null) initialize();
         setContent(fullDisplay);
+        Color contentBackground = Styles.getBackgroundColor(fullDisplay);
+        if (contentBackground != null)
+            Styles.setBackgroundColor(this, contentBackground);
+        else Styles.setBackgroundColor(this, Color.WHITE);
         setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         Root.getPortal().getSubtitle().setText(title);
     }
 
     protected void initialize() {
         fullDisplay = initDisplay();
-        fullDisplay.setStyle("-fx-background-color: #ffffff");
         fullDisplay.setPrefSize(Root.getPortal().getMainArea().getLayoutBounds().getWidth(), Root.getPortal().getMainArea().getLayoutBounds().getHeight() - Root.getPortal().getTopbar().getLayoutBounds().getHeight());
     }
 
@@ -175,5 +190,19 @@ public abstract class TaskView extends ScrollPane {
 
     public boolean getInitializeFlag() {
         return initializeFlag;
+    }
+
+    @Override
+    public boolean isDarkMode() {
+        return darkMode;
+    }
+
+    protected final void toggleDarkMode() {
+        darkMode = !darkMode;
+        invertColors();
+    }
+
+    protected void invertColors() {
+        Colors.invertGrayscale(this);
     }
 }

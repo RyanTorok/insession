@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import java.util.Collection;
 import java.util.List;
 
-public class MultipleChoiceQuestion extends QuestionElement {
+public class MultipleChoiceQuestion extends ValuedQuestionElement {
 
     private List<MultipleChoiceAnswer> correctAnswers;
     private boolean scatterChoices;
@@ -33,7 +33,7 @@ public class MultipleChoiceQuestion extends QuestionElement {
     }
 
     @Override
-    protected Node getAnswerSpaceDisplay() {
+    protected Node getDisplay() {
         if (pullDown) return new MultipleChoicePullDownPane(displayType, answerChoices.toArray(new String[0]));
         else return new MultipleChoiceRadioPane(scatterChoices, allowMultipleSelections, displayType, answerChoices.toArray(new String[0]));
     }

@@ -7,13 +7,13 @@ import java.util.ArrayList;
  */
 public class QuestionGroup extends TestElement {
 
-    private ArrayList<TestElement> subelements;
+    private ArrayList<QuestionUnit> subelements;
     private QuestionObject groupwideDisplayObj;
     private boolean returnable;
     private boolean scatterQuestions;
     private TestTimingRule sectiontimer;
 
-    public QuestionGroup(ArrayList<TestElement> elements) {
+    public QuestionGroup(ArrayList<QuestionUnit> elements) {
         subelements = elements;
         sectiontimer = new TestTimingRule();
     }
@@ -26,24 +26,32 @@ public class QuestionGroup extends TestElement {
         this.sectiontimer = sectiontimer;
     }
 
-    public ArrayList<TestElement> getSubelements() {
+    public ArrayList<QuestionUnit> getSubelements() {
         return subelements;
     }
 
-    public void addSubElement(int index, TestElement e) {
+    public void addSubElement(int index, QuestionUnit e) {
         subelements.add(index, e);
     }
 
-    public void addSubElement(TestElement e) {
+    public void addSubElement(QuestionUnit e) {
         subelements.add(e);
     }
 
-    public boolean removeSubElement(TestElement e) {
+    public boolean removeSubElement(QuestionUnit e) {
         return subelements.remove(e);
     }
 
-    public TestElement removeSubElementAtIndex(int index) {
+    public QuestionUnit removeSubElementAtIndex(int index) {
         return subelements.remove(index);
     }
 
+    public QuestionUnit get(int n) {
+        return subelements.get(n);
+    }
+
+
+    public int size() {
+        return subelements.size();
+    }
 }

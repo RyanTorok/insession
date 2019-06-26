@@ -15,15 +15,6 @@ public class Student extends User {
     static long serialVersionUID = User.serialVersionUID;
     private String studentID;
 
-    public UtilScheduler.StudentSchedulePackage getSavedSSP() {
-        return savedSSP;
-    }
-
-    public void setSavedSSP(UtilScheduler.StudentSchedulePackage savedSSP) {
-        this.savedSSP = savedSSP;
-    }
-
-    private UtilScheduler.StudentSchedulePackage savedSSP;
 
     public int getGrade() {
         return grade;

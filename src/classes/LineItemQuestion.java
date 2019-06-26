@@ -9,7 +9,7 @@ import main.Size;
 import java.util.Collection;
 import java.util.Set;
 
-public class LineItemQuestion extends QuestionElement {
+public class LineItemQuestion extends ValuedQuestionElement {
     private Set<LineItemAnswer> correctAnswers;
     private boolean caseSensitive = false;
     private boolean enableSpellCheck = true;      //User level spell checker
@@ -29,7 +29,7 @@ public class LineItemQuestion extends QuestionElement {
     }
 
     @Override
-    protected Pane getAnswerSpaceDisplay() {
+    protected Pane getDisplay() {
         TextField answerBlank = new TextField();
         answerBlank.setPrefColumnCount(60);
         answerBlank.setPadding(Size.insets(10));
@@ -72,4 +72,5 @@ public class LineItemQuestion extends QuestionElement {
     public void setEnableSpellCorrection(boolean enableSpellCorrection) {
         this.enableSpellCorrection = enableSpellCorrection;
     }
+
 }

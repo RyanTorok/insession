@@ -1,6 +1,8 @@
 package gui;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
@@ -35,10 +37,20 @@ public class CompressedRichText {
     }
 
     public TextFlow extract() {
-        //TODO optimize this. Stress tests cause havoc since we have every character as a different Text node
-        TextFlow flow = new TextFlow();
+        return extract(null);
+    }
+
+    public TextFlow extract(Region bindBackground) {
+        //TODO optimize this. Stress tests cause havoc since we have every character as a different Label node
+
+        TextFlow flow;
+        if (bindBackground == null)
+            flow = new TextFlow();
+        else
+            flow = new AutoColoredTextFlow(bindBackground);
+
         for (int i = 0; i < unformattedText.length(); i++) {
-            flow.getChildren().add(new Text(Character.toString(unformattedText.charAt(i))));
+                flow.getChildren().add(new Text(Character.toString(unformattedText.charAt(i))));
         }
         for (String styleComponent : styles.keySet()) {
             List<Pair<Integer, Integer>> indexList = styles.get(styleComponent);

@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
@@ -47,13 +48,18 @@ public class WeatherManager {
 
                 URL api = new URL("https://api.weather.gov/");
                 URL stations = new URL(api, "points/" + latlon[0] + "," + latlon[1] + "/stations/");
-                BufferedReader stationsIn = new BufferedReader(new InputStreamReader(stations.openStream()));
-                String stationFile = "", line = "";
-                while ((line = stationsIn.readLine()) != null) {
-                    stationFile += line + "\n";
+                StringBuilder stationFile;
+                String line;
+                try (BufferedReader stationsIn = new BufferedReader(new InputStreamReader(stations.openStream()))) {
+                    stationFile = new StringBuilder();
+                    line = "";
+                    while ((line = stationsIn.readLine()) != null) {
+                        stationFile.append(line).append("\n");
+                    }
+                } catch (IOException e) {
+                    return;
                 }
-                stationsIn.close();
-                JSONObject stationsObj = new JSONObject(stationFile);
+                JSONObject stationsObj = new JSONObject(stationFile.toString());
                 JSONArray features = stationsObj.getJSONArray("features");
                 int numStations = features.length();
                 if (stationIndex >= numStations)

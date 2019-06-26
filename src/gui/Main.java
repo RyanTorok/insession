@@ -98,6 +98,7 @@ public class Main extends Application {
     private ImageView background;
     private AnchorPane weatherPane;
     private boolean day;
+    private long hourOfNight;
     private StackPane topbarWrapper;
     private String borderWidth;
 
@@ -146,10 +147,10 @@ public class Main extends Application {
             contentPanes = new Pane[5];
             Root.setPortal(this);
             User user = User.read();
-            String icon_path = "file:" + Address.fromRootAddr("resources", "icon.png");
+            String icon_path = "file:" + Address.fromRootAddr("resources", "islogo.png");
             Image iconImg = new Image(icon_path);
             primaryStage.getIcons().add(0, iconImg);
-            primaryStage.setTitle("Paintbrush LMS");
+            primaryStage.setTitle("InSession by Digital Classroom");
             User.setActive(user);
             if (user == null || User.getSerCount() > 1) {
                 newUser();
@@ -173,8 +174,8 @@ public class Main extends Application {
 
         getPrimaryStage().setMaximized(false);
         String title_name = User.active() != null && User.active().getFirst() != null ? User.active().getFirst() : "Guest";
-        getPrimaryStage().setTitle("Welcome, " + title_name + " - Paintbrush LMS");
-        mainlogo = new Text("paintbrush.");
+        getPrimaryStage().setTitle("Welcome, " + title_name + " - InSession by Digital Classroom");
+        mainlogo = new Text(".in.session.");
         mainlogo.setFont(CustomFonts.comfortaa_bold(60));
         mainlogo.setFill(Color.WHITE);
         upper = mainlogo.getText().toUpperCase();
@@ -551,7 +552,6 @@ public class Main extends Application {
         }
         updateWeather();
         launchClass(test);
-
     }
 
 
@@ -633,13 +633,20 @@ public class Main extends Application {
             sunset = manager.getSunsetMillis();
         }
 
-        Boolean isDaytime;
         if (sunrise != 0 && sunset != 0) {
-            isDaytime = sunrise < now && now < sunset;
+            day = sunrise < now && now < sunset;
+            if (!day) {
+                long nightLengthMillis = 86000000 - (sunset - sunrise);
+                //should always be true, just a sanity check to a void divide by 0 error
+                if (nightLengthMillis != 0) {
+                    hourOfNight = (now - sunset) / (nightLengthMillis) * 12;
+                } else hourOfNight = 1;
+            }
         } else {
-            isDaytime = currentHr > 6 && currentHr < 21;
+            this.day = currentHr > 6 && currentHr < 21;
+            if (!this.day)
+                hourOfNight = (currentHr + 3) % 24 + 1;
         }
-        day = isDaytime;
     }
 
     private void checkDaytime() {
@@ -722,7 +729,7 @@ public class Main extends Application {
                 break;
         }
         if (needMoon) {
-            int hourOfNight = (currentHr + 3) % 24 + 1;
+
             Image moon = new Image("file:" + Address.fromRootAddr("resources", getMoonFN() + ".png"));
             ImageView moonNode = new ImageView(moon);
             double moonImgRadius = Size.lessWidthHeight(40);

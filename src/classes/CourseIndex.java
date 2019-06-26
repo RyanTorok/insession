@@ -1,6 +1,7 @@
 package classes;
 
 import main.Student;
+import main.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,14 +39,14 @@ public class CourseIndex {
         return candidate;
     }
 
-    void addToEmptiest(Student s, Course course, Integer period) {
+    void addToEmptiest(User s, Course course, Integer period) {
         PriorityQueue<ClassPd> q = courses.get(course.getClassCode()).get(period);
         ClassPd empty = q.poll();
         empty.getStudentList().add(s);
         q.add(empty);
     }
 
-    void remove(Student swapGuy, Course course, Integer period) {
+    void remove(User swapGuy, Course course, Integer period) {
         for (ClassPd cp : courses.get(course.getClassCode()).get(period)
              ) {
             cp.getStudentList().remove(swapGuy);

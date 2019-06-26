@@ -28,7 +28,7 @@ public class ClassPd extends MSClass implements Serializable, Indexable {
     static final long serialVersionUID = 100L;
 
     private Course castOf;
-    private transient ArrayList<Student> studentList;
+    private transient ArrayList<User> studentList;
     private int periodNo;
     private int capacity;
     private transient Color color;
@@ -39,7 +39,7 @@ public class ClassPd extends MSClass implements Serializable, Indexable {
     private Teacher teacher;
     private Identifier identifier;
 
-    public ClassPd(Course castOf, ArrayList<Student> studentList, int periodNo, int capacity, Color color, Teacher teacher, UUID uniqueId) {
+    public ClassPd(Course castOf, ArrayList<User> studentList, int periodNo, int capacity, Color color, Teacher teacher, UUID uniqueId) {
         this.castOf = castOf;
         this.studentList = studentList;
         this.periodNo = periodNo;
@@ -91,7 +91,7 @@ public class ClassPd extends MSClass implements Serializable, Indexable {
         return null;
     }
 
-    public ArrayList<Student> getStudentList() {
+    public ArrayList<User> getStudentList() {
         return studentList;
     }
 
@@ -107,7 +107,7 @@ public class ClassPd extends MSClass implements Serializable, Indexable {
         this.castOf = castOf;
     }
 
-    public void setStudentList(ArrayList<Student> studentList) {
+    public void setStudentList(ArrayList<User> studentList) {
         this.studentList = studentList;
     }
 

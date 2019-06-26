@@ -2,6 +2,7 @@ package classes;
 
 import main.Student;
 import main.Time;
+import main.User;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class UtilScheduler {
                             continue;
                         }
                         ArrayList<Integer> studentScores = new ArrayList<>();
-                        for (Student s : period.getStudentList()) {
+                        for (User s : period.getStudentList()) {
                             StudentSchedulePackage ssp = s.getSavedSSP();
                             ClassPd swapClass = index.courses.get(ssp.proposedSchedule.courseOrder[nearestHole].getClassCode()).get(period.getPeriodNo()).peek();
                             studentScores.add(swapClass.getCapacity() - swapClass.getStudentList().size());
@@ -58,7 +59,7 @@ public class UtilScheduler {
                             index0++;
                         }
                         //the student whose proposed class at the location of the hole is the emptiest in the period containing the overfull class
-                        Student swapGuy = period.getStudentList().get(minIndex);
+                        User swapGuy = period.getStudentList().get(minIndex);
 
                         //swap student class times
                         index.remove(swapGuy, swapGuy.getSavedSSP().proposedSchedule.courseOrder[period.getPeriodNo()], period.getPeriodNo());

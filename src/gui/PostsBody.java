@@ -2,12 +2,14 @@ package gui;
 
 import classes.Post;
 import classes.PostStatus;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -52,25 +54,27 @@ public class PostsBody extends VBox {
         List<Post> mostPopular = postEngine.getPosts().stream()
                 .sorted(Comparator.comparing(post -> weight_views * post.getViews() + weight_likes * post.getLikes() + weight_date * (-1 * (System.currentTimeMillis() - post.getIdentifier().getTime1()) / 86400000)))
                 .collect(Collectors.toList());
-        Text header = new Text("Popular Posts");
-        header.setFill(postEngine.getBelongsTo().textFill());
+        VBox toReturn = new VBox();
+        AutoColoredLabel header = new AutoColoredLabel("Popular Posts", toReturn);
         header.setFont(Font.font(Size.fontSize(20)));
         HBox headerWrapper = new HBox(header);
         headerWrapper.setPadding(Size.insets(30, 0, 30, 15));
 
-        VBox toReturn = new VBox(headerWrapper);
+        toReturn.getChildren().add(headerWrapper);
         toReturn.getChildren().addAll(makePostDisplay(mostPopular));
         if (mostPopular.size() == 0) {
-            Text placeholder = new Text("This class has no posts.");
+            AutoColoredLabel placeholder = new AutoColoredLabel("This class has no posts.", toReturn);
             placeholder.setFont(Font.font(Size.fontSize(14)));
-            placeholder.setFill(postEngine.getBelongsTo().textFill());
             VBox placeholderWrapper = new VBox(placeholder);
             placeholderWrapper.setMinSize(Size.width(600), Size.height(100));
             placeholderWrapper.setAlignment(Pos.CENTER);
             toReturn.getChildren().add(placeholderWrapper);
         }
         toReturn.setPadding(Size.insets(10, 0, 0, 0));
-        Styles.setBackgroundColor(toReturn, postEngine.getBelongsTo().getColor());
+        Styles.setBackgroundColor(toReturn, wrapper.getClassPd().getColor());
+        toReturn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT)));
+        Colors.setCustomInvertColor(toReturn, Colors.invertColor(ClassView.DEFAULT_BACKGROUND));
+        Colors.autoThemeSet(toReturn, wrapper);
         return toReturn;
     }
 
@@ -79,27 +83,27 @@ public class PostsBody extends VBox {
                 .filter(post -> post.getStatusLabels().contains(PostStatus.UNANSWERED))
                 .sorted(Comparator.comparing(post -> weight_views * post.getViews() + weight_likes * post.getLikes() + weight_date * (-1 * (System.currentTimeMillis() - post.getIdentifier().getTime1()) / 86400000)))
                 .collect(Collectors.toList());
-        Text header = new Text("Top Unanswered Questions");
-        header.setFill(postEngine.getBelongsTo().textFill());
+        VBox toReturn = new VBox();
+        AutoColoredLabel header = new AutoColoredLabel("Top Unanswered Questions", toReturn);
         header.setFont(Font.font(Size.fontSize(20)));
         HBox headerWrapper = new HBox(header);
         headerWrapper.setPadding(Size.insets(30, 0, 30, 15));
-
-        VBox toReturn = new VBox(headerWrapper);
+        toReturn.getChildren().add(headerWrapper);
         toReturn.getChildren().addAll(makePostDisplay(topUnanswered));
         if (topUnanswered.size() == 0) {
-            Text placeholder = new Text("This class has no unanswered questions.");
+            AutoColoredLabel placeholder = new AutoColoredLabel("This class has no unanswered questions.", toReturn);
             placeholder.setFont(Font.font(Size.fontSize(14)));
-            placeholder.setFill(postEngine.getBelongsTo().textFill());
             VBox placeholderWrapper = new VBox(placeholder);
             placeholderWrapper.setMinSize(Size.width(600), Size.height(100));
             placeholderWrapper.setAlignment(Pos.CENTER);
             toReturn.getChildren().add(placeholderWrapper);
         }
         toReturn.setPadding(Size.insets(10, 0, 0, 0));
-        Styles.setBackgroundColor(toReturn, postEngine.getBelongsTo().getColor());
+        Styles.setBackgroundColor(toReturn, wrapper.getClassPd().getColor());
+        toReturn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT)));
+        Colors.setCustomInvertColor(toReturn, Colors.invertColor(ClassView.DEFAULT_BACKGROUND));
+        Colors.autoThemeSet(toReturn, wrapper);
         return toReturn;
-
     }
 
     private ArrayList<VBox> makePostDisplay(List<Post> postsDescending) {
@@ -108,34 +112,38 @@ public class PostsBody extends VBox {
             Post p = postsDescending.get(i);
             VBox headerAndPost = new VBox();
             Styles.setBackgroundColor(headerAndPost, wrapper.getBackgroundColor());
-            Text author = new Text(p.getIdentifier().getAuthorName());
+            AutoColoredLabel author = new AutoColoredLabel(p.getIdentifier().getAuthorName(), getWrapper());
             author.setFont(Font.font("Sans Serif", FontPosture.ITALIC, Size.fontSize(18)));
-            Text title = makeTitle(p.getTitle());
+            AutoColoredLabel title = makeTitle(p.getTitle());
             HBox head = new HBox(title, new Layouts.Filler(), author);
             head.setPadding(Size.insets(5));
             headerAndPost.getChildren().add(head);
-            TextFlow collapsed = new TextFlow(new Text(p.collapseText(370)));
+            TextFlow collapsed = new TextFlow(new AutoColoredLabel(p.collapseText(370), getWrapper()));
             collapsed.setPadding(Size.insets(5));
             headerAndPost.getChildren().add(collapsed);
             Events.highlightOnMouseOver(headerAndPost);
             headerAndPost.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> PostsBody.this.fire(p));
             headerAndPost.setMinSize(Size.width(600), Size.height(100));
             headerAndPost.setMaxSize(Size.width(600), Size.height(100));
+            headerAndPost.setBorder(new Border(new BorderStroke(Color.BLACK, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT,
+                    BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID,
+                    CornerRadii.EMPTY, BorderWidths.DEFAULT, Insets.EMPTY)));
+            Colors.autoThemeSet(headerAndPost, getWrapper());
             postDisplay.add(headerAndPost);
         }
         return postDisplay;
     }
 
-    Text makeTitle(String title) {
-        Text t = new Text(title);
-        t.setFont(Font.font("Sans Serif", Size.fontSize(18)));
-        return t;
+    AutoColoredLabel makeTitle(String title) {
+        AutoColoredLabel l = new AutoColoredLabel(title, getWrapper());
+        l.setFont(Font.font("Sans Serif", Size.fontSize(18)));
+        return l;
     }
 
     void newThread() {
 
         getChildren().clear();
-        TextField titleField = new TextField();
+        SubtleTextField titleField = new SubtleTextField();
         titleField.setFont(Font.font("Sans Serif", Size.fontSize(27)));
         titleField.setPrefColumnCount(40);
         titleField.setPromptText("Enter a title for your thread here.");
@@ -148,9 +156,12 @@ public class PostsBody extends VBox {
                 keyMap.unlock();
             }
         });
+        titleField.setBindBackground(getWrapper());
+        Colors.autoThemeSet(titleField, getWrapper());
         Post newPost = Post.newPost(wrapper.getClassPd());
         PostWindow window = fire(newPost);
         window.getChildren().set(0, titleField);
+        HBox postOptions = new HBox();
         InlineTextEditor.edit(window.getPostArea(), window.getPostArea().getText(), (compressedRichText)-> {
             if (compressedRichText == null) {
                 initialize();

@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.junit.Test;
 
@@ -95,5 +97,12 @@ public class StylesTest {
     @Test(expected = java.lang.NullPointerException.class)
     public void nullTest7() {
         Styles.getProperty(null, "");
+    }
+
+    @Test
+    public void backgroundTest() {
+        Pane dummy = new Pane();
+        Styles.setBackgroundColor(dummy, Color.WHITE);
+        assertEquals("#ffffff", Styles.getProperty(dummy, "-fx-background-color").toLowerCase());
     }
 }

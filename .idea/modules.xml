@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/paintbrush_lms.iml" filepath="$PROJECT_DIR$/.idea/paintbrush_lms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/insession.iml" filepath="$PROJECT_DIR$/.idea/insession.iml" />
     </modules>
   </component>
 </project>

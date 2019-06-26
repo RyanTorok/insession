@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 
 public class TaskViewWrapper extends StackPane {
 
-    public static final int SCROLL_MILLIS = 400;
+    public static final int SCROLL_MILLIS = 300;
     private ArrayList<TaskView> activeViews;
     private boolean changeLock;
     private int which;
@@ -151,7 +151,7 @@ public class TaskViewWrapper extends StackPane {
 
     public static void rescale() {
         fullWidth = Size.width(Size.DEFAULT_WIDTH);
-        fullHeight = Root.getPortal() == null || Root.getPortal().getTopbar() == null ? Size.height(925) : Size.height(Size.DEFAULT_HEIGHT - (Size.scaledHeight(Root.getPortal().getTopbar().getPrefHeight()) + Main.SCALED_BORDER_THICKNESS)+ 5);
+        fullHeight = Root.getPortal() == null || Root.getPortal().getTopbar() == null ? Size.height(925) : Size.height(Size.DEFAULT_HEIGHT - (Size.scaledHeight(Root.getPortal().getTopbar().getPrefHeight()) + Main.SCALED_BORDER_THICKNESS) + 10);
         smallWidth = fullWidth / 2;
         smallHeight = fullHeight / 2;
     }
@@ -270,7 +270,7 @@ public class TaskViewWrapper extends StackPane {
     }
 
     private void growView(TaskView me, int millis) {
-        changeSize(me, millis, 0, Size.height(-2), fullWidth, fullHeight, true, false);
+        changeSize(me, millis, 0, 0, fullWidth, fullHeight, true, false);
     }
 
     private void initView(TaskView me) {

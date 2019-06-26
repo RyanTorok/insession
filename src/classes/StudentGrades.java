@@ -1,12 +1,16 @@
 package classes;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public class StudentGrades {
 
-    private HashMap<Assignment, Grade> grades;
+    private TreeMap<Assignment, Grade> grades;
 
-    public HashMap<Assignment, Grade> getGrades() {
+    public StudentGrades(TreeMap<Assignment, Grade> grades) {
+        this.grades = grades;
+    }
+
+    public TreeMap<Assignment, Grade> getGrades() {
         return grades;
     }
 
